@@ -12,7 +12,43 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('employees', function (Blueprint $table) {
-            $table->id();
+            $table->integer('employee_id')->primary(); //birthdate-001 for id
+            
+            $table->integer('company_id'); //fk
+            $table->foreign('company_id')
+                ->references('company_id')
+                ->on('companies') 
+                ->onDelete('cascade');
+
+            $table->integer('schedule_id'); //fk
+            $table->foreign('schedule_id')
+                ->references('schedule_id')
+                ->on('schedules')
+                ->onDelete('cascade');
+
+            $table->string('first_name');
+            $table->string('middle_name');
+            $table->string('last_name');
+            $table->string('email');
+            $table->string('username');
+            $table->string('password');
+            $table->string('job_position');
+            $table->date('contract_start');
+            $table->date('contract_end');
+
+            $table->enum('employment_type',['fulltime', 'part-time', 'contractual']);
+            $table->date('birthdate');
+            $table->enum('gender', ['male','female']);
+            $table->enum('marital_status',['single','married','widowed']);
+            $table->enum('blood_type', ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'])->nullable();
+            $table->string('religion');
+            $table->string('residential_address');
+            $table->string('bank_account_number');
+            $table->string('sss_number');
+            
+            $table->string('phil_health_number');
+            $table->string('pag_ibig_number');
+            $table->string('tin_number');
             $table->timestamps();
         });
     }
@@ -25,3 +61,4 @@ return new class extends Migration
         Schema::dropIfExists('employees');
     }
 };
+

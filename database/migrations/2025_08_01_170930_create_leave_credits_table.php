@@ -12,8 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('leave_credits', function (Blueprint $table) {
-            $table->id();
+            $table->integer('employee_id');
+            $table->enum('leave_type', ['vacation', 'sick','official business','emergency']);
+
+            $table->decimal('credit_days', 5, 2);
+            $table->decimal('used_days', 5, 2)->default(0);
             $table->timestamps();
+            
+            $table->foreign('employee_id')
+                ->references('employee_id')
+                ->on('employees')
+                ->onDelete('cascade');
+            
+            $table->primary(['employee_id', 'leave_type']);
         });
     }
 

@@ -12,7 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('qr_token', function (Blueprint $table) {
-            $table->id();
+            $table->integer('token_id')->primary();
+
+            $table->string('company_id');
+            $table->foreign('company_id')
+                ->references('company_id')
+                ->on('companies')
+                ->onDelete('cascade');
+
+            $table->string('is_active');
+
             $table->timestamps();
         });
     }

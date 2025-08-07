@@ -12,8 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('contracts', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->integer('contract_id')->primary();
+
+            $table->integer('employee_id');
+            $table->foreign('employee_id')
+                ->references('employee_id')
+                ->on('employees')
+                ->onDelete('cascade');
+
+            $table->date('signed_date');
+            $table->date('end_date');
         });
     }
 
