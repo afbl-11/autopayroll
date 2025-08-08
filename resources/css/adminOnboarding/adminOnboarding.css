@@ -80,9 +80,12 @@ input, select {
 }
 
 .g4 {
-    position: relative;
     width: 300px;
     margin-bottom: 20px;
+}
+
+.wrapper {
+    position: relative;
 }
 
 .g4 input {
@@ -94,7 +97,7 @@ input, select {
 .toggleEye {
     position: absolute;
     right: 12px;
-    top: 72%;
+    top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
     user-select: none;

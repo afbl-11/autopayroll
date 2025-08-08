@@ -4,22 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AutoPayroll Employee Onboarding</title>
-         @vite(['resources/css/addEmp.css', 'resources/js/app.js'])
+         @vite(['resources/css/empOnboarding/addEmp1.css', 'resources/js/app.js'])
 </head>
 <body>
-    <div class = "sidebar">
-        <div class="logo"><span class="a">A</span><span class="p">P</span></div>
-        <nav>
-            <ul>
-                <li><a href="#"><img src="{{ asset('images/home.png') }}" id="img1"><span><p>Home</p></span></a></li>
-                <li><a href="#"><img src="{{ asset('images/emp.png') }}"><span><p>Employee</p></span></a></li>
-                <li><a href="#"><img src="{{ asset('images/compliance.png') }}"><span><p>Compliance</p></span></a></li>
-                <li><a href="#"><img src="{{ asset('images/notif.png') }}"><span><p>Notifications</p></span></a></li>
-                <li><a href="#"><img src="{{ asset('images/admin.png') }}"><span><p>Admin</p></span></a></li>
-            </ul>
-        </nav>
-    </div>
-    
+  @include('layout.sidebar')
   <div class ="container">
     <div class = "header"><a href="#"><img src="{{ asset('images/left-arrow.png') }}"></a><h2>Add Employee</h2></div>
     <div class="steps-div">
@@ -32,24 +20,23 @@
         <div class="steps"><div class="icon"><img src="{{ asset('images/notVerified.png') }}"></div><div class="step-no">Step 4</div><div class="desc">Account Setup</div></div>
         <div class="line"><h1>____</h1></div>
         <div class="steps"><div class="icon"><img src="{{ asset('images/notVerified.png') }}"></div><div class="step-no">Step 5</div><div class="desc">Review Details</div></div>
-        
     </div>
-    <form class="form" action="{{ route('addEmp2') }}" method="GET">
+    <form class="form" action="" method="GET">
     <div class = "content">
         <div class="head">
-            <div class="fn">
-                <label for= "fn">First Name <span class="required">*</span></label><br>
-                <input type="text" id="fname" name="fname" required />
+            <div class="firstName">
+                <label for= "firstName">First Name <span class="required">*</span></label><br>
+                <input type="text" id="firstName" name="firstName" required />
             </div>
-            <div class="mn">
-                <label for= "mn">Middle Name</label><br>
-                <input type="text" id="mname" name="mname" placeholder="Optional" />
+            <div class="middleName">
+                <label for= "middleName">Middle Name</label><br>
+                <input type="text" id="middleName" name="middleName" placeholder="Optional" />
             </div>    
         </div>
         <div class = "row">
-            <div class="ln">
-                <label for= "ln">Last Name <span class="required">*</span></label><br>
-                <input type="text" id="lname" name="lname" />
+            <div class="lastName">
+                <label for= "lastName">Last Name <span class="required">*</span></label><br>
+                <input type="text" id="lastName" name="lastName" required />
             </div>
             <div class = "suffix">
                 <label for="suffix">Suffix</label><br>
@@ -111,13 +98,50 @@
     </form> 
   </div>
   <script>
-    document.getElementById('date-Of-birth').addEventListener('change', function() {
+    document.getElementById('date-Of-birth').addEventListener('blur', function() {
         const dateOfbirth = new Date(this.value);
-        const d = Date.now() - dateOfbirth.getTime();
-        const aged = new Date(d);
-        const age = Math.abs(aged.getUTCFullYear() - 1970);
+        if (isNaN(dateOfbirth)) return;
+        
+        const today = new Date();
+
+        if (dateOfbirth > today) {
+            document.getElementById('age').value = '';
+            alert("Date of birth cannot be in the future.");
+            return;
+        }
+
+        const date = Date.now() - dateOfbirth.getTime();
+        const ageDate = new Date(date);
+        const age = Math.abs(ageDate.getUTCFullYear() - 1970);
         document.getElementById('age').value = age;
+
+        if (age < 15) {
+            document.getElementById('date-Of-birth').value = '';
+            document.getElementById('age').value = '';
+            alert("The hired employee does not meet the required minimum age standards for employment.");
+            return;
+        }
+        
+        if (age > 65) {
+            document.getElementById('date-Of-birth').value = '';
+            document.getElementById('age').value = '';
+            alert("The hired employee is beyond the suitable age range for employment."); //inassume ko lang ito sa age range.
+            return;
+        }
     });
+
+    document.getElementById('age').addEventListener('change', function() {
+       const dateOfbirthInput = document.getElementById('date-Of-birth');
+
+       if (!dateOfbirthInput.value.trim()) {
+          alert("Please enter the employee's date of birth first.");
+          this.value = '';
+          dateOfbirthInput.focus();
+          return;
+       }
+
+    });
+
  </script>
 </body>
 </html>

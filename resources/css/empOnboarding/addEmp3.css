@@ -20,9 +20,63 @@ body {
     gap: 70px;
 }
 
+.head, .row2 {
+    align-items: flex-end;
+    display: flex;
+    gap: 15px;
+}
+
+.companyDesignation, .uploadDocuments {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.companyDesignation select {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.uploadDocuments input {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.wrapper {
+    margin-bottom: 20px;
+    margin-left: 20px;
+}
+
+.wrapper2 {
+    margin-bottom: 20px;
+    margin-left: 3px;
+    padding-right: 365px; 
+}
+
+.addCompany {
+    height: 40px;
+    padding: 12px;
+    border-radius: 8px;
+    width: 125px;
+    border: none;
+    flex-shrink: 0;
+    white-space: nowrap;
+    background-color: #ffcf33;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease;
+}
+
+.addCompany:hover {
+    background-color: #ffd84d
+}
+
 .container {
     margin-left: 400px;
-    margin-top: 125px;
     justify-content: center;
     width: 1100px;
 }
@@ -33,94 +87,76 @@ body {
     margin-bottom: 85px;
 }
 
-.fn, .mn, .ln, .suffix, .place-Of-birth, .date-Of-birth, .age, .gender, .marital-status, .blood-type {
+.companyDesignation, .addCompany, .emp-type, .startingDate, .jobPosition, .uploadDocuments, .browse {
     display: flex;
     flex-direction: column;
     flex: 1;
     margin-bottom: 15px;
 }
 
-.sidebar {
-    width: 99px;
-    background: black;
+.emp-buttons {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 20px;
-    position: fixed;
-    height: 100vh;
-    transition: width 0.3s ease;
-    overflow-x: hidden;
-    flex-shrink: 0;
+    gap: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
 }
 
-.sidebar:hover {
-    width: 220px;
+.emp-buttons button {
+    padding: 8px 20px;
+    border: 1px solid #ccc;
+    background-color: white;
+    border-radius: 12px;
+    cursor: pointer;
+    width: 148px;
+    height: 40px;
+    transition: 0.2s;
+    margin-right: 20px;
 }
 
-.sidebar .logo {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    margin-top: 10px;
+.emp-buttons button:hover {
+    border: 1px solid #e1e1e1;
+    background-color: rgb(248, 248, 248);
 }
 
-.sidebar nav ul {
-    list-style: none;
-    padding: 0;
-    width: 100%;
-   
+.emp-buttons .type-selected {
+    background-color: #cce5ff;
+    border: 2px solid #007bff;
+    color: #007bff;
 }
 
-.sidebar nav ul li {
-    margin: 20px 0;
-    margin-bottom: 30px;
+.emp-buttons .type-selected:hover {
+    background-color: #dfeeff;
+    border: 2px solid #4ba2ff;
+    color: #007bff;
 }
 
-.sidebar nav ul li a {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
+.emp-type button.active {
+    background-color: black;
     color: white;
-    padding: 10px 15px;
-    transition: background 0.3s ease;
-    
+    border-color: black;
 }
 
-.sidebar span {
-    color: white
+.uploadDocuments {
+    flex: 1;
 }
 
-.sidebar nav ul li a:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 6px;
-}
-
-.sidebar nav ul li a img {
-    display: flex;
-    width: 24px;
-    height: 24px;
-    transition: margin 0.3s ease;
-    margin-left: 75px;
-}
-
-.sidebar nav ul li a span {
-    opacity: 0;
+.browse {
+    height: 40px;
+    padding: 12px;
+    border-radius: 8px;
+    width: 125px;
+    border: none;
+    flex-shrink: 0;
     white-space: nowrap;
-    margin-left: 0;
-    transition: opacity 0.3s ease, margin 0.3s ease;
-    font-size: 14px;
-    
+    background-color: #D7D5CE;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease;
 }
 
-.sidebar:hover nav ul li a img {
-    margin-right: 15px;
-    margin-left: 0px;
-}
-
-.sidebar:hover nav ul li a span {
-    opacity: 1;
-    margin-left: 5px;
+.browse:hover {
+    background-color: #e0ded6;
 }
 
 .steps-div {
@@ -209,11 +245,6 @@ input, select {
     margin-bottom: 20px;
 }
 
-.blood-type {
-    width: 440px;
-    margin-bottom: 20px;
-}
-
 h2 {
     margin-top: 10px;
     font-size: 32px;
@@ -226,7 +257,7 @@ h2 {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-top: 120px;
+    margin-top: 20px;
 }
 
 .header img {
@@ -237,14 +268,11 @@ h2 {
     margin-right: 5px;
 }
 
-.logo .a {
-    color: white;
+.next-con{
+    display: flex;
+    justify-content: flex;
+    width: 100%;
 }
-
-.logo .p {
-    color: #ffcf33;
-}
-
 
 .next {
     background-color: #ffcf33;
@@ -284,10 +312,6 @@ h2 {
         margin-left: 380px;
     }
 
-     .header {
-        margin-top: 150px;
-    }
-
     .next {
         width: 150px;
         font-size: 14px;
@@ -295,6 +319,10 @@ h2 {
         margin-top: 20px;
         align-self: flex-start;
         align-items: right;
+    }
+
+    .wrapper2 {
+        padding-right: 0;
     }
 }
 
@@ -335,7 +363,7 @@ h2 {
         margin-left: -90px;
     }
 
-    .head, .row {
+    .head, .row, .row2 {
         flex-direction: column;
         gap: 20px;
         width: 100%;
@@ -343,10 +371,6 @@ h2 {
 
     .content {
         margin-left: 0;
-        width: 100%;
-    }
-
-    .blood-type {
         width: 100%;
     }
 
