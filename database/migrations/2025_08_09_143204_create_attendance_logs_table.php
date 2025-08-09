@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('attendance_logs', function (Blueprint $table) {
             $table->integer('log_id')->primary();
 
-            $table->string('employee_id');
+            $table->integer('employee_id');
             $table->foreign('employee_id')
                 ->references('employee_id')
                 ->on('employees')
