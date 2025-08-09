@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('qr_token', function (Blueprint $table) {
             $table->integer('token_id')->primary();
 
-            $table->string('company_id');
+            $table->integer('company_id');
             $table->foreign('company_id')
                 ->references('company_id')
                 ->on('companies')
