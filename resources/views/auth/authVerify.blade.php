@@ -21,7 +21,7 @@
         <input type="number" maxlength="1" />
         <input type="number" maxlength="1" />
     </div>
-    <div class="resend">Didn't receive a code? <strong><a onclick="resendCode()">Click to resend.</a></strong></div>
+    <div class="resend">Didn't receive a code? <strong><a href="#" role="button" onclick="resendCode()">Click to resend.</a></strong></div>
     <div class="actions">
         <button class="cancel" onclick="cancel()">Cancel</button>
         <button class="continue" onclick="submitCode()">Continue</button>
