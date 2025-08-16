@@ -1,0 +1,304 @@
+body {
+    font-family: Arial;
+    font-size: 12px;
+    background: #fff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    height: 275vh;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.head, .row {
+    display: flex;
+    gap: 70px;
+}
+
+.container {
+    margin-left: 400px;
+    margin-top: 85vh;
+    justify-content: center;
+    width: 1100px;
+}
+
+.content {
+    width: 950px;
+    margin-bottom: 20px;
+}
+
+.firstName, .middleName, .lastName, .suffix, 
+.place-Of-birth, .date-Of-birth, .age, .gender, 
+.marital-status, .blood-type, .residentialAddress, 
+.addressId, .personalContactNum, .email, .otherContactNum,
+.companyDesignation, .addCompany, .emp-type, .startingDate, 
+.jobPosition, .uploadDocuments, .browse, .email, .empId, .password {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-bottom: 15px;
+}
+
+.steps-div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    margin-left: -150px;
+}
+
+.steps {
+    padding: 10px;
+    font-size: 14px;
+    color: #888;
+    text-align: center;
+    flex: 1;
+    min-width: 120px;
+}
+
+.steps .icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 10px auto;
+   
+}
+
+.steps .icon img {
+    width: 100%;
+    height: auto;
+}
+
+.steps .desc {
+    color: #1F2937;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+    letter-spacing: 1.6px;
+    margin-bottom: 10px;
+}
+
+.steps .step-no {
+    color: #4B5563;
+    text-align: center;
+    font-size: 12px;
+    font-style: normal;
+    line-height: 160%;
+    letter-spacing: 1.333px;
+}
+
+.line {
+    font-weight: bold;
+    color:#888;
+    font-weight: 300;
+}
+
+.lines {
+    font-weight: bold;
+    color:#3CBF6C;
+    margin-top: 25px;
+    
+}
+
+.line, .lines {
+    margin: 25px 5px;
+}
+
+label {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.required {
+    color: red;
+}
+
+input {
+    font-size: 14px;
+    margin-bottom: 20px;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    padding: 4px 0;
+    font-size: 14px;
+    background-color: transparent;
+}
+
+.blood-type, .otherContactNum, .uploadDocuments, .password {
+    width: 440px;
+}
+
+.emp-type{
+    width: 180px;
+}
+
+h2 {
+    margin-top: 10px;
+    font-size: 32px;
+}
+
+h3 {
+    margin-top: 25px;
+    font-size: 20px;
+    margin-bottom: 75px;
+}
+
+.header {
+    margin-left: -250px;
+    width: 500px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: -5px;
+}
+
+.header img {
+    width: 25px;
+    height: 25px;
+    vertical-align: middle;
+    margin-top: 10px;
+    margin-right: 5px;
+}
+
+.confirm {
+    background-color: #ffcf33;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 150px;
+    height: 47px;
+    margin-top: 20px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    transition: background 0.3s ease;
+    margin-bottom: 80px;
+}
+
+.confirm:hover {
+    background-color: #ffd84d
+}
+
+@media screen and (max-width: 1700px){
+
+    body {
+        margin-right: 10px;
+    }
+    
+    .container {
+        margin-left: 390px;
+    }
+
+}
+
+@media screen and (max-width: 1550px){
+
+    .container {
+        margin-left: 380px;
+    }
+
+    .confirm {
+        width: 150px;
+        font-size: 14px;
+        padding: 10px;
+        margin-top: 20px;
+        align-self: flex-start;
+        align-items: right;
+    }
+}
+
+@media screen and (max-width: 1400px){
+
+    .header {
+        margin-top: 0px;
+    }
+    
+    body {
+        flex-direction: column;
+        height: auto;
+        padding: 20px;
+        padding-left: 0;
+        padding-top: 0;
+        align-items: flex-start;
+    }
+
+    .steps-div {
+        margin-left: 0;
+    }
+
+    .container {
+        width: 75%;
+        margin-left: 290px;
+        margin-top: 30px;
+    }
+
+    .header {
+        margin-left: -90px;
+    }
+
+    .head, .row {
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+    }
+
+    .content {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .blood-type, .blood-type, .otherContactNum, .uploadDocuments, .password, .emp-type {
+        width: 100%;
+    }
+
+}
+
+@media screen and (max-width: 1370px){
+    .confirm { 
+        margin-left: 0px;
+    }
+}
+
+@media screen and (max-width: 1250px){
+    
+    .container {
+        margin-left: 230px;
+    }
+
+}
+
+@media screen and (max-width: 970px) {
+    
+    .container {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start; 
+        margin-left: 150px;
+    }
+
+    .header {
+        margin-left: -10px;
+    }
+
+    .form {
+        width: 100%;
+        gap: 15px;
+    }
+
+}
+
+@media screen and (max-width: 700px) {
+    .container {
+        width: 70%;
+    }
+}
