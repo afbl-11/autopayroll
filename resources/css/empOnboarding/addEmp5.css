@@ -22,14 +22,13 @@ body {
 
 .container {
     margin-left: 400px;
-    margin-top: 125px;
+    margin-top: 85vh;
     justify-content: center;
     width: 1100px;
 }
 
 .content {
     width: 950px;
-    margin-left: 65px;
     margin-bottom: 20px;
 }
 
@@ -46,10 +45,11 @@ body {
 }
 
 .steps-div {
-     display: flex;
+    display: flex;
     justify-content: space-between;
     margin-bottom: 30px;
     flex-wrap: wrap;
+    margin-left: -150px;
 }
 
 .steps {
@@ -175,7 +175,6 @@ h3 {
     font-size: 16px;
     border-radius: 8px;
     cursor: pointer;
-    margin-left: 65px;
     width: 150px;
     height: 47px;
     margin-top: 20px;
@@ -230,6 +229,10 @@ h3 {
         padding-left: 0;
         padding-top: 0;
         align-items: flex-start;
+    }
+
+    .steps-div {
+        margin-left: 0;
     }
 
     .container {
@@ -292,4 +295,10 @@ h3 {
         gap: 15px;
     }
 
+}
+
+@media screen and (max-width: 700px) {
+    .container {
+        width: 70%;
+    }
 }

@@ -1,0 +1,603 @@
+body {
+    font-family: Arial;
+    font-size: 12px;
+    background: #fff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    height: 120vh;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.container {
+    margin-left: 32vh;
+    margin-top: 35vh;
+    justify-content: center;
+}
+
+.content {
+    width: 1200px;
+    margin-left: -30px;
+    margin-bottom: 85px;
+}
+
+label {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.required {
+    color: red;
+}
+
+h2 {
+    margin-top: 10px;
+    font-size: 32px;
+}
+
+.userInfo {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 16px;
+    margin-left: 975px;
+    margin-top: 10px;
+}
+
+.userInfo span {
+    white-space: nowrap;
+}
+
+.userInfo img {
+    width: 65px;
+    height: 75px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.header {
+    margin-left: -100px;
+    width: 500px;
+    margin-bottom: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 35px; 
+}
+
+.header2 {
+    display: flex;
+    padding: 12px 12px 14px 20px;
+    align-items: center;
+    flex: 1;
+    border-radius: 8px 8px 0 0;
+    background: #D7D5CE;
+    font-size: 22px;
+    padding: 15px;
+}
+
+.payrollCategories {
+    display: flex;
+    height: 181px;
+    padding: 20px;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 0 0 8px 8px;
+    background: #F6F5F2;
+    box-shadow: 2px 5px 5.9px rgba(136, 125, 125, 0.25);
+    margin-bottom: 30px;
+}
+
+.payrollCategory1, .payrollCategory2, .payrollCategory3, .payrollCategory4 {
+    flex: 1;
+    width: 180px;
+    background: transparent;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    height: 150px;
+}
+
+.payrollCategory1, .payrollCategory2, .payrollCategory3 {
+    border-right: 2px solid gray;
+    margin-right: 10px;
+}
+
+#amount {
+    color: black;
+    font-size: 32px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+#pastAmount {
+    color: gray;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+#payDate {
+    color: black;
+    font-size: 32px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.payrollCategory1 div:first-child, .payrollCategory2 div:first-child, 
+.payrollCategory3 div:first-child, .payrollCategory4 div:first-child {
+    font-size: 20px;
+    color: #4B5563;
+}
+
+.middleRow {
+    display: flex;
+    gap: 30px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.attendanceOverview {
+    flex: 1;
+    border-radius: 6px;
+    padding: 15px;
+    box-shadow: 2px 5px 5.9px rgba(136, 125, 125, 0.25);
+    height: 500px;
+    padding: 15px 20px;
+    background: #F6F5F2;
+}
+
+.manpower {
+    flex: 2;
+    background: #F6F5F2;
+    border-radius: 6px;
+    padding: 15px;
+    box-shadow: 2px 5px 5.9px rgba(136, 125, 125, 0.25);
+}
+
+.attendanceOverview p {
+    padding: 6px 0;
+    font-size: 24px;
+}
+
+.categoryTitle {
+    margin-top: 15px;
+    color: #4B5563;
+}
+
+.attendanceOverview h2 {
+    font-size: 27px;
+    margin-bottom: 30px;
+}
+
+.manpowerRow {
+    display: flex;
+    gap: 10px;
+    border-bottom: 2px solid lightgray;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.manpower h2 {
+    font-size: 27px;
+    margin-bottom: 30px;
+}
+
+.companyDetails {
+    flex: 1.5;
+}
+
+.companyDetails strong {
+    display: block;
+}
+
+.companyDetails div {
+    color: #666;
+}
+
+.details {
+    font-size: 16px;
+    text-align: center;
+}
+
+.companyLogo {
+    width: 54px;
+    height: 54px;
+}
+
+.logo {
+    text-align: center;   
+}
+
+.manpower h4 {
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: gray;
+}
+
+.manpowerRow2 {
+    height: 85px;
+}
+
+.count {
+    font-size: 23px;
+    text-align: center;
+}
+
+.companyName {
+    flex: 1;
+}
+
+.manpowerCount{
+    flex: 1;
+}
+
+.address p {
+    font-size: 14px;
+    text-align: justify;
+}
+
+
+.leaveRequests {
+    margin-top: 20px;
+    background: #F6F5F2;
+    border-radius: 6px;
+    padding: 15px 20px;
+    box-shadow: 2px 5px 5.9px rgba(136, 125, 125, 0.25);
+    margin-bottom: 30px;
+}
+
+.leaveRequestsContainer {
+    display: flex;
+}
+
+.leaveRequests h2 {
+    font-size: 27px;
+    margin-bottom: 30px;
+}
+
+.requesterName {
+    flex: 0.5;
+    font-size: 16px;
+    padding: 10px;
+}
+
+.leaveRequest {
+    flex: 2.5;
+    font-size: 16px;
+    flex-wrap: flex;
+    padding: 10px;
+    color: gray;
+    padding-left: 30px;
+}
+
+.time {
+    flex: 0.5;
+    padding: 10px;
+    color: gray;
+    text-align: right;
+    padding-right: 20px;
+}
+
+#employeeName {
+    font-weight: bold;
+}
+
+#num1, #num2, #num3, num4 {
+    text-align: left;
+    padding-left: 0;
+    width: 440px;
+    margin-top: 15px;
+}
+
+#num1, #num2, #num3 {
+    border-bottom: 2px solid lightgray;
+}
+
+.attendanceCategory4 p {
+    text-align: left;
+    padding-left: 0;
+    font-size: 23px;
+    width: 440px;
+}
+
+@media screen and (max-width: 1500px) {
+    body {
+        flex-direction: column;
+        height: auto;
+        padding: 24px;
+        padding-left: 0;
+        padding-top: 0;
+        align-items: stretch;
+    }
+
+    .container {
+        margin: 20px auto 20px;
+        margin-left: 12vh;
+      
+    }
+
+    .head, .row {
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+    }
+
+    .content {
+        width: 90%;
+        max-width: none;
+        margin-left: 10vh;
+    }
+
+    .header {
+        margin-left: 50px;
+        margin-top: 10px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+    }
+
+    .userInfo {
+        margin-left: 12.5vh;
+        margin-right: 5vh;
+    }
+
+    .payrollCategories {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+        align-items: stretch;
+        padding: 18px;
+        height: auto;
+    }
+
+    .payrollCategory1,
+    .payrollCategory2,
+    .payrollCategory3,
+    .payrollCategory4 {
+        width: calc(25% - 13.5px);
+        min-width: 200px;
+        height: auto;
+        box-sizing: border-box;
+    }
+
+    .payrollCategories > :last-child {
+        border-right: none;
+    }
+
+}
+
+@media screen and (max-width: 1200px) {
+    .content {
+        width: 90%;
+    }
+
+    .payrollCategory1,
+    .payrollCategory2,
+    .payrollCategory3,
+    .payrollCategory4 {
+        width: calc(50% - 10px);
+    }
+
+    .payrollCategories > :nth-child(2n) {
+        border-right: none;
+    }
+
+    .middleRow {
+        gap: 20px;
+        align-items: flex-start;
+    }
+
+    .attendanceOverview, .manpower {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    
+}
+
+@media screen and (max-width: 1070px) {
+    
+    .payrollCategories {
+        flex-direction: column;
+        gap: 14px;
+        padding: 12px;
+    }
+
+    .payrollCategory1, .payrollCategory2, .payrollCategory3, .payrollCategory4 {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid rgba(0,0,0,0.06);
+        padding-bottom: 12px;
+    }
+
+    .middleRow {
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .attendanceOverview, .manpower {
+        width: 100%;
+        padding: 14px;
+        height: auto;
+    }
+
+    .leaveRequestsContainer {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .requesterName, .leaveRequest, .time {
+        flex: 1;
+        padding: 8px;
+        text-align: left;
+    }
+
+    #num1, #num2, #num3, #num4, .attendanceCategory4 p {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .content {
+        width: 90%;
+        margin-left: 7vh;
+    }
+
+    .userInfo img {
+        height: 65px;
+        width: 55px;
+    }
+    
+}
+
+@media screen and (max-width: 700px) {
+
+    .header h2 {
+        font-size: 30px;
+    }
+   
+    .userInfo img {
+        height: 50px;
+        width: 40px;
+    }
+
+    .manpowerRow {
+        gap: 20px; 
+    }
+
+    .header {
+        margin-top: 0;
+    }
+
+    .manpowerRow2 {
+        height: 120px;
+    }
+
+    .companyLogo {
+        width: 45px;
+        height: 45px;
+    }
+
+    .details {
+        font-size: 14px;
+    }
+
+    .count{
+        font-size: 20px;
+    }
+    
+    .address p {
+        font-size: 12px;
+    }
+    
+}
+
+@media screen and (max-width: 650px) {
+
+    .content {
+        margin-left: 5vh;
+    }
+
+    .header h2 {
+        font-size: 22px;
+        margin-left: -10px;
+    }
+
+
+    .userInfo {
+        font-size: 12px;
+        margin-left: 2vh;
+        margin-top: 10px;
+    }
+
+    .userInfo img {
+        height: 45px;
+        width: 35px;
+    }
+
+    .companyLogo {
+        width: 40px;
+        height: 40px;
+    }
+
+    .details {
+        font-size: 11px;
+    }
+
+    .count{
+        font-size: 15px;
+    }
+    
+    .address p {
+        font-size: 11px;
+    }
+
+    .payrollCategory1 div:first-child, 
+    .payrollCategory2 div:first-child, 
+    .payrollCategory3 div:first-child, 
+    .payrollCategory4 div:first-child {
+        font-size: 16px;
+    }
+
+    #amount {
+        font-size: 24px;
+    }
+
+    #pastAmount {
+        font-size: 12px;
+    }
+
+    #payDate {
+        font-size: 24px;
+    }
+
+    .attendanceCategory1 p,
+    .attendanceCategory2 p,
+    .attendanceCategory3 p,
+    .attendanceCategory4 p {
+        font-size: 20px;
+    }
+
+    #num1, #num2, #num3, #num4 {
+        font-size: 19px;
+    }
+
+   .manpower h4 {
+        font-size: 14px;
+    }
+    
+    .header2 h3, .attendanceOverview h2, 
+    .manpower h2, .leaveRequests h2 {
+        font-size: 24px;
+    }
+
+    #employeeName {
+        font-size: 15px;
+    }
+
+    #employeeReason {
+        font-size: 15px;
+    }
+  
+    #employeeTime {
+        font-size: 11px;
+    }
+}
+
+
+
+
+
