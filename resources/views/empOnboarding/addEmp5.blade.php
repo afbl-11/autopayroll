@@ -150,15 +150,6 @@
         <button type ="submit" class="confirm">Confirm</button>
     </form> 
   </div>
-  <script>
-    document.getElementById('date-Of-birth').addEventListener('change', function() {
-        const dateOfbirth = new Date(this.value);
-        const date = Date.now() - dateOfbirth.getTime();
-        const ageDate = new Date(date);
-        const age = Math.abs(ageDate.getUTCFullYear() - 1970);
-        document.getElementById('age').value = age;
-    });
- </script>
 </body>
 </html>
 

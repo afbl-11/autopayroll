@@ -22,14 +22,13 @@ body {
 
 .container {
     margin-left: 400px;
-    margin-top: 10px;
+    margin-top: 30vh;
     justify-content: center;
     width: 1100px;
 }
 
 .content {
     width: 950px;
-    margin-left: 65px;
     margin-bottom: 85px;
 }
 
@@ -45,6 +44,7 @@ body {
     justify-content: space-between;
     margin-bottom: 30px;
     flex-wrap: wrap;
+    margin-left: -150px;
 }
 
 .steps {
@@ -165,7 +165,7 @@ h2 {
     font-size: 16px;
     border-radius: 8px;
     cursor: pointer;
-    margin-left: 925px;
+    margin-left: 875px;
     width: 150px;
     height: 47px;
     font-weight: bold;
@@ -218,12 +218,6 @@ input[type=number] {
     }
 }
 
-@media screen and (max-width: 1470px){
-    .next { 
-        margin-left: 875px;
-    }
-}
-
 @media screen and (max-width: 1450px){
     .next { 
         margin-left: 825px;
@@ -260,6 +254,10 @@ input[type=number] {
         flex-direction: column;
         gap: 20px;
         width: 100%;
+    }
+    
+    .steps-div {
+        margin-left: 0;
     }
 
     .otherContactNum {
@@ -360,5 +358,20 @@ input[type=number] {
 @media screen and (max-width: 760px){
     .next { 
         margin-left: 280px;
+    }
+}
+
+@media screen and (max-width: 730px) {
+    .next { 
+        margin-left: 230px;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .container {
+        width: 70%;
+    }
+    .next { 
+        margin-left: 150px;
     }
 }
