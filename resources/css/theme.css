@@ -1,0 +1,84 @@
+:root {
+    --clr-primary: #1F2937;
+    --clr-secondary: #4B5563;
+    --clr-muted: #9CA3AF;
+
+    --clr-background: #FDFCF9;
+    --clr-indigo: #07051A;
+    --clr-yellow: #FFD858;
+    --clr-card-surface: #F6F5F2;
+    --clr-card-inner: #D7D5CE;
+    --clr-red: #BA2A2A;
+    --clr-green: #3CBF6C;
+    --clr-light-green: #6FEA95;
+    --clr-mustard: #F5A623;
+    --clr-light-mustart: #FFB94D;
+
+    --font-logo: 'Quicksand', sans-serif;
+
+}
+
+    @font-face {
+        font-family: 'Helvetica light';
+        src: url('../fonts/helvetica/HelveticaNeueLight.otf');
+        font-weight: 100;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: 'Helvetica Regular';
+        src: url('../fonts/helvetica/HelveticaNeueMedium.otf');
+        font-weight: 300;
+        font-style: normal;
+        font-display: swap;
+    }  @font-face {
+        font-family: 'Helvetica medium';
+        src: url('../fonts/helvetica/HelveticaNeueMedium.otf');
+        font-weight: 300;
+        font-style: normal;
+        font-display: swap;
+    }
+    @font-face {
+            font-family: 'Helvetica black';
+            src: url('../fonts/helvetica/HelveticaNeueBlack.otf');
+            font-weight: 500;
+            font-style: normal;
+            font-display: swap;
+        }
+    @font-face {
+            font-family: 'Quicksand';
+            src: url('../fonts/quicksand/Quicksand_Bold.otf');
+            font-weight: 900;
+            font-style: normal;
+            font-display: swap;
+        }
+
+    body {
+        font-size: 16px;
+        line-height: 1.6;
+        font-family: system-ui, 'Helvetica Regular';
+        color: var(--clr-primary);
+        background: var(--clr-background);
+    }
+
+    h1 { font-size: 57.33px; line-height: 1.1; margin-bottom: 0.5em; }
+    h2 { font-size: 47.78px; line-height: 1.2; margin-bottom: 0.5em; }
+    h3 { font-size: 39.81px; line-height: 1.25; margin-bottom: 0.5em; }
+    h4 { font-size: 33.18px; line-height: 1.3; margin-bottom: 0.5em; }
+    h5 { font-size: 27.65px; line-height: 1.35; margin-bottom: 0.5em; }
+    h6 { font-size: 23.04px; line-height: 1.4; margin-bottom: 0.5em; }
+
+    p     { font-size: 16px; line-height: 1.6; margin-bottom: 1em; }
+    small { font-size: 13.33px; line-height: 1.5; }
+
+    #logo {
+        font-family: var(--font-logo);
+    }
+
+
+
+
+
+
+
