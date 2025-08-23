@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('payrolls', function (Blueprint $table) {
             $table->integer('payroll_id')->primary();
 
-            $table->integer('employee_id');
+            $table->string('employee_id');
             $table->foreign('employee_id')
                 ->references('employee_id')
                 ->on('employees')
@@ -26,7 +26,7 @@ return new class extends Migration
 
             $table->integer('total_work_days');
             $table->decimal('rate', 10 ,2);
-            
+
             // salary
             $table->decimal('gross_salary', 10, 2);
             $table->decimal('net_pay', 10, 2);
@@ -37,7 +37,7 @@ return new class extends Migration
             $table->decimal('sss_deductions', 10, 2);
             $table->decimal('late_deductions', 10, 2)->nullable();
             $table->decimal('cash_bond', 10, 2)->nullable();
-            
+
 
             // additional pay
             $table->decimal('holiday', 10, 2)->nullable();

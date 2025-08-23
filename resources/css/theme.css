@@ -1,13 +1,41 @@
+/*==========================
+        How to use
+============================
+This is a global style, di mo na need i specify
+every common styles sa ibang page kagaya ng font
+sizes or font family etc.
+
+andito din ibang styles kagaya ng buttons and all shts.
+
+@vite(['resources/css/onboarding/admin-onboarding.css', 'resources/js/password-validation.js', 'resources/css/theme.css'])
+
+add mo lang 'resoures/css/theme.css every blade file mo
+*/
+
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 :root {
     --clr-primary: #1F2937;
     --clr-secondary: #4B5563;
     --clr-muted: #9CA3AF;
 
+    /*backgrounds*/
     --clr-background: #FDFCF9;
     --clr-indigo: #07051A;
-    --clr-yellow: #FFD858;
+
+    /*card colors*/
     --clr-card-surface: #F6F5F2;
     --clr-card-inner: #D7D5CE;
+
+
+    /*status colors*/
+    --clr-yellow: #FFD858;
     --clr-red: #BA2A2A;
     --clr-green: #3CBF6C;
     --clr-light-green: #6FEA95;
@@ -28,14 +56,14 @@
 
     @font-face {
         font-family: 'Helvetica Regular';
-        src: url('../fonts/helvetica/HelveticaNeueMedium.otf');
+        src: url('../fonts/helvetica/HelveticaNeueRoman.otf');
         font-weight: 300;
         font-style: normal;
         font-display: swap;
     }  @font-face {
         font-family: 'Helvetica medium';
         src: url('../fonts/helvetica/HelveticaNeueMedium.otf');
-        font-weight: 300;
+        font-weight: 900;
         font-style: normal;
         font-display: swap;
     }
@@ -69,12 +97,47 @@
     h5 { font-size: 27.65px; line-height: 1.35; margin-bottom: 0.5em; }
     h6 { font-size: 23.04px; line-height: 1.4; margin-bottom: 0.5em; }
 
+    h1,h2,h3,h4,h5,h6 {
+        font-family: 'Helvetica medium', sans-serif;
+        letter-spacing: 1.3px
+    }
+
     p     { font-size: 16px; line-height: 1.6; margin-bottom: 1em; }
-    small { font-size: 13.33px; line-height: 1.5; }
+    small { font-size: 13.33px; line-height: 1.5; letter-spacing: 1.6px; }
+
+    input {font-family: "Helvetica Regular", sans-serif; line-height: 1.6; letter-spacing: 1.6px;}
 
     #logo {
         font-family: var(--font-logo);
     }
+
+    .button-filled {
+        background: var(--clr-yellow);
+        height: 47px;
+        width: 150px;
+        outline: none;
+        border: none;
+        font-family: 'Helvetica medium', sans-serif;
+        letter-spacing: 1.5px;
+        font-size: 16px;
+        border-radius: 8px;
+
+    }
+
+    .button-ghost {
+        background: none;
+        height: 47px;
+        width: 150px;
+        outline: none;
+        border: 1px solid var(--clr-yellow);
+        font-family: 'Helvetica medium', sans-serif;
+        letter-spacing: 1.5px;
+        font-size: 16px;
+        border-radius: 8px;
+    }
+
+/*TODO: add proper helvetica regular*/
+/*    TODO: global themes, auth login and emp regis*/
 
 
 

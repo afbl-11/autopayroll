@@ -15,16 +15,16 @@ return new class extends Migration
         Schema::create('leave_request', function (Blueprint $table) {
             $table->integer('leave_request_id')->primary();
 
-            $table->integer('employee_id');
+            $table->string('employee_id');
             $table->foreign('employee_id')
                 ->references('employee_id')
                 ->on('employees')
                 ->onDelete('cascade');
 
-            $table->integer('approver_id');
+            $table->string('approver_id');
             $table->foreign('approver_id')
                 ->references('admin_id')
-                ->on('admin')
+                ->on('admins')
                 ->onDelete('cascade');
 
             $table->string('leave_type');

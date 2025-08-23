@@ -15,6 +15,17 @@ class Admin extends Model
         'first_name',
         'last_name',
         'email',
+        'role',
         'password',
+        'tin',
+        'company_name',
+        'country',
+        'region',
+        'province',
+        'zip',
+        'city',
+        'barangay',
+        'street',
+        'house_number',
     ];
 }

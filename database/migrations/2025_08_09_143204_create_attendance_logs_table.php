@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('attendance_logs', function (Blueprint $table) {
             $table->integer('log_id')->primary();
 
-            $table->integer('employee_id');
+            $table->string('employee_id');
             $table->foreign('employee_id')
                 ->references('employee_id')
                 ->on('employees')
@@ -26,7 +26,7 @@ return new class extends Migration
 
             $table->decimal('clock_in_latitude', 10, 8);
             $table->decimal('clock_in_longitude', 11, 8);
-            
+
             $table->timestamps();
 
         });

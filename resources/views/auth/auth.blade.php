@@ -12,7 +12,7 @@
     </div>
   <div class ="container">
     <h1 class ="header">Welcome Back!</h1>
-    <form class="form">
+    <form class="form" action="{{route('admin.register')}}" method="POST" >
         <div class="l1">
             <label for= "email">Email or Username </label> <br>
             <input type="text" id="email" required />
@@ -21,11 +21,11 @@
             <label for="password">Password </label> <br>
             <div class = "wrapper">
             <input type="password" id="password" required />
-            <span class="toggleEye" onclick="togglePassword()">👁</span> <br> 
+            <span class="toggleEye" onclick="togglePassword()">👁</span> <br>
             </div>
             <a class = "forgot" href="./authverify.blade.php">Forgot Password?</a>
         </div>
-        <button type ="submit" class="signIn">Sign In</button>
+        <button type ="submit" class="signIn" >Sign In</button>
     </form>
 
   </div>
@@ -36,7 +36,7 @@
 
     if (passwordInput.type === "password") {
         passwordInput.type = "text";
-        icon.textContent = "⌣"; 
+        icon.textContent = "⌣";
     } else {
         passwordInput.type = "password";
         icon.textContent = "👁";
