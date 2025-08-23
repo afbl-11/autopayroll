@@ -7,49 +7,56 @@
          @vite(['resources/css/empOnboarding/addEmp2.css', 'resources/js/app.js'])
 </head>
 <body>
-  @include('layout.sidebar')
+  @include('layout.sidebar', ['step' => 2])
   <div class ="container">
     <div class = "header"><a href=""><img src="{{ asset('images/left-arrow.png') }}"></a><h2>Add Employee</h2></div>
-    <div class="steps-div">
-        <div class="steps"><div class="icon"><img src="{{ asset('images/verified.png') }}"></div><div class="step-no">Step 1</div><div class="desc">Basic Information</div></div>
-        <div class="lines"><h1>____</h1></div>
-        <div class="steps"><div class="icon"><img src="{{ asset('images/verified.png') }}"></div><div class="step-no">Step 2</div><div class="desc">Contact & Address</div></div>
-        <div class="lines"><h1>____</h1></div>
-        <div class="steps"><div class="icon"><img src="{{ asset('images/notVerified.png') }}"></div><div class="step-no">Step 3</div><div class="desc">Employment Overview</div></div>
-        <div class="line"><h1>____</h1></div>
-        <div class="steps"><div class="icon"><img src="{{ asset('images/notVerified.png') }}"></div><div class="step-no">Step 4</div><div class="desc">Account Setup</div></div>
-        <div class="line"><h1>____</h1></div>
-        <div class="steps"><div class="icon"><img src="{{ asset('images/notVerified.png') }}"></div><div class="step-no">Step 5</div><div class="desc">Review Details</div></div>
-    </div>
-    <form class="form" action="" method="GET">
+    @include('layout.steps')
+    <form class="form" action="" method="POST">
     <div class = "content">
-        <div class="residentialAddress">
+        <div class="residentialAddress formGroup">
                 <label for= "fn">Residential Address <span class="required">*</span></label><br>
-                <input type="text" id="residentialAddress" name="residentialAddress" required />
+                <input type="text" id="residentialAddress" name="residentialAddress" placeholder="Residential Address" required />
             </div>
 
-        <div class="addressId">
+        <div class="addressId formGroup">
                 <label for= "fn">Address on ID <span class="required">*</span></label><br>
-                <input type="text" id="addressId" name="addressId" required />
+                <input type="text" id="addressId" name="addressId" placeholder="Address on ID" required />
             </div>
 
         <div class = "row">
-            <div class="personalContactNum">
+            <div class="personalContactNum formGroup">
                 <label for= "personalContactNum">Personal Contact Number <span class="required">*</span></label><br>
-                <input type="number" id="personalContactNum" name="personalContactNum" required />
+                <input type="number" id="personalContactNum" name="personalContactNum" placeholder="Personal Contact Number" required />
             </div>
-            <div class="email">
+            <div class="email formGroup">
                 <label for="email">Email <span class="required">*</span></label> <br>
-                <input type="email" id="email" name="email" required />
+                <input type="email" id="email" name="email" placeholder="Email" required />
             </div>    
         </div>
-        <div class="otherContactNum">
+        <div class="otherContactNum formGroup">
                 <label for= "otherContactNum">Other Contact </label><br>
-                <input type="number" id="otherContactNum" name="otherContactNum" placeholder="Optional" />
+                <input type="number" id="otherContactNum" name="otherContactNum" placeholder="Other Contact Number (Optional)" />
             </div>
     </div>
         <button type ="submit" class="next">Next</button>
     </form> 
   </div>
+<script>
+    const currentStep = 2;
+    const steps= document.querySelectorAll('.steps');
+    const lines = document.querySelectorAll('.line');
+    steps.forEach(step => {
+        const stepNum = parseInt(step.dataset.step);
+        if (stepNum <= currentStep) {
+            step.querySelector('img').src = "{{ asset('images/verified.png') }}";
+        }
+    });
+    lines.forEach(line => {
+        const lineNum = parseInt(line.dataset.step);
+        if (lineNum <= currentStep) {
+            line.classList.add('active-line');
+        }
+    });
+</script>
 </body>
 </html>

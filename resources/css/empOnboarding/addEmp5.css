@@ -7,6 +7,7 @@ body {
     display: flex;
     align-items: center;
     height: 275vh;
+    overflow-x: hidden;
 }
 
 .form {
@@ -24,7 +25,7 @@ body {
     margin-left: 400px;
     margin-top: 85vh;
     justify-content: center;
-    width: 1100px;
+    width: 1050px;
 }
 
 .content {
@@ -32,84 +33,11 @@ body {
     margin-bottom: 20px;
 }
 
-.firstName, .middleName, .lastName, .suffix, 
-.place-Of-birth, .date-Of-birth, .age, .gender, 
-.marital-status, .blood-type, .residentialAddress, 
-.addressId, .personalContactNum, .email, .otherContactNum,
-.companyDesignation, .addCompany, .emp-type, .startingDate, 
-.jobPosition, .uploadDocuments, .browse, .email, .empId, .password {
+.formGroup, .formGroupLow {
     display: flex;
     flex-direction: column;
     flex: 1;
     margin-bottom: 15px;
-}
-
-.steps-div {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 30px;
-    flex-wrap: wrap;
-    margin-left: -150px;
-}
-
-.steps {
-    padding: 10px;
-    font-size: 14px;
-    color: #888;
-    text-align: center;
-    flex: 1;
-    min-width: 120px;
-}
-
-.steps .icon {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto 10px auto;
-   
-}
-
-.steps .icon img {
-    width: 100%;
-    height: auto;
-}
-
-.steps .desc {
-    color: #1F2937;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 150%;
-    letter-spacing: 1.6px;
-    margin-bottom: 10px;
-}
-
-.steps .step-no {
-    color: #4B5563;
-    text-align: center;
-    font-size: 12px;
-    font-style: normal;
-    line-height: 160%;
-    letter-spacing: 1.333px;
-}
-
-.line {
-    font-weight: bold;
-    color:#888;
-    font-weight: 300;
-}
-
-.lines {
-    font-weight: bold;
-    color:#3CBF6C;
-    margin-top: 25px;
-    
-}
-
-.line, .lines {
-    margin: 25px 5px;
 }
 
 label {
@@ -135,7 +63,7 @@ input {
     width: 440px;
 }
 
-.emp-type{
+.emp-type {
     width: 180px;
 }
 
@@ -216,7 +144,7 @@ h3 {
     }
 }
 
-@media screen and (max-width: 1400px){
+@media screen and (max-width: 1400px), screen and (max-height: 670px){
 
     .header {
         margin-top: 0px;
@@ -229,10 +157,6 @@ h3 {
         padding-left: 0;
         padding-top: 0;
         align-items: flex-start;
-    }
-
-    .steps-div {
-        margin-left: 0;
     }
 
     .container {
@@ -256,10 +180,16 @@ h3 {
         width: 100%;
     }
 
-    .blood-type, .blood-type, .otherContactNum, .uploadDocuments, .password, .emp-type {
+    .formGroupLow {
         width: 100%;
     }
 
+}
+
+@media screen and (max-height: 670px) {
+    .content {
+        width: 90%;
+    }
 }
 
 @media screen and (max-width: 1370px){
