@@ -1,0 +1,70 @@
+.container {
+    display: block;
+    width: 100%;
+    min-height: 100vh;
+    padding-bottom: 50px;
+    position: relative;
+    justify-content: center;
+    justify-items: center;
+}
+.logo {
+    margin: 22px 0px 40px 37px;
+}
+.form-container {
+    display: flex;
+    width: inherit;
+    height: inherit;
+    justify-content: center;
+    justify-items: center;
+}
+.logo span {
+    color: var(--clr-yellow);
+}
+.field-row {
+    display: flex;
+    gap: 76px;
+    margin-bottom: 30px;
+    width: 894px;
+}
+.field-input label{
+    display: block;
+    margin-bottom: 5px;
+    color: var(--clr-secondary);
+}
+.field-input {
+    flex: 1;
+}
+.field-input.auto {
+    flex: 0 0 auto;
+    width: 409px;
+}
+.field-input input, select {
+    width: 100%;
+    height: 47px;
+    border: 1px solid var(--clr-primary);
+    border-radius: 12px;
+    background: none;
+    outline: none;
+    padding: 10px;
+    align-items: center;
+    align-self: center;
+    font-size: 16px;
+}
+
+.field-input input:focus, select:focus {
+    border: 1px solid var(--clr-yellow);
+}
+
+button {
+float: right;
+}
+
+#password-rules {
+    list-style: none;
+    padding: 0;
+    margin: 5px 0 0;
+    font-size: 0.9rem;
+}
+#password-rules li {
+    margin-bottom: 3px;
+}
