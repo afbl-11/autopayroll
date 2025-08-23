@@ -1,14 +1,17 @@
-<!DOCTYPE html>
+d<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AutoPayroll Admin Module</title>
          @vite(['resources/css/admin/admin.css', 'resources/js/app.js'])
+ 
 </head>
+@include('layout.sidebarAdmin')
 <body>
-  @include('layout.sidebarAdmin')
+  
   <div class ="container">
+    
     <div class = "header">
         <h2>Dashboard</h2>
         <div class="userInfo">
@@ -23,21 +26,21 @@
            <h3>Payroll Summary</h3>
            </div>
             <div class="payrollCategories">
-                <div class="payrollCategory1">
+                <div class="payrollCategory1 payrollCategory">
                     <div>Paid Employees</div>
                     <p id="amount">37</p>
                 </div>
-                <div class="payrollCategory2">
+                <div class="payrollCategory2 payrollCategory">
                     <div>Total Payroll</div>
                     <p id="amount">100,000.00</p>
                     <p id="pastAmount">98,765.00 last month</p>
                 </div>
-                <div class="payrollCategory3">
+                <div class="payrollCategory3 payrollCategory">
                     <div>Total Deductions</div>
                      <p id="amount">33,876.00</p>
                      <p id="pastAmount">36,564.00 last month</p>
                 </div>
-                <div class="payrollCategory4">
+                <div class="payrollCategory4 payrollCategory">
                     <div>Upcoming Pay Date</div>
                     <p id="payDate">June 30, 2025</p>
                 </div>
@@ -47,19 +50,19 @@
         <div class = "middleRow">
             <div class="attendanceOverview">
                 <h2>Attendance Overview</h2>
-                <div class = "attendanceCategory1">
+                <div class = "attendanceCategory1 attendanceCategory">
                     <p class = "categoryTitle">Number of Absences</p>
                     <p id="num1">10</p>
                 </div>
-                <div class = "attendanceCategory2">
+                <div class = "attendanceCategory2 attendanceCategory">
                     <p class = "categoryTitle">Early Clock-ins</p>
                     <p id="num2">27</p>
                 </div>
-                <div class = "attendanceCategory3">
+                <div class = "attendanceCategory3 attendanceCategory">
                     <p class = "categoryTitle">Late Clock-ins</p>
                     <p id="num3">20</p>
                 </div>
-                <div class = "attendanceCategory4">
+                <div class = "attendanceCategory4 attendanceCategory">
                     <p class = "categoryTitle">Overtimes Logged</p>
                     <p id="num4">15</p>
                 </div>
@@ -184,6 +187,7 @@
         </div>
   </div>
 </div>
+
 </body>
 </html>
 
