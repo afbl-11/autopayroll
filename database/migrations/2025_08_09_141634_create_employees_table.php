@@ -12,12 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('employees', function (Blueprint $table) {
-            $table->integer('employee_id')->primary(); //birthdate-001 for id
-            
+            $table->string('employee_id')->primary(); //birthdate-001 for id
+
             $table->integer('company_id'); //fk
             $table->foreign('company_id')
                 ->references('company_id')
-                ->on('companies') 
+                ->on('companies')
                 ->onDelete('cascade');
 
             $table->integer('schedule_id'); //fk
@@ -45,7 +45,7 @@ return new class extends Migration
             $table->string('residential_address');
             $table->string('bank_account_number');
             $table->string('sss_number');
-            
+
             $table->string('phil_health_number');
             $table->string('pag_ibig_number');
             $table->string('tin_number');
