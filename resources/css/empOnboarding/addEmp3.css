@@ -7,6 +7,7 @@ body {
     display: flex;
     align-items: center;
     height: 100vh;
+    overflow-x: hidden;
 }
 
 .form {
@@ -78,7 +79,7 @@ body {
 .container {
     margin-left: 400px;
     justify-content: center;
-    width: 1100px;
+    width: 1050px;
     margin-top: 30vh;
 }
 
@@ -87,7 +88,7 @@ body {
     margin-bottom: 85px;
 }
 
-.companyDesignation, .addCompany, .emp-type, .startingDate, .jobPosition, .uploadDocuments, .browse {
+.formGroup {
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -157,74 +158,6 @@ body {
 
 .browse:hover {
     background-color: #e0ded6;
-}
-
-.steps-div {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 30px;
-    flex-wrap: wrap;
-    margin-left: -150px;
-}
-
-.steps {
-    padding: 10px;
-    font-size: 14px;
-    color: #888;
-    text-align: center;
-    flex: 1;
-    min-width: 120px;
-}
-
-.steps .icon {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto 10px auto;
-   
-}
-
-.steps .icon img {
-    width: 100%;
-    height: auto;
-}
-
-.steps .desc {
-    color: #1F2937;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 150%;
-    letter-spacing: 1.6px;
-    margin-bottom: 10px;
-}
-
-.steps .step-no {
-    color: #4B5563;
-    text-align: center;
-    font-size: 12px;
-    font-style: normal;
-    line-height: 160%;
-    letter-spacing: 1.333px;
-}
-
-.line {
-    font-weight: bold;
-    color:#888;
-    font-weight: 300;
-}
-
-.lines {
-    font-weight: bold;
-    color:#3CBF6C;
-    margin-top: 25px;
-    
-}
-
-.line, .lines {
-    margin: 25px 5px;
 }
 
 label {
@@ -333,8 +266,8 @@ h2 {
     }
 }
 
-@media screen and (max-width: 1400px){
-
+@media screen and (max-width: 1400px), screen and (max-height: 670px){
+ 
     .header {
         margin-top: 0px;
     }
@@ -352,10 +285,6 @@ h2 {
         width: 75%;
         margin-left: 290px;
         margin-top: 30px;
-    }
-
-    .steps-div {
-        margin-left: 0;
     }
 
     .header {
@@ -377,6 +306,16 @@ h2 {
         margin-left: 800px;
     }
 
+}
+
+@media screen and (max-height: 670px) {
+    .next {
+        margin-left: 925px;
+    }
+
+    .content {
+        width: 90%;
+    }
 }
 
 @media screen and (max-width: 1370px){
@@ -467,6 +406,13 @@ h2 {
 @media screen and (max-width: 760px){
     .next { 
         margin-left: 280px;
+    }
+
+    .emp-buttons button {
+        font-size: 11px;
+        width: 120px;
+        height: 45px;
+        margin-right: 10px;
     }
 }
 
