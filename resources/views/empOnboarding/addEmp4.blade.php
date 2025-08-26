@@ -10,33 +10,23 @@
   @include('layout.sidebar')
   <div class ="container">
     <div class = "header"><a href=""><img src="{{ asset('images/left-arrow.png') }}"></a><h2>Add Employee</h2></div>
-    <div class="steps-div">
-        <div class="steps"><div class="icon"><img src="{{ asset('images/verified.png') }}"></div><div class="step-no">Step 1</div><div class="desc">Basic Information</div></div>
-        <div class="lines"><h1>____</h1></div>
-        <div class="steps"><div class="icon"><img src="{{ asset('images/verified.png') }}"></div><div class="step-no">Step 2</div><div class="desc">Contact & Address</div></div>
-        <div class="lines"><h1>____</h1></div>
-        <div class="steps"><div class="icon"><img src="{{ asset('images/verified.png') }}"></div><div class="step-no">Step 3</div><div class="desc">Employment Overview</div></div>
-        <div class="lines"><h1>____</h1></div>
-        <div class="steps"><div class="icon"><img src="{{ asset('images/verified.png') }}"></div><div class="step-no">Step 4</div><div class="desc">Account Setup</div></div>
-        <div class="lines"><h1>____</h1></div>
-        <div class="steps"><div class="icon"><img src="{{ asset('images/notVerified.png') }}"></div><div class="step-no">Step 5</div><div class="desc">Review Details</div></div>
-    </div>
-    <form class="form" action="" method="GET">
+    @include('layout.steps')
+    <form class="form" action="" method="POST">
     <div class = "content">
-        <div class="email">
+        <div class="email formGroup">
                 <label for="email">Email <span class="required">*</span></label> <br>
-                <input type="email" id="email" required />
+                <input type="email" id="email" placeholder="Email" required />
         </div>
 
-        <div class="empId">
+        <div class="empId formGroup">
                 <label for= "fn">Employee Identification Number </label><br>
-                <input type="number" id="empId" name="empId" required />
+                <input type="number" id="empId" name="empId" placeholder="Employee ID Number" required />
         </div>
 
-        <div class="password">
+        <div class="password formGroup">
             <label for="password">Password </label> <br>
             <div class = "wrapper">
-            <input type="password" id="password" required />
+            <input type="password" id="password" placeholder="Password" required />
             <span class="toggleEye" onclick="togglePassword()">👁</span> <br> 
             </div>
         </div>
@@ -56,8 +46,24 @@
     } else {
         passwordInput.type = "password";
         icon.textContent = "👁";
+        }
     }
-}
+
+    const currentStep = 4;
+    const steps= document.querySelectorAll('.steps');
+    const lines = document.querySelectorAll('.line');
+    steps.forEach(step => {
+        const stepNum = parseInt(step.dataset.step);
+        if (stepNum <= currentStep) {
+            step.querySelector('img').src = "{{ asset('images/verified.png') }}";
+        }
+    });
+    lines.forEach(line => {
+        const lineNum = parseInt(line.dataset.step);
+        if (lineNum <= currentStep) {
+            line.classList.add('active-line');
+        }
+    });
  </script>
 </body>
 </html>

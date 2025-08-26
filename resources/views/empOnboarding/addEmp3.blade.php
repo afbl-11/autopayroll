@@ -10,21 +10,11 @@
   @include('layout.sidebar')
   <div class ="container">
     <div class = "header"><a href=""><img src="{{ asset('images/left-arrow.png') }}"></a><h2>Add Employee</h2></div>
-    <div class="steps-div">
-        <div class="steps"><div class="icon"><img src="{{ asset('images/verified.png') }}"></div><div class="step-no">Step 1</div><div class="desc">Basic Information</div></div>
-        <div class="lines"><h1>____</h1></div>
-        <div class="steps"><div class="icon"><img src="{{ asset('images/verified.png') }}"></div><div class="step-no">Step 2</div><div class="desc">Contact & Address</div></div>
-        <div class="lines"><h1>____</h1></div>
-        <div class="steps"><div class="icon"><img src="{{ asset('images/verified.png') }}"></div><div class="step-no">Step 3</div><div class="desc">Employment Overview</div></div>
-        <div class="lines"><h1>____</h1></div>
-        <div class="steps"><div class="icon"><img src="{{ asset('images/notVerified.png') }}"></div><div class="step-no">Step 4</div><div class="desc">Account Setup</div></div>
-        <div class="line"><h1>____</h1></div>
-        <div class="steps"><div class="icon"><img src="{{ asset('images/notVerified.png') }}"></div><div class="step-no">Step 5</div><div class="desc">Review Details</div></div> 
-    </div>
-    <form class="form" action="" method="GET">
+    @include('layout.steps')
+    <form class="form" action="" method="POST">
     <div class = "content">
         <div class="head">
-            <div class="companyDesignation">
+            <div class="companyDesignation formGroup">
                 <label for= "companyDesignation">Company Designation <span class="required">*</span></label><br>
                 <select name="companyDesignation" id="companyDesignation" required />
                     <option value="c1">Vships Services Oceania Inc.</option>
@@ -39,11 +29,11 @@
                 </select>
             </div>
             <div class="wrapper">
-            <button class="addCompany" onclick ="">Add Company</button> 
+            <button class="addCompany formGroup" onclick ="">Add Company</button> 
             </div>
         </div>
         
-        <div class="emp-type">
+        <div class="emp-type formGroup">
             <label for= "emp-type">Employment Type <span class="required">*</span></label><br>
             <div class="emp-buttons">
             <button type="button" class="type">Fulltime</button>
@@ -53,23 +43,23 @@
         </div>
         
         <div class = "row">
-            <div class="startingDate">
+            <div class="startingDate formGroup">
                 <label for= "startingDate">Starting Date <span class="required">*</span></label><br>
                 <input type="date" id="startingDate" name="startingDate" required />
             </div>
 
-            <div class="jobPosition">
+            <div class="jobPosition formGroup">
                 <label for="jobPosition">Job Position <span class="required">*</span></label><br>
-                <input type="text" id="jobPosition" name="jobPosition" required />
+                <input type="text" id="jobPosition" name="jobPosition" placeholder="Job Position" required />
             </div>    
         </div>
         <div class="row2">
-            <div class = "uploadDocuments">
+            <div class = "uploadDocuments formGroup">
                 <label for="uploadDocuments">Upload Documents <span class="required">*</span></label><br>
                 <input type="text" id="uploadDocuments" name="uploadDocuments" readonly />
             </div>
             <div class = "wrapper2">
-            <button type="button" class="browse">Browse</button>
+            <button type="button" class="browse formGroup">Browse</button>
             </div>
         </div>
         </div>
@@ -114,6 +104,22 @@
         if (hiddenFileInput.files.length > 0) {
             const fileName = hiddenFileInput.files[0].name;
             uploadInput.value = fileName;
+        }
+    });
+
+    const currentStep = 3;
+    const steps= document.querySelectorAll('.steps');
+    const lines = document.querySelectorAll('.line');
+    steps.forEach(step => {
+        const stepNum = parseInt(step.dataset.step);
+        if (stepNum <= currentStep) {
+            step.querySelector('img').src = "{{ asset('images/verified.png') }}";
+        }
+    });
+    lines.forEach(line => {
+        const lineNum = parseInt(line.dataset.step);
+        if (lineNum <= currentStep) {
+            line.classList.add('active-line');
         }
     });
  </script>
