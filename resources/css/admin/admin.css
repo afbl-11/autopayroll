@@ -7,12 +7,7 @@ body {
     display: flex;
     align-items: center;
     height: 120vh;
-}
-
-.form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    overflow-x: hidden;
 }
 
 .container {
@@ -25,15 +20,6 @@ body {
     width: 1200px;
     margin-left: -30px;
     margin-bottom: 85px;
-}
-
-label {
-    font-size: 14px;
-    margin-bottom: 5px;
-}
-
-.required {
-    color: red;
 }
 
 h2 {
@@ -95,7 +81,7 @@ h2 {
     margin-bottom: 30px;
 }
 
-.payrollCategory1, .payrollCategory2, .payrollCategory3, .payrollCategory4 {
+.payrollCategory {
     flex: 1;
     width: 180px;
     background: transparent;
@@ -106,7 +92,9 @@ h2 {
     height: 150px;
 }
 
-.payrollCategory1, .payrollCategory2, .payrollCategory3 {
+.payrollCategory1, 
+.payrollCategory2, 
+.payrollCategory3 {
     border-right: 2px solid gray;
     margin-right: 10px;
 }
@@ -132,8 +120,7 @@ h2 {
     margin-top: 10px;
 }
 
-.payrollCategory1 div:first-child, .payrollCategory2 div:first-child, 
-.payrollCategory3 div:first-child, .payrollCategory4 div:first-child {
+.payrollCategory div:first-child {
     font-size: 20px;
     color: #4B5563;
 }
@@ -160,6 +147,7 @@ h2 {
     background: #F6F5F2;
     border-radius: 6px;
     padding: 15px;
+    height: 500px;
     box-shadow: 2px 5px 5.9px rgba(136, 125, 125, 0.25);
 }
 
@@ -311,7 +299,7 @@ h2 {
     width: 440px;
 }
 
-@media screen and (max-width: 1500px) {
+@media screen and (max-width: 1500px), screen and (max-height: 700px) {
     body {
         flex-direction: column;
         height: auto;
@@ -322,9 +310,8 @@ h2 {
     }
 
     .container {
-        margin: 20px auto 20px;
+        margin: 20px auto;
         margin-left: 12vh;
-      
     }
 
     .head, .row {
@@ -335,7 +322,6 @@ h2 {
 
     .content {
         width: 90%;
-        max-width: none;
         margin-left: 10vh;
     }
 
@@ -354,6 +340,10 @@ h2 {
         margin-right: 5vh;
     }
 
+    .manpowerRow2 {
+        height: 95px;
+    }
+
     .payrollCategories {
         display: flex;
         flex-wrap: wrap;
@@ -363,10 +353,7 @@ h2 {
         height: auto;
     }
 
-    .payrollCategory1,
-    .payrollCategory2,
-    .payrollCategory3,
-    .payrollCategory4 {
+    .payrollCategory {
         width: calc(25% - 13.5px);
         min-width: 200px;
         height: auto;
@@ -377,6 +364,10 @@ h2 {
         border-right: none;
     }
 
+    .address p {
+        font-size: 11px;
+    }
+
 }
 
 @media screen and (max-width: 1200px) {
@@ -384,10 +375,7 @@ h2 {
         width: 90%;
     }
 
-    .payrollCategory1,
-    .payrollCategory2,
-    .payrollCategory3,
-    .payrollCategory4 {
+    .payrollCategory {
         width: calc(50% - 10px);
     }
 
@@ -416,7 +404,7 @@ h2 {
         padding: 12px;
     }
 
-    .payrollCategory1, .payrollCategory2, .payrollCategory3, .payrollCategory4 {
+    .payrollCategory {
         width: 100%;
         border-right: none;
         border-bottom: 1px solid rgba(0,0,0,0.06);
@@ -460,6 +448,7 @@ h2 {
         height: 65px;
         width: 55px;
     }
+
     
 }
 
@@ -483,7 +472,7 @@ h2 {
     }
 
     .manpowerRow2 {
-        height: 120px;
+        height: 130px;
     }
 
     .companyLogo {
@@ -499,16 +488,12 @@ h2 {
         font-size: 20px;
     }
     
-    .address p {
-        font-size: 12px;
-    }
-    
 }
 
 @media screen and (max-width: 650px) {
 
     .content {
-        margin-left: 5vh;
+        margin-left: 6vh;
     }
 
     .header h2 {
@@ -545,10 +530,7 @@ h2 {
         font-size: 11px;
     }
 
-    .payrollCategory1 div:first-child, 
-    .payrollCategory2 div:first-child, 
-    .payrollCategory3 div:first-child, 
-    .payrollCategory4 div:first-child {
+    .payrollCategory div:first-child {
         font-size: 16px;
     }
 
@@ -564,10 +546,7 @@ h2 {
         font-size: 24px;
     }
 
-    .attendanceCategory1 p,
-    .attendanceCategory2 p,
-    .attendanceCategory3 p,
-    .attendanceCategory4 p {
+    .attendanceCategory p {
         font-size: 20px;
     }
 
@@ -596,6 +575,62 @@ h2 {
         font-size: 11px;
     }
 }
+
+@media screen and (max-height: 700px) {
+    .container {
+        margin-left: 110px;
+    }
+
+    .userInfo {
+        margin: auto;
+        justify-content: right;
+        width: 75%;
+        padding-top: 10px;
+    }
+
+    .content {
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+    
+}
+
+@media screen and (max-height: 700px) and (max-width: 1000px) {
+    .header {
+        width: 90%;
+    }
+}
+
+@media screen and (max-height: 700px) and (max-width: 750px) {
+    .content {
+        width: 80%;
+    }
+    .header {
+        padding-right: 10px;
+    }
+    .address p {
+        font-size: 10.5px;
+    }
+    
+    .manpowerRow2 {
+        height: 180px; 
+    }
+
+    .manpowerRow2:first-child {
+        height: 150px;
+    }
+}
+
+@media screen and (max-height: 700px) and (max-width: 650px) {
+    .header {
+        width: 80%;
+    }
+    .content {
+        width: 70%;
+    }
+}
+
+
 
 
 
