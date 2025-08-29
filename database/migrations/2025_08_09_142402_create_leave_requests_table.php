@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('leave_request', function (Blueprint $table) {
-            $table->integer('leave_request_id')->primary();
+            $table->string('leave_request_id')->primary();
 
             $table->string('employee_id');
             $table->foreign('employee_id')

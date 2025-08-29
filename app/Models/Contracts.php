@@ -8,7 +8,7 @@ class Contracts extends Model
 {
     protected $primaryKey = 'contract_id';
     public $incrementing = false;
-    protected $keyType = 'integer';
+    protected $keyType = 'string';
 
     protected $fillable = [
         'contact_id',

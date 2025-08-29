@@ -8,7 +8,7 @@ class Payroll extends Model
 {
     protected $primaryKey = 'payroll_id';
     public $incrementing = false;
-    protected $keyType = 'integer';
+    protected $keyType = 'string';
 
     protected $fillable = [
         'employee_id',

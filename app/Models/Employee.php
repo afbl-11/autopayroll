@@ -8,7 +8,7 @@ class Employee extends Model
 {
     protected $primaryKey = 'employee_id';
     public $incrementing = false;
-    protected $keyType = 'integer';
+    protected $keyType = 'string';
 
     protected $fillable = [
         'employee_id',
@@ -40,7 +40,7 @@ class Employee extends Model
         'contract_start' => 'date',
         'contract_end' => 'date',
         'birthdate' => 'date',
-    ]; 
+    ];
 
     public function company() {
         return $this->belongsTo(Company::class, 'company_id', 'company_id');

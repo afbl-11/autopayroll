@@ -8,7 +8,7 @@ class Schedule extends Model
 {
     protected $primaryKey = 'schedule_id';
     public $incrementing = false;
-    protected $keyType = 'integer';
+    protected $keyType = 'string';
 
     protected $fillable = [
         'schedule_id',
