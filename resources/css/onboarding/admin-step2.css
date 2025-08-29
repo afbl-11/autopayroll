@@ -1,0 +1,26 @@
+.container {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    padding-bottom: 50px;
+    position: relative;
+    justify-content: center;
+    justify-items: center;
+}
+.form-container {
+    display: block;
+    width: 70%;
+    padding: 0 30px 0 30px;
+    height: inherit;
+    justify-content: center;
+    justify-items: center;
+}
+.field-row {
+    display: flex;
+    gap: 76px;
+    margin-bottom: 30px;
+    width: 100%;
+}
+button {
+    float: right;
+}
