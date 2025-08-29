@@ -12,9 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('companies', function (Blueprint $table) {
-            $table->integer('company_id')->primary();
+            $table->string('company_id')->primary();
+//            $table->string('company_logo')->nullable();
             $table->string('company_name');
-            $table->string('company_address');
+            $table->string('country');
+            $table->string('region');
+            $table->string('province');
+            $table->string('city');
+            $table->string('barangay');
+            $table->string('street');
+            $table->string('house_number');
+            $table->string('zip');
             $table->string('industry');
             $table->string('tin_number');
             $table->timestamps();
