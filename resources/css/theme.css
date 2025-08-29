@@ -1,17 +1,23 @@
-/*==========================
-        How to use
-============================
-This is a global style, di mo na need i specify
-every common styles sa ibang page kagaya ng font
-sizes or font family etc.
+/*==========================================
+  THEME.CSS – Global Site Styles
+============================================
+This CSS file contains all global styles used
+throughout the application.
 
-andito din ibang styles kagaya ng buttons and all shts.
+Includes:
+- Fonts & typography
+- Color variables
+- Buttons, inputs, and form elements
+- Common layout helpers (like .field-row)
+- Card & background styles
 
-@vite(['resources/css/onboarding/admin-onboarding.css', 'resources/js/password-validation.js', 'resources/css/theme.css'])
+Usage:
+Simply include this file in your Blade templates:
 
-add mo lang 'resoures/css/theme.css every blade file mo
-*/
+@vite(['resources/css/theme.css'])
 
+No need to repeat these common styles in other CSS files.
+===========================================*/
 
 *,
 *::before,
@@ -107,10 +113,56 @@ add mo lang 'resoures/css/theme.css every blade file mo
 
     input {font-family: "Helvetica Regular", sans-serif; line-height: 1.6; letter-spacing: 1.6px;}
 
+
+/*=====================
+Logo
+======================*/
+    .logo {
+        margin: 22px 0px 40px 37px;
+    }
     #logo {
         font-family: var(--font-logo);
     }
+    .logo span {
+        color: var(--clr-yellow);
+    }
 
+    /*==============
+    Forms
+    ================*/
+.field-input label{
+    display: block;
+    margin-bottom: 5px;
+    color: var(--clr-secondary);
+}
+.field-input input, select   {
+    width: 100%;
+    min-height: 47px;
+    border: 1px solid var(--clr-primary);
+    border-radius: 12px;
+    background: none;
+    outline: none;
+    padding: 10px;
+    align-items: center;
+    align-self: center;
+    font-size: 16px;
+}
+
+.field-input {
+    flex: 1;
+}
+.field-input.auto {
+    flex: 0 0 auto;
+    width: 409px;
+}
+
+    .field-input input:focus, select:focus {
+        border: 1px solid var(--clr-yellow);
+    }
+
+    /*================
+    buttons
+    ==================*/
     .button-filled {
         background: var(--clr-yellow);
         height: 47px;
@@ -121,9 +173,8 @@ add mo lang 'resoures/css/theme.css every blade file mo
         letter-spacing: 1.5px;
         font-size: 16px;
         border-radius: 8px;
-
+        box-shadow: 2px 5px 5.9px 0 rgba(136, 125, 125, 0.25);
     }
-
     .button-ghost {
         background: none;
         height: 47px;
