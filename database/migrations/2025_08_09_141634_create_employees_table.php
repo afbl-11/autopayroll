@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->string('employee_id')->primary(); //birthdate-001 for id
 
-            $table->integer('company_id'); //fk
+            $table->string('company_id'); //fk
             $table->foreign('company_id')
                 ->references('company_id')
                 ->on('companies')

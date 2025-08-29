@@ -8,7 +8,7 @@ class QrToken extends Model
 {
     protected $primaryKey = 'token_id';
     public $incrementing = false;
-    protected $keyType = 'integer';
+    protected $keyType = 'string';
 
     protected $fillable = [
         'token_id',

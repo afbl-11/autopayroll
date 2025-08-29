@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('schedules', function (Blueprint $table) {
             $table->integer('schedule_id')->primary();
 
-            $table->integer('company_id');
+            $table->string('company_id');
             $table->foreign('company_id')
                 ->references('company_id')
                 ->on('companies')

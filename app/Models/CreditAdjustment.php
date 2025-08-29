@@ -8,7 +8,7 @@ class CreditAdjustment extends Model
 {
     protected $primaryKey = 'adjustment_id';
     public $incrementing = false;
-    protected $keyType = 'integer';
+    protected $keyType = 'string';
 
     protected $fillable = [
         'adjustment_id',

@@ -8,7 +8,7 @@ class AttendanceLogs extends Model
 {
     protected $primaryKey = 'log_id';
     public $incrementing = false;
-    protected $keyType = 'integer';
+    protected $keyType = 'string';
 
     protected $fillable = [
         'log_id',

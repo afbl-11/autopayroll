@@ -8,7 +8,7 @@ class LeaveRequest extends Model
 {
     protected $primaryKey = 'leave_request_id';
     public $incrementing = false;
-    protected $keyType = 'integer';
+    protected $keyType = 'string';
 
     protected $fillable = [
         'leave_request_id',
