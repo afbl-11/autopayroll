@@ -5,15 +5,17 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
-    align-items: center;
-    height: 120vh;
+    flex-direction: column;
+    max-height: calc(100vh - 20px);
+    padding-bottom: 40px;
+    
 }
 
 .container {
     margin-left: 20vh;
-    margin-top: 15vh;
-    justify-content: center;
     margin-right: 10vh;
+    margin-top: 20px;
+    width: calc(100% - 25vh); 
 }
 
 h2 {
@@ -213,7 +215,7 @@ notificationName {
 
     .container {
         margin: 20px auto;
-        margin-left: 30vh; 
+        margin-left: 20vh; 
     }
 
     .notifications {
@@ -236,6 +238,18 @@ notificationName {
 
     .details {
         font-size: 13px;
+    }
+}
+
+@media screen and (max-width: 1500px){
+    .container {
+        width: calc(100% - 15%);
+    }
+}
+
+@media screen and (max-width: 1300px){
+    .container {
+        width: 75%;
     }
 }
 
@@ -271,7 +285,6 @@ notificationName {
     }
     
 }
-
 @media screen and (max-width: 650px) {
 
     .container {
@@ -299,16 +312,33 @@ notificationName {
     }
 }
 
-@media screen and (max-height: 700px) {
-    .container {
-        margin-left: 125px;
+@media screen and (max-height: 700px) and (max-width: 1700px){
+    .container{
+        width: 90%;
+        margin: 20px auto auto 130px;
+    }
+}
+
+
+@media screen and (max-height: 700px) and (max-width: 1500px) {
+    .container { 
+        width: 85%;
     }
     .content {
         margin-left: 50px;
         margin-right: 50px;
     }
-    
 }
+
+@media screen and (max-height: 700px) and (max-width: 750px) {
+    .container { 
+        width: 75%;
+    } 
+}
+
+
+
+
 
 
 

@@ -7,7 +7,7 @@
          @vite(['resources/css/notification/notificationCenter.css', 'resources/js/app.js'])
 </head>
 <body>
-  @include('layout.sidebarAdmin')
+  @include('layout.sidebar')
   <div class ="container">
     <div class = "header">
         <h2>Notification Center</h2>
@@ -47,69 +47,19 @@
                     <p id="notifName">Company Policy Updates</p>
                 </div>
                 <div class = "notificationContent">
-                    <p id="notifContent">Dear Team, We would like to inform you that starting July 1, 2025, several updates to our company policies will take effect. These changes are part of our ongoing efforts to improve workplace transparency, employee well-being, and operational efficiency.</p>
+                    <p id="notifContent">{{$variable}}</p> <!-- In the design, variable here is "Dear Team, We would like to inform you that starting July 1, 2025, several updates to our company policies will take effect. These changes are part of our ongoing efforts to improve workplace transparency, employee well-being, and operational efficiency." -->
                 </div>
                 <div class = "rightSide">
                     <div class="notifDate">
-                        <p id="date">6 - 2 - 2025</p>
+                        <p id="date">{{$variable}}</p> <!-- In the design, variable here is "6 - 2 - 2025" -->
                     </div>
                     <div class="details">
                         <a href=""><span class="textUnderline">View Detail</span><span class="arrow">></span></a> 
                     </div>
                 </div>
             </div>
-
-             <div class="notifications">
-                <div class="notificationName">
-                    <p id="notifName">Company Policy Updates</p>
-                </div>
-                <div class = "notificationContent">
-                    <p id="notifContent">Dear Team, We would like to inform you that starting July 1, 2025, several updates to our company policies will take effect. These changes are part of our ongoing efforts to improve workplace transparency, employee well-being, and operational efficiency.</p>
-                </div>
-                <div class = "rightSide">
-                    <div class="notifDate">
-                        <p id="date">6 - 2 - 2025</p>
-                    </div>
-                    <div class="details">
-                        <a href=""><span class="textUnderline">View Detail</span><span class="arrow">></span></a>
-                    </div>
-                </div>
-            </div>
-
-             <div class="notifications">
-                <div class="notificationName">
-                    <p id="notifName">Company Policy Updates</p>
-                </div>
-                <div class = "notificationContent">
-                    <p id="notifContent">Dear Team, We would like to inform you that starting July 1, 2025, several updates to our company policies will take effect. These changes are part of our ongoing efforts to improve workplace transparency, employee well-being, and operational efficiency.</p>
-                </div>
-                <div class = "rightSide">
-                    <div class="notifDate">
-                        <p id="date">6 - 2 - 2025</p>
-                    </div>
-                    <div class="details">
-                        <a href=""><span class="textUnderline">View Detail</span><span class="arrow">></span></a>
-                    </div>
-                </div>
-            </div>
-
-             <div class="notifications">
-                <div class="notificationName">
-                    <p id="notifName">Company Policy Updates</p>
-                </div>
-                <div class = "notificationContent">
-                    <p id="notifContent">Dear Team, We would like to inform you that starting July 1, 2025, several updates to our company policies will take effect. These changes are part of our ongoing efforts to improve workplace transparency, employee well-being, and operational efficiency.</p>
-                </div>
-                <div class = "rightSide">
-                    <div class="notifDate">
-                        <p id="date">6 - 2 - 2025</p>
-                    </div>
-                    <div class="details">
-                        <a href=""><span class="textUnderline">View Detail</span><span class="arrow">></span></a>
-                    </div>
-                </div>
-            </div>
         </div>
+        
 </body>
 </html>
 
