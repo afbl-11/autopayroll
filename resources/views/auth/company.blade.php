@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Add Client Company</title>
-    @vite(['resources/css/onboarding/admin-step1.css', 'resources/js/api/address-picker.js', 'resources/css/theme.css'])
+    @vite(['resources/css/admin_registration/admin_dashboard-step1.css', 'resources/js/api/address-picker.js', 'resources/css/theme.css'])
 </head>
 <body>
     <div class="logo">
@@ -12,7 +12,7 @@
     </div>
 <div class="container" >
     <div class="form-container">
-        <form action="{{route('onboarding.client')}}" method="post">
+        <form action="{{route('admin_registration.client')}}" method="post">
             @csrf
             <h6>Personal Information</h6>
             <div class="field-row">

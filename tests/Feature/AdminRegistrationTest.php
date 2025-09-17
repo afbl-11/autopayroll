@@ -15,21 +15,21 @@ class AdminRegistrationTest extends TestCase
     public function admin_can_complete_two_step_registration()
     {
         // Step 1: Personal Info
-        $response1 = $this->post('/admin/', [
+        $response1 = $this->post('/admin_dashboard/', [
             'first_name' => 'Marc',
             'last_name' => 'Afable',
             'email' => 'marc@example.com',
             'tin' => '123456789',
-            'role' => 'admin',
+            'role' => 'admin_dashboard',
             'password' => 'Password@123',
         ]);
 
         // Should redirect to Step 2
-        $response1->assertRedirect('/admin/address');
+        $response1->assertRedirect('/admin_dashboard/address');
         $this->assertSessionHas('register.personal');
 
         // Step 2: Address Info
-        $response2 = $this->post('/admin/register', [
+        $response2 = $this->post('/admin_dashboard/register', [
             'country' => 'Philippines',
             'region' => 'NCR',
             'province' => 'Metro Manila',
@@ -40,10 +40,10 @@ class AdminRegistrationTest extends TestCase
             'zip' => '1227',
         ]);
 
-        // Should redirect to onboarding / dashboard
-        $response2->assertRedirect('/admin/onboarding');
+        // Should redirect to admin_registration / admin_dashboard
+        $response2->assertRedirect('/admin_dashboard/admin_registration');
 
-        // Check database for admin record
+        // Check database for admin_dashboard record
         $this->assertDatabaseHas('admins', [
             'email' => 'marc@example.com',
             'first_name' => 'Marc',

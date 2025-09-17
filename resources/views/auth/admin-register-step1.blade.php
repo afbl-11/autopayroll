@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AutoPayroll Admin Onboarding</title>
-    @vite(['resources/css/onboarding/admin-step1.css', 'resources/js/api/address-picker.js', 'resources/css/theme.css'])
+    @vite(['resources/css/admin_registration/admin_dashboard-step1.css', 'resources/js/api/address-picker.js', 'resources/css/theme.css'])
 
 
 </head>

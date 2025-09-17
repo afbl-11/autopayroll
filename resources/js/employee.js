@@ -4,7 +4,7 @@ menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
 }
 
 function deleteEmployee(employeeId) {
-    var employeeCard = document.querySelector('.employee-card[data-employee-id="' + employeeId + '"]');
+    var employeeCard = document.querySelector('.employee admin_dashboard-card[data-employee admin_dashboard-id="' + employeeId + '"]');
     if (employeeCard) {
         employeeCard.remove();
         alert("Employee " + employeeId + " deleted");
@@ -17,12 +17,12 @@ document.getElementById('company-filter').addEventListener('change', updateEmplo
 
 function updateEmployeeTitle() {
     var companyFilter = document.getElementById('company-filter').value;
-    var title = document.getElementById('employee-title'); 
+    var title = document.getElementById('employee admin_dashboard-title');
 
     if (companyFilter === 'all') {
-        title.innerText = 'All Employees'; 
+        title.innerText = 'All Employees';
     } else {
-        title.innerText = companyFilter; 
+        title.innerText = companyFilter;
     }
 
     filterEmployees();
@@ -32,7 +32,7 @@ function filterEmployees() {
     var companyFilter = document.getElementById('company-filter').value;
     var statusFilter = document.getElementById('status-filter').value;
 
-    var employeeCards = document.querySelectorAll('.employee-card');
+    var employeeCards = document.querySelectorAll('.employee admin_dashboard-card');
 
     employeeCards.forEach(function(card) {
         var cardCompany = card.getAttribute('data-company');
@@ -51,9 +51,9 @@ function filterEmployees() {
         }
 
         if (showCard) {
-            card.style.display = 'block'; 
+            card.style.display = 'block';
         } else {
-            card.style.display = 'none'; 
+            card.style.display = 'none';
         }
     });
 }
