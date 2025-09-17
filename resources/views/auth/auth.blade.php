@@ -12,7 +12,7 @@
     </div>
   <div class ="container">
     <h1 class ="header">Welcome Back!</h1>
-    <form class="form" action="{{route('admin.register')}}" method="POST" >
+    <form class="form" action="{{route('admin_dashboard.register')}}" method="POST" >
         <div class="l1">
             <label for= "email">Email or Username </label> <br>
             <input type="text" id="email" required />

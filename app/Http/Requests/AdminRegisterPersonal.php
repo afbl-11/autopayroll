@@ -17,7 +17,7 @@ class AdminRegisterPersonal extends FormRequest
         return [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'role' => 'required|in:admin,hr',
+            'role' => 'required|in:admin_dashboard,hr',
             'email' => 'required|email|unique:admins,email',
             'tin' => ['required', 'digits_between:9,12'],
             'password' => [

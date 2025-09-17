@@ -1,22 +1,22 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ClientController;
+use App\Http\Controllers\AdminRegistrationController;
+use App\Http\Controllers\ClientRegistrationController;
 use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-    return view('onboarding.company');
+    return view('admin_registration.company');
 });
 
-/**admin registration*/
-Route::post('/admin/register', [AuthController::class, 'register'])->name('admin.register');
-Route::get('/admin/onboarding', [AuthController::class, 'showForm'])->name('admin.onboarding');
-Route::post('/admin/step1', [AuthController::class, 'storeStep1'])->name('auth.store.step1');
-Route::get('/admin/address', [AuthController::class, 'showStep2'])->name('auth.register.step2');
+/**admin_dashboard registration*/
+Route::post('/admin/register', [AdminRegistrationController::class, 'register'])->name('admin_dashboard.register');
+Route::get('/admin/admin_registration', [AdminRegistrationController::class, 'showForm'])->name('admin_dashboard.admin_registration');
+Route::post('/admin/step1', [AdminRegistrationController::class, 'storeStep1'])->name('auth.store.step1');
+Route::get('/admin/address', [AdminRegistrationController::class, 'showStep2'])->name('auth.register.step2');
 /**company registration*/
-Route::post('/client/onboarding', [ClientController::class, 'register'])->name('onboarding.client');
-Route::get('client/register', [ClientController::class, 'showForm'])->name('register.client');
+Route::post('/client/admin_registration', [ClientRegistrationController::class, 'register'])->name('admin_registration.client');
+Route::get('client/register', [ClientRegistrationController::class, 'showForm'])->name('register.client');
 
 
 
