@@ -15,7 +15,7 @@ d<!DOCTYPE html>
     <div class = "header">
         <h2>Dashboard</h2>
         <div class="userInfo">
-            <span>Nichole Monzon</span>
+            <span>{{$variable}}</span> <!-- In the design, variable here is "Nichole Monzon" -->
             <img onclick="" src="{{ asset('images/afable.png') }}">
         </div>
     </div>
@@ -28,21 +28,21 @@ d<!DOCTYPE html>
             <div class="payrollCategories">
                 <div class="payrollCategory1 payrollCategory">
                     <div>Paid Employees</div>
-                    <p id="amount">37</p>
+                    <p id="amount">{{$variable}}</p> <!-- In the design, variable here is "37" -->
                 </div>
                 <div class="payrollCategory2 payrollCategory">
                     <div>Total Payroll</div>
-                    <p id="amount">100,000.00</p>
-                    <p id="pastAmount">98,765.00 last month</p>
+                    <p id="amount">{{$variable}}</p> <!-- In the design, variable here is "100,000.00" -->
+                    <p id="pastAmount">{{$variable}}</p> <!-- In the design, variable here is "98,765.00 last month" -->
                 </div>
                 <div class="payrollCategory3 payrollCategory">
                     <div>Total Deductions</div>
-                     <p id="amount">33,876.00</p>
-                     <p id="pastAmount">36,564.00 last month</p>
+                     <p id="amount">{{$variable}}</p> <!-- In the design, variable here is "33,876.00" -->
+                     <p id="pastAmount">{{$variable}}</p> <!-- In the design, variable here is "36,564.00 last month" -->
                 </div>
                 <div class="payrollCategory4 payrollCategory">
                     <div>Upcoming Pay Date</div>
-                    <p id="payDate">June 30, 2025</p>
+                    <p id="payDate">{{$variable}}</p> <!-- In the design, variable here is "June 30, 2025" -->
                 </div>
             </div>    
         </div>
@@ -52,19 +52,19 @@ d<!DOCTYPE html>
                 <h2>Attendance Overview</h2>
                 <div class = "attendanceCategory1 attendanceCategory">
                     <p class = "categoryTitle">Number of Absences</p>
-                    <p id="num1">10</p>
+                    <p id="num1">{{$variable}}</p> <!-- In the design, variable here is "10" -->
                 </div>
                 <div class = "attendanceCategory2 attendanceCategory">
                     <p class = "categoryTitle">Early Clock-ins</p>
-                    <p id="num2">27</p>
+                    <p id="num2">{{$variable}}</p> <!-- In the design, variable here is "27" -->
                 </div>
                 <div class = "attendanceCategory3 attendanceCategory">
                     <p class = "categoryTitle">Late Clock-ins</p>
-                    <p id="num3">20</p>
+                    <p id="num3">{{$variable}}</p> <!-- In the design, variable here is "20" -->
                 </div>
                 <div class = "attendanceCategory4 attendanceCategory">
                     <p class = "categoryTitle">Overtimes Logged</p>
-                    <p id="num4">15</p>
+                    <p id="num4">{{$variable}}</p> <!-- In the design, variable here is "15" -->
                 </div>
             </div>
 
@@ -81,7 +81,7 @@ d<!DOCTYPE html>
                                 <img class="companyLogo" src="{{ asset('images/building.png') }}">
                             </div>
                             <div class="details">
-                                <strong>Mindchamps</strong>
+                                <strong>{{$variable}}</strong> <!-- In the design, variable here is "Mindchamps" -->
                             </div>
                           </div>
                         </div>
@@ -91,7 +91,7 @@ d<!DOCTYPE html>
                             </div>
                             <div class="manpowerRow2">
                             <div class="address">
-                                <p>Unit 504, 5th Floor One Corporate Centre, Julia Vargas Ave, Ortigas Center, Pasig City, 1605</p>
+                                <p>{{$variable}}</p> <!-- In the design, variable here is "Unit 504, 5th Floor One Corporate Centre, Julia Vargas Ave, Ortigas Center, Pasig City, 1605" -->
                             </div>
                             </div>
                         </div>
@@ -101,72 +101,11 @@ d<!DOCTYPE html>
                             </div>
                             <div class="manpowerRow2">
                             <div class="count">
-                                <p id="manpowerCount">10</p>
+                                <p id="manpowerCount">{{$variable}}</p> <!-- In the design, variable here is "10" -->
                             </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="manpowerRow">  
-                        <div class="companyName">
-                            
-                        <div class="manpowerRow2">
-                            <div class="logo">
-                                <img class="companyLogo" src="{{ asset('images/building.png') }}">
-                            </div>
-                            <div class="details">
-                                <strong>Mindchamps</strong>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="companyDetails">
-                            
-                            <div class="manpowerRow2">
-                            <div class="address">
-                                <p>Unit 504, 5th Floor One Corporate Centre, Julia Vargas Ave, Ortigas Center, Pasig City, 1605</p>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="manpowerCount">
-                            
-                            <div class="manpowerRow2">
-                            <div class="count">
-                                <p id="manpowerCount">10</p>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-
-                     <div class="manpowerRow">  
-                        <div class="companyName">
-                            
-                        <div class="manpowerRow2">
-                            <div class="logo">
-                                <img class="companyLogo" src="{{ asset('images/building.png') }}">
-                            </div>
-                            <div class="details">
-                                <strong>Mindchamps</strong>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="companyDetails">
-                            
-                            <div class="manpowerRow2">
-                            <div class="address">
-                                <p>Unit 504, 5th Floor One Corporate Centre, Julia Vargas Ave, Ortigas Center, Pasig City, 1605</p>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="manpowerCount">
-                            
-                            <div class="manpowerRow2">
-                            <div class="count">
-                                <p id="manpowerCount">10</p>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-     
                 </div>
             </div>
                     
@@ -175,15 +114,17 @@ d<!DOCTYPE html>
             <h2>Leave Requests</h2> 
             <div class="leaveRequestsContainer">
                 <div class="requesterName">
-                    <p id="employeeName">Marc Jurell Afable</p>
+                    <p id="employeeName">{{$variable}}</p> <!-- In the design, variable here is "Marc Jurell Afable" -->
                 </div>
                 <div class = "leaveRequest">
-                    <p id="employeeReason">I would like to formally request vacation leave from July 15 to July 19, 2025 (5 working days)</p>
+                    <p id="employeeReason">{{$variable}}</p> <!-- In the design, variable here is "I would like to formally request vacation leave from July 15 to July 19, 2025 (5 working days)" -->
                 </div>
                 <div class = "time">
-                    <p id="employeeTime">9 hours ago</p>
+                    <p id="employeeTime">{{$variable}}</p> <!-- In the design, variable here is "9 hours ago" -->
                 </div>
                 </div>
+
+                
         </div>
   </div>
 </div>

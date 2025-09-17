@@ -5,14 +5,15 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
-    align-items: center;
-    height: 120vh;
+     flex-direction: column;
+    max-height: calc(100vh - 20px);
+    padding-bottom: 40px;
     overflow-x: hidden;
 }
 
 .container {
     margin-left: 32vh;
-    margin-top: 35vh;
+    margin-top: -5vh;
     justify-content: center;
 }
 
@@ -147,9 +148,15 @@ h2 {
     background: #F6F5F2;
     border-radius: 6px;
     padding: 15px;
-    height: 500px;
+    padding-bottom: 20px;
+    min-height: 500px;
+    max-height: 500px;
+    overflow-y: auto;
     box-shadow: 2px 5px 5.9px rgba(136, 125, 125, 0.25);
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f6f5f2;
 }
+
 
 .attendanceOverview p {
     padding: 6px 0;
@@ -169,10 +176,19 @@ h2 {
 .manpowerRow {
     display: flex;
     gap: 10px;
-    border-bottom: 2px solid lightgray;
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-bottom: 20px;
+    position: relative;
+    margin: auto;
+    padding: 2rem;
+}
+
+.manpowerRow::after {
+    content: "";
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    bottom: 0;
+    height: 1px;
+    background: lightgray;
 }
 
 .manpower h2 {
@@ -243,10 +259,28 @@ h2 {
     padding: 15px 20px;
     box-shadow: 2px 5px 5.9px rgba(136, 125, 125, 0.25);
     margin-bottom: 30px;
+    min-height: 200px;
+    max-height: 300px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f6f5f2;
 }
 
 .leaveRequestsContainer {
     display: flex;
+    position: relative;
+    margin-bottom: 40px;
+}
+
+.leaveRequestsContainer::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    height: 0.5px;
+    margin: -20px;
+    left: 20px;
+    right: 20px;
+    background: lightgray;
 }
 
 .leaveRequests h2 {
