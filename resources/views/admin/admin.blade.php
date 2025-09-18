@@ -7,7 +7,7 @@ d<!DOCTYPE html>
          @vite(['resources/css/admin/admin.css', 'resources/js/app.js'])
  
 </head>
-@include('layout.sidebarAdmin')
+@include('layout.sidebar')
 <body>
   
   <div class ="container">

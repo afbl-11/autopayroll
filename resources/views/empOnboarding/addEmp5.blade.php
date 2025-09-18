@@ -7,7 +7,7 @@
          @vite(['resources/css/empOnboarding/addEmp5.css', 'resources/js/app.js'])
 </head>
 <body>
-  @include('layout.sidebarEmp5')
+  @include('layout.sidebar')
   <div class ="container">
     <div class = "header"><a href="#"><img src="{{ asset('images/left-arrow.png') }}"></a><h2>Add Employee</h2></div>
     @include('layout.steps')

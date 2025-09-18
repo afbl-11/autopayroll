@@ -333,7 +333,7 @@ h2 {
     width: 440px;
 }
 
-@media screen and (max-width: 1500px), screen and (max-height: 700px) {
+@media screen and (max-width: 1500px) {
     body {
         flex-direction: column;
         height: auto;
@@ -535,7 +535,6 @@ h2 {
         margin-left: -10px;
     }
 
-
     .userInfo {
         font-size: 12px;
         margin-left: 2vh;
@@ -626,6 +625,16 @@ h2 {
         margin-left: 50px;
         margin-right: 50px;
     }
+
+    .header {
+        margin-left: 50px;
+        margin-top: 10px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+    }
     
 }
 
@@ -660,7 +669,7 @@ h2 {
         width: 80%;
     }
     .content {
-        width: 70%;
+        width: 70%; 
     }
 }
 
