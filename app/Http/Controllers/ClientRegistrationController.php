@@ -16,7 +16,7 @@ class ClientRegistrationController extends Controller
         return redirect()->route('register.client');
     }
     public function showForm() {
-        return view('admin_dashboard.admin_dashboard');
+        return view('admin.admin');
     }
 
 

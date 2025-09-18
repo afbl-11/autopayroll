@@ -6,7 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Account Creation | Address</title>
-    @vite(['resources/css/theme.css', 'resources/css/admin_registration/admin_dashboard-step2.css', 'resources/js/api/address-picker.js'])
+    @vite(['resources/css/theme.css', 'resources/css/admin_registration/admin-step2.css', 'resources/js/api/address-picker.js'])
 </head>
 <body>
 <div class="logo">
@@ -14,7 +14,7 @@
 </div>
 <div class="container">
 <div class="form-container">
-    <form action="{{route('admin_dashboard.register')}}" method="post">
+    <form action="{{route('admin.register')}}" method="post">
         @csrf
         <h6>Company Information</h6>
         <div class="field-row">
@@ -28,8 +28,8 @@
             <div class="field-input">
                 <label for="country">Country</label>
                 <select name="country" id="country">
-                    <option value="">Select Country</option>
                     <option value="philippines">Philippines</option>
+
                 </select>
             </div>
             <div class="field-input">
