@@ -11,7 +11,7 @@ Route::get('/', function () {
 
 /**admin registration*/
 Route::post('/admin/register', [AdminRegistrationController::class, 'register'])->name('admin.register');
-Route::get('/admin/onboarding', [AdminRegistrationController::class, 'showForm'])->name('admin.onboarding');
+Route::get('/admin/onboarding', [AdminRegistrationController::class, 'showAdminDashboard'])->name('admin.onboarding');
 Route::post('/admin/step1', [AdminRegistrationController::class, 'storeStep1'])->name('auth.store.step1');
 Route::get('/admin/address', [AdminRegistrationController::class, 'showStep2'])->name('auth.register.step2');
 /**company registration*/

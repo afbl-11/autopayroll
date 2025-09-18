@@ -9,13 +9,8 @@ use App\Services\Auth\AdminRegistration;
 class AdminRegistrationController extends Controller
 {
     public function __construct(
-        protected AdminRegistration $adminService,)
+        protected AdminRegistration $adminService)
     {}
-
-    public function showForm()
-    {
-        return view('admin_dashboard.admin_dashboard');
-    }
 
     public function storeStep1(AdminRegisterPersonal $request) {
 
@@ -24,13 +19,17 @@ class AdminRegistrationController extends Controller
 
     }
     public function showStep2() {
-//        dd(session('register.personal'));
-        return view('admin_registration.admin_dashboard-register-step2');
+        return view('auth.admin-register-step2');
+    }
+
+    public function showAdminDashboard()
+    {
+        return view('admin.admin');
     }
     public function register(AdminRegisterAddress $request)
     {
         $this->adminService->createAdmin($request->validated());
-        return redirect()->route('admin_dashboard.admin_registration')->with('success', 'Admin registered successfully!');
+        return redirect()->route('admin.onboarding')->with('success', 'Admin registered successfully!');
     }
 
 }
