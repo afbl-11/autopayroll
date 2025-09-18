@@ -14,7 +14,7 @@
 </div>
 <div class="container">
 <div class="form-container">
-    <form action="{{route('admin_dashboard.register')}}" method="post">
+    <form action="{{route('admin.register')}}" method="post">
         @csrf
         <h6>Company Information</h6>
         <div class="field-row">
