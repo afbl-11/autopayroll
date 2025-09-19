@@ -71,34 +71,37 @@ d<!DOCTYPE html>
             <div class="manpower">
                 <h2>Manpower Distribution</h2>
                 
-                    <div class="manpowerRow">  
+                    <div class="manpowerTitle">  
                         <div class="companyName">
-                            <div class="title">
                                 <h4>Company</h4>
-                            </div>
+                        </div>
+                        <div class="companyDetails">
+                                <h4>Address</h4>   
+                        </div>
+                        <div class="manpowerCount"> 
+                                <h4>Manpower</h4>
+                        </div>
+                    </div>
+                     
+                    <div class="manpowerRow">  
+                        <div class="companyName">  
                         <div class="manpowerRow2">
                             <div class="logo">
                                 <img class="companyLogo" src="{{ asset('images/building.png') }}">
                             </div>
                             <div class="details">
-                                <strong>{{$variable}}</strong> <!-- In the design, variable here is "Mindchamps" -->
+                                <strong></strong><!-- In the design, variable here is "Mindchamps" -->
                             </div>
                           </div>
                         </div>
-                        <div class="companyDetails">
-                            <div class="addressTitle">
-                                <h4>Address</h4>
-                            </div>
+                        <div class="companyDetails">  
                             <div class="manpowerRow2">
                             <div class="address">
-                                <p>{{$variable}}</p> <!-- In the design, variable here is "Unit 504, 5th Floor One Corporate Centre, Julia Vargas Ave, Ortigas Center, Pasig City, 1605" -->
+                                <p></p><!-- In the design, variable here is "Unit 504, 5th Floor One Corporate Centre, Julia Vargas Ave, Ortigas Center, Pasig City, 1605" -->
                             </div>
                             </div>
                         </div>
                         <div class="manpowerCount">
-                            <div class="manpowerTitle">
-                                <h4>Manpower</h4>
-                            </div>
                             <div class="manpowerRow2">
                             <div class="count">
                                 <p id="manpowerCount">{{$variable}}</p> <!-- In the design, variable here is "10" -->
@@ -106,12 +109,14 @@ d<!DOCTYPE html>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
                     
                   
         <div class="leaveRequests">
-            <h2>Leave Requests</h2> 
+            <h2>Leave Requests</h2>
+
             <div class="leaveRequestsContainer">
                 <div class="requesterName">
                     <p id="employeeName">{{$variable}}</p> <!-- In the design, variable here is "Marc Jurell Afable" -->
@@ -122,9 +127,8 @@ d<!DOCTYPE html>
                 <div class = "time">
                     <p id="employeeTime">{{$variable}}</p> <!-- In the design, variable here is "9 hours ago" -->
                 </div>
-                </div>
-
-                
+            </div>
+   
         </div>
   </div>
 </div>

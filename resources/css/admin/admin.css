@@ -173,6 +173,14 @@ h2 {
     margin-bottom: 30px;
 }
 
+.manpowerTitle{
+    display: flex;
+    gap: 10px;
+    margin: auto;
+    padding: 2rem;
+    margin-bottom: -50px;
+}
+
 .manpowerRow {
     display: flex;
     gap: 10px;
@@ -324,6 +332,8 @@ h2 {
 
 #num1, #num2, #num3 {
     border-bottom: 2px solid lightgray;
+    display: inline-block;
+    width: 100%;
 }
 
 .attendanceCategory4 p {
@@ -346,6 +356,7 @@ h2 {
     .container {
         margin: 20px auto;
         margin-left: 12vh;
+        width: 90%;
     }
 
     .head, .row {
@@ -404,7 +415,13 @@ h2 {
 
 }
 
+
 @media screen and (max-width: 1200px) {
+
+    .container {
+        width: 87%;
+    }
+
     .content {
         width: 90%;
     }
@@ -423,7 +440,7 @@ h2 {
     }
 
     .attendanceOverview, .manpower {
-        width: 100%;
+        width: 40%;
         box-sizing: border-box;
     }
 
@@ -473,6 +490,11 @@ h2 {
 }
 
 @media screen and (max-width: 800px) {
+
+    .container {
+        width: 80%;
+    }
+
     .content {
         width: 90%;
         margin-left: 7vh;
@@ -525,6 +547,14 @@ h2 {
 }
 
 @media screen and (max-width: 650px) {
+
+    .manpowerRow, .manpowerTitle{
+        padding: 1rem;
+    }
+
+    .manpowerTitle {
+        margin-bottom: auto;
+    }
 
     .content {
         margin-left: 6vh;
@@ -588,7 +618,9 @@ h2 {
     }
 
    .manpower h4 {
-        font-size: 14px;
+         font-size: 13px;
+         margin-bottom: auto;
+         
     }
     
     .header2 h3, .attendanceOverview h2, 
@@ -609,8 +641,16 @@ h2 {
     }
 }
 
+@media screen and (max-width: 550px){
+    .manpower h4{
+        font-size: 12.5px;
+        padding: 0px;
+    }
+}
+
 @media screen and (max-height: 700px) {
     .container {
+        margin-top: 0;
         margin-left: 110px;
     }
 
@@ -669,9 +709,29 @@ h2 {
         width: 80%;
     }
     .content {
-        width: 70%; 
+        width: 75%; 
+    }
+    .manpower h2{
+        font-size: 22px;
+    }
+    .manpower h4{
+        font-size: 12px;
+    }
+    .manpowerRow, .manpowerTitle{
+        padding: 1rem;
     }
 }
+
+@media screen and (max-height: 700px) and (max-width: 550px) {
+    
+    .manpower h4{
+        font-size: 11.5px;
+        padding: 8px;
+        padding-bottom: 0;
+    }
+    
+}
+
 
 
 
