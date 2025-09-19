@@ -30,6 +30,11 @@ class AdminRegistrationController extends Controller
     {
         $this->adminService->createAdmin($request->validated());
         return redirect()->route('admin.onboarding')->with('success', 'Admin registered successfully!');
+        /*
+         * this should noot redirect to the dashboard, instead redirect it to a page where it then redirects it to the login page
+         *
+         * s
+         * */
     }
 
 }

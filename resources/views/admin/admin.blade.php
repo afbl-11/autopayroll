@@ -1,14 +1,13 @@
-d<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>AutoPayroll Admin Module</title>
-    @vite(['resources/css/admin_dashboard/admin_dashboard.css', 'resources/js/app.js'])
-
+    @vite(['resources/css/admin_dashboard/admin.css', 'resources/js/app.js', 'resources/css/theme/css'])
 </head>
-@include('partitions.sidebarAdmin')
 <body>
+@include('partitions.sidebarAdmin')
 
 <div class="container">
 
