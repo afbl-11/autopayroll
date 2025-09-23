@@ -80,6 +80,11 @@ body {
   transform: scale(1.1);
 }
 
+.nav-item img{
+  height: 21px;
+  width: 21px;
+}
+
 .brand .full-name {
   display: none;
   color: white;
@@ -104,4 +109,11 @@ body {
 
 .sidebar:hover .brand .brand-letter {
   display: none;
+}
+
+.nav-item,
+.nav-item .label,
+.nav-item .icon {
+  color: #fff !important;
+  font-weight: 100 !important;
 }
