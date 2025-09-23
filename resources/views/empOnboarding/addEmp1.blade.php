@@ -9,9 +9,9 @@
 <body>
   @include('layout.sidebar')
   <div class ="container">
-    <div class = "header"><a href="#"><img src="{{ asset('images/left-arrow.png') }}"></a><h2>Add Employee</h2></div>
+    <div class = "header"><img onclick="" src="{{ asset('images/left-arrow.png') }}"><h2>Add Employee</h2></div>
     @include('layout.steps', ['step' => 1])
-    <form class="form" action="" method="POST">
+    <form class="form" action="" method="GET">
     <div class = "content">
         <div class="head">
             <div class="firstName formGroup">
@@ -45,25 +45,25 @@
         
         <div class = "row">
             <div class="date-Of-birth formGroup">
-                <label for= "dateOfbirth">Date of Birth</label><br>
+                <label for= "dateOfbirth">Date of Birth <span class="required">*</span></label><br>
                 <input type="date" id="date-Of-birth" name="date-Of-birth" placeholder="Date of Birth" required />
             </div>
 
             <div class="age formGroup">
-                <label for="age">Age</label><br>
+                <label for="age">Age <span class="required">*</span></label><br>
                 <input type="number" id="age" name="age" placeholder="Age" required />
             </div>    
         </div>
         <div class="row">
             <div class = "gender formGroup">
-                <label for="gender">Gender</label><br>
+                <label for="gender">Gender <span class="required">*</span></label><br>
                 <select name="gender" id="gender" required />
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                 </select>
             </div>
             <div class = "marital-status formGroup">
-                <label for="marital-status">Marital Status</label><br>
+                <label for="marital-status">Marital Status <span class="required">*</span></label><br>
                 <select name="marital-status" id="marital-status" required />
                     <option value="single">Single</option>
                     <option value="married">Married</option>
@@ -71,7 +71,7 @@
             </div>
         </div>
             <div class = "blood-type formGroup">
-                <label for="blood-type">Blood Type</label><br>
+                <label for="blood-type">Blood Type <span class="required">*</span></label><br>
                 <select name="blood-type" id="blood-type" required />   
                     <option value="blood-type-1">A+</option>
                     <option value="blood-type-2">A-</option>
@@ -151,4 +151,3 @@
  </script>
 </body>
 </html>
-

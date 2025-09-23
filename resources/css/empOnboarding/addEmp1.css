@@ -25,7 +25,7 @@ body {
     margin-left: 400px;
     justify-content: center;
     width: 1050px;
-    margin-top: 40vh;
+    margin-top: 43vh;
 }
 
 .content {
@@ -85,6 +85,7 @@ h2 {
     vertical-align: middle;
     margin-top: 10px;
     margin-right: 5px;
+    cursor: pointer;
 }
 
 .next {
@@ -308,6 +309,11 @@ input[type=number] {
     .container {
         width: 70%;
     }
+
+    .content {
+        width: 95%;
+    }
+    
     .next { 
         margin-left: 150px;
     }

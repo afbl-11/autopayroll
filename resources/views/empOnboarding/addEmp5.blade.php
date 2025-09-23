@@ -9,9 +9,9 @@
 <body>
   @include('layout.sidebar')
   <div class ="container">
-    <div class = "header"><a href="#"><img src="{{ asset('images/left-arrow.png') }}"></a><h2>Add Employee</h2></div>
+    <div class = "header"><img onclick="" src="{{ asset('images/left-arrow.png') }}"><h2>Add Employee</h2></div>
     @include('layout.steps')
-    <form class="form" action="" method="POST">
+    <form class="form" action="" method="GET">
     <div class = "content">
         <h3>BASIC INFORMATION</h3>
         <div class="head">
@@ -160,4 +160,3 @@
 </script>
 </body>
 </html>
-

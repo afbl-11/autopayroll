@@ -200,6 +200,7 @@ h2 {
     vertical-align: middle;
     margin-top: 10px;
     margin-right: 5px;
+    cursor: pointer;
 }
 
 .next-con{
@@ -426,6 +427,11 @@ h2 {
     .container {
         width: 70%;
     }
+
+    .content {
+        width: 95%;
+    }
+    
     .next { 
         margin-left: 150px;
     }

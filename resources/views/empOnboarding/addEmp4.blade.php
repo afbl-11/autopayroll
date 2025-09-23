@@ -9,22 +9,22 @@
 <body>
   @include('layout.sidebar')
   <div class ="container">
-    <div class = "header"><a href=""><img src="{{ asset('images/left-arrow.png') }}"></a><h2>Add Employee</h2></div>
+    <div class = "header"><img onclick="" src="{{ asset('images/left-arrow.png') }}"><h2>Add Employee</h2></div>
     @include('layout.steps')
-    <form class="form" action="" method="POST">
+    <form class="form" action="" method="GET">
     <div class = "content">
         <div class="email formGroup">
-                <label for="email">Email <span class="required">*</span></label> <br>
+                <label for="email">Email <span class="required">*</span></label><br>
                 <input type="email" id="email" placeholder="Email" required />
         </div>
 
         <div class="empId formGroup">
-                <label for= "fn">Employee Identification Number </label><br>
+                <label for= "fn">Employee Identification Number <span class="required">*</span></label><br>
                 <input type="number" id="empId" name="empId" placeholder="Employee ID Number" required />
         </div>
 
         <div class="password formGroup">
-            <label for="password">Password </label> <br>
+            <label for="password">Password <span class="required">*</span></label><br>
             <div class = "wrapper">
             <input type="password" id="password" placeholder="Password" required />
             <span class="toggleEye" onclick="togglePassword()">👁</span> <br> 
