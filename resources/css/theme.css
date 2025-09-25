@@ -1,5 +1,5 @@
 /*==========================================
-  THEME.CSS – Global Site Styles
+THEME.CSS – Global Site Styles
 ============================================
 This CSS file contains all global styles used
 throughout the application.
@@ -118,7 +118,7 @@ No need to repeat these common styles in other CSS files.
 Logo
 ======================*/
     .logo {
-        margin: 22px 0px 40px 37px;
+        margin: 22px 0 40px 37px;
     }
     #logo {
         font-family: var(--font-logo);

@@ -75,6 +75,7 @@
 {{--
     TODO: password reveal
     TODO: password validation - front-end
+    TODO: email verification
      --}}
 
 
