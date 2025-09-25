@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
 {
+    use HasFactory;
+
     protected $primaryKey = 'employee_id';
     public $incrementing = false;
     protected $keyType = 'string';
@@ -29,12 +32,20 @@ class Employee extends Model
         'marital_status',
         'blood_type',
         'religion',
-        'residential_address',
+        'country',
+        'region',
+        'province',
+        'zip',
+        'city',
+        'barangay',
+        'street',
+        'house_number',
         'bank_account_number',
         'sss_number',
         'phil_health_number',
         'pag_ibig_number',
         'tin_number',
+        'phone_number',
     ];
     protected $casts = [
         'contract_start' => 'date',

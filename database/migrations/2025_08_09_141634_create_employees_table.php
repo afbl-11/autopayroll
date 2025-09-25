@@ -31,6 +31,7 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('email');
             $table->string('username');
+            $table->string('phone_number');
             $table->string('password');
             $table->string('job_position');
             $table->date('contract_start');
@@ -42,10 +43,18 @@ return new class extends Migration
             $table->enum('marital_status',['single','married','widowed']);
             $table->enum('blood_type', ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'])->nullable();
             $table->string('religion');
-            $table->string('residential_address');
+
+            $table->string('country');
+            $table->string('region');
+            $table->string('province');
+            $table->string('zip');
+            $table->string('city');
+            $table->string('barangay');
+            $table->string('street');
+            $table->string('house_number')->nullable();
+
             $table->string('bank_account_number');
             $table->string('sss_number');
-
             $table->string('phil_health_number');
             $table->string('pag_ibig_number');
             $table->string('tin_number');

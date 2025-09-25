@@ -22,14 +22,15 @@ class AdminRegistrationController extends Controller
         return view('auth.admin-register-step2');
     }
 
-    public function showAdminDashboard()
-    {
-        return view('admin.admin');
-    }
     public function register(AdminRegisterAddress $request)
     {
         $this->adminService->createAdmin($request->validated());
-        return redirect()->route('admin.onboarding')->with('success', 'Admin registered successfully!');
+        return redirect()->route('register.success')->with('success', 'Admin registered successfully!');
+        /*
+         * this should noot redirect to the dashboard, instead redirect it to a page where it then redirects it to the login page
+         *
+         * s
+         * */
     }
 
 }
