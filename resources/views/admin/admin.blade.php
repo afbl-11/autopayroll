@@ -4,17 +4,19 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>AutoPayroll Admin Module</title>
-    @vite(['resources/css/admin_dashboard/admin.css', 'resources/js/app.js', 'resources/css/theme/css'])
+    @vite(['resources/css/admin_dashboard/admin.css', 'resources/js/app.js', 'resources/css/theme.css'])
 </head>
 <body>
 dashboard
-{{--{{$user->first_name}}--}}
+{{$user->first_name}}
 {{--{{$user->id}}--}}
 
 <form action="{{route('logout')}}" method="post">
     @csrf
     <button type="submit" class="button-filled">Logout</button>
 </form>
+
+<a href="{{route('verification.notice')}}">verify</a>
 
 {{--@include('partitions.sidebarAdmin')--}}
 
