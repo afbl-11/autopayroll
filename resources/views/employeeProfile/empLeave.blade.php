@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sidebar + Employee Header</title>
-  @vite(['resources/css/employeeProfile/empLeave.css', 'resources/js/app.js'])
+  @vite(['resources/css/employeeProfile/empLeave.css', 'resources/js/employeeProfile/empLeave.js'])
 </head>
 <body>
   <div class="whole-container">
@@ -64,13 +64,12 @@
 
             <div class="attached-row">
                 <div class="attached-icon">📎</div>
-                    
                     <!-- This is used for experimentation purposes like for testing if the file will be viewed in "View Attached File" -->
-                    <input type="file" id="file-input" style="display: none" onchange="setFilePreview(event)">
-                    
+                    <input type="file" id="file-input" accept=".pdf,.doc,.docx,image/*" style="display: none" onchange="setFilePreview(event)">
                     <a id="attached-link" href="javascript:void(0)" class="attached-link" onclick="chooseOrViewFile()">
-                        View Attached File
-                    </a>
+                        View Attached File </a>
+                    <span id="seen-status" class="status unseen"> </span>
+                    <div id="preview-container"> </div>
                 </div>
             </div>
 
@@ -110,28 +109,5 @@
             </div>
         </aside>
     </div>
-<script>
-    let fileUrl = null; 
-        function chooseOrViewFile() {
-        if (fileUrl) {
-            window.open(fileUrl, '_blank');
-        } else {
-            alert("Employee doesn't have any attached file.");
-        }
-        }
-
-        function setFilePreview(event) {
-        const fileInput = event.target;
-
-        if (fileInput.files.length > 0) {
-            const file = fileInput.files[0];
-            fileUrl = URL.createObjectURL(file);
-            document.getElementById('attached-link').textContent = file.name;
-        } else {
-            fileUrl = null;
-            document.getElementById('attached-link').textContent = "View Attached File";
-        }
-        }
-</script>
 </body>
 </html>
