@@ -4,8 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-class Admin extends Authenticatable
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Notifications\Notifiable;
+
+class Admin extends Authenticatable implements MustVerifyEmail
 {
+    use Notifiable;
     protected $primaryKey = 'admin_id';
     public $incrementing = false;
     protected $keyType = 'string';
@@ -27,5 +31,16 @@ class Admin extends Authenticatable
         'barangay',
         'street',
         'house_number',
+        'email_verified_at'
+    ];
+
+    protected $hidden = [
+        'password',
+//        'remember_token',
+        'tin'
+    ];
+
+    protected $casts = [
+        'email_verified_at' => 'datetime',
     ];
 }

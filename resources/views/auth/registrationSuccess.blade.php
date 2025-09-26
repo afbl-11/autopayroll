@@ -16,8 +16,12 @@
 {{--        should have an image beside welcome--}}
         <h3>Welcome to AutoPayroll!!</h3>
         <h6>Your account has been created successfully. We’re excited to help you save time and streamline your payroll process.</h6>
-        <p>Log in now and take the first step toward stress-free payroll management.</p>
-        <a class="button-filled" href="{{route('login')}}">Continue to Login</a>
+        <p>Please verify email now to sign-in to your account.</p>
+        <form action="{{route('login')}}" method="get">
+            @csrf
+            <button type="submit" class="button-filled">Verify email</button>
+        </form>
+
     </div>
 </body>
 </html>

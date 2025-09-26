@@ -3,16 +3,16 @@
 namespace App\Services\Auth;
 use App\Models\Admin;
 use App\Services\GenerateId;
-use Carbon\Carbon;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
 
 class AdminRegistration
 {
 
- public function __construct(
-     protected GenerateId $generateId
- )
- {}
+    public function __construct(
+        protected GenerateId $generateId
+    )
+    {}
 
     public function processStep1(array $data): void
     {
@@ -27,6 +27,9 @@ class AdminRegistration
         $data['admin_id'] = $this->generateId->generateId(Admin::class, 'admin_id');
 
         $admin = Admin::create($data);
+
+        event(new Registered($admin));
+
         session()->forget('register.personal');
 
         return $admin;

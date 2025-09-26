@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('barangay');
             $table->string('street');
             $table->string('house_number')->nullable();
+            $table->string('email_verified_at')->nullable();
 
             $table->timestamps();
         });
