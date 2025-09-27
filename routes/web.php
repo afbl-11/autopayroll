@@ -38,7 +38,7 @@ Route::get('/dashboard', [DashboardController::class, 'showDashboard'])
 //logout
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 
-/**company registration*/
+/**company registration TODO:protect route */
 Route::post('/client/onboarding', [ClientRegistrationController::class, 'register'])->name('onboarding.client');
 Route::get('client/register', [ClientRegistrationController::class, 'showForm'])->name('register.client');
 
