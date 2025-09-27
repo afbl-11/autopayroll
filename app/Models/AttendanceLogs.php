@@ -20,7 +20,7 @@ class AttendanceLogs extends Model
         'clock_out_latitude'
     ];
 
-    protected $cast = [
+    protected $casts = [
         'clock_in_time' => 'datetime',
         'clock_out_time' => 'datetime',
         'clock_in_latitude' => 'decimal:8',

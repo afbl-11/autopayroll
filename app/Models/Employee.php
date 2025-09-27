@@ -61,12 +61,6 @@ class Employee extends Model
         return $this->belongsTo(Schedule::class, 'schedule_id', 'schedule_id');
     }
 
-    public function leaveRequests() {
-        return $this->hasMany(LeaveRequest::class, 'employee_id', 'employee_id');
-    }
 
-    public function payrolls() {
-        return $this->hasMany(Payroll::class, 'payroll_id', 'payroll_id');
-    }
 
 }
