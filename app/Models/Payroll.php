@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Payroll extends Model
 {
+    use HasFactory;
     protected $primaryKey = 'payroll_id';
     public $incrementing = false;
     protected $keyType = 'string';
@@ -26,7 +28,7 @@ class Payroll extends Model
         'night_differential',
         'overtime',
         'pay_date',
-        'status'
+        'status' //paid, unpaid dinhi makukuha an paid employees ha dashboard
     ];
 
     protected $casts = [

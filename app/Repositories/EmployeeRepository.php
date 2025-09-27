@@ -34,6 +34,9 @@ class EmployeeRepository
     public function getEmployees() {
         return Employee::all();
     }
+    public function countEmployees() {
+        return Employee::count();
+    }
 
     public function getEmployeeById($id) {
         return Employee::find($id);

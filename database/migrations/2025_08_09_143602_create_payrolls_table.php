@@ -48,7 +48,7 @@ return new class extends Migration
 
             $table->date('pay_date');
             $table->enum('status', ['released','processing']);
-
+//TODO: make a get function that will get the status, and count the employees
             $table->timestamps();
         });
     }

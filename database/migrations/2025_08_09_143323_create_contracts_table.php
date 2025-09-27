@@ -22,6 +22,7 @@ return new class extends Migration
 
             $table->date('signed_date');
             $table->date('end_date');
+            $table->timestamps();
         });
     }
 

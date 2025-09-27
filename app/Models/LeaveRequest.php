@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class LeaveRequest extends Model
 {
+    use HasFactory;
     protected $primaryKey = 'leave_request_id';
     public $incrementing = false;
     protected $keyType = 'string';
