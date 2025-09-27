@@ -2,19 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\Company;
+use App\Models\Admin;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
-
-class CompaniesTableSeeder extends Seeder
+class AdminSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-     Company::factory()->count(3)->create();
+        Admin::factory()->count(2)->create();
     }
 }

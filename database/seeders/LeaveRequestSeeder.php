@@ -2,19 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\Company;
+use App\Models\LeaveRequest;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
-
-class CompaniesTableSeeder extends Seeder
+class LeaveRequestSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-     Company::factory()->count(3)->create();
+        LeaveRequest::factory()->count(10)->create();
     }
 }
