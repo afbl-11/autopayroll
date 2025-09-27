@@ -26,7 +26,7 @@ class Payroll extends Model
         'night_differential',
         'overtime',
         'pay_date',
-        'status'
+        'status' //paid, unpaid dinhi makukuha an paid employees ha dashboard
     ];
 
     protected $casts = [

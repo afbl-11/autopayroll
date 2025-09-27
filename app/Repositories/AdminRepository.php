@@ -3,12 +3,16 @@
 namespace App\Repositories;
 
 use App\Models\Admin;
+use Illuminate\Support\Facades\Auth;
 
 class AdminRepository
 {
     public function create(array $data)
     {
         return Admin::create($data);
+    }
+    public function signedAdmin() {
+        return Auth::guard('admin')->user();
     }
 
     public function update(array $data, $id)
