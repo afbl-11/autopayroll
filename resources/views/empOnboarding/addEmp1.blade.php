@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AutoPayroll Employee Onboarding</title>
-         @vite(['resources/css/empOnboarding/addEmp1.css', 'resources/js/app.js'])
+         @vite(['resources/css/empOnboarding/addEmp1.css', 'resources/js/empOnboarding/addEmp.js'])
 </head>
 <body>
   @include('layout.sidebar')
@@ -87,67 +87,5 @@
         <button type ="submit" class="next">Next</button>
     </form> 
   </div>
-  <script>
-    document.getElementById('date-Of-birth').addEventListener('blur', function() {
-        const dateOfbirth = new Date(this.value);
-        if (isNaN(dateOfbirth)) return;
-        
-        const today = new Date();
-
-        if (dateOfbirth > today) {
-            document.getElementById('age').value = '';
-            alert("Date of birth cannot be in the future.");
-            return;
-        }
-
-        const date = Date.now() - dateOfbirth.getTime();
-        const ageDate = new Date(date);
-        const age = Math.abs(ageDate.getUTCFullYear() - 1970);
-        document.getElementById('age').value = age;
-
-        if (age < 15) {
-            document.getElementById('date-Of-birth').value = '';
-            document.getElementById('age').value = '';
-            alert("The hired employee does not meet the required minimum age standards for employment.");
-            return;
-        }
-        
-        if (age > 65) {
-            document.getElementById('date-Of-birth').value = '';
-            document.getElementById('age').value = '';
-            alert("The hired employee is beyond the suitable age range for employment."); //inassume ko lang ito sa age range.
-            return;
-        }
-    });
-
-    document.getElementById('age').addEventListener('change', function() {
-       const dateOfbirthInput = document.getElementById('date-Of-birth');
-
-       if (!dateOfbirthInput.value.trim()) {
-          alert("Please enter the employee's date of birth first.");
-          this.value = '';
-          dateOfbirthInput.focus();
-          return;
-       }
-
-    });
-
-    const currentStep = 1;
-    const steps= document.querySelectorAll('.steps');
-    const lines = document.querySelectorAll('.line');
-    steps.forEach(step => {
-        const stepNum = parseInt(step.dataset.step);
-        if (stepNum <= currentStep) {
-            step.querySelector('img').src = "{{ asset('images/verified.png') }}";
-        }
-    });
-    lines.forEach(line => {
-        const lineNum = parseInt(line.dataset.step);
-        if (lineNum <= currentStep) {
-            line.classList.add('active-line');
-        }
-    });
-
- </script>
 </body>
 </html>

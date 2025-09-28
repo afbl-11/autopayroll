@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AutoPayroll Employee Onboarding</title>
-         @vite(['resources/css/empOnboarding/addEmp2.css', 'resources/js/app.js'])
+         @vite(['resources/css/empOnboarding/addEmp2.css', 'resources/js/empOnboarding/addEmp.js'])
 </head>
 <body>
-  @include('layout.sidebar', ['step' => 2])
+  @include('layout.sidebar')
   <div class ="container">
     <div class = "header"><img onclick="" src="{{ asset('images/left-arrow.png') }}"><h2>Add Employee</h2></div>
-    @include('layout.steps')
+    @include('layout.steps', ['step' => 2])
     <form class="form" action="" method="GET">
     <div class = "content">
         <div class="residentialAddress formGroup">
@@ -41,22 +41,5 @@
         <button type ="submit" class="next">Next</button>
     </form> 
   </div>
-<script>
-    const currentStep = 2;
-    const steps= document.querySelectorAll('.steps');
-    const lines = document.querySelectorAll('.line');
-    steps.forEach(step => {
-        const stepNum = parseInt(step.dataset.step);
-        if (stepNum <= currentStep) {
-            step.querySelector('img').src = "{{ asset('images/verified.png') }}";
-        }
-    });
-    lines.forEach(line => {
-        const lineNum = parseInt(line.dataset.step);
-        if (lineNum <= currentStep) {
-            line.classList.add('active-line');
-        }
-    });
-</script>
 </body>
 </html>

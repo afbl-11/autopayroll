@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AutoPayroll Employee Onboarding</title>
-         @vite(['resources/css/empOnboarding/addEmp3.css', 'resources/js/app.js'])
+         @vite(['resources/css/empOnboarding/addEmp3.css', 'resources/js/empOnboarding/addEmp.js'])
 </head>
 <body>
   @include('layout.sidebar')
   <div class ="container">
     <div class = "header"><img onclick="" src="{{ asset('images/left-arrow.png') }}"><h2>Add Employee</h2></div>
-    @include('layout.steps')
+    @include('layout.steps', ['step' => 3])
     <form class="form" action="" method="GET">
     <div class = "content">
         <div class="head">
@@ -56,11 +56,18 @@
         <div class="row2">
             <div class = "uploadDocuments formGroup">
                 <label for="uploadDocuments">Upload Documents <span class="required">*</span></label><br>
-                <input type="text" id="uploadDocuments" name="uploadDocuments" readonly />
+                <div class="file-wrapper">
+                    <input type="text" id="uploadDocuments" name="uploadDocuments" readonly />
+                    <span id="seenIndicator" class="indicator unseen" hidden>Unseen</span>
+                    <span id="removeFile" class="remove-btn" hidden>&times;</span>
+                </div>
             </div>
             <div class = "wrapper2">
             <button type="button" class="browse formGroup">Browse</button>
             </div>
+        </div>
+        <div id="filePreview" class="file-preview" hidden>
+            <div id="previewContent"></div>
         </div>
         </div>
         <div class="next-con">
@@ -68,60 +75,5 @@
         </div>
     </form> 
   </div>
-  <script>
-    const empButtons = document.querySelectorAll('.emp-buttons .type');
-    let selectedType = null;
-
-    empButtons.forEach(button => {
-        button.addEventListener('click', () => {
-
-            if (button.classList.contains('type-selected')) {
-                button.classList.remove('type-selected');
-                selectedType = null;
-                console.log('Deselected Employment Type');
-            } else {
-                empButtons.forEach(btn => btn.classList.remove('type-selected'));
-                button.classList.add('type-selected');
-                selectedType = button.textContent.trim();
-                console.log('Selected Employment Type:', selectedType);
-            }
-        });
-    });
-
-    const browseButton = document.querySelector('.browse');
-    const uploadInput = document.getElementById('uploadDocuments');
-
-    const hiddenFileInput = document.createElement('input');
-    hiddenFileInput.type = 'file';
-    hiddenFileInput.style.display = 'none';
-    document.body.appendChild(hiddenFileInput);
-
-    browseButton.addEventListener('click', () => {
-        hiddenFileInput.click();
-    });
-
-    hiddenFileInput.addEventListener('change', () => {
-        if (hiddenFileInput.files.length > 0) {
-            const fileName = hiddenFileInput.files[0].name;
-            uploadInput.value = fileName;
-        }
-    });
-
-    const currentStep = 3;
-    const steps= document.querySelectorAll('.steps');
-    const lines = document.querySelectorAll('.line');
-    steps.forEach(step => {
-        const stepNum = parseInt(step.dataset.step);
-        if (stepNum <= currentStep) {
-            step.querySelector('img').src = "{{ asset('images/verified.png') }}";
-        }
-    });
-    lines.forEach(line => {
-        const lineNum = parseInt(line.dataset.step);
-        if (lineNum <= currentStep) {
-            line.classList.add('active-line');
-        }
-    });
- </script>
 </body>
 </html>
