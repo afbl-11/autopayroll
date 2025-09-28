@@ -11,7 +11,7 @@
   <div class ="container">
     <div class = "header"><img onclick="" src="{{ asset('images/left-arrow.png') }}"><h2>Add Employee</h2></div>
     @include('layout.steps', ['step' => 2])
-    <form class="form" action="" method="GET">
+    <form class="form" action="" method="POST">
     <div class = "content">
         <div class="residentialAddress formGroup">
                 <label for= "fn">Residential Address <span class="required">*</span></label><br>

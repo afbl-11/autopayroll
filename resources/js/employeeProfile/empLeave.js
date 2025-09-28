@@ -66,10 +66,10 @@ function setFilePreview(event) {
         iframe.style.height = '60vh';
         iframe.setAttribute('title', fileName + ' preview');
         previewContainer.appendChild(iframe);
-    } else if (fileType === 'doc' || fileType === 'docx') {
-        const msg = document.createElement('p');
-        msg.textContent = `Preview is not available for .${fileType}. Use download below.`;
-        previewContainer.appendChild(msg);
+    } else if (fileName.endsWith(".doc") || fileName.endsWith(".docx")) {
+        const iframe = document.createElement('iframe');
+        iframe.src = "https://view.officeapps.live.com/op/embed.aspx?src=" + encodeURIComponent("https://yourdomain.com/uploads/" + fileName);
+        previewContainer.appendChild(iframe);
         const dl = document.createElement('a');
         dl.href = fileUrl;
         dl.download = fileName;

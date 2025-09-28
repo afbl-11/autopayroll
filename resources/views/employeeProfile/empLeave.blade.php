@@ -71,7 +71,7 @@
                     <span id="seen-status" class="status unseen"> </span>
                     <div id="preview-container"> </div>
                 </div>
-            </div>
+            </div> 
 
             <aside class="leave-details-card">
             <div class="detail">

@@ -11,7 +11,7 @@
   <div class ="container">
     <div class = "header"><img onclick="" src="{{ asset('images/left-arrow.png') }}"><h2>Add Employee</h2></div>
     @include('layout.steps', ['step' => 5])
-    <form class="form" action="" method="GET">
+    <form class="form" action="" method="POST">
     <div class = "content">
         <h3>BASIC INFORMATION</h3>
         <div class="head">
@@ -135,7 +135,7 @@
             <input type="password" id="password" readonly /> 
         </div>
         </div>
-        
+
         <button type ="submit" class="confirm">Confirm</button>
     </form> 
   </div>

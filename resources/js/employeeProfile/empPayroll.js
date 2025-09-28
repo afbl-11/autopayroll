@@ -191,12 +191,16 @@ document.addEventListener("keydown", function (e) {
         e.preventDefault();
         if (idx > 0) {
             inputs[idx - 1].focus();
+            let val = inputs[idx - 1].value;
+            inputs[idx - 1].setSelectionRange(val.length, val.length);
         }
     }
     if (e.key === "ArrowDown") {
         e.preventDefault();
         if (idx < inputs.length - 1) {
             inputs[idx + 1].focus();
+            let val = inputs[idx + 1].value;
+            inputs[idx + 1].setSelectionRange(val.length, val.length);
         }
     }
 });
