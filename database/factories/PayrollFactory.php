@@ -4,6 +4,8 @@ namespace Database\Factories;
 
 use App\Models\Payroll;
 use App\Models\Employee;
+use App\Models\PayrollPeriod;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PayrollFactory extends Factory
@@ -13,6 +15,7 @@ class PayrollFactory extends Factory
     public function definition()
     {
         $employee = Employee::inRandomOrder()->first();
+        $payroll_period = PayrollPeriod::inRandomOrder()->first();
 
         $periodStart = $this->faker->dateTimeBetween('-2 months', 'now');
         $periodEnd = (clone $periodStart)->modify('+14 days');
@@ -21,8 +24,7 @@ class PayrollFactory extends Factory
         $payDateEnd = $periodEnd > $now ? $now : $periodEnd;
 
         $rate = $this->faker->randomFloat(2, 200, 1000); // daily rate
-        $totalWorkDays = $this->faker->numberBetween(10, 15);
-        $grossSalary = $rate * $totalWorkDays;
+        $grossSalary = $rate * 10;
 
         $pagIbig = $grossSalary * 0.02;
         $sss = $grossSalary * 0.045;
@@ -41,11 +43,9 @@ class PayrollFactory extends Factory
         $payDateStart = $periodStart > $payDateEnd ? $payDateEnd : $periodStart;
 
         return [
-            'payroll_id' => $this->faker->uuid(),
+            'payroll_id' => Carbon::now()->year . str_pad(rand(1, 9999), 4, '0', STR_PAD_LEFT),
             'employee_id' => $employee ? $employee->employee_id : $this->faker->uuid(),
-            'period_start_date' => $periodStart->format('Y-m-d'),
-            'period_end_date' => $periodEnd->format('Y-m-d'),
-            'total_work_days' => $totalWorkDays,
+            'payroll_period_id' => $payroll_period ? $payroll_period->payroll_period_id : $this->faker->uuid(),
             'rate' => $rate,
             'gross_salary' => $grossSalary,
             'net_pay' => $netPay,

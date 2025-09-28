@@ -31,10 +31,10 @@ class AttendanceRepository
         return AttendanceLogs::find($id);
     }
 
-    public function getByEmployee($employeeId)
-    {
-        return AttendanceLogs::where('employee_id', $employeeId)->get();
-    }
+//    public function getByEmployee($employeeId)
+//    {
+//        return AttendanceLogs::where('employee_id', $employeeId)->get();
+//    }
 
     public function getByDate($date)
     {
@@ -43,9 +43,17 @@ class AttendanceRepository
             ->get();
     }
 
+    public function getClockIn($date) {
+        return AttendanceLogs::WhereDate('clock_in_time', $date)->get();
+    }
+    public function getClockOut($date) {
+        return AttendanceLogs::where('clock_out_time', $date)->get();
+    }
+
     public function getAll()
     {
         return AttendanceLogs::all();
+        //returns a collection of attendance logs
     }
 
     public function getByStatus($status)
