@@ -20,11 +20,14 @@ return new class extends Migration
                 ->on('employees')
                 ->onDelete('cascade');
 
-            // payroll period
-            $table->date('period_start_date');
-            $table->date('period_end_date');
+            $table->string('payroll_period_id');
+            $table->foreign('payroll_period_id')
+                ->references('payroll_period_id')
+                ->on('payroll_periods')
+                ->onDelete('cascade');
 
-            $table->integer('total_work_days');
+            $table->unique(['employee_id', 'payroll_period_id']);
+
             $table->decimal('rate', 10 ,2);
 
             // salary
@@ -48,7 +51,7 @@ return new class extends Migration
 
             $table->date('pay_date');
             $table->enum('status', ['released','processing']);
-//TODO: make a get function that will get the status, and count the employees
+
             $table->timestamps();
         });
     }
