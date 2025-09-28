@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\AdminRegistrationController;
+use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\ClientRegistrationController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EmployeeDashboardController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -58,8 +60,12 @@ Route::post('/email/verification-notification', function (Request $request) {
 })->middleware(['auth:admin', 'throttle:6,1'])->name('verification.send');
 
 
-
-
+//web linking
+Route::get('/employees/register=1', [EmployeeDashboardController::class, 'index'])->name('employee.register');
+Route::get('/employees/register=2', [EmployeeDashboardController::class, 'showStep2'])->name('employee.register.2');
+Route::get('/employees/register=3', [EmployeeDashboardController::class, 'showStep3'])->name('employee.register.3');
+Route::get('/employees/register=4', [EmployeeDashboardController::class, 'showStep4'])->name('employee.register.4');
+Route::get('/employees/register=5', [EmployeeDashboardController::class, 'showStep5'])->name('employee.register.5');
 
 
 
