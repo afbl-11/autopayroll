@@ -63,12 +63,16 @@ class PayrollRepository
         return Payroll::where('employee_id', $employeeId)->sum('net_pay');
     }
 
-    public function getTotalDeductionsByEmployee($employeeId)
+    public function getTotalDeductions()
     {
-        return Payroll::where('employee_id', $employeeId)
-                ->sum('pag_ibig_deductions')
-            + Payroll::where('employee_id', $employeeId)->sum('sss_deductions')
-            + Payroll::where('employee_id', $employeeId)->sum('late_deductions')
-            + Payroll::where('employee_id', $employeeId)->sum('cash_bond');
+        return Payroll::sum('pag_ibig_deductions')
+            + Payroll::sum('sss_deductions')
+            + Payroll::sum('late_deductions')
+            + Payroll::sum('cash_bond');
+    }
+
+
+    public function getTotalGrossSalary() {
+        return Payroll::sum('gross_salary');
     }
 }

@@ -29,6 +29,3 @@
 </body>
 </html>
 
-{{--TODO: setup email service in hostinger
-after verificatioon sucess we will automatically go to the registration success page where it will redirect us to login
---}}

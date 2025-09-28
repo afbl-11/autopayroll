@@ -30,4 +30,8 @@ class Company extends Model
         'latitude',
         'longitude',
     ];
+    public function employees()
+    {
+        return $this->hasMany(Employee::class, 'company_id', 'company_id');
+    }
 }

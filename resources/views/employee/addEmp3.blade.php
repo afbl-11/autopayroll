@@ -12,7 +12,7 @@
     <div class="header"><a href=""><img src="{{ asset('images/left-arrow.png') }}"></a>
         <h2>Add Employee</h2></div>
     @include('partitions.steps')
-    <form class="form" action="" method="POST">
+    <form class="form" action="{{route('employee.register.4')}}" method="get">
         <div class="content">
             <div class="head">
                 <div class="companyDesignation formGroup">

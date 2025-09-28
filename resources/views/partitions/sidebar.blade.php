@@ -1,23 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AutoPayroll Employee Onboarding</title>
-         @vite(['resources/css/includes/sidebar.css', 'resources/js/app.js'])
-</head>
-<body>
-    <div class = "sidebar">
-        <div class="logo"><span class="a">A</span><span class="p">P</span></div>
-        <nav>
-            <ul>
-                <li><a href="#"><img src="{{ asset('images/home.png') }}" id="img1"><span><p>Home</p></span></a></li>
-                <li><a href="#"><img src="{{ asset('images/emp.png') }}"><span><p>Employee</p></span></a></li>
-                <li><a href="#"><img src="{{ asset('images/compliance.png') }}"><span><p>Compliance</p></span></a></li>
-                <li><a href="#"><img src="{{ asset('images/notif.png') }}"><span><p>Notifications</p></span></a></li>
-                <li><a href="#"><img src="{{ asset('images/admin_dashboard.png') }}"><span><p>Admin</p></span></a></li>
-            </ul>
-        </nav>
+<div class="sidebar">
+    <div class="sidebar-logo">
+        A<span>P</span>
     </div>
-</body>
-</html>
+
+    <nav class="nav-menu">
+        <ul>
+            <li>
+                <a href="#">
+                    <img src="{{ asset('assets/navigations/home.png') }}" alt="Home Icon">
+                </a>
+            </li>
+            <li>
+                <a href="{{route('employee.register')}}">
+                    <img src="{{ asset('assets/navigations/employee.png') }}" alt="Employee Icon">
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="{{ asset('assets/navigations/compliance.png') }}" alt="Compliance Icon">
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="{{ asset('assets/navigations/bell.png') }}" alt="Notifications Icon">
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="{{ asset('assets/navigations/settings.png') }}" alt="Settings Icon">
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="logout">
+        <form action="{{route('logout')}}" method="post">
+        <button type="submit" class="button-logout">Logout</button>
+        </form>
+    </div>
+</div>

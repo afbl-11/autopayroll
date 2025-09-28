@@ -1,16 +1,13 @@
 body {
    display: flex;
+    height: 100%;
 }
 .container {
     width: 100%;
     padding: 0 30px 0 30px;
 
 }
-.sidebar {
-    width: 99px;
-    height: 100vh;
-    background: var(--clr-indigo);
-}
+
 nav {
     height: 142px;
     display: flex;
@@ -21,7 +18,7 @@ nav {
 nav h4 {
     margin-bottom: 28px;
 }
-.main-content {
+.main {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -55,7 +52,8 @@ display: flex;
     width: 100%;
     height: 120px;
     border-left: 1px solid var(--clr-secondary);
-    padding-left: 28px ;
+    padding-left: 15px ;
+    text-align: left;
 }
 .table-item:first-of-type{
     border:none;
@@ -68,3 +66,102 @@ display: flex;
     text-align: center;
     padding-top: 30px;
 }
+
+.content {
+
+}
+
+.section {
+    margin-top: 30px;
+    display: flex;
+    /*background: var(--clr-indigo);*/
+    width: 1000px;
+    height: auto;
+    gap: 30px;
+}
+.attendance-overview {
+    border-radius: 8px;
+    background: var(--clr-card-surface);
+    width: 35%;
+    height: 100%;
+    padding: 20px;
+}
+
+
+.attendance-data h6 {
+    color: var(--clr-secondary);
+    margin-bottom: 20px;
+}
+.attendance-data {
+    margin-top: 20px;
+    border-bottom: 1px solid var(--clr-muted);
+}
+.value {
+    margin-left: 20px;
+}
+
+.manpower-distribution {
+    border-radius: 8px;
+    background: var(--clr-card-surface);
+    width: 65%;
+    height: 528px;
+    padding: 20px;
+    overflow: hidden;
+}
+.table-headers {
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr;
+    border-bottom: 2px solid var(--clr-muted)   ;
+    padding-bottom: 5px;
+    margin-top: 20px;
+}
+
+.company-cards {
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--clr-muted);
+}
+
+.company-cards .card-data {
+    padding: 5px 10px;
+}
+.company-cards-wrapper {
+    margin-top: 20px;
+    max-height: 400px;
+    overflow-y: auto;
+    border-radius: 8px;
+    padding: 5px;
+
+}
+
+.company-cards-wrapper::-webkit-scrollbar {
+    width: 6px;
+}
+
+.company-cards-wrapper::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 3px;
+}
+.leave-requests {
+    padding: 12px;
+    background: var(--clr-card-surface);
+    margin-top: 30px;
+    height: 319px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+.requests-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+
+
+

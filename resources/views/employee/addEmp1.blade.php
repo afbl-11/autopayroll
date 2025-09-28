@@ -4,15 +4,15 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>AutoPayroll Employee Onboarding</title>
-    @vite(['resources/css/employee admin_dashboard registration/addEmp1.css', 'resources/js/app.js'])
+    @vite(['resources/css/employee_registration/addEmp1.css', 'resources/js/app.js','resources/css/includes/sidebar.css'])
 </head>
 <body>
 @include('partitions.sidebar')
 <div class="container">
     <div class="header"><a href="#"><img src="{{ asset('images/left-arrow.png') }}"></a>
         <h2>Add Employee</h2></div>
-    @include('partitions.steps', ['step' => 1])
-    <form class="form" action="" method="POST">
+{{--    @include('partitions.steps', ['step' => 1])--}}
+    <form class="form" action="{{route('employee.register.2')}}" method="get">
         <div class="content">
             <div class="head">
                 <div class="firstName formGroup">

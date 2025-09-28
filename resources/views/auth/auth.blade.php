@@ -8,32 +8,34 @@
 </head>
 <body>
     <div class = "logo">
-        <span class="auto">Auto</span><span class="payroll">Payroll</span>
+       <h1 class="logo" id="logo">Auto<span>Payroll</span></h1>
     </div>
   <div class ="container">
-    <h1 class ="header">Welcome Back!</h1>
+        <div class="sign-in-wrapper">
+            <h3 class="header">Welcome Back!</h3>
 
-    <form class="form" action="{{route('login.admin')}}" method="post" >
-        @csrf
-        <div class="l1">
-            <label for= "email">Email or Username </label> <br>
-            <input type="text" name="email" id="email" required />
-            @error('email')
-            <span class="error">{{ $message }}</span>
-            @enderror
+            <form class="form" action="{{route('login.admin')}}" method="post">
+                @csrf
+                    <div class="l1">
+                        <label for="email">Email or Username </label> <br>
+                        <input type="text" name="email" id="email" required/>
+                        @error('email')
+                        <span class="error">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="l2">
+                        <label for="password">Password </label> <br>
+                        <div class="wrapper">
+                            <input type="password" name="password" id="password" required/>
+                            <span class="toggleEye" onclick="togglePassword()">👁</span> <br>
+                        </div>
+                        <a class="forgot" href="./authverify.blade.php">Forgot Password?</a>
+                    </div>
+
+                <button type="submit" class="signIn">Sign In</button>
+            </form>
         </div>
-
-        <div class="l2">
-            <label for="password">Password </label> <br>
-                <div class = "wrapper">
-                    <input type="password" name="password" id="password" required />
-                    <span class="toggleEye" onclick="togglePassword()">👁</span> <br>
-                </div>
-            <a class = "forgot" href="./authverify.blade.php">Forgot Password?</a>
-        </div>
-
-        <button type ="submit" class="signIn" >Sign In</button>
-    </form>
 
   </div>
   <script>
