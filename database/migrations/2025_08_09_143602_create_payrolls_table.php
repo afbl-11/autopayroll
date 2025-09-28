@@ -24,7 +24,7 @@ return new class extends Migration
             $table->date('period_start_date');
             $table->date('period_end_date');
 
-            $table->integer('total_work_days');
+            $table->integer('total_work_days'); //should be foreign key
             $table->decimal('rate', 10 ,2);
 
             // salary
