@@ -25,6 +25,8 @@ return new class extends Migration
             $table->string('zip');
             $table->string('industry');
             $table->string('tin_number');
+            $table->decimal('latitude', 10, 7);
+            $table->decimal('longitude', 10, 7);
             $table->timestamps();
         });
     }

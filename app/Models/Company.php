@@ -26,6 +26,8 @@ class Company extends Model
         'house_number',
         'zip',
         'industry',
-        'tin_number'
+        'tin_number',
+        'latitude',
+        'longitude',
     ];
 }
