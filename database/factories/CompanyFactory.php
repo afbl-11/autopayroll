@@ -36,6 +36,8 @@ class CompanyFactory extends Factory
             'zip' => $this->faker->postcode,
             'industry' => $this->faker->randomElement(['IT', 'Manufacturing', 'Retail', 'Finance', 'Services']),
             'tin_number' => $this->faker->numerify('###-###-###-###'),
+            'latitude'     => $this->faker->latitude(5, 20),
+            'longitude'    => $this->faker->longitude(115, 126),
         ];
     }
 }

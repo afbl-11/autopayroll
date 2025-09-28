@@ -14,9 +14,7 @@ class Payroll extends Model
 
     protected $fillable = [
         'employee_id',
-        'period_start',
-        'period_end',
-        'total_work_days',
+        'payroll_period_id',
         'rate',
         'gross_salary',
         'net_pay',
@@ -28,12 +26,10 @@ class Payroll extends Model
         'night_differential',
         'overtime',
         'pay_date',
-        'status' //paid, unpaid dinhi makukuha an paid employees ha dashboard
+        'status'
     ];
 
     protected $casts = [
-        'period_start' => 'date',
-        'period_end' => 'date',
         'rate' => 'decimal:8',
         'gross_salary' => 'decimal:8',
         'net_pay' => 'decimal:8',
@@ -49,5 +45,8 @@ class Payroll extends Model
 
     public function employee() {
         return $this->belongsTo(Employee::class, 'employee_id', 'employee_id');
+    }
+    public function payrollPeriod() {
+        return $this->belongsTo(PayrollPeriod::class, 'payroll_period_id', 'payroll_period_id');
     }
 }
