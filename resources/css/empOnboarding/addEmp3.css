@@ -290,7 +290,20 @@ h2 {
     border-radius: 5px;
     object-fit: contain;
 } 
- 
+
+#previewContent iframe { 
+    border: 0;
+}
+
+.wrapper-iframe {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 @media screen and (max-width: 1700px){
 
     body {
@@ -454,7 +467,6 @@ h2 {
     .next { 
         margin-left: 375px;
     }
-
 }
 
 @media screen and (max-width: 870px){
@@ -472,7 +484,7 @@ h2 {
         font-size: 11px;
         width: 120px;
         height: 45px;
-        margin-right: 10px;
+        margin-right: 0px;
     }
 }
 
@@ -484,14 +496,14 @@ h2 {
 
 @media screen and (max-width: 700px) {
     .container {
-        width: 70%;
+        width: 67%;
     }
 
     .content {
-        width: 95%;
+        width: 90%;
     }
     
     .next { 
-        margin-left: 150px;
+        margin-left: 125px;
     }
 }

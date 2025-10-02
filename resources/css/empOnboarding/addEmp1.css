@@ -307,14 +307,12 @@ input[type=number] {
 
 @media screen and (max-width: 700px) {
     .container {
-        width: 70%;
+        width: 67%;
     }
-
     .content {
-        width: 95%;
+        width: 90%;
     }
-    
     .next { 
-        margin-left: 150px;
+        margin-left: 125px;
     }
 }

@@ -1,4 +1,51 @@
 (function () {
+    const style = document.createElement('style');
+    style.textContent = `#filePreview {
+    position: relative;
+    }
+    #previewContent { 
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    touch-action: none;
+    }
+    #previewContent img, #previewContent iframe {
+    user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    pointer-events: auto;
+    transform-origin: 0 0;
+    will-change: transform;
+    display: block;
+    max-width: none;
+    max-height: none;
+    }
+    .preview-controls {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: flex;
+    gap: 6px;
+    z-index: 9999;
+    background: rgba(255,255,255,0.9);
+    border-radius: 6px;
+    padding: 6px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    align-items: center;
+    }
+    .preview-controls button {
+    border: 0;
+    background: transparent;
+    padding: 6px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    }
+    .preview-controls button:hover {
+    background: rgba(0,0,0,0.05);
+    }`;
+    document.head.appendChild(style);
+
     const dobEl = document.getElementById('date-Of-birth');
     const ageEl = document.getElementById('age');
 
@@ -104,12 +151,144 @@
         document.body.appendChild(hiddenFileInput);
 
         let uploadedFileURL = null;
+        let activePreviewElement = null;
+        let controlsWrapper = null;
 
         browseButton.addEventListener('click', () => {
           hiddenFileInput.click();
         });
 
-        hiddenFileInput.addEventListener('change', () => {
+        function createPreviewControls(container, targetEl) {
+          if (controlsWrapper) controlsWrapper.remove();
+
+          controlsWrapper = document.createElement('div');
+          controlsWrapper.className = 'preview-controls';
+
+          const btnZoomIn = document.createElement('button');
+          btnZoomIn.title = 'Zoom In'; 
+          btnZoomIn.textContent = '+';
+          const btnZoomOut = document.createElement('button');
+          btnZoomOut.title = 'Zoom Out'; 
+          btnZoomOut.textContent = '-';
+          const btnReset = document.createElement('button');
+          btnReset.title = 'Reset'; 
+          btnReset.textContent = '⟲';
+          const btnDragToggle = document.createElement('button');
+          btnDragToggle.title = 'Toggle Drag'; 
+          btnDragToggle.textContent = '✋';
+
+        controlsWrapper.append(btnZoomOut, btnZoomIn, btnReset, btnDragToggle);
+        container.appendChild(controlsWrapper);
+
+        const state = {
+          scale: 1,
+          minScale: 0.25,
+          maxScale: 8,
+          translateX: 0,
+          translateY: 0,
+          dragging: false,
+          dragEnabled: false,
+          lastClientX: 0,
+          lastClientY: 0,
+        };
+        btnDragToggle.style.opacity = '0.5';
+
+        function updateTransform() {
+          targetEl.style.transform = `translate(${state.translateX}px, ${state.translateY}px) scale(${state.scale})`;
+        }
+
+        function clampScale(s) {
+          return Math.max(state.minScale, Math.min(state.maxScale, s));
+        }
+
+        btnZoomIn.addEventListener('click', () => {
+          state.scale = clampScale(state.scale * 1.15);
+          updateTransform();
+        });
+
+        btnZoomOut.addEventListener('click', () => {
+          state.scale = clampScale(state.scale / 1.15);
+          updateTransform();
+        });
+
+        btnReset.addEventListener('click', () => {
+          state.scale = 1;
+          state.translateX = 0;
+          state.translateY = 0;
+          updateTransform();
+        });
+
+        btnDragToggle.addEventListener('click', () => {
+          state.dragEnabled = !state.dragEnabled;
+          if (targetEl.tagName.toLowerCase() === "iframe" || targetEl.querySelector("iframe")) {
+              const iframe = targetEl.tagName.toLowerCase() === "iframe" ? targetEl : targetEl.querySelector("iframe");
+              iframe.style.pointerEvents = state.dragEnabled ? 'none' : 'auto';
+          }
+          btnDragToggle.style.opacity = state.dragEnabled ? '1' : '0.5';
+        });
+
+        container.addEventListener('wheel', (ev) => {
+          if (filePreview.hidden) return;
+          ev.preventDefault();
+          const delta = -ev.deltaY || ev.wheelDelta;
+          const zoomFactor = delta > 0 ? 1.08 : 1 / 1.08;
+          const rect = targetEl.getBoundingClientRect();
+          const offsetX = ev.clientX - rect.left;
+          const offsetY = ev.clientY - rect.top;
+          const prevScale = state.scale;
+          const nextScale = clampScale(prevScale * zoomFactor);
+          state.translateX = (state.translateX - offsetX) * (nextScale / prevScale) + offsetX;
+          state.translateY = (state.translateY - offsetY) * (nextScale / prevScale) + offsetY;
+          state.scale = nextScale;
+          updateTransform();
+        }, { passive: false });
+
+        targetEl.addEventListener('pointerdown', (ev) => {
+          if (!state.dragEnabled) return;
+          ev.preventDefault();
+          state.dragging = true;
+          targetEl.setPointerCapture(ev.pointerId);
+          state.lastClientX = ev.clientX;
+          state.lastClientY = ev.clientY;
+        });
+
+        targetEl.addEventListener('pointermove', (ev) => {
+          if (!state.dragging) return;
+          ev.preventDefault();
+          const dx = ev.clientX - state.lastClientX;
+          const dy = ev.clientY - state.lastClientY;
+          state.lastClientX = ev.clientX;
+          state.lastClientY = ev.clientY;
+          state.translateX += dx;
+          state.translateY += dy;
+          updateTransform();
+        });
+
+        targetEl.addEventListener('pointerup', (ev) => {
+          if (!state.dragging) return;
+          state.dragging = false;
+          try {
+            targetEl.releasePointerCapture(ev.pointerId);
+          } catch (e) {}
+        });
+
+        targetEl.addEventListener('dblclick', () => {
+          state.scale = 1;
+          state.translateX = 0;
+          state.translateY = 0;
+          updateTransform();
+        });
+
+       return {
+        destroy() {
+          controlsWrapper && controlsWrapper.remove();
+          controlsWrapper = null;
+        },
+        state
+       };
+      }
+    
+      hiddenFileInput.addEventListener('change', () => {
           if (hiddenFileInput.files.length > 0) {
             const file = hiddenFileInput.files[0];
             const fileName = file.name;
@@ -127,22 +306,36 @@
             removeBtn.hidden = false;
             previewContent.innerHTML = "";
             filePreview.hidden = true;
+            activePreviewElement = null;
             if (fileType.startsWith("image/")) {
               const img = document.createElement("img");
               img.src = uploadedFileURL;
               previewContent.appendChild(img);
-              previewContent.appendChild(dl);
+              activePreviewElement = img;
             } else if (fileType === "application/pdf") {
+              const wrapper = document.createElement("div");
+              wrapper.className = "wrapper-iframe";
               const iframe = document.createElement("iframe");
               iframe.src = uploadedFileURL + "#toolbar=0";
-              previewContent.appendChild(iframe);
+              wrapper.appendChild(iframe);
+              previewContent.appendChild(wrapper);
+              activePreviewElement = wrapper;
             } else {
                 const iframe = document.createElement("iframe");
                 iframe.src="https://view.officeapps.live.com/op/embed.aspx?src=" + encodeURIComponent("https://yourdomain.com/uploads/" + fileName);
                 previewContent.appendChild(iframe);
+                activePreviewElement = iframe;
             }
+            setTimeout (() => {
+          if (activePreviewElement) {
+            activePreviewElement.style.transform = 'translate(0px, 0px) scale(1)';
+            activePreviewElement.style.transformOrigin = '0 0';
+            const api = createPreviewControls(filePreview, activePreviewElement);
+            activePreviewElement._previewApi = api;
           }
-        });  
+        }, 30);
+        }
+      });  
 
         uploadInput.addEventListener('click', () => {
           if (!uploadedFileURL) return;
@@ -152,11 +345,13 @@
             seenIndicator.textContent = "Seen";
             seenIndicator.classList.remove("unseen");
             seenIndicator.classList.add("seen");
+            if (controlsWrapper) controlsWrapper.style.display = 'flex';
           } else {
             filePreview.hidden = true;
             seenIndicator.textContent = "Unseen";
             seenIndicator.classList.remove("seen");
             seenIndicator.classList.add("unseen");
+            if (controlsWrapper) controlsWrapper.style.display = 'none';
           }
         });
 
@@ -167,6 +362,10 @@
             URL.revokeObjectURL(uploadedFileURL);
             uploadedFileURL = null;
           }
+          if (activePreviewElement && activePreviewElement._previewApi) {
+            activePreviewElement._previewApi.destroy();
+          }
+          activePreviewElement = null;
           seenIndicator.hidden = true;
           removeBtn.hidden = true;
           filePreview.hidden = true;
