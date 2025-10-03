@@ -6,7 +6,7 @@ body {
     padding: 0;
     display: flex;
     align-items: center;
-    height: 100vh;
+    max-height: calc(100vh - 20px);
     overflow-x: hidden;
 }
 
@@ -23,7 +23,7 @@ body {
 
 .container {
     margin-left: 400px;
-    margin-top: 30vh;
+    margin-top: 33vh;
     justify-content: center;
     width: 1050px;
 }
@@ -85,6 +85,7 @@ h2 {
     vertical-align: middle;
     margin-top: 10px;
     margin-right: 5px;
+    cursor: pointer;
 }
 
 .next {
@@ -316,9 +317,12 @@ input[type=number] {
 
 @media screen and (max-width: 700px) {
     .container {
-        width: 70%;
+        width: 67%;
+    }
+    .content {
+        width: 90%;
     }
     .next { 
-        margin-left: 150px;
+        margin-left: 125px;
     }
 }
