@@ -1,0 +1,351 @@
+body {
+    font-family: Arial;
+    font-size: 12px;
+    background: #fff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 20px);
+    padding-bottom: 40px;
+    
+}
+
+.container {
+    margin-left: 20vh;
+    margin-right: 10vh;
+    margin-top: 20px;
+    width: calc(100% - 25vh); 
+}
+
+h2 {
+    margin-top: 10px;
+    font-size: 32px;
+}
+
+.header {
+    width: 500px;
+    margin-bottom: 100px;
+    gap: 10px;
+}
+
+.navBar {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 80px;
+    padding: 10px 0;
+}
+
+.item {
+    font-size: 13px;
+    color: black;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+   
+}
+
+.item:hover {
+    color: rgb(23, 23, 23);
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.3),
+                 0 0 10px rgba(0, 0, 0, 0.2),
+                 0 0 15px rgba(0, 0, 0, 0.1);
+    transform: scale(1.05);
+}
+
+.divider {
+    border: none;
+    border-top: 1px solid #c4c4c4;
+    margin-bottom: 20px;
+    margin-top: -5px;
+
+}
+
+.dateButton {
+  background-color: black;
+  color: white;
+  font-size: 13px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 2px 5px 5.9px 0 rgba(136, 125, 125, 0.25);
+  border-radius: 16px;
+  width: 108px;
+  height: 33px;
+  text-align: center;
+  transition: 0.2s ease-in-out;
+}
+
+
+.dateDropdown {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 40px;
+}
+
+.dates {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dates a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dates a:hover {
+    background-color: #f1f1f1;
+}
+
+.dateDropdown:hover .dates {
+  display: block;
+}
+
+.dateDropdown:hover .dateButton {
+  background-color: #444444;
+}
+
+.navBar img {
+    width: 25px;
+    height: 25px;
+    
+}
+
+.notifications {
+    background: #F6F5F2;
+    border-radius: 6px;
+    padding: 15px 20px;
+    box-shadow: 2px 5px 5.9px rgba(136, 125, 125, 0.25);
+    margin-bottom: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 10px;
+    height: auto;
+}
+
+notificationName {
+    flex: 0.5;
+    font-size: 24px;
+    padding: 10px;
+}
+
+.notificationContent {
+    flex: 2.5;
+    font-size: 16px;
+    flex-wrap: flex;
+    padding: 10px;
+    color: gray;
+    padding-left: 50px;
+    line-height: 24px;
+    margin-top: 10px;
+    min-width: 250px;
+}
+
+.rightSide {
+    flex: 0 0 auto;
+    padding: 10px;
+    color: gray;
+    text-align: right;
+    padding-right: 20px;
+}
+
+#notifName {
+    margin-top: 45px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+#notifDate {
+    font-size: 14px;
+}
+
+.details {
+    font-size: 14px;
+    display: flex;
+}
+
+.details a {
+    flex: 1;
+    margin-right: -115px;
+    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+    z-index: 1;
+    color: gray;
+    display: inline-flex;
+    gap: 5px;
+    margin: 55px 0 0 0;
+    transition: 0.2s ease-in-out;
+}
+
+.details a:hover {
+    color: rgb(162, 162, 162);
+    transform: scale(1.02);
+}
+
+.textUnderline {
+    text-decoration: underline;
+}
+
+.arrow {
+    font-size: 16px;
+    line-height: 1;
+    text-decoration: none;
+}
+
+@media screen and (max-width: 1300px), screen and (max-height: 700px) {
+    body {
+        flex-direction: column;
+        height: auto;
+        padding: 24px;
+        padding-left: 0;
+        padding-top: 0;
+        align-items: stretch;
+    }
+
+    .container {
+        margin: 20px auto;
+        margin-left: 20vh; 
+    }
+
+    .notifications {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .notificationContent {
+        padding-left: 10px;
+    }
+
+    .rightSide {
+        text-align: left;
+        padding-right: 0;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .details {
+        font-size: 13px;
+    }
+}
+
+@media screen and (max-width: 1500px){
+    .container {
+        width: calc(100% - 15%);
+    }
+}
+
+@media screen and (max-width: 1300px){
+    .container {
+        width: 75%;
+    }
+}
+
+@media screen and (max-width: 850px) {
+
+    .header h2 {
+        font-size: 30px;
+    }
+
+    .container {
+        margin-left: 17.5vh;
+    }
+    
+}
+
+@media screen and (max-width: 780px) {
+    .navBar {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .item {
+        font-size: 12px;
+    }
+
+    .header {
+        margin-bottom: 75px;
+    }
+
+    .navBar img {
+        width: 20px;
+        height: 20px;
+    }
+    
+}
+@media screen and (max-width: 650px) {
+
+    .container {
+        width: 75%;
+    }
+
+    .header h2 {
+        font-size: 22px;
+    }
+
+    #notifName {
+        font-size: 15px;
+    }
+
+    #notifContent {
+        font-size: 15px;
+    }
+  
+    .details {
+        font-size: 11px;
+    }
+
+    .arrow {
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-height: 700px) and (max-width: 1700px){
+    .container{
+        width: 90%;
+        margin: 20px auto auto 130px;
+    }
+}
+
+
+@media screen and (max-height: 700px) and (max-width: 1500px) {
+    .container { 
+        width: 85%;
+    }
+    .content {
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+}
+
+@media screen and (max-height: 700px) and (max-width: 750px) {
+    .container { 
+        width: 75%;
+    } 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

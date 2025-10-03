@@ -1,0 +1,86 @@
+.sidebar {
+    width: 100px;
+    height: 100vh;
+    background: var(--clr-indigo);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+
+    position: sticky;
+    top: 0;
+}
+
+.sidebar-logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--clr-background);
+    margin-top: 40px;
+}
+.sidebar-logo span {
+    color: var(--clr-yellow);
+}
+.nav-menu {
+    height: 100%;
+}
+.nav-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.nav-menu li {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.nav-menu a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: var(--clr-background);
+    font-size: 12px;
+    transition: color 0.2s;
+}
+
+.nav-menu a:hover p {
+    color: var(--clr-yellow);
+}
+
+.nav-menu img {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 30px;
+}
+
+.logout a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: var(--clr-background);
+    font-size: 12px;
+    transition: color 0.2s;
+    margin-bottom: 20px;
+}
+
+.logout a:hover p {
+    color: var(--clr-background);
+}
+
+.logout img {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 5px;
+}
+.button-logout {
+    background: var(--clr-red);
+    outline: none;
+    padding: 10px;
+    border-radius: 200px;
+    border: none;
+}
+
