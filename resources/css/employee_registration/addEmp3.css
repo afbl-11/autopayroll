@@ -6,8 +6,9 @@ body {
     padding: 0;
     display: flex;
     align-items: center;
-    height: 100vh;
+    min-height: calc(100vh - 20px);
     overflow-x: hidden;
+    padding-top: 5px;
 }
 
 .form {
@@ -80,7 +81,7 @@ body {
     margin-left: 400px;
     justify-content: center;
     width: 1050px;
-    margin-top: 30vh;
+    margin-top: 5px;
 }
 
 .content {
@@ -200,6 +201,7 @@ h2 {
     vertical-align: middle;
     margin-top: 10px;
     margin-right: 5px;
+    cursor: pointer;
 }
 
 .next-con{
@@ -226,6 +228,80 @@ h2 {
 
 .next:hover {
     background-color: #ffd84d
+}
+
+.file-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%; 
+}
+
+#uploadDocuments {
+    width: 100%;
+    padding-right: 85px;
+    cursor: pointer;
+}
+
+.remove-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 20px;
+    color: black;
+    padding-bottom: 18px;
+}
+
+.indicator {
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    font-weight: bold;
+    color: gray;
+}
+
+.indicator.unseen {
+    color: red;
+    padding-bottom: 20px;
+}
+
+.indicator.seen {
+    color: green;
+    padding-bottom: 20px;
+}
+
+.file-preview {
+    margin-top: 15px;
+    padding: 10px;
+    border: 1px solid lightgray;
+    border-radius: 8px;
+    background: #f9f9f9;
+    max-height: 600px;
+    overflow: auto;
+}
+
+.file-preview iframe, .file-preview img {
+    width: 100%;
+    height: 500px;
+    border: none;
+    border-radius: 5px;
+    object-fit: contain;
+} 
+
+#previewContent iframe { 
+    border: 0;
+}
+
+.wrapper-iframe {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 @media screen and (max-width: 1700px){
@@ -274,17 +350,15 @@ h2 {
     
     body {
         flex-direction: column;
-        height: auto;
+        max-height: calc(100vh - 20px);
         padding: 20px;
         padding-left: 0;
-        padding-top: 0;
-        align-items: flex-start;
+        align-items: flex-start; 
     }
 
     .container {
         width: 75%;
         margin-left: 290px;
-        margin-top: 30px;
     }
 
     .header {
@@ -375,7 +449,6 @@ h2 {
 @media screen and (max-width: 970px) {
     
     .container {
-        margin-top: 20px;
         display: flex;
         flex-direction: column;
         align-items: flex-start; 
@@ -394,7 +467,6 @@ h2 {
     .next { 
         margin-left: 375px;
     }
-
 }
 
 @media screen and (max-width: 870px){
@@ -412,7 +484,7 @@ h2 {
         font-size: 11px;
         width: 120px;
         height: 45px;
-        margin-right: 10px;
+        margin-right: 0px;
     }
 }
 
@@ -424,9 +496,14 @@ h2 {
 
 @media screen and (max-width: 700px) {
     .container {
-        width: 70%;
+        width: 67%;
     }
+
+    .content {
+        width: 90%;
+    }
+    
     .next { 
-        margin-left: 150px;
+        margin-left: 125px;
     }
 }

@@ -6,7 +6,7 @@ body {
     padding: 0;
     display: flex;
     align-items: center;
-    height: 100vh;
+    max-height: calc(100vh - 20px);
     overflow-x: hidden;
 }
 
@@ -25,7 +25,7 @@ body {
     margin-left: 400px;
     justify-content: center;
     width: 1050px;
-    margin-top: 40vh;
+    margin-top: 43vh;
 }
 
 .content {
@@ -85,6 +85,7 @@ h2 {
     vertical-align: middle;
     margin-top: 10px;
     margin-right: 5px;
+    cursor: pointer;
 }
 
 .next {
@@ -121,7 +122,7 @@ input[type=number] {
     body {
         margin-right: 10px;
     }
-
+    
     .container {
         margin-left: 390px;
     }
@@ -149,7 +150,7 @@ input[type=number] {
 }
 
 @media screen and (max-width: 1450px){
-    .next {
+    .next { 
         margin-left: 825px;
     }
 }
@@ -160,7 +161,7 @@ input[type=number] {
         margin-top: 0px;
         margin-left: -90px;
     }
-
+    
     body {
         flex-direction: column;
         height: auto;
@@ -191,7 +192,7 @@ input[type=number] {
         width: 100%;
     }
 
-    .next {
+    .next { 
         margin-left: 800px;
     }
 
@@ -208,66 +209,66 @@ input[type=number] {
 }
 
 @media screen and (max-width: 1370px){
-    .next {
+    .next { 
         margin-left: 775px;
     }
 }
 
 @media screen and (max-width: 1350px){
-    .next {
+    .next { 
         margin-left: 750px;
     }
 }
 
 @media screen and (max-width: 1270px){
-    .next {
+    .next { 
         margin-left: 675px;
     }
 }
 
 @media screen and (max-width: 1250px){
-
+    
     .container {
         margin-left: 230px;
     }
 
-    .next {
+    .next { 
         margin-left: 650px;
     }
 
 }
 
 @media screen and (max-width: 1170px){
-    .next {
+    .next { 
         margin-left: 575px;
     }
 }
 
 @media screen and (max-width: 1150px){
-    .next {
+    .next { 
         margin-left: 550px;
     }
 }
 
 @media screen and (max-width: 1070px){
-    .next {
+    .next { 
         margin-left: 475px;
     }
 }
 
 @media screen and (max-width: 1050px){
-    .next {
+    .next { 
         margin-left: 450px;
     }
 }
 
 @media screen and (max-width: 970px) {
-
+    
     .container {
         margin-top: 20px;
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
+        align-items: flex-start; 
         margin-left: 150px;
     }
 
@@ -280,35 +281,38 @@ input[type=number] {
         gap: 15px;
     }
 
-    .next {
+    .next { 
         margin-left: 375px;
     }
 
 }
 
 @media screen and (max-width: 870px){
-    .next {
+    .next { 
         margin-left: 350px;
     }
 }
 
 @media screen and (max-width: 760px){
-    .next {
+    .next { 
         margin-left: 280px;
     }
 }
 
 @media screen and (max-width: 730px) {
-    .next {
+    .next { 
         margin-left: 230px;
     }
 }
 
 @media screen and (max-width: 700px) {
     .container {
-        width: 70%;
+        width: 67%;
     }
-    .next {
-        margin-left: 150px;
+    .content {
+        width: 90%;
+    }
+    .next { 
+        margin-left: 125px;
     }
 }

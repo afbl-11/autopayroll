@@ -1,0 +1,220 @@
+/* -------------------------------------------------------
+   VARIABLES — tweak these to quickly adjust the UI
+------------------------------------------------------- */
+:root{
+  /* Colors */
+  --bg:            #f6f6f6;
+  --card-bg:       #ffffff;
+  --text:          #222;
+  --th-bg:         #dedcd3;
+  --row-border:    #222;
+  --stroke:        #d9d9d9;
+  --status-green:  #23a24d;
+  --status-orange: #f39a1f;
+  --btn-bg:        #e5e1db;
+
+  /* Typography & spacing */
+  --font-family: Helvetica;
+  --font-size:   14px;     /* table font size */
+  --cell-y:      14px;     /* vertical cell padding */
+  --cell-x:      16px;     /* horizontal cell padding */
+  --radius:      12px;     /* card radius */
+  --page-pad:    24px;     /* page padding */
+
+  /* Column widths (only two are constrained) */
+  --col-days:    80px;     /* Days of Work — narrow, centered */
+  --col-status:  140px;    /* Status column width */
+}
+
+/* -------------------------------------------------------
+   RESET / BASE
+------------------------------------------------------- */
+* { box-sizing: border-box; }
+
+html, body{
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-family);
+}
+
+/* -------------------------------------------------------
+   LAYOUT
+------------------------------------------------------- */
+.page{
+  padding: var(--page-pad);
+  display: grid;
+  place-items: start center;
+  gap: 12px;
+}
+
+.card{
+  background: var(--card-bg);
+  width: min(1200px, 95vw);
+  border-radius: var(--radius);
+  box-shadow: 0 2px 6px rgba(0,0,0,.08);
+  overflow: hidden;
+}
+
+.table-wrap {
+  overflow-x: auto;        /* no horizontal scrollbar */
+  overflow-y: auto;          /* vertical scrollbar only if needed */
+  -webkit-overflow-scrolling: touch;
+  margin: 0;
+
+  max-height: 800px;         /* adjust this depending on how many rows you want visible */
+}
+
+/* -------------------------------------------------------
+   TABLE
+------------------------------------------------------- */
+table{
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;     /* natural widths */
+}
+
+/* Keep table readable on narrow screens */
+table.payroll-table{
+  min-width: 900px;       /* adjust if you add/remove columns */
+}
+
+/* Cells (header + body) */
+thead th,
+tbody td{
+  padding: var(--cell-y) var(--cell-x);
+  border-bottom: 1px solid var(--row-border);
+  vertical-align: middle;
+  white-space: nowrap;
+  font-size: var(--font-size);
+}
+
+.header {
+  width: 100%;
+  margin-right: 0;
+}
+
+
+/* Header */
+thead th{
+  position: sticky;
+  top: 0;
+  background: var(--th-bg);
+  color: #61615a;
+  letter-spacing: .2px;
+  font-weight: 700;
+  border-bottom: 1px solid var(--stroke);
+}
+
+/* Row end */
+tbody tr:last-child td{ border-bottom: none; }
+
+/* -------------------------------------------------------
+   COLUMN ALIGNMENT (independent per column)
+   1: Pay Date        → left
+   2: Days of Work    → centered, fixed width
+   3: Overtime        → right, tabular
+   4: Gross Earning   → right, tabular
+   5: Deductions      → right, tabular
+   6: Net Pay         → right, tabular
+   7: Status          → centered, fixed width
+------------------------------------------------------- */
+
+/* Column 1: Pay Date */
+thead th:nth-child(1),
+tbody td:nth-child(1){
+  text-align: center;
+}
+
+/* Column 2: Days of Work */
+thead th:nth-child(2),
+tbody td:nth-child(2){
+  width: var(--col-days);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Column 3: Overtime */
+thead th:nth-child(3),
+tbody td:nth-child(3){
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Column 4: Gross Earning */
+thead th:nth-child(4),
+tbody td:nth-child(4){
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Column 5: Deductions */
+thead th:nth-child(5),
+tbody td:nth-child(5){
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Column 6: Net Pay */
+thead th:nth-child(6),
+tbody td:nth-child(6){
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Column 7: Status */
+thead th:nth-child(7),
+tbody td:nth-child(7){
+  width: var(--col-status);
+  text-align: center;
+}
+
+/* -------------------------------------------------------
+   STATUS CELLS
+------------------------------------------------------- */
+.status-cell{
+  color: #222;          /* switch to #fff if you want higher contrast */
+  font-weight: 700;
+  letter-spacing: .3px;
+}
+
+.status-cell.settled    { background: var(--status-green); }
+.status-cell.processing { background: var(--status-orange); color: #1b1406; }
+
+/* -------------------------------------------------------
+   PAGER (outside the card)
+------------------------------------------------------- */
+.pager-wrap{
+  display: flex;
+  justify-content: flex-end;
+  width: min(1200px, 95vw);
+}
+
+.pager{
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  border: none;
+  padding: 10px 16px;
+  background: var(--btn-bg);
+  color: #333;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 3px 6px rgba(0,0,0,.12);
+  transition: transform .12s ease, box-shadow .12s ease, background .2s ease;
+}
+
+.pager:hover{ transform: translateY(-1px); box-shadow: 0 6px 12px rgba(0,0,0,.18); }
+.pager .arrow{ font-size: 22px; line-height: 0; }
+
+/* -------------------------------------------------------
+   SMALL-SCREEN TWEAKS (denser padding)
+------------------------------------------------------- */
+@media (max-width: 700px){
+  .card{width:95%;}
+  thead th, tbody td{
+    padding: 10px 12px;
+  }
+}
