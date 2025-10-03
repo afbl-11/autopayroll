@@ -4,12 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Employee Payroll Page</title> 
-  @vite(['resources/css/employeeProfile/empTablePayroll.css', 'resources/js/employeeProfile/empPayroll.js'])
+  @vite(['resources/css/employeeProfile/empTablePayroll.css', 'resources/js/employeeProfile/app.js'])
 </head>
 <body>   
   <div class="sidebar">@include('layout.sidebar')</div>   
+  <div class="header">@include('layout.header')</div>
     <main class="page">
-        @include('layout.header')
+        
     <section class="card">
       <div class="table-wrap" role="region" aria-label="Payroll history table" tabindex="0">
         <table class="payroll-table">
@@ -26,130 +27,13 @@
           </thead>
           <tbody>
             <tr>
-              <td>June 1 – 15, 2025</td>
-              <td class="num">15</td>
-              <td class="num">3,086.9</td>
-              <td class="num">8,981.9</td>
-              <td class="num">5,000.00</td>
-              <td class="num">25,000.00</td>
-              <td class="status-cell processing">Processing</td>
-            </tr>
-            <tr>
-              <td>May 15 – 30, 2025</td>
-              <td class="num">9</td>
-              <td class="num">3,086.9</td>
-              <td class="num">8,981.9</td>
-              <td class="num">5,000.00</td>
-              <td class="num">25,000.00</td>
-              <td class="status-cell settled">Settled</td>
-            </tr>
-            <tr>
-              <td>May 1 – 15, 2025</td>
-              <td class="num">9</td>
-              <td class="num">3,086.9</td>
-              <td class="num">8,981.9</td>
-              <td class="num">5,000.00</td>
-              <td class="num">25,000.00</td>
-              <td class="status-cell settled">Settled</td>
-            </tr>
-            <tr>
-              <td>April 15 – 30, 2025</td>
-              <td class="num">9</td>
-              <td class="num">3,086.9</td>
-              <td class="num">8,981.9</td>
-              <td class="num">5,000.00</td>
-              <td class="num">25,000.00</td>
-              <td class="status-cell settled">Settled</td>
-            </tr>
-            <tr>
-              <td>April 1 – 15, 2025</td>
-              <td class="num">9</td>
-              <td class="num">3,086.9</td>
-              <td class="num">8,981.9</td>
-              <td class="num">5,000.00</td>
-              <td class="num">25,000.00</td>
-              <td class="status-cell settled">Settled</td>
-            </tr>
-            <tr>
-              <td>March 15 – 30, 2025</td>
-              <td class="num">9</td>
-              <td class="num">3,086.9</td>
-              <td class="num">8,981.9</td>
-              <td class="num">5,000.00</td>
-              <td class="num">25,000.00</td>
-              <td class="status-cell settled">Settled</td>
-            </tr>
-            <tr>
-              <td>March 1 – 15, 2025</td>
-              <td class="num">9</td>
-              <td class="num">3,086.9</td>
-              <td class="num">8,981.9</td>
-              <td class="num">5,000.00</td>
-              <td class="num">25,000.00</td>
-              <td class="status-cell settled">Settled</td>
-            </tr>
-            <tr>
-              <td>Feb 15 – 30, 2025</td>
-              <td class="num">9</td>
-              <td class="num">3,086.9</td>
-              <td class="num">8,981.9</td>
-              <td class="num">5,000.00</td>
-              <td class="num">25,000.00</td>
-              <td class="status-cell settled">Settled</td>
-            </tr>
-            <tr>
-              <td>Feb 1 – 15, 2025</td>
-              <td class="num">9</td>
-              <td class="num">3,086.9</td>
-              <td class="num">8,981.9</td>
-              <td class="num">5,000.00</td>
-              <td class="num">25,000.00</td>
-              <td class="status-cell settled">Settled</td>
-            </tr>
-            <tr>
-              <td>Jan 15 – 30, 2025</td>
-              <td class="num">9</td>
-              <td class="num">3,086.9</td>
-              <td class="num">8,981.9</td>
-              <td class="num">5,000.00</td>
-              <td class="num">25,000.00</td>
-              <td class="status-cell settled">Settled</td>
-            </tr>
-            <tr>
-              <td>Jan 1 – 15, 2025</td>
-              <td class="num">9</td>
-              <td class="num">3,086.9</td>
-              <td class="num">8,981.9</td>
-              <td class="num">5,000.00</td>
-              <td class="num">25,000.00</td>
-              <td class="status-cell settled">Settled</td>
-            </tr>
-            <tr>
-              <td>Dec 15 – 30, 2024</td>
-              <td class="num">9</td>
-              <td class="num">3,086.9</td>
-              <td class="num">8,981.9</td>
-              <td class="num">5,000.00</td>
-              <td class="num">25,000.00</td>
-              <td class="status-cell settled">Settled</td>
-            </tr>
-            <tr>
-              <td>Dec 1 – 25, 2024</td>
-              <td class="num">9</td>
-              <td class="num">3,086.9</td>
-              <td class="num">8,981.9</td>
-              <td class="num">5,000.00</td>
-              <td class="num">25,000.00</td>
-              <td class="status-cell settled">Settled</td>
-            </tr>
-            <tr>
-              <td>Nov 15 – 30, 2024</td>
-              <td class="num">9</td>
-              <td class="num">3,086.9</td>
-              <td class="num">8,981.9</td>
-              <td class="num">5,000.00</td>
-              <td class="num">25,000.00</td>
-              <td class="status-cell settled">Settled</td>
+              <td>{{$variable}}</td> <!-- In the design, variable here is "June 1 - 15, 2025" -->
+              <td class="num">{{$variable}}</td> <!-- In the design, variable here is "15" -->
+              <td class="num">{{$variable}}</td> <!-- In the design, variable here is "3,086.9" -->
+              <td class="num">{{$variable}}</td> <!-- In the design, variable here is "8,981.9" -->
+              <td class="num">{{$variable}}</td> <!-- In the design, variable here is "5,000.00" -->
+              <td class="num">{{$variable}}</td> <!-- In the design, variable here is "25,000.00" -->
+              <td class="status-cell processing">{{$variable}}</td> <!-- In the design, variable here is "Processing/Settled" (code for processing: "status-cell processing", code for settled: "status-cell settled") -->
             </tr>
           </tbody>
         </table>
