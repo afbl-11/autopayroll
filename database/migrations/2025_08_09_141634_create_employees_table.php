@@ -12,15 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('employees', function (Blueprint $table) {
-            $table->string('employee_id')->primary(); //birthdate-001 for id
+            $table->string('employee_id')->primary();
 
-            $table->string('company_id'); //fk
+            $table->string('company_id')->nullable();
             $table->foreign('company_id')
                 ->references('company_id')
                 ->on('companies')
                 ->onDelete('cascade');
 
-            $table->integer('schedule_id'); //fk
+            $table->integer('schedule_id')->nullable();
             $table->foreign('schedule_id')
                 ->references('schedule_id')
                 ->on('schedules')

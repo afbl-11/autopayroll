@@ -20,6 +20,7 @@ return new class extends Migration
                 ->on('employees')
                 ->onDelete('cascade');
 
+            $table->string('rate');
             $table->date('signed_date');
             $table->date('end_date');
             $table->timestamps();
@@ -33,4 +34,5 @@ return new class extends Migration
     {
         Schema::dropIfExists('contracts');
     }
+
 };

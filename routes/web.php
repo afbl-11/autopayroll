@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeDashboardController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PayrollController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -14,10 +15,7 @@ use Illuminate\Http\Request;
 
 
 
-Route::get('/', function () {
-    return view('auth.admin-register-step1');
-});
-
+Route::get('/index', [PayrollController::class, 'index']);
 /**admin registration*/
 Route::post('/register/admin/success', [AdminRegistrationController::class, 'register'])->name('admin.register');
 Route::post('/register/admin/personal-info', [AdminRegistrationController::class, 'storeStep1'])->name('auth.store.step1');
@@ -60,7 +58,7 @@ Route::post('/email/verification-notification', function (Request $request) {
 })->middleware(['auth:admin', 'throttle:6,1'])->name('verification.send');
 
 
-//web linking
+//employee registration
 Route::get('/employees/register=1', [EmployeeDashboardController::class, 'index'])->name('employee.register');
 Route::get('/employees/register=2', [EmployeeDashboardController::class, 'showStep2'])->name('employee.register.2');
 Route::get('/employees/register=3', [EmployeeDashboardController::class, 'showStep3'])->name('employee.register.3');
