@@ -24,6 +24,7 @@ class ContractsFactory extends Factory
             'employee_id' => $employee ? $employee->employee_id : $this->faker->uuid(),
             'signed_date' => $signedDate->format('Y-m-d'),
             'end_date' => $endDate->format('Y-m-d'),
+            'rate' => 500,
         ];
     }
 }

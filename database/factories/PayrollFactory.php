@@ -14,7 +14,12 @@ class PayrollFactory extends Factory
 
     public function definition()
     {
-        $employee = Employee::inRandomOrder()->first();
+        static $employeeIds = null;
+
+        if ($employeeIds === null) {
+            $employeeIds = Employee::pluck('employee_id')->toArray();
+        }
+
         $payroll_period = PayrollPeriod::inRandomOrder()->first();
 
         $periodStart = $this->faker->dateTimeBetween('-2 months', 'now');
@@ -44,7 +49,7 @@ class PayrollFactory extends Factory
 
         return [
             'payroll_id' => Carbon::now()->year . str_pad(rand(1, 9999), 4, '0', STR_PAD_LEFT),
-            'employee_id' => $employee ? $employee->employee_id : $this->faker->uuid(),
+            'employee_id' =>$this->faker->randomElement($employeeIds),
             'payroll_period_id' => $payroll_period ? $payroll_period->payroll_period_id : $this->faker->uuid(),
             'rate' => $rate,
             'gross_salary' => $grossSalary,
