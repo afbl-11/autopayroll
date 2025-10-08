@@ -7,22 +7,6 @@
     justify-content: center;
     justify-items: center;
 }
-
-.create-intro {
-    width: 50%;
-    height: inherit;
-    /*background: #0a0a0a;*/
-}
-.form-intro h4 {
-    margin-bottom: 0;
-}
-p {
-    color: var(--clr-secondary);
-}
-.form-intro {
-    margin-bottom: 50px;
-}
-
 .form-container {
     display: block;
     width: 50%;
@@ -31,12 +15,7 @@ p {
     justify-content: center;
     justify-items: center;
 }
-.field-row {
-    display: block;
-    gap: 76px;
-    margin-bottom: 30px;
-    width: 100%;
-}
+
 .field-row:nth-of-type(-n+2), .field-row:last-of-type {
     display: flex;
     gap: 30px;

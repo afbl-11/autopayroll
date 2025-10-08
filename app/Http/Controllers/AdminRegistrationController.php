@@ -12,14 +12,17 @@ class AdminRegistrationController extends Controller
         protected AdminRegistration $adminService)
     {}
 
+    public function showStep1() {
+        return view('auth.admin-register-step1');
+    }
+    public function showStep2() {
+        return view('auth.admin-register-step2');
+    }
     public function storeStep1(AdminRegisterPersonal $request) {
 
         $this->adminService->processStep1($request->validated());
         return redirect()->route('auth.register.step2');
 
-    }
-    public function showStep2() {
-        return view('auth.admin-register-step2');
     }
 
     public function register(AdminRegisterAddress $request)

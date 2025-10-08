@@ -7,11 +7,12 @@
          @vite(['resources/css/empOnboarding/addEmp5.css', 'resources/js/empOnboarding/addEmp.js'])
 </head>
 <body>
-  @include('layout.sidebar')
+  @include('partitions.sidebar')
   <div class ="container">
     <div class = "header"><img onclick="" src="{{ asset('images/left-arrow.png') }}"><h2>Add Employee</h2></div>
-    @include('layout.steps', ['step' => 5])
-    <form class="form" action="" method="GET">
+    @include('partitions.steps', ['step' => 5])
+    <form class="form" action="{{route('employee.create')}}" method="post">
+        @csrf
     <div class = "content">
         <h3>BASIC INFORMATION</h3>
         <div class="head">
@@ -22,14 +23,14 @@
             <div class="lastName formGroup">
                 <label for= "lastName">Last Name </label><br>
                 <input type="text" id="lastName" name="lastName" readonly />
-            </div>    
+            </div>
         </div>
-        
+
         <div class="place-Of-birth formGroup">
             <label for= "placeOfbirth">Place of Birth </label> <br>
             <input type="text" id="placeOfbirth" name="placeOfbirth" readonly />
             </div>
-        
+
         <div class = "row">
             <div class="date-Of-birth formGroup">
                 <label for= "dateOfbirth">Date of Birth</label><br>
@@ -39,7 +40,7 @@
             <div class="age formGroup">
                 <label for="age">Age</label><br>
                 <input type="number" id="age" name="age" readonly />
-            </div>    
+            </div>
         </div>
         <div class="row">
             <div class = "gender formGroup">
@@ -56,7 +57,7 @@
                 <input type="text" id="blood-type" name="blood-type" readonly />
             </div>
         </div>
-        
+
         <div class = "content">
         <h3>CONTACT & ADDRESS</h3>
         <div class="residentialAddress formGroup">
@@ -77,7 +78,7 @@
             <div class="email formGroup">
                 <label for="email">Email </label> <br>
                 <input type="email" id="email" name="email" readonly />
-            </div>    
+            </div>
         </div>
         <div class="otherContactNum formGroupLow">
                 <label for= "otherContactNum">Other Contact </label><br>
@@ -93,7 +94,7 @@
                 <input type="text" id="companyDesignation" name="companyDesignation" readonly />
             </div>
         </div>
-        
+
         <div class="emp-type formGroupLow">
             <label for= "emp-type">Employment Type </label><br>
             <input type="text" id="emp-type" name="emp-type" readonly />
@@ -108,7 +109,7 @@
             <div class="jobPosition formGroup">
                 <label for="jobPosition">Job Position </label><br>
                 <input type="text" id="jobPosition" name="jobPosition" readonly />
-            </div>    
+            </div>
         </div>
         <div class="row2">
             <div class = "uploadDocuments formGroupLow">
@@ -132,12 +133,12 @@
 
         <div class="password formGroupLow">
             <label for="password">Password </label> <br>
-            <input type="password" id="password" readonly /> 
+            <input type="password" id="password" readonly />
         </div>
         </div>
 
         <button type ="submit" class="confirm">Confirm</button>
-    </form> 
+    </form>
   </div>
 </body>
 </html>

@@ -20,6 +20,7 @@ class Employee extends Model
         'first_name',
         'middle_name',
         'last_name',
+        'suffix',
         'email',
         'username',
         'password',
@@ -32,6 +33,9 @@ class Employee extends Model
         'marital_status',
         'blood_type',
         'religion',
+        'phone_number',
+
+        // Residential Address
         'country',
         'region',
         'province',
@@ -40,24 +44,38 @@ class Employee extends Model
         'barangay',
         'street',
         'house_number',
+
+        // ID Address
+        'id_country',
+        'id_region',
+        'id_province',
+        'id_zip',
+        'id_city',
+        'id_barangay',
+        'id_street',
+        'id_house_number',
+
+        // IDs and Accounts
         'bank_account_number',
         'sss_number',
         'phil_health_number',
         'pag_ibig_number',
         'tin_number',
-        'phone_number',
     ];
+
     protected $casts = [
         'contract_start' => 'date',
         'contract_end' => 'date',
         'birthdate' => 'date',
     ];
 
-    public function company() {
+    public function company()
+    {
         return $this->belongsTo(Company::class, 'company_id', 'company_id');
     }
 
-    public function schedule() {
+    public function schedule()
+    {
         return $this->belongsTo(Schedule::class, 'schedule_id', 'schedule_id');
     }
 
@@ -65,6 +83,4 @@ class Employee extends Model
     {
         return $this->hasMany(AttendanceLogs::class, 'employee_id', 'employee_id');
     }
-
-
 }

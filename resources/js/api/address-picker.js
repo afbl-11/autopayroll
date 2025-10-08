@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", async () => {
        const option = document.createElement("option");
        option.value = region.code;
        option.textContent = region.name;
+        option.setAttribute("data-name", region.name);
        regionSelect.appendChild(option);
     });
 
@@ -29,8 +30,14 @@ document.addEventListener("DOMContentLoaded", async () => {
             const option = document.createElement("option");
             option.value = province.code;
             option.textContent = province.name;
+            option.setAttribute("data-name", province.name);
             provinceSelect.appendChild(option);
         });
+    });
+    regionSelect.addEventListener("change", async () => {
+        console.log("Selected region code:", regionSelect.value);
+        const provinces = await getProvinces(regionSelect.value);
+        console.log("Loaded provinces:", provinces);
     });
 
 //     on province change city
@@ -46,6 +53,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             const option = document.createElement("option");
             option.value = city.code;
             option.textContent = city.name;
+            option.setAttribute("data-name", city.name);
             citySelect.appendChild(option);
         });
     });
@@ -62,7 +70,11 @@ document.addEventListener("DOMContentLoaded", async () => {
             const option = document.createElement("option");
             option.value = barangay.code;
             option.textContent = barangay.name;
+            option.setAttribute("data-name", barangay.name);
             barangaySelect.appendChild(option);
         });
     });
 });
+
+//TODO: change stored value from code to name
+//example: region code: 000022002 to eastern samar

@@ -12,14 +12,19 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use App\Http\Controllers\EmployeeRegistrationController;
 
 
 
-Route::get('/index', [PayrollController::class, 'index']);
+Route::get('/', function () {
+    return view('welcome');
+});
 /**admin registration*/
+Route::get('/register/admin/credentials', [AdminRegistrationController::class, 'showStep1'])->name('auth.register.step1');
+Route::get('/register/admin/address', [AdminRegistrationController::class, 'showStep2'])->name('auth.register.step2');
+
 Route::post('/register/admin/success', [AdminRegistrationController::class, 'register'])->name('admin.register');
 Route::post('/register/admin/personal-info', [AdminRegistrationController::class, 'storeStep1'])->name('auth.store.step1');
-Route::get('/register/admin/address', [AdminRegistrationController::class, 'showStep2'])->name('auth.register.step2');
 
 //login
 Route::get('/login', function () {
@@ -32,7 +37,7 @@ Route::get('/register/success', function () {
 
 Route::post('/login/admin', [LoginController::class, 'authenticate'])->name('login.admin');
 Route::get('/dashboard', [DashboardController::class, 'showDashboard'])
-    ->middleware(['auth:admin'])
+//    ->middleware(['auth:admin'])
     ->name('dashboard');
 
 //logout
@@ -44,7 +49,7 @@ Route::get('client/register', [ClientRegistrationController::class, 'showForm'])
 
 //email verification
 Route::get('/email/verify', function () {
-   return view('auth.verify-email');
+    return view('auth.verify-email');
 })->middleware('auth:admin')->name('verification.notice');
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
@@ -58,12 +63,21 @@ Route::post('/email/verification-notification', function (Request $request) {
 })->middleware(['auth:admin', 'throttle:6,1'])->name('verification.send');
 
 
-//employee registration
-Route::get('/employees/register=1', [EmployeeDashboardController::class, 'index'])->name('employee.register');
-Route::get('/employees/register=2', [EmployeeDashboardController::class, 'showStep2'])->name('employee.register.2');
-Route::get('/employees/register=3', [EmployeeDashboardController::class, 'showStep3'])->name('employee.register.3');
-Route::get('/employees/register=4', [EmployeeDashboardController::class, 'showStep4'])->name('employee.register.4');
-Route::get('/employees/register=5', [EmployeeDashboardController::class, 'showStep5'])->name('employee.register.5');
+//employee dashboard
+Route::get('/employee/dashboard', [EmployeeDashboardController::class, 'showDashboard'])->name('employee.dashboard');
+
+//employee registration TODO: protect route
+Route::get('/employees/register=1', [EmployeeDashboardController::class, 'showStep1'])->name('employee.register.1');
+Route::get('/employees/register=2', [EmployeeRegistrationController::class, 'showStep2'])->name('employee.register.2');
+Route::get('/employees/register=3', [EmployeeRegistrationController::class, 'showStep3'])->name('employee.register.3');
+Route::get('/employees/register=4', [EmployeeRegistrationController::class, 'showStep4'])->name('employee.register.4');
+Route::get('/employees/register=5', [EmployeeRegistrationController::class, 'showStep5'])->name('employee.register.5');
+
+Route::post('/employees/register/basic', [EmployeeRegistrationController::class, 'storeBasicInformation'])->name('store.employee.register.1');
+Route::post('/employees/register/address', [EmployeeRegistrationController::class, 'storeAddress'])->name('store.employee.register.2');
+Route::post('/employees/register/designation', [EmployeeRegistrationController::class, 'storeDesignation'])->name('store.employee.register.3');
+Route::post('/employees/register/credentials', [EmployeeRegistrationController::class, 'storeCredentials'])->name('store.employee.register.4');
+Route::post('/employees/register/create', [EmployeeRegistrationController::class, 'createEmployee'])->name('employee.create');
 
 
 

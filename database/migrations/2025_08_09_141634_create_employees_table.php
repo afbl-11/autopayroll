@@ -26,10 +26,12 @@ return new class extends Migration
                 ->on('schedules')
                 ->onDelete('cascade');
 
+            $table->string('profile_photo')->nullable();
             $table->string('first_name');
             $table->string('middle_name');
             $table->string('last_name');
-            $table->string('email');
+            $table->enum('suffix', ['Sr.', 'Jr.', 'Other'])->nullable();
+            $table->string('email')->nullable();
             $table->string('username');
             $table->string('phone_number');
             $table->string('password');
@@ -37,14 +39,14 @@ return new class extends Migration
             $table->date('contract_start');
             $table->date('contract_end');
 
-            $table->enum('employment_type',['fulltime', 'part-time', 'contractual']);
+            $table->enum('employment_type',['full-time', 'part-time', 'contractual']);
             $table->date('birthdate');
             $table->enum('gender', ['male','female']);
             $table->enum('marital_status',['single','married','widowed']);
             $table->enum('blood_type', ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'])->nullable();
-            $table->string('religion');
 
-            $table->string('country');
+//            current address
+            $table->string('country')->default('Philippines');
             $table->string('region');
             $table->string('province');
             $table->string('zip');
@@ -53,11 +55,24 @@ return new class extends Migration
             $table->string('street');
             $table->string('house_number')->nullable();
 
+//            address on id
+            $table->string('id_country')->default('Philippines');
+            $table->string('id_region');
+            $table->string('id_province');
+            $table->string('id_zip');
+            $table->string('id_city');
+            $table->string('id_barangay');
+            $table->string('id_street');
+            $table->string('id_house_number')->nullable();
+
             $table->string('bank_account_number');
             $table->string('sss_number');
             $table->string('phil_health_number');
             $table->string('pag_ibig_number');
             $table->string('tin_number');
+
+            $table->json('uploaded_documents')->nullable();
+
             $table->timestamps();
         });
     }

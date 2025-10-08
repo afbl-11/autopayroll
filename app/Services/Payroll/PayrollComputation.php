@@ -58,7 +58,7 @@ class PayrollComputation
 
         $clock_in = Carbon::parse($attendance->clock_in_time);
         $clock_out = Carbon::parse($attendance->clock_out_time);
-        $workHours = $clock_out->diffInMinutes($clock_in);
+        $workHours = $clock_in->diffInMinutes($clock_out);
         $late_time = $startTime->diffInMinutes($clock_in);
 
         if ($clock_out > $endTime) {

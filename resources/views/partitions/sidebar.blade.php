@@ -6,12 +6,12 @@
     <nav class="nav-menu">
         <ul>
             <li>
-                <a href="#">
+                <a href="{{route('dashboard')}}">
                     <img src="{{ asset('assets/navigations/home.png') }}" alt="Home Icon">
                 </a>
             </li>
             <li>
-                <a href="{{route('employee.register')}}">
+                <a href="{{route('employee.dashboard')}}">
                     <img src="{{ asset('assets/navigations/employee.png') }}" alt="Employee Icon">
                 </a>
             </li>
