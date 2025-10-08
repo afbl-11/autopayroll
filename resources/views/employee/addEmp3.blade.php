@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AutoPayroll Employee Onboarding</title>
-         @vite(['resources/css/empOnboarding/addEmp3.css', 'resources/js/empOnboarding/addEmp.js'])
+         @vite(['resources/css/employee_registration/addEmp3.css', 'resources/js/empOnboarding/addEmp.js'])
 </head>
 <body>
-  @include('layout.sidebar')
+  @include('partitions.sidebar')
   <div class ="container">
     <div class = "header"><img onclick="" src="{{ asset('images/left-arrow.png') }}"><h2>Add Employee</h2></div>
-    @include('layout.steps', ['step' => 3])
+    @include('partitions.steps', ['step' => 3])
     <form class="form" action="" method="GET">
     <div class = "content">
         <div class="head">
@@ -29,10 +29,10 @@
                 </select>
             </div>
             <div class="wrapper">
-            <button class="addCompany formGroup" onclick ="">Add Company</button> 
+            <button class="addCompany formGroup" onclick ="">Add Company</button>
             </div>
         </div>
-        
+
         <div class="emp-type formGroup">
             <label for= "emp-type">Employment Type <span class="required">*</span></label><br>
             <div class="emp-buttons">
@@ -41,7 +41,7 @@
             <button type="button" class="type">Contractual</button>
             </div>
         </div>
-        
+
         <div class = "row">
             <div class="startingDate formGroup">
                 <label for= "startingDate">Starting Date <span class="required">*</span></label><br>
@@ -51,7 +51,7 @@
             <div class="jobPosition formGroup">
                 <label for="jobPosition">Job Position <span class="required">*</span></label><br>
                 <input type="text" id="jobPosition" name="jobPosition" placeholder="Job Position" required />
-            </div>    
+            </div>
         </div>
         <div class="row2">
             <div class = "uploadDocuments formGroup">
@@ -73,7 +73,7 @@
         <div class="next-con">
         <button type ="submit" class="next">Next</button>
         </div>
-    </form> 
+    </form>
   </div>
 </body>
 </html>

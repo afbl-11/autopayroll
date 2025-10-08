@@ -27,6 +27,10 @@ class DashboardService
         return $admin ? strtoupper($admin->first_name . ' ' . $admin->last_name) : null;
 
     }
+
+    protected function getAdminAll() {
+        return  $this->adminRepository->signedAdmin();
+    }
     protected function getEndPeriod() {
         return PayrollPeriod::orderByDesc('end_date')->value('end_date');
     }
@@ -47,6 +51,7 @@ class DashboardService
             'total_deductions' => $this->payrollRepository->getTotalDeductions(),
             'end_period' => $this->getEndPeriod(),
             'company'  => $this->showCompanies(),
+            'adminAll' =>$this->getAdminAll(),
 
 
         ];

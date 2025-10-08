@@ -20,12 +20,14 @@
         </div>
         <div class="wrapper">
             <small>Didn't receive the email? Click to resend</small>
-            <form action="{{route('verification.send')}}" method="get">
+            <form action="{{route('verification.send')}}" method="post">
                 @csrf
                 <button type="submit" class="button-filled">Resend Email</button>
             </form>
         </div>
 
     </div>
+
+{{--TODO: make this appear after new admin login--}}
 </body>
 </html>

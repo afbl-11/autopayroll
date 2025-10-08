@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 
 class EmployeeDashboardController extends Controller
 {
+
+    public function showDashboard() {
+        return view('employeeDashboard');
+    }
     public function index() {
         return view('employee.addEmp1');
     }

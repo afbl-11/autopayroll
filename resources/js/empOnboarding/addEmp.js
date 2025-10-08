@@ -3,7 +3,7 @@
     style.textContent = `#filePreview {
     position: relative;
     }
-    #previewContent { 
+    #previewContent {
     width: 100%;
     height: 100%;
     overflow: hidden;
@@ -96,7 +96,7 @@
 
     function updateStepsForDiv(stepsDiv) {
         const currentStep = Number(stepsDiv.dataset.currentStep) || 1;
-        const verified = stepsDiv.dataset.verifiedSrc || '/images/verified.png';
+        const verified = stepsDiv.dataset.verifiedSrc || '/assets/employeeProfile/VerifiedAccount.png';
 
         const steps = stepsDiv.querySelectorAll('.steps');
         const lines = stepsDiv.querySelectorAll('.line');
@@ -165,16 +165,16 @@
           controlsWrapper.className = 'preview-controls';
 
           const btnZoomIn = document.createElement('button');
-          btnZoomIn.title = 'Zoom In'; 
+          btnZoomIn.title = 'Zoom In';
           btnZoomIn.textContent = '+';
           const btnZoomOut = document.createElement('button');
-          btnZoomOut.title = 'Zoom Out'; 
+          btnZoomOut.title = 'Zoom Out';
           btnZoomOut.textContent = '-';
           const btnReset = document.createElement('button');
-          btnReset.title = 'Reset'; 
+          btnReset.title = 'Reset';
           btnReset.textContent = '⟲';
           const btnDragToggle = document.createElement('button');
-          btnDragToggle.title = 'Toggle Drag'; 
+          btnDragToggle.title = 'Toggle Drag';
           btnDragToggle.textContent = '✋';
 
         controlsWrapper.append(btnZoomOut, btnZoomIn, btnReset, btnDragToggle);
@@ -287,7 +287,7 @@
         state
        };
       }
-    
+
       hiddenFileInput.addEventListener('change', () => {
           if (hiddenFileInput.files.length > 0) {
             const file = hiddenFileInput.files[0];
@@ -335,7 +335,7 @@
           }
         }, 30);
         }
-      });  
+      });
 
         uploadInput.addEventListener('click', () => {
           if (!uploadedFileURL) return;
@@ -371,19 +371,19 @@
           filePreview.hidden = true;
           previewContent.innerHTML = "";
         });
-      }) 
-})(); 
+      })
+})();
 
 function togglePassword() {
     const passwordInput = document.getElementById("password");
     const icon = document.querySelector(".toggleEye");
         if (passwordInput.type === "password") {
             passwordInput.type = "text";
-            icon.textContent = "⌣"; 
+            icon.textContent = "⌣";
         } else {
             passwordInput.type = "password";
             icon.textContent = "👁";
             }
         }
-        
+
 window.togglePassword = togglePassword;

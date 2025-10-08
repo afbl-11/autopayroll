@@ -7,10 +7,10 @@
          @vite(['resources/css/empOnboarding/addEmp4.css', 'resources/js/empOnboarding/addEmp.js'])
 </head>
 <body>
-  @include('layout.sidebar')
+  @include('partitions.sidebar')
   <div class ="container">
     <div class = "header"><img onclick="" src="{{ asset('images/left-arrow.png') }}"><h2>Add Employee</h2></div>
-    @include('layout.steps', ['step' => 4])
+    @include('partitions.steps', ['step' => 4])
     <form class="form" action="" method="GET">
     <div class = "content">
         <div class="email formGroup">
@@ -27,12 +27,12 @@
             <label for="password">Password <span class="required">*</span></label><br>
             <div class = "wrapper">
             <input type="password" id="password" placeholder="Password" required />
-            <span class="toggleEye" onclick="togglePassword()">👁</span> <br> 
+            <span class="toggleEye" onclick="togglePassword()">👁</span> <br>
             </div>
         </div>
     </div>
         <button type ="submit" class="next">Next</button>
-    </form> 
+    </form>
   </div>
-</body> 
+</body>
 </html>

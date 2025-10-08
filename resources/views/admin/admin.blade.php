@@ -14,7 +14,7 @@
         <h4>Dashboard</h4>
         <div class="user-menu">
             <a href="#">
-                <p>{{$admin}}</p>
+                <p>{{$adminAll->province}}</p>
 
             </a>
         </div>
