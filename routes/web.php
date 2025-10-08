@@ -12,6 +12,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use App\Http\Controllers\EmployeeRegistrationController;
 
 
 
@@ -66,11 +67,17 @@ Route::post('/email/verification-notification', function (Request $request) {
 Route::get('/employee/dashboard', [EmployeeDashboardController::class, 'showDashboard'])->name('employee.dashboard');
 
 //employee registration TODO: protect route
-Route::get('/employees/register=1', [EmployeeDashboardController::class, 'index'])->name('employee.register');
-Route::get('/employees/register=2', [EmployeeDashboardController::class, 'showStep2'])->name('employee.register.2');
-Route::get('/employees/register=3', [EmployeeDashboardController::class, 'showStep3'])->name('employee.register.3');
-Route::get('/employees/register=4', [EmployeeDashboardController::class, 'showStep4'])->name('employee.register.4');
-Route::get('/employees/register=5', [EmployeeDashboardController::class, 'showStep5'])->name('employee.register.5');
+Route::get('/employees/register=1', [EmployeeDashboardController::class, 'showStep1'])->name('employee.register.1');
+Route::get('/employees/register=2', [EmployeeRegistrationController::class, 'showStep2'])->name('employee.register.2');
+Route::get('/employees/register=3', [EmployeeRegistrationController::class, 'showStep3'])->name('employee.register.3');
+Route::get('/employees/register=4', [EmployeeRegistrationController::class, 'showStep4'])->name('employee.register.4');
+Route::get('/employees/register=5', [EmployeeRegistrationController::class, 'showStep5'])->name('employee.register.5');
+
+Route::post('/employees/register/basic', [EmployeeRegistrationController::class, 'storeBasicInformation'])->name('store.employee.register.1');
+Route::post('/employees/register/address', [EmployeeRegistrationController::class, 'storeAddress'])->name('store.employee.register.2');
+Route::post('/employees/register/designation', [EmployeeRegistrationController::class, 'storeDesignation'])->name('store.employee.register.3');
+Route::post('/employees/register/credentials', [EmployeeRegistrationController::class, 'storeCredentials'])->name('store.employee.register.4');
+Route::post('/employees/register/create', [EmployeeRegistrationController::class, 'createEmployee'])->name('employee.create');
 
 
 

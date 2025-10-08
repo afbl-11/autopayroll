@@ -12,14 +12,13 @@ class AssignmentRequest extends FormRequest
 
     public function rules() {
         return [
-          'company_designation_id' => 'required|string|max:20',
-            'employmentType_id' => 'required|string|max:20',
-            'startingDate' => 'required|date',
-            'endingDate' => 'required|date',
-            'jobPosition_id' => 'required|string|max:20',
-            'uploadedDocuments' => 'required|array',
+            'company_id' => ['required', 'string', 'exists:companies,company_id'],
+            'employment_type' => ['required', 'string', 'in:full-time,part-time,contractual'],
+            'contract_start' => ['required', 'date', 'date_format:Y-m-d'],
+            'contract_end' => ['required', 'date', 'date_format:Y-m-d', 'after_or_equal:contract_start'],
+            'job_position' => ['required', 'string', 'max:255'],
+            'uploaded_documents' => ['nullable', 'array'],
+            'uploaded_documents.*' => ['file', 'mimes:pdf,jpg,jpeg,png', 'max:5120'],
         ];
-
-//        TODO: subject for checks and revisions. check migration
     }
 }

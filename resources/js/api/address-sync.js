@@ -6,10 +6,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     const citySelect1 = document.getElementById("city");
     const barangaySelect1 = document.getElementById("barangay");
 
-    const regionSelect2 = document.getElementById("region2");
-    const provinceSelect2 = document.getElementById("province2");
-    const citySelect2 = document.getElementById("city2");
-    const barangaySelect2 = document.getElementById("barangay2");
+    const regionSelect2 = document.getElementById("id_region");
+    const provinceSelect2 = document.getElementById("id_province");
+    const citySelect2 = document.getElementById("id_city");
+    const barangaySelect2 = document.getElementById("id_barangay");
 
     const checkbox = document.getElementById("same_address");
 
@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         select.innerHTML = "<option value=''>Select Region</option>";
         regions.forEach(region => {
             const opt = document.createElement("option");
-            opt.value = region.name;
+            opt.value = region.code;
             opt.textContent = region.name;
             select.appendChild(opt);
         });
@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const provinces = await getProvinces(regionSelect.value);
         provinces.forEach(p => {
             const opt = document.createElement("option");
-            opt.value = p.name;
+            opt.value = p.code;
             opt.textContent = p.name;
             provinceSelect.appendChild(opt);
         });
@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const cities = await getCities(provinceSelect.value);
         cities.forEach(c => {
             const opt = document.createElement("option");
-            opt.value = c.name;
+            opt.value = c.code;
             opt.textContent = c.name;
             citySelect.appendChild(opt);
         });
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const barangays = await getBarangays(citySelect.value);
         barangays.forEach(b => {
             const opt = document.createElement("option");
-            opt.value = b.name;
+            opt.value = b.code;
             opt.textContent = b.name;
             barangaySelect.appendChild(opt);
         });
@@ -103,10 +103,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     // --- Helpers ---
     function copyTextFields() {
         const pairs = [
-            ["country", "country2"],
-            ["zip", "zip2"],
-            ["street", "street2"],
-            ["house-number", "house-number2"]
+            ["country", "id_country"],
+            ["zip", "id_zip"],
+            ["street", "id_street"],
+            ["house-number", "id_house-number"]
         ];
         pairs.forEach(([from, to]) => {
             const fromEl = document.getElementById(from);
@@ -117,10 +117,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     function clearSecondAddress() {
         [
-            "country2",
-            "zip2",
-            "street2",
-            "house-number2"
+            "id_zip",
+            "id_street",
+            "id_house-number"
         ].forEach(id => {
             const el = document.getElementById(id);
             if (el) el.value = "";
@@ -133,10 +132,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             provinceSelect2,
             citySelect2,
             barangaySelect2,
-            document.getElementById("country2"),
-            document.getElementById("zip2"),
-            document.getElementById("street2"),
-            document.getElementById("house-number2")
+            document.getElementById("id_country"),
+            document.getElementById("id_zip"),
+            document.getElementById("id_street"),
+            document.getElementById("id_house-numbe")
         ].forEach(el => {
             if (el) el.disabled = disabled;
         });

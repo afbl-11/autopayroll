@@ -11,7 +11,8 @@
   <div class ="container">
     <div class = "header"><img onclick="" src="{{ asset('images/left-arrow.png') }}"><h2>Add Employee</h2></div>
     @include('partitions.steps', ['step' => 5])
-    <form class="form" action="" method="GET">
+    <form class="form" action="{{route('employee.create')}}" method="post">
+        @csrf
     <div class = "content">
         <h3>BASIC INFORMATION</h3>
         <div class="head">

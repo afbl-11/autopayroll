@@ -13,7 +13,7 @@
         <div class = "header"><img onclick="" src="{{ asset('images/left-arrow.png') }}"><h2>Add Employee</h2></div>
         @include('partitions.steps', ['step' => 1])
 
-        <form class="form" action="{{route('employee.register.2')}}" method="">
+        <form class="form" action="{{route('store.employee.register.1')}}" method="post">
             @csrf
             <div class = "content">
 
@@ -39,7 +39,6 @@
                             <option value=""></option>
                             <option value="sr">Sr.</option>
                             <option value="jr">Jr.</option>
-                            <option value="third">III</option>
                         </select>
                     </div>
                 </div>

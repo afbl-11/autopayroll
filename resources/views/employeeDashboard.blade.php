@@ -68,7 +68,7 @@
                     <option value="inactive">Inactive</option>
                 </select>
 
-                <a href="{{route('employee.register')}}" class="button-filled">Add employee</a>
+                <a href="{{route('employee.register.1')}}" class="button-filled">Add employee</a>
             </div>
         </div>
 

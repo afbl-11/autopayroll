@@ -11,7 +11,7 @@
   <div class ="container">
     <div class = "header"><img onclick="" src="{{ asset('images/left-arrow.png') }}"><h2>Add Employee</h2></div>
     @include('partitions.steps', ['step' => 3])
-    <form class="form" action="" method="GET">
+    <form class="form" action="{{route('store.employee.register.3')}}" method="post">
     <div class = "content">
         <div class="head">
             <div class="companyDesignation formGroup">

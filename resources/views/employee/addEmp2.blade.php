@@ -9,7 +9,8 @@
       'resources/css/employee_registration/addEmp2.css',
       'resources/js/api/address-picker.js',
       'resources/js/api/address-sync.js',
-      'resources/js/empOnboarding/addEmp.js'
+      'resources/js/empOnboarding/addEmp.js',
+      'resources/js/address-retrieve.js',
     ])
 </head>
 <body>
@@ -21,7 +22,7 @@
 <div class="container">
     <div class="content">
         @include('partitions.steps', ['step' => 2])
-        <form action="{{route('employee.register.3')}}" method="get">
+        <form action="{{route('store.employee.register.2')}}" method="post">
             @csrf
             <div class="form-container">
 
@@ -105,14 +106,14 @@
                 {{-- country & region --}}
                 <div class="field-row">
                     <div class="field-input">
-                        <label for="country2">Country</label>
-                        <select name="country2" id="country2">
+                        <label for="id_country">Country</label>
+                        <select name="id_country" id="id_country">
                             <option value="philippines">Philippines</option>
                         </select>
                     </div>
                     <div class="field-input">
-                        <label for="region2">Region</label>
-                        <select name="region2" id="region2">
+                        <label for="id_region">Region</label>
+                        <select name="id_region" id="id_region">
                             <option value="">Select Region</option>
                         </select>
                     </div>
@@ -121,28 +122,28 @@
                 {{-- province & zip --}}
                 <div class="field-row">
                     <div class="field-input">
-                        <label for="province2">Province</label>
-                        <select name="province2" id="province2">
+                        <label for="id_province">Province</label>
+                        <select name="id_province" id="id_province">
                             <option value="">Select Province</option>
                         </select>
                     </div>
                     <div class="field-input">
-                        <label for="zip2">Postal Code</label>
-                        <input type="text" name="zip2" id="zip2">
+                        <label for="id_zip">Postal Code</label>
+                        <input type="text" name="id_zip" id="id_zip">
                     </div>
                 </div>
 
                 {{-- city & barangay --}}
                 <div class="field-row">
                     <div class="field-input">
-                        <label for="city2">City / Municipality</label>
-                        <select name="city2" id="city2">
+                        <label for="id_city">City / Municipality</label>
+                        <select name="id_city" id="id_city">
                             <option value="">Select City / Municipality</option>
                         </select>
                     </div>
                     <div class="field-input">
-                        <label for="barangay2">Barangay</label>
-                        <select name="barangay2" id="barangay2">
+                        <label for="id_barangay">Barangay</label>
+                        <select name="id_barangay" id="id_barangay">
                             <option value="">Select Barangay</option>
                         </select>
                     </div>
@@ -151,12 +152,12 @@
                 {{-- street & building number --}}
                 <div class="field-row">
                     <div class="field-input">
-                        <label for="street2">Street</label>
-                        <input type="text" name="street2" id="street2">
+                        <label for="id_street">Street</label>
+                        <input type="text" name="id_street" id="id_street">
                     </div>
                     <div class="field-input">
-                        <label for="house-number2">Unit / Building no.</label>
-                        <input type="text" name="house_number2" id="house-number2">
+                        <label for="id_house-number">Unit / Building no.</label>
+                        <input type="text" name="id_house_number" id="id_house-number">
                     </div>
                 </div>
 
