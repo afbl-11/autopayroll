@@ -17,7 +17,7 @@ use App\Http\Controllers\EmployeeRegistrationController;
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('admin.dashboard');
 });
 /**admin registration*/
 Route::get('/register/admin/credentials', [AdminRegistrationController::class, 'showStep1'])->name('auth.register.step1');

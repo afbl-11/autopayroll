@@ -1,9 +1,7 @@
-<div class="sidebar">
-    <div class="sidebar-logo">
-        A<span>P</span>
-    </div>
+@vite(['resources/css/theme.css', 'resources/css/includes/sidebar.css' ])
 
-    <nav class="nav-menu">
+<aside>
+    <x-logo-minimized></x-logo-minimized>
         <ul>
             <li>
                 <a href="{{route('dashboard')}}">
@@ -35,7 +33,11 @@
 
     <div class="logout">
         <form action="{{route('logout')}}" method="post">
-        <button type="submit" class="button-logout">Logout</button>
+            <button type="submit" class="button-logout">Logout</button>
         </form>
     </div>
-</div>
+</aside>
+
+
+
+

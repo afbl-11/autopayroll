@@ -24,7 +24,7 @@ No need to repeat these common styles in other CSS files.
 *::after {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    box-sizing: content-box;
 }
 :root {
     --clr-primary: #1F2937;
@@ -94,6 +94,9 @@ No need to repeat these common styles in other CSS files.
         font-family: system-ui, 'Helvetica Regular';
         color: var(--clr-primary);
         background: var(--clr-background);
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
     }
 
 h1 { font-size: 48px; line-height: 1.1; color: var(--clr-primary); }
@@ -123,22 +126,26 @@ Logo
 ======================*/
     .logo {
         margin: 22px 0 40px 37px;
-    }
-    #logo {
         font-family: var(--font-logo);
     }
-    .logo span {
+    .logo-small {
+        font-family: var(--font-logo);
+        color: var(--clr-background);
+    }
+
+    .logo span,
+    .logo-small span {
         color: var(--clr-yellow);
     }
 
     /*==============
     Forms
     ================*/
-.field-input label{
-    display: block;
-    margin-bottom: 5px;
-    color: var(--clr-secondary);
-}
+    .field-input label{
+        display: block;
+        margin-bottom: 5px;
+        color: var(--clr-secondary);
+    }
     .field-input input, select   {
         width: 100%;
         min-height: 47px;
