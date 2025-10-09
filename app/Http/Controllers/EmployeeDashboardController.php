@@ -12,6 +12,6 @@ class EmployeeDashboardController extends Controller
     }
 
     public function showStep1() {
-        return view('addEmp1');
+        return view('employee.addEmp1');
     }
 }

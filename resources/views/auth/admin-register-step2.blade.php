@@ -6,7 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Account Creation | Address</title>
-    @vite(['resources/css/theme.css', 'resources/css/admin_registration/admin-step2.css', 'resources/js/api/address-picker.js'])
+    @vite(['resources/css/theme.css', 'resources/css/admin_registration/admin-step2.css', 'resources/js/api/address-picker.js', 'resources/js/address-retrieve.js'])
 </head>
 <body>
 <div class="logo">

@@ -15,7 +15,7 @@
 </head>
 <body>
 <nav>
-    <a href="{{route('employee.register')}}"><img src="{{asset('assets/employeeProfile/BackArrow.png')}}" alt=""></a>
+    <a href="{{route('store.employee.register.1')}}"><img src="{{asset('assets/employeeProfile/BackArrow.png')}}" alt=""></a>
     <h4>Add Employee</h4>
 </nav>
 

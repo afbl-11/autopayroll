@@ -8,10 +8,10 @@ document.querySelector("form").addEventListener("submit", (e) => {
 
     // Create hidden fields dynamically
     const inputs = [
-        { name: "region_name", value: regionName },
-        { name: "province_name", value: provinceName },
-        { name: "city_name", value: cityName },
-        { name: "barangay_name", value: barangayName },
+        { name: "region", value: regionName },
+        { name: "province", value: provinceName },
+        { name: "city", value: cityName },
+        { name: "barangay", value: barangayName },
     ];
 
     inputs.forEach(({ name, value }) => {
