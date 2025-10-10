@@ -3,28 +3,31 @@
 <aside>
     <x-logo-minimized></x-logo-minimized>
     <div class="nav-menu">
-        <ul>
-            <li>
-                <a href="{{route('dashboard')}}">
-                    <img src="{{ asset('assets/navigations/home.png') }}" alt="Home Icon">
-                </a>
-            </li>
-            <li>
-                <a href="{{route('employee.dashboard')}}">
-                    <img src="{{ asset('assets/navigations/employee.png') }}" alt="Employee Icon">
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <img src="{{ asset('assets/navigations/compliance.png') }}" alt="Compliance Icon">
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <img src="{{ asset('assets/navigations/bell.png') }}" alt="Notifications Icon">
-                </a>
-            </li>
-        </ul>
+        <div class="nav-wrapper">
+            <ul>
+                <li>
+                    <a href="{{route('dashboard')}}">
+                        <img src="{{ asset('assets/navigations/home.png') }}" alt="Home Icon">
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('employee.dashboard')}}">
+                        <img src="{{ asset('assets/navigations/employee.png') }}" alt="Employee Icon">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="{{ asset('assets/navigations/compliance.png') }}" alt="Compliance Icon">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="{{ asset('assets/navigations/bell.png') }}" alt="Notifications Icon">
+                    </a>
+                </li>
+            </ul>
+        </div>
+
 
     </div>
         <div class="logout">

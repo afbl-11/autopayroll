@@ -24,7 +24,7 @@ No need to repeat these common styles in other CSS files.
 *::after {
     margin: 0;
     padding: 0;
-    box-sizing: content-box;
+    box-sizing: border-box;
 }
 :root {
     --clr-primary: #1F2937;
@@ -94,9 +94,6 @@ No need to repeat these common styles in other CSS files.
         font-family: system-ui, 'Helvetica Regular';
         color: var(--clr-primary);
         background: var(--clr-background);
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
     }
 
 h1 { font-size: 48px; line-height: 1.1; color: var(--clr-primary); }
@@ -201,6 +198,7 @@ p {
 
 
 
+
     /*================
     buttons
     ==================*/
@@ -217,11 +215,22 @@ p {
         border-radius: 8px;
         box-shadow: 2px 5px 5.9px 0 rgba(136, 125, 125, 0.25);
         color: var(--clr-primary);
+        align-items: center;
+        display: flex;
+        justify-content: center;
+    }
+    .button-filled a {
+        text-decoration: none;
+        color: var(--clr-primary);
+    }
+    .button-filled a:hover {
+        text-decoration: none;
+        color: var(--clr-background);
     }
 
 .button-filled:hover {
     background: var(--clr-primary);
-    color: var(--clr-yellow);
+    color: var(--clr-background);
     transition: all 0.3s ease-in-out;
 }
 .button-ghost {
@@ -254,12 +263,37 @@ p {
     cursor: pointer;
 }
 
-/*TODO: add proper helvetica regular*/
-/*    TODO: global themes, auth login and emp regis*/
+.image-link {
+    height: auto;
+    width: 100%;
+}
 
+.image-link  img {
+    width: 75px;
+    max-width: 75px;
+    height: 75px;
+    object-fit: cover;
+    border-radius: 100%;
+}
 
+.image-link a {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
 
+.image-link h6 {
+    color: var(--clr-secondary);
+}
 
+.progression-status {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 
 

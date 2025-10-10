@@ -25,7 +25,10 @@ class DashboardService
     {
         $admin = $this->adminRepository->signedAdmin();
         return $admin ? strtoupper($admin->first_name . ' ' . $admin->last_name) : null;
-
+    }
+    protected function getAdminByFirstName() {
+        $admin = $this->adminRepository->signedAdmin();
+        return $admin ? strtoupper($admin->first_name) : null;
     }
 
     protected function getAdminAll() {
@@ -52,6 +55,7 @@ class DashboardService
             'end_period' => $this->getEndPeriod(),
             'company'  => $this->showCompanies(),
             'adminAll' =>$this->getAdminAll(),
+            'adminFirstName' => $this->getAdminByFirstName(),
 
 
         ];

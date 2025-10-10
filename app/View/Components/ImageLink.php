@@ -6,14 +6,18 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Root extends Component
+class ImageLink extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public string $image;
+    public  string $profileRoute;
+
+    public function __construct(protected  $user = null, protected bool $admin = false)
     {
-        //
+        $this->image = "/assets/profile-pic.png";
+        $this->profileRoute = "admin.profile";
     }
 
     /**
@@ -21,6 +25,6 @@ class Root extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('layouts.root-layout');
+        return view('components.image-link');
     }
 }

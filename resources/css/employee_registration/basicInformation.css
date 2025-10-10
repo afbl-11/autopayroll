@@ -1,0 +1,20 @@
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.form-wrapper {
+    margin-top: 20px;
+    width: 60%;
+}
+form {
+    width: 100%;
+}
+.field-row {
+    display: flex !important;
+    gap: 10rem !important;
+
+}

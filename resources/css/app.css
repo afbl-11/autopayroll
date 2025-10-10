@@ -1,5 +1,21 @@
-body {
-    font-family: sans-serif;
-    background-color: #f5f5f5;
-    color: #333;
-} /*default*/
+main {
+    /*margin-left: 5%;*/
+    /*padding:  5%;*/
+}
+
+header {
+    height: 10%;
+    width: auto;
+    margin-left: 5%;
+    padding: 0 30px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+}
+
+.user-profile{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
