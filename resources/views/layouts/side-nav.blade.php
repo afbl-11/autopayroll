@@ -2,6 +2,7 @@
 
 <aside>
     <x-logo-minimized></x-logo-minimized>
+    <div class="nav-menu">
         <ul>
             <li>
                 <a href="{{route('dashboard')}}">
@@ -23,19 +24,22 @@
                     <img src="{{ asset('assets/navigations/bell.png') }}" alt="Notifications Icon">
                 </a>
             </li>
-            <li>
-                <a href="#">
-                    <img src="{{ asset('assets/navigations/settings.png') }}" alt="Settings Icon">
-                </a>
-            </li>
         </ul>
-    </nav>
 
-    <div class="logout">
-        <form action="{{route('logout')}}" method="post">
-            <button type="submit" class="button-logout">Logout</button>
-        </form>
     </div>
+        <div class="logout">
+            <ul>
+                <li>
+                    <a href="#">
+                        <img src="{{ asset('assets/navigations/settings.png') }}" alt="Settings Icon">
+                    </a>
+                </li>
+            </ul>
+            <form action="{{route('logout')}}" method="post">
+                <x-button-image icon="assets/navigations/exit.png"></x-button-image>
+            </form>
+        </div>
+
 </aside>
 
 

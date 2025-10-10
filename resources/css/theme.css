@@ -130,6 +130,8 @@ Logo
     }
     .logo-small {
         font-family: var(--font-logo);
+        text-align: center;
+        top: 0;
         color: var(--clr-background);
     }
 
@@ -238,6 +240,18 @@ p {
     border: 1px solid var(--clr-primary);
     color: var(--clr-yellow);
     transition: all 0.3s ease-in-out;
+}
+
+.button-image {
+    width: 25px;
+    height: 25px;
+    outline: none;
+    background: none;
+    border: none;
+}
+
+.button-image:hover {
+    cursor: pointer;
 }
 
 /*TODO: add proper helvetica regular*/

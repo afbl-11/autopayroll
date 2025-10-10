@@ -3,7 +3,6 @@
     {{$slot}}
     <section class="main-content">
         <main>
-
         </main>
     </section>
 </x-root>
