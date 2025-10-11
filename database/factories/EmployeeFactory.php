@@ -61,14 +61,13 @@ class EmployeeFactory extends Factory
             'username' => $faker->unique()->userName,
             'password' => bcrypt('Str0ngPass!'),
             'job_position' => $faker->randomElement($jobs),
-            'employment_type' => $faker->randomElement(['fulltime', 'part-time', 'contractual']),
+            'employment_type' => $faker->randomElement(['full-time', 'part-time', 'contractual']),
             'contract_start' => $faker->dateTimeBetween('-2 years', '-1 year')->format('Y-m-d'),
             'contract_end' => $faker->dateTimeBetween('+1 month', '+2 years')->format('Y-m-d'),
             'birthdate' => $faker->date('Y-m-d', '2000-12-31'),
             'gender' => $faker->randomElement(['male', 'female']),
             'marital_status' => $faker->randomElement(['single', 'married', 'widowed']),
             'blood_type' => $faker->randomElement(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']),
-            'religion' => $faker->word,
             'phone_number' => $faker->numerify('09#########'),
 
             // Residential Address
