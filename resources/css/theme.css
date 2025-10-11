@@ -123,22 +123,28 @@ Logo
 ======================*/
     .logo {
         margin: 22px 0 40px 37px;
-    }
-    #logo {
         font-family: var(--font-logo);
     }
-    .logo span {
+    .logo-small {
+        font-family: var(--font-logo);
+        text-align: center;
+        top: 0;
+        color: var(--clr-background);
+    }
+
+    .logo span,
+    .logo-small span {
         color: var(--clr-yellow);
     }
 
     /*==============
     Forms
     ================*/
-.field-input label{
-    display: block;
-    margin-bottom: 5px;
-    color: var(--clr-secondary);
-}
+    .field-input label{
+        display: block;
+        margin-bottom: 5px;
+        color: var(--clr-secondary);
+    }
     .field-input input, select   {
         width: 100%;
         min-height: 47px;
@@ -192,6 +198,7 @@ p {
 
 
 
+
     /*================
     buttons
     ==================*/
@@ -208,11 +215,22 @@ p {
         border-radius: 8px;
         box-shadow: 2px 5px 5.9px 0 rgba(136, 125, 125, 0.25);
         color: var(--clr-primary);
+        align-items: center;
+        display: flex;
+        justify-content: center;
+    }
+    .button-filled a {
+        text-decoration: none;
+        color: var(--clr-primary);
+    }
+    .button-filled a:hover {
+        text-decoration: none;
+        color: var(--clr-background);
     }
 
 .button-filled:hover {
     background: var(--clr-primary);
-    color: var(--clr-yellow);
+    color: var(--clr-background);
     transition: all 0.3s ease-in-out;
 }
 .button-ghost {
@@ -233,12 +251,49 @@ p {
     transition: all 0.3s ease-in-out;
 }
 
-/*TODO: add proper helvetica regular*/
-/*    TODO: global themes, auth login and emp regis*/
+.button-image {
+    width: 25px;
+    height: 25px;
+    outline: none;
+    background: none;
+    border: none;
+}
 
+.button-image:hover {
+    cursor: pointer;
+}
 
+.image-link {
+    height: auto;
+    width: 100%;
+}
 
+.image-link  img {
+    width: 75px;
+    max-width: 75px;
+    height: 75px;
+    object-fit: cover;
+    border-radius: 100%;
+}
 
+.image-link a {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+
+.image-link h6 {
+    color: var(--clr-secondary);
+}
+
+.progression-status {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 
 

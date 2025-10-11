@@ -1,13 +1,4 @@
-body {
-   display: flex;
-    height: 100%;
-}
-.container {
-    width: 100%;
-    flex: 1;
-    padding: 0 30px 0 30px;
 
-}
 
 nav {
     height: 142px;

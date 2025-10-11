@@ -79,6 +79,9 @@ Route::post('/employees/register/designation', [EmployeeRegistrationController::
 Route::post('/employees/register/credentials', [EmployeeRegistrationController::class, 'storeCredentials'])->name('store.employee.register.4');
 Route::post('/employees/register/create', [EmployeeRegistrationController::class, 'createEmployee'])->name('employee.create');
 
-
+//test route
+Route::get('/admin/profile', function () {
+    return view('user-profile');
+})->name('admin.profile');
 
 

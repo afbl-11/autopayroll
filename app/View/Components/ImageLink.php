@@ -1,0 +1,30 @@
+<?php
+
+namespace App\View\Components;
+
+use Closure;
+use Illuminate\Contracts\View\View;
+use Illuminate\View\Component;
+
+class ImageLink extends Component
+{
+    /**
+     * Create a new component instance.
+     */
+    public string $image;
+    public  string $profileRoute;
+
+    public function __construct(protected  $user = null, protected bool $admin = false)
+    {
+        $this->image = "/assets/profile-pic.png";
+        $this->profileRoute = "admin.profile";
+    }
+
+    /**
+     * Get the view / contents that represent the component.
+     */
+    public function render(): View|Closure|string
+    {
+        return view('components.image-link');
+    }
+}
