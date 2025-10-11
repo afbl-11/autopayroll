@@ -67,11 +67,11 @@ Route::post('/email/verification-notification', function (Request $request) {
 Route::get('/employee/dashboard', [EmployeeDashboardController::class, 'showDashboard'])->name('employee.dashboard');
 
 //employee registration TODO: protect route
-Route::get('/employees/register=1', [EmployeeDashboardController::class, 'showStep1'])->name('employee.register.1');
-Route::get('/employees/register=2', [EmployeeRegistrationController::class, 'showStep2'])->name('employee.register.2');
-Route::get('/employees/register=3', [EmployeeRegistrationController::class, 'showStep3'])->name('employee.register.3');
-Route::get('/employees/register=4', [EmployeeRegistrationController::class, 'showStep4'])->name('employee.register.4');
-Route::get('/employees/register=5', [EmployeeRegistrationController::class, 'showStep5'])->name('employee.register.5');
+Route::get('/employees/register/1', [EmployeeDashboardController::class, 'showStep1'])->name('employee.register.1');
+Route::get('/employees/register/2', [EmployeeRegistrationController::class, 'showStep2'])->name('employee.register.2');
+Route::get('/employees/register/3', [EmployeeRegistrationController::class, 'showStep3'])->name('employee.register.3');
+Route::get('/employees/register/4', [EmployeeRegistrationController::class, 'showStep4'])->name('employee.register.4');
+Route::get('/employees/register/5', [EmployeeRegistrationController::class, 'showStep5'])->name('employee.register.5');
 
 Route::post('/employees/register/basic', [EmployeeRegistrationController::class, 'storeBasicInformation'])->name('store.employee.register.1');
 Route::post('/employees/register/address', [EmployeeRegistrationController::class, 'storeAddress'])->name('store.employee.register.2');

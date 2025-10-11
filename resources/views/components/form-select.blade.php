@@ -1,4 +1,4 @@
-@props(['name' => '', 'id' => '', 'value' => '','label' => '', 'labelOption' => '', 'options' => ''])
+@props(['name' => '', 'id' => '', 'value' => '','label' => '', 'labelOption' => '', 'options' => [], 'selected' => ''])
 
 <div {{$attributes->merge(['class' => 'field-input'])}}>
 
@@ -6,8 +6,8 @@
         <label for="{{ $id }}">{{ $label }}</label>
     @endif
 
-    <select name="{{$name}}" id="{{$id}}">
-        <option value="Select"></option>
+    <select name="{{$name}}" id="{{$id}}" >
+        <option value="">{{$slot}}</option>
         @foreach($options as $value => $labelOption)
             <option value="{{ $value }}" @selected($selected == $value)>{{ $labelOption }}</option>
         @endforeach
