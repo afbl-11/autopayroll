@@ -39,6 +39,7 @@
                 </li>
             </ul>
             <form action="{{route('logout')}}" method="post">
+                @csrf
                 <x-button-image icon="assets/navigations/exit.png"></x-button-image>
             </form>
         </div>
