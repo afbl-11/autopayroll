@@ -145,7 +145,7 @@ Logo
         margin-bottom: 5px;
         color: var(--clr-secondary);
     }
-    .field-input input, select   {
+    .field-input input, select{
         width: 100%;
         min-height: 47px;
         border: 1px solid var(--clr-primary);
@@ -205,7 +205,7 @@ p {
     .button-filled {
         background: var(--clr-yellow);
         height: 47px;
-        width: 150px;
+        width: auto !important;
         outline: none;
         border: none;
         padding: 0 2% 0 2%;
@@ -269,9 +269,9 @@ p {
 }
 
 .image-link  img {
-    width: 75px;
-    max-width: 75px;
-    height: 75px;
+    width: 50px;
+    max-width: 50px;
+    height: 50px;
     object-fit: cover;
     border-radius: 100%;
 }
@@ -290,10 +290,24 @@ p {
 
 .progression-status {
     margin-top: 30px;
+    width: 90%;
+    /*margin-left: 10rem;*/
+}
+
+.header {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: center;
 }
 
+.error_message {
+    color: var(--clr-red);
+    /*position: absolute;*/
+}
 
+.read-mode-only {
+    pointer-events: none;
+    background: #f0f0f0;
+    color: var(--clr-muted);
+}
 

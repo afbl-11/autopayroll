@@ -15,7 +15,7 @@ class BasicInformationRequest extends FormRequest
             'first_name' => ['required', 'string', 'max:255'],
             'middle_name' => ['string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
-            'suffix' => [ 'required', 'in:Sr.,Jr.,Other'],
+            'suffix' => [ 'nullable', 'in:Sr.,Jr.,Other'],
             'birthdate' => ['required', 'date', 'date_format:Y-m-d', 'before_or_equal:' . now()->subYears(18)->format('Y-m-d')],
             'age' => ['required', 'integer', 'min:18', 'max:65'],
             'gender' => ['required', 'in:male,female'],

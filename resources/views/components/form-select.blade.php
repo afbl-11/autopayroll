@@ -9,7 +9,10 @@
     <select name="{{$name}}" id="{{$id}}" >
         <option value="">{{$slot}}</option>
         @foreach($options as $value => $labelOption)
-            <option value="{{ $value }}" @selected($selected == $value)>{{ $labelOption }}</option>
+            <option  value="{{ old($name, $value ?? '') }}" @selected($selected == $value)>{{ $labelOption }}</option>
         @endforeach
     </select>
+        @error($id)
+        <small class="error_message">{{ $message }}</small>
+        @enderror
 </div>

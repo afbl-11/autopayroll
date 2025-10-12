@@ -1,27 +1,28 @@
-.main-content {
+.main-content{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100%;
-    padding: 50px;
+    padding-bottom: 50px;
 }
 
-.form-wrapper {
+form{
+    width: 100%;
+}
+.form-wrapper{
     margin-top: 20px;
     width: 80%;
 }
 
-.button-filled {
-    float: right;
-}
 .field-row {
     display: flex !important;
-    gap: 5rem !important;
 }
-
-form {
-    width: 100%;
+section .field-row:last-of-type {
+    width: 46%;
+}
+.button-filled {
+    float: right ;
 }
 
 section h5 {

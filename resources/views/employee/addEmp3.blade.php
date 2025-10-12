@@ -1,79 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AutoPayroll Employee Onboarding</title>
-         @vite(['resources/css/employee_registration/addEmp3.css', 'resources/js/empOnboarding/addEmp.js'])
-</head>
-<body>
-  @include('partitions.sidebar')
-  <div class ="container">
-    <div class = "header"><img onclick="" src="{{ asset('images/left-arrow.png') }}"><h2>Add Employee</h2></div>
-    @include('partitions.steps', ['step' => 3])
-    <form class="form" action="{{route('store.employee.register.3')}}" method="post">
-    <div class = "content">
-        <div class="head">
-            <div class="companyDesignation formGroup">
-                <label for= "companyDesignation">Company Designation <span class="required">*</span></label><br>
-                <select name="companyDesignation" id="companyDesignation" required />
-                    <option value="c1">Vships Services Oceania Inc.</option>
-                    <option value="c2">Metrogate</option>
-                    <option value="c3">Mindchamps</option>
-                    <option value="c4">Synapse</option>
-                    <option value="c5">Elevated Plus</option>
-                    <option value="c6">Quaerito Qualitas Inc.</option>
-                    <option value="c7">Proselect Management Inc.</option>
-                    <option value="c8">Global Marine Travel</option>
-                    <option value="c9">Brawn Fire Safety Equipment Co.</option>
-                </select>
-            </div>
-            <div class="wrapper">
-            <button class="addCompany formGroup" onclick ="">Add Company</button>
-            </div>
-        </div>
+@vite(['resources/css/employee_registration/designation.css', 'resources/js/empOnboarding/addEmp.js'])
 
-        <div class="emp-type formGroup">
-            <label for= "emp-type">Employment Type <span class="required">*</span></label><br>
-            <div class="emp-buttons">
-            <button type="button" class="type">Fulltime</button>
-            <button type="button" class="type">Part-Time</button>
-            <button type="button" class="type">Contractual</button>
+<x-app :title="$title" :showProgression="true">
+<section class="main-content">
+    <div class="form-wrapper">
+        <form  action="{{route('store.employee.register.3')}}" method="post">
+            @csrf
+{{--                company and add company button--}}
+            <div class="field-row">
+                <x-form-select  name="company_id" id="company_id" label="Company" :options="$companies" required></x-form-select>
+                <x-button-link source="onboarding.client" class="button-link" required>Add Client</x-button-link>
             </div>
-        </div>
+{{--            employment type--}}
+            <div class="radio-group">
+                <label>Employment Type</label><br>
 
-        <div class = "row">
-            <div class="startingDate formGroup">
-                <label for= "startingDate">Starting Date <span class="required">*</span></label><br>
-                <input type="date" id="startingDate" name="startingDate" required />
-            </div>
+                <x-form-radio
+                    name="employment_type"
+                    value="full-time"
+                    label="Full-Time"
+                    :selected="old('employment_type')"
+                    required
+                />
 
-            <div class="jobPosition formGroup">
-                <label for="jobPosition">Job Position <span class="required">*</span></label><br>
-                <input type="text" id="jobPosition" name="jobPosition" placeholder="Job Position" required />
+                <x-form-radio
+                    name="employment_type"
+                    value="part-time"
+                    label="Part-Time"
+                    :selected="old('employment_type')"
+                    required
+                />
+
+                <x-form-radio
+                    name="employment_type"
+                    value="contractual"
+                    label="Contractual"
+                    :selected="old('employment_type')"
+                    required
+                />
             </div>
-        </div>
-        <div class="row2">
-            <div class = "uploadDocuments formGroup">
-                <label for="uploadDocuments">Upload Documents <span class="required">*</span></label><br>
-                <div class="file-wrapper">
-                    <input type="text" id="uploadDocuments" name="uploadDocuments" readonly />
-                    <span id="seenIndicator" class="indicator unseen" hidden>Unseen</span>
-                    <span id="removeFile" class="remove-btn" hidden>&times;</span>
-                </div>
+{{--            start and end date--}}
+            <div class="field-row">
+                <x-form-date name="contract_start" id="contract_start" label="Starting Date" required></x-form-date>
+                <x-form-date name="contract_end" id="contract_end" label="Termination Date" required></x-form-date>
             </div>
-            <div class = "wrapper2">
-            <button type="button" class="browse formGroup">Browse</button>
+{{--           upload documents --}}
+            <div class="field-row">
+                <x-form-input name="job_position" id="job_position" label="Position" required ></x-form-input>
+                <x-form-file-input name="uploaded_document" id="uploaded_document" label="Upload Documents" accept=".pdf,.jpg,.png,.docx" required></x-form-file-input>
             </div>
-        </div>
-        <div id="filePreview" class="file-preview" hidden>
-            <div id="previewContent"></div>
-        </div>
-        </div>
-        <div class="next-con">
-        <button type ="submit" class="next">Next</button>
-        </div>
-    </form>
-  </div>
-</body>
-</html>
+            <x-button-submit>Continue</x-button-submit>
+        </form>
+    </div>
+</section>
+</x-app>

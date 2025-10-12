@@ -3,7 +3,9 @@
     'name' => '',
     'id' => '',
     'label' => '',
-    'placeholder' => ''
+    'placeholder' => '',
+    'value' => '',
+    'readonly' => false,
 ])
 
 
@@ -18,5 +20,12 @@
         name="{{ $name }}"
         id="{{ $id }}"
         placeholder="{{ $placeholder }}"
+        value="{{ old($name, $value ?? '') }}"
+        @if($readonly === true)
+{{--        readonly--}}
+        @endif
     >
+            @error($id)
+            <small class="error_message">{{ $message }}</small>
+            @enderror
 </div>

@@ -1,86 +1,158 @@
 @vite(['resources/css/theme.css', 'resources/css/employee_registration/basicInformation.css'])
-@if ($errors->any())
-    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-        <strong>There were some problems with your input.</strong>
-        <ul class="mt-2 list-disc list-inside">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
 
-<x-app title="{{$title}}" :showProgression="true">
-
+<x-app title="{{ $title }}" :showProgression="true">
     <section class="main-content">
         <div class="form-wrapper">
-            <form action="{{route('store.employee.register.1')}}" method="post">
+            <form action="{{ route('store.employee.register.1') }}" method="post">
                 @csrf
+
+                {{-- =========================
+                  PERSONAL INFORMATION
+                ========================== --}}
                 <section id="personal-information">
                     <h5>Personal Information</h5>
-            {{--        first and last name--}}
-                    <div class="field-row">
-                        <x-form-input  name="first_name" id="first_name"  label="First Name" required></x-form-input>
-                        <x-form-input name="middle_name" id="middle_name"  label="Middle Name" required></x-form-input>
-                    </div>
-                    <div class="field-row">
-                        <x-form-input name="last_name" id="last_name"  label="Last Name" required></x-form-input>
-                        <x-form-select :options="['Sr.' => 'Sr.','Jr.' => 'Jr.', 'Other' => 'Other' ]" label="Suffix"  name="suffix" id="suffix">None</x-form-select>
-                    </div>
 
-    {{--                birthdate and age--}}
+                    {{-- First, Middle, Last Name --}}
                     <div class="field-row">
-                        <x-form-input type="date" name="birthdate" id="birthdate"  label="Birth Date" required></x-form-input>
-                        <x-form-input name="age" id="age"  label="Age" required ></x-form-input>
+                        <x-form-input name="first_name" id="first_name" label="First Name" required />
+                        <x-form-input name="middle_name" id="middle_name" label="Middle Name"  required />
                     </div>
 
                     <div class="field-row">
-                        <x-form-select :options="['male' => 'Male', 'female' => 'Female' ]" label="Blood Type" required name="gender" id="gender">------</x-form-select>
+                        <x-form-input name="last_name" id="last_name" label="Last Name"  required />
+
+                        <x-form-select
+                            :options="['Sr.' => 'Sr.', 'Jr.' => 'Jr.', 'Other' => 'Other']"
+                            label="Suffix"
+                            name="suffix"
+                            id="suffix"
+                        >None</x-form-select>
+                    </div>
+
+                    {{-- Birthdate and Age --}}
+                    <div class="field-row">
+                        <x-form-input type="date" name="birthdate" id="birthdate"
+                                      label="Birth Date" :value="old('birthdate')" required />
+                        <x-form-input name="age" id="age" label="Age"
+                                       required :readonly="true" />
+                    </div>
+
+                    <div class="field-row">
+                        <x-form-select
+                            :options="['male' => 'Male', 'female' => 'Female']"
+                            label="Gender"
+                            name="gender"
+                            id="gender"
+                            required
+                        >------</x-form-select>
+
                         <x-form-select
                             :options="[
-                                'A+' => 'A+',
-                                'A-' => 'A-',
-                                'B+' => 'B+',
-                                'B-' => 'B-',
-                                'AB+' => 'AB+',
-                                'AB-' => 'AB-',
-                                'O+' => 'O+',
-                                'O-' => 'O-']"
-                            label="Blood Type" required name="blood_type" id="blood_type">------</x-form-select>
+                                'A+' => 'A+','A-' => 'A-',
+                                'B+' => 'B+','B-' => 'B-',
+                                'AB+' => 'AB+','AB-' => 'AB-',
+                                'O+' => 'O+','O-' => 'O-'
+                            ]"
+                            label="Blood Type"
+                            name="blood_type"
+                            id="blood_type"
+                            required
+                        >------</x-form-select>
                     </div>
+
                     <div class="field-row">
-                        <x-form-select :options="[
+                        <x-form-select
+                            :options="[
                                 'single' => 'Single',
                                 'married' => 'Married',
                                 'widow' => 'Widow'
-                            ]" required label="Civil Status" name="marital_status" id="marital_status">------</x-form-select>
+                            ]"
+                            label="Civil Status"
+                            name="marital_status"
+                            id="marital_status"
+                            required
+                        >------</x-form-select>
                     </div>
                 </section>
 
-                <section id=government-requirement">
-{{--                    bank and sss--}}
+                {{-- =========================
+                     GOVERNMENT REQUIREMENTS
+                ========================== --}}
+                <section id="government-requirement">
                     <h5>Government Requirements</h5>
+
+                    {{-- Bank and SSS --}}
                     <div class="field-row">
-                        <x-form-input label="Bank Account Number" name="bank_account_number" id="bank_account_number" required></x-form-input>
-                        <x-form-input label="Social Security Number" name="sss_number" id="sss_number" required placeholder="e.g 123456789102"></x-form-input>
+                        <x-form-input label="Bank Account Number"
+                                      name="bank_account_number"
+                                      id="bank_account_number"
+                                      required
+                                      placeholder="10-16 digits"
+                        />
+
+                        <x-form-input label="Social Security Number"
+                                      name="sss_number"
+                                      id="sss_number"
+                                      placeholder="10 digits"
+                                      required />
                     </div>
 
-{{--                    philhealth and pagibig--}}
+                    {{-- PhilHealth and Pag-IBIG --}}
                     <div class="field-row">
-                        <x-form-input label="Phil-Health Number" name="phil_health_number" id="phil_health_number" required placeholder="e.g 1234567891023456"></x-form-input>
-                        <x-form-input label="Pag-Ibig Number" name="pag_ibig_number" id="pag_ibig_number" required placeholder="e.g 1234567891023456"></x-form-input>
+                        <x-form-input label="PhilHealth Number"
+                                      name="phil_health_number"
+                                      id="phil_health_number"
+                                      placeholder="12 digits"
+                                       required />
+
+                        <x-form-input label="Pag-IBIG Number"
+                                      name="pag_ibig_number"
+                                      id="pag_ibig_number"
+                                      placeholder="12 digits"
+                                       required />
                     </div>
 
-{{--                    Tin--}}
+                    {{-- TIN --}}
                     <div class="field-row">
-                        <x-form-input label="TIN" name="tin_number" id="pag_ibig_number" required placeholder="e.g 1234567891"></x-form-input>
+                        <x-form-input label="TIN"
+                                      name="tin_number"
+                                      id="tin_number"
+                                      placeholder="9-12 digits"
+                                      required />
                     </div>
                 </section>
-
 
                 <x-button-submit>Continue</x-button-submit>
             </form>
         </div>
     </section>
-
 </x-app>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const dateInput = document.getElementById('birthdate');
+        const ageInput = document.getElementById('age');
+
+        dateInput.addEventListener('change', () => {
+            const birthdateValue = dateInput.value;
+            if(!birthdateValue) return;
+
+            const today = new Date();
+            const birthDate = new Date(birthdateValue);
+
+
+            let age = today.getFullYear() - birthDate.getFullYear();
+
+            const monthDiff = today.getMonth() - birthDate.getMonth();
+            const dayDiff = today.getDate() - birthDate.getDate();
+
+            if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+                age--;
+            }
+
+            ageInput.value = age >= 0 ? age : 0;
+        });
+    });
+</script>
+
