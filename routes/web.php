@@ -37,11 +37,11 @@ Route::get('/register/success', function () {
 
 Route::post('/login/admin', [LoginController::class, 'authenticate'])->name('login.admin');
 Route::get('/dashboard', [DashboardController::class, 'showDashboard'])
-//    ->middleware(['auth:admin'])
+    ->middleware(['auth:admin'])
     ->name('dashboard');
 
 //logout
-Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
+Route::post('/logout', [LogoutController::class, 'logout'])->middleware('auth:admin')->name('logout');
 
 /**company registration TODO:protect route */
 Route::post('/client/onboarding', [ClientRegistrationController::class, 'register'])->name('onboarding.client');
@@ -66,6 +66,8 @@ Route::post('/email/verification-notification', function (Request $request) {
 //employee dashboard
 Route::get('/employee/dashboard', [EmployeeDashboardController::class, 'showDashboard'])->name('employee.dashboard');
 
+Route::middleware(['auth:admin', 'verified'])->group(function () {
+
 //employee registration TODO: protect route
 Route::get('/employees/register/1', [EmployeeDashboardController::class, 'showStep1'])->name('employee.register.1');
 Route::get('/employees/register/2', [EmployeeRegistrationController::class, 'showStep2'])->name('employee.register.2');
@@ -79,9 +81,4 @@ Route::post('/employees/register/designation', [EmployeeRegistrationController::
 Route::post('/employees/register/credentials', [EmployeeRegistrationController::class, 'storeCredentials'])->name('store.employee.register.4');
 Route::post('/employees/register/create', [EmployeeRegistrationController::class, 'createEmployee'])->name('employee.create');
 
-//test route
-Route::get('/admin/profile', function () {
-    return view('user-profile');
-})->name('admin.profile');
-
-
+});
