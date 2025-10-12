@@ -6,10 +6,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     const citySelect1 = document.getElementById("city");
     const barangaySelect1 = document.getElementById("barangay");
 
+    const countrySelect2 = document.getElementById("id_country");
     const regionSelect2 = document.getElementById("id_region");
     const provinceSelect2 = document.getElementById("id_province");
     const citySelect2 = document.getElementById("id_city");
     const barangaySelect2 = document.getElementById("id_barangay");
+    const postalSelect2 = document.getElementById("id_zip");
+    const streetSelect2 = document.getElementById("id_street");
+    const houseSelect2 = document.getElementById("id_house_number");
 
     const checkbox = document.getElementById("same_address");
 
@@ -28,7 +32,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // --- Helper population functions ---
     async function populateProvinces(regionSelect, provinceSelect, citySelect, barangaySelect) {
         provinceSelect.innerHTML = "<option value=''>Select Province</option>";
-        citySelect.innerHTML = "<option value=''>Select City</option>";
+        citySelect.innerHTML = "<option value=''>Select City / Municipality</option>";
         barangaySelect.innerHTML = "<option value=''>Select Barangay</option>";
         if (!regionSelect.value) return;
         const provinces = await getProvinces(regionSelect.value);
@@ -41,7 +45,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     async function populateCities(provinceSelect, citySelect, barangaySelect) {
-        citySelect.innerHTML = "<option value=''>Select City</option>";
+        citySelect.innerHTML = "<option value=''>Select City / Municipality</option>";
         barangaySelect.innerHTML = "<option value=''>Select Barangay</option>";
         if (!provinceSelect.value) return;
         const cities = await getCities(provinceSelect.value);
@@ -82,20 +86,39 @@ document.addEventListener("DOMContentLoaded", async () => {
     checkbox.addEventListener("change", async () => {
         if (checkbox.checked) {
             copyTextFields();
+            countrySelect2.classList.add("read-mode-only")
+
             regionSelect2.value = regionSelect1.value;
+            regionSelect2.classList.add("read-mode-only");
 
             await populateProvinces(regionSelect2, provinceSelect2, citySelect2, barangaySelect2);
             provinceSelect2.value = provinceSelect1.value;
+            provinceSelect2.classList.add("read-mode-only");
 
             await populateCities(provinceSelect2, citySelect2, barangaySelect2);
             citySelect2.value = citySelect1.value;
+            citySelect2.classList.add("read-mode-only");
 
             await populateBarangays(citySelect2, barangaySelect2);
             barangaySelect2.value = barangaySelect1.value;
+            barangaySelect2.classList.add("read-mode-only");
+
+            postalSelect2.classList.add("read-mode-only");
+            streetSelect2.classList.add("read-mode-only");
+            houseSelect2.classList.add("read-mode-only");
+
 
             toggleSecondAddress(true); // disable all fields
         } else {
             toggleSecondAddress(false); // re-enable
+            countrySelect2.classList.remove("read-mode-only");
+            regionSelect2.classList.remove("read-mode-only");
+            provinceSelect2.classList.remove("read-mode-only");
+            citySelect2.classList.remove("read-mode-only");
+            barangaySelect2.classList.remove("read-mode-only");
+            postalSelect2.classList.remove("read-mode-only");
+            streetSelect2.classList.remove("read-mode-only");
+            houseSelect2.classList.remove("read-mode-only");
             clearSecondAddress();
         }
     });
@@ -106,7 +129,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             ["country", "id_country"],
             ["zip", "id_zip"],
             ["street", "id_street"],
-            ["house-number", "id_house-number"]
+            ["house_number", "id_house_number"]
         ];
         pairs.forEach(([from, to]) => {
             const fromEl = document.getElementById(from);
@@ -126,7 +149,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
         [regionSelect2, provinceSelect2, citySelect2, barangaySelect2].forEach(sel => (sel.value = ""));
     }
-    function toggleSecondAddress(disabled) {
+    function toggleSecondAddress(readonly) {
         [
             regionSelect2,
             provinceSelect2,
@@ -135,9 +158,13 @@ document.addEventListener("DOMContentLoaded", async () => {
             document.getElementById("id_country"),
             document.getElementById("id_zip"),
             document.getElementById("id_street"),
-            document.getElementById("id_house-numbe")
+            document.getElementById("id_house_number")
         ].forEach(el => {
-            if (el) el.disabled = disabled;
+            if (el) {
+                el.readOnly = readonly;
+                el.classList.toggle(readonly);
+            }
         });
     }
+
 });

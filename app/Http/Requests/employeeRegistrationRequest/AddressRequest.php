@@ -32,7 +32,7 @@ class AddressRequest extends FormRequest
             'phone_number' => [
                 'required',
                 'string',
-                'regex:/^\+63\d{10}$/',//TODO: forms should start with a +63
+                'regex:/^\d{11}$/',//TODO: forms should start with a +63
             ],
             'email' => 'nullable|string|email|max:255|unique:employees,email',
         ];

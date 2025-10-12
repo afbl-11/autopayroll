@@ -1,38 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AutoPayroll Employee Onboarding</title>
-         @vite(['resources/css/empOnboarding/addEmp4.css', 'resources/js/empOnboarding/addEmp.js'])
-</head>
-<body>
-  @include('partitions.sidebar')
-  <div class ="container">
-    <div class = "header"><img onclick="" src="{{ asset('images/left-arrow.png') }}"><h2>Add Employee</h2></div>
-    @include('partitions.steps', ['step' => 4])
-    <form class="form" action="{{route('store.employee.register.4')}}" method="post">
-    <div class = "content">
-        <div class="email formGroup">
-                <label for="email">Email <span class="required">*</span></label><br>
-                <input type="email" id="email" placeholder="Email" required />
-        </div>
+@vite(['resources/css/employee_registration/accountSetup.css', 'resources/js/empOnboarding/addEmp.js'])
 
-        <div class="empId formGroup">
-                <label for= "fn">Employee Identification Number <span class="required">*</span></label><br>
-                <input type="number" id="empId" name="empId" placeholder="Employee ID Number" required />
-        </div>
+<x-app :title="$title" :showProgression="true">
+    <section class="main-content">
+        <div class="form-wrapper">
+            <form class="form" action="{{route('store.employee.register.4')}}" method="post">
+                @csrf
+{{--                username and email--}}
+                <div class="field-row">
+                    <x-form-input name="username" id="username" label="User Name" required></x-form-input>
+                </div>
 
-        <div class="password formGroup">
-            <label for="password">Password <span class="required">*</span></label><br>
-            <div class = "wrapper">
-            <input type="password" id="password" placeholder="Password" required />
-            <span class="toggleEye" onclick="togglePassword()">👁</span> <br>
-            </div>
+                <div class="field-row">
+                    <x-form-input type="text" name="email" id="email" label="Email" placeholder="Optional" :value="$email" :disabled="true"></x-form-input>
+                </div>
+
+{{--                password--}}
+                <div class="field-row">
+                    <x-form-input  type="text" name="password" id="password" label="Password" value="DefaultPassword123!" :disabled="true"></x-form-input>
+                </div>
+
+                <x-button-submit>Continue</x-button-submit>
+            </form>
         </div>
-    </div>
-        <button type ="submit" class="next">Next</button>
-    </form>
-  </div>
-</body>
-</html>
+    </section>
+</x-app>
+
+<script>
+    const password = document.getElementById('password');
+    const email = document.getElementById('email');
+
+    password.classList.add('read-mode-only');
+    email.classList.add('read-mode-only');
+</script>

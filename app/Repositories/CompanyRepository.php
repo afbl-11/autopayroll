@@ -19,9 +19,6 @@ class CompanyRepository
     public function delete($id) {
         return Company::destroy($id);
     }
-    public function getCompanies() {
-        return Company::all();
-    }
     public function getCompany($id) {
         return Company::find($id);
     }
@@ -32,5 +29,9 @@ class CompanyRepository
 
     public function getCompanyIndustries() {
         return Company::pluck('industry');
+    }
+
+    public function getCompanies() {
+        return Company::orderBy('company_name')->pluck('company_name', 'company_id')->toArray();
     }
 }

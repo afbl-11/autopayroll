@@ -19,7 +19,7 @@ class AdminRegisterPersonal extends FormRequest
             'last_name' => ['required','string','max:255'],
             'role' => ['required','in:admin,hr'],
             'email' => ['required','email','unique:admins,email'],
-            'tin' => ['required', 'digits_between:9,12'],
+            'tin' => ['required', 'digits_between:9,12','unique:admins,tin'],
             'password' => [
                 'required',
                 'string',

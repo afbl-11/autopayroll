@@ -4,35 +4,26 @@
     align-items: center;
     justify-content: center;
     width: 100%;
+    padding-bottom: 50px;
 }
 
 .form-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-top: 20px;
     width: 80%;
 }
+.field-row{
+    display: flex !important;
+}
 form {
-    width: 100%;
+    width: 50%;
+}
+.button-filled {
+    float: right;
 }
 .field-row {
     display: flex !important;
     gap: 5rem !important;
-}
-
-.field-row:last-of-type {
-    max-width: 46%;
-}
-.field-row:first-of-type {
-    margin-top: 30px;
-}
-
-.button-filled {
-    float: right;
-}
-
-.main-content {
-    margin-bottom: 5%;
-}
-
-#age {
-    pointer-events: none;
 }

@@ -1,14 +1,14 @@
 .steps-div {
     display: flex;
-    width: 70%;
-    justify-content: space-between;
+    width: 100%;
+    justify-content: space-around;
     margin-bottom: 30px;
     flex-wrap: wrap;
 }
 
 .steps {
-    padding: 10px;
-    font-size: 14px;
+    /*padding: 10px;*/
+    /*font-size: 14px;*/
     color: #888;
     text-align: center;
     flex: 1;
@@ -58,22 +58,4 @@
 
 .line.active-line{
     border-color: #3CBF6C;
-}
-
-@media screen and (max-width: 1550px) {
-    .steps-div {
-        margin-left: -100px;
-    }
-}
-
-@media screen and (max-width: 970px) {
-    .steps-div {
-        margin-left: 0px;
-    }
-}
-
-@media screen and (max-width: 650px) {
-    .steps-div {
-        width: 95%;
-    }
 }
