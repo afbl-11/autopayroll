@@ -5,7 +5,7 @@
       'resources/js/empOnboarding/addEmp.js',
       'resources/js/address-retrieve.js',
     ])
-<x-app title="{{$title}}" :showProgression="true">
+<x-app :title="$title" :showProgression="true">
     <section class="main-content">
             <div class="form-wrapper">
                 <form action="{{route('store.employee.register.2')}}" method="post">

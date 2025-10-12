@@ -16,6 +16,11 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{{route('register.client')}}">
+                        <img src="{{asset('assets/navigations/building.png')}}" alt="Company">
+                    </a>
+                </li>
+                <li>
                     <a href="#">
                         <img src="{{ asset('assets/navigations/compliance.png') }}" alt="Compliance Icon">
                     </a>

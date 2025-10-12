@@ -44,8 +44,8 @@ Route::get('/dashboard', [DashboardController::class, 'showDashboard'])
 Route::post('/logout', [LogoutController::class, 'logout'])->middleware('auth:admin')->name('logout');
 
 /**company registration TODO:protect route */
-Route::post('/client/onboarding', [ClientRegistrationController::class, 'register'])->name('onboarding.client');
-Route::get('client/register', [ClientRegistrationController::class, 'showForm'])->name('register.client');
+Route::get('company/register', [ClientRegistrationController::class, 'showForm'])->name('register.client');
+Route::post('company/register/attempt', [ClientRegistrationController::class, 'register'])->name('register.client');
 
 //email verification
 Route::get('/email/verify', function () {
