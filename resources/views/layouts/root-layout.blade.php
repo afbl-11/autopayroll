@@ -3,6 +3,7 @@
 
 <head>
     @include('partitions.head')
+    @vite('resources/css/theme.css')
 </head>
 
 <body>

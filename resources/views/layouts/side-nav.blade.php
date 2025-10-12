@@ -40,7 +40,7 @@
             </ul>
             <form action="{{route('logout')}}" method="post">
                 @csrf
-                <x-button-image icon="assets/navigations/exit.png"></x-button-image>
+                <x-button-submit icon="assets/navigations/exit.png"></x-button-submit>
             </form>
         </div>
 
