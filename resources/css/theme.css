@@ -145,7 +145,7 @@ Logo
         margin-bottom: 5px;
         color: var(--clr-secondary);
     }
-    .field-input input, select{
+    .field-input input, .field-input select{
         width: 100%;
         min-height: 47px;
         border: 1px solid var(--clr-primary);

@@ -5,11 +5,11 @@
     'label' => '',
     'placeholder' => '',
     'value' => '',
-    'readonly' => false,
+    'noDefault' => false,
 ])
 
 
-<div {{ $attributes->merge(['class' => 'field-input']) }}>
+<div @if(!$noDefault){{ $attributes->merge(['class' => 'field-input']) }} @endif>
 
     @if($label)
         <label for="{{ $id }}">{{ $label }}</label>

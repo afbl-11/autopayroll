@@ -1,0 +1,8 @@
+.employee-card {
+    background: var(--clr-card-surface);
+    height: 355px;
+    width: 272px;
+    border-radius: 16px;
+    padding: 13px;
+    box-shadow: 2px 5px 6px 0 rgba(136, 125, 125, 0.25);
+}
