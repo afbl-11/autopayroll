@@ -8,7 +8,7 @@
 {{--                company and add company button--}}
             <div class="field-row">
                 <x-form-select  name="company_id" id="company_id" label="Company" :options="$companies" required></x-form-select>
-                <x-button-link source="onboarding.client" class="button-link" required>Add Client</x-button-link>
+                <x-button-link source="show.register.client" class="button-link" required>Add Client</x-button-link>
             </div>
 {{--            employment type--}}
             <div class="radio-group">
