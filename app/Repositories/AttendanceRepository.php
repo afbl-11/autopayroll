@@ -31,10 +31,10 @@ class AttendanceRepository
         return AttendanceLogs::find($id);
     }
 
-//    public function getByEmployee($employeeId)
-//    {
-//        return AttendanceLogs::where('employee_id', $employeeId)->get();
-//    }
+    public function getByEmployee($employeeId)
+    {
+        return AttendanceLogs::where('employee_id', $employeeId)->get();
+    }
 
     public function getByDate($date)
     {
@@ -53,11 +53,12 @@ class AttendanceRepository
     public function getAll()
     {
         return AttendanceLogs::all();
-        //returns a collection of attendance logs
     }
 
     public function getByStatus($status)
     {
         return AttendanceLogs::where('status', $status)->get();
     }
+
+
 }

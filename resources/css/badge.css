@@ -1,0 +1,10 @@
+.badge-default {
+    background-color: black;
+    min-width: 100px;
+    min-height: 100px;
+    border-radius: 100%;
+}
+
+.badge-negative {}
+
+.badge-pending {}

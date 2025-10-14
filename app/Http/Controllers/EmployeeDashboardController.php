@@ -4,17 +4,33 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Employee;
+use App\Repositories\AttendanceRepository;
+use App\Repositories\CompanyRepository;
+use App\Repositories\EmployeeRepository;
+use Illuminate\Http\Request;
+
 
 class EmployeeDashboardController extends Controller
 {
 
-    public function showDashboard() {
+    public function __construct(
+        protected CompanyRepository $companyRepository,
+        protected EmployeeRepository $employeeRepository,
+        protected AttendanceRepository $attendanceRepository,
+    ){}
 
-        return view('employeeDashboard')->with('title','Employee Dashboard');
+
+    public function showDashboard(Request $request) {
+        $companies = $this->companyRepository->getCompanies();
+        $employees = $this->employeeRepository->getEmployees();
+
+        return view('employeeDashboard', compact('employees', 'companies'))->with('title', 'Employee Dashboard');
     }
 
+
+
+
     public function showStep1() {
-        $title = 'Add Employee';
-        return view('employee.addEmp1', compact('title'));
+        return view('employee.addEmp1')->with('title','Add Employee');
     }
 }

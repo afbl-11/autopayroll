@@ -1,0 +1,24 @@
+.state-default {
+    background-color: var(--clr-green);
+    width: 70px;
+    padding: 5px;
+    border-radius: 16px;
+    text-align: center;
+
+}
+
+.state-inactive {
+    background-color: var(--clr-red);
+    width: 70px;
+    padding: 5px;
+    border-radius: 16px;
+    text-align: center;
+}
+small {
+    color: var(--clr-primary);
+    font-size: 10px !important;
+    margin-bottom: 0 !important;
+    /*line-height: 0 !important;*/
+    text-align: center !important;
+}
+

@@ -5,11 +5,11 @@
     'label' => '',
     'placeholder' => '',
     'value' => '',
-    'readonly' => false,
+    'noDefault' => false,
 ])
 
 
-<div {{ $attributes->merge(['class' => 'field-input']) }}>
+<div @if(!$noDefault){{ $attributes->merge(['class' => 'field-input']) }} @endif>
 
     @if($label)
         <label for="{{ $id }}">{{ $label }}</label>
@@ -21,9 +21,6 @@
         id="{{ $id }}"
         placeholder="{{ $placeholder }}"
         value="{{ old($name, $value ?? '') }}"
-        @if($readonly === true)
-{{--        readonly--}}
-        @endif
     >
             @error($id)
             <small class="error_message">{{ $message }}</small>

@@ -44,8 +44,8 @@ Route::get('/dashboard', [DashboardController::class, 'showDashboard'])
 Route::post('/logout', [LogoutController::class, 'logout'])->middleware('auth:admin')->name('logout');
 
 /**company registration TODO:protect route */
-Route::post('/client/onboarding', [ClientRegistrationController::class, 'register'])->name('onboarding.client');
-Route::get('client/register', [ClientRegistrationController::class, 'showForm'])->name('register.client');
+Route::get('company/register', [ClientRegistrationController::class, 'showForm'])->name('show.register.client');
+Route::post('company/register/attempt', [ClientRegistrationController::class, 'register'])->name('register.client');
 
 //email verification
 Route::get('/email/verify', function () {
@@ -65,10 +65,11 @@ Route::post('/email/verification-notification', function (Request $request) {
 
 //employee dashboard
 Route::get('/employee/dashboard', [EmployeeDashboardController::class, 'showDashboard'])->name('employee.dashboard');
+Route::get('/employees/filter', [EmployeeDashboardController::class, 'filter'])
+    ->name('employee.filter');
+
 
 Route::middleware(['auth:admin', 'verified'])->group(function () {
-
-//employee registration TODO: protect route
 Route::get('/employees/register/1', [EmployeeDashboardController::class, 'showStep1'])->name('employee.register.1');
 Route::get('/employees/register/2', [EmployeeRegistrationController::class, 'showStep2'])->name('employee.register.2');
 Route::get('/employees/register/3', [EmployeeRegistrationController::class, 'showStep3'])->name('employee.register.3');
@@ -80,5 +81,9 @@ Route::post('/employees/register/address', [EmployeeRegistrationController::clas
 Route::post('/employees/register/designation', [EmployeeRegistrationController::class, 'storeDesignation'])->name('store.employee.register.3');
 Route::post('/employees/register/credentials', [EmployeeRegistrationController::class, 'storeCredentials'])->name('store.employee.register.4');
 Route::post('/employees/register/create', [EmployeeRegistrationController::class, 'createEmployee'])->name('employee.create');
-
 });
+
+//password management
+Route::get('/forgot_password', function () {
+    return view('auth.authVerify');
+})->name('forgot.password');

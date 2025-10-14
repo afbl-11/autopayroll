@@ -16,6 +16,11 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{{route('show.register.client')}}">
+                        <img src="{{asset('assets/navigations/building.png')}}" alt="Company">
+                    </a>
+                </li>
+                <li>
                     <a href="#">
                         <img src="{{ asset('assets/navigations/compliance.png') }}" alt="Compliance Icon">
                     </a>
@@ -40,7 +45,7 @@
             </ul>
             <form action="{{route('logout')}}" method="post">
                 @csrf
-                <x-button-image icon="assets/navigations/exit.png"></x-button-image>
+                <x-button-submit icon="assets/navigations/exit.png"></x-button-submit>
             </form>
         </div>
 

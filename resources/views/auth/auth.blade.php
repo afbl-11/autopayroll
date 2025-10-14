@@ -1,43 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AutoPayroll Authentication</title>
-         @vite(['resources/css/auth/auth.css', 'resources/js/app.js', "resources/css/theme.css"])
-</head>
-<body>
-    <div class = "logo">
-       <h1 class="logo" id="logo">Auto<span>Payroll</span></h1>
-    </div>
-  <div class ="container">
-        <div class="sign-in-wrapper">
+@vite(['resources/css/auth/auth.css', 'resources/js/app.js', "resources/css/theme.css"])
+<x-root>
+    <nav><x-logo-expanded/></nav>
+    <section class="main-content">
+        <div class="form-wrapper">
             <h3 class="header">Welcome Back!</h3>
 
             <form class="form" action="{{route('login.admin')}}" method="post">
                 @csrf
-                    <div class="l1">
-                        <label for="email">Email or Username </label> <br>
-                        <input type="text" name="email" id="email" required/>
-                        @error('email')
-                        <span class="error">{{ $message }}</span>
-                        @enderror
-                    </div>
+                <div class="field-row">
+                    <x-form-input type="pass" name="email" id="email" label="Email Address" required></x-form-input>
+                </div>
 
-                    <div class="l2">
-                        <label for="password">Password </label> <br>
-                        <div class="wrapper">
-                            <input type="password" name="password" id="password" required/>
-                            <span class="toggleEye" onclick="togglePassword()">👁</span> <br>
-                        </div>
-                        <a class="forgot" href="./authverify.blade.php">Forgot Password?</a>
-                    </div>
+                <div class="field-row">
+                    <x-form-input type="password" name="password" id="password" label="Password" class="toggleEye" required></x-form-input>
 
-                <button type="submit" class="signIn">Sign In</button>
+                    <a href="{{route('forgot.password')}}"><small>Forgot Password</small></a>
+                </div>
+
+                <x-button-submit>Sign in</x-button-submit>
             </form>
         </div>
 
-  </div>
+    </section>
+</x-root>
   <script>
     function togglePassword() {
     const passwordInput = document.getElementById("password");
@@ -52,5 +37,3 @@
     }
 }
  </script>
-</body>
-</html>

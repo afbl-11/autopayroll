@@ -2,7 +2,9 @@
 
 namespace App\Repositories;
 
+use App\Models\Company;
 use App\Models\Employee;
+use Illuminate\Http\Request;
 
 class EmployeeRepository
 {
@@ -32,8 +34,10 @@ class EmployeeRepository
     }
 
     public function getEmployees() {
-        return Employee::all();
+        return Employee::with('attendanceLogs')->get();
     }
+
+
     public function countEmployees() {
         return Employee::count();
     }
@@ -68,5 +72,35 @@ class EmployeeRepository
     public function getEmployeeByGender($gender) {
         return Employee::where('gender', $gender)->get();
     }
+
+    public function getLatestAttendance(){
+        return Employee::with(['attendanceLogs' => function ($query) {
+            $query->latest('clock_in_time')->limit(1);
+        }])->get();
+    }
+
+//    public function processFilter(Request $request)
+//    {
+//        $query = Employee::with(['attendanceLogs' => fn($q) => $q->latest()->limit(1)]);
+//
+//        if ($request->filled('search_bar')) {
+//            $query->where(function ($q) use ($request) {
+//                $q->where('first_name', 'like', '%'.$request->search_bar.'%')
+//                    ->orWhere('last_name', 'like', '%'.$request->search_bar.'%')
+//                    ->orWhere('username', 'like', '%'.$request->search_bar.'%');
+//            });
+//        }
+//
+//        if ($request->filled('company_id')) {
+//            $query->where('company_id', $request->company_id);
+//        }
+//
+//        if ($request->filled('status')) {
+//            $query->whereHas('attendanceLogs', fn($q) => $q->where('status', $request->status));
+//        }
+//
+//        return $query->get();
+//    }
+
 
 }
