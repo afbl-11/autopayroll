@@ -65,10 +65,11 @@ Route::post('/email/verification-notification', function (Request $request) {
 
 //employee dashboard
 Route::get('/employee/dashboard', [EmployeeDashboardController::class, 'showDashboard'])->name('employee.dashboard');
+Route::get('/employees/filter', [EmployeeDashboardController::class, 'filter'])
+    ->name('employee.filter');
+
 
 Route::middleware(['auth:admin', 'verified'])->group(function () {
-
-
 Route::get('/employees/register/1', [EmployeeDashboardController::class, 'showStep1'])->name('employee.register.1');
 Route::get('/employees/register/2', [EmployeeRegistrationController::class, 'showStep2'])->name('employee.register.2');
 Route::get('/employees/register/3', [EmployeeRegistrationController::class, 'showStep3'])->name('employee.register.3');

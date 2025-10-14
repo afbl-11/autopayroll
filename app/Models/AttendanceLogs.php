@@ -15,16 +15,17 @@ class AttendanceLogs extends Model
     protected $fillable = [
         'log_id',
         'employee_id',
+        'clock_in_date',
         'clock_in_time',
         'clock_out_time',
-        'status',
         'clock_in_latitude',
         'clock_out_latitude'
     ];
 
     protected $casts = [
-        'clock_in_time' => 'datetime',
-        'clock_out_time' => 'datetime',
+        'clock_in_date' => 'date',
+        'clock_in_time' => 'time',
+        'clock_out_time' => 'time',
         'clock_in_latitude' => 'decimal:8',
         'clock_out_longitude' => 'decimal:8'
     ];

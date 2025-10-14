@@ -11,10 +11,19 @@ class EmployeeCards extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct()
-    {
-        //
-    }
+    public function __construct(
+        public string $id,
+        public string $name,
+        public ?string $image,
+        public string $position,
+        public string $email,
+        public string $phone,
+        public string $type,
+        public string $username,
+        public string $date,
+        public ?bool $status,
+    )
+    {}
 
     /**
      * Get the view / contents that represent the component.

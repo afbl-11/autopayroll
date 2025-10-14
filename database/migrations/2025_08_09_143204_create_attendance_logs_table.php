@@ -20,12 +20,12 @@ return new class extends Migration
                 ->on('employees')
                 ->onDelete('cascade');
 
-            $table->dateTime('clock_in_time');
-            $table->dateTime('clock_out_time');
-            $table->enum('status', ['active','inactive']);
+            $table->date('clock_in_date')->nullable();
+            $table->time('clock_in_time')->nullable();
+            $table->time('clock_out_time')->nullable();
 
-            $table->decimal('clock_in_latitude', 10, 8);
-            $table->decimal('clock_in_longitude', 11, 8);
+            $table->decimal('clock_in_latitude', 10, 8)->nullable();
+            $table->decimal('clock_in_longitude', 11, 8)->nullable();
 
             $table->timestamps();
 
