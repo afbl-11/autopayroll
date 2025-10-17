@@ -34,6 +34,7 @@ class Employee extends Model
         'blood_type',
         'religion',
         'phone_number',
+        'api_token',
 
         // Residential Address
         'country',

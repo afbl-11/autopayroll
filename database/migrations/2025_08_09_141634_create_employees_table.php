@@ -72,6 +72,7 @@ return new class extends Migration
             $table->string('tin_number');
 
             $table->json('uploaded_documents')->nullable();
+            $table->string('api_token', 80)->nullable()->unique();
 
             $table->timestamps();
         });
