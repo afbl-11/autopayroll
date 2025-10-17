@@ -7,6 +7,7 @@ use App\Models\Schedule;
 use App\Models\Employee;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Employee>
@@ -69,6 +70,7 @@ class EmployeeFactory extends Factory
             'marital_status' => $faker->randomElement(['single', 'married', 'widowed']),
             'blood_type' => $faker->randomElement(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']),
             'phone_number' => $faker->numerify('09#########'),
+            'api_token' => Str::random(60),
 
             // Residential Address
             'country' => $resAddress['country'],

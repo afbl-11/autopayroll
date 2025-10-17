@@ -68,7 +68,7 @@ Route::get('/employee/dashboard', [EmployeeDashboardController::class, 'showDash
 Route::get('/employees/filter', [EmployeeDashboardController::class, 'filter'])
     ->name('employee.filter');
 
-
+//employee registration
 Route::middleware(['auth:admin', 'verified'])->group(function () {
 Route::get('/employees/register/1', [EmployeeDashboardController::class, 'showStep1'])->name('employee.register.1');
 Route::get('/employees/register/2', [EmployeeRegistrationController::class, 'showStep2'])->name('employee.register.2');
