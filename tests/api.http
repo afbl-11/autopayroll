@@ -3,7 +3,7 @@ POST http://127.0.0.1:8000/api/employee/login
 Content-Type: application/json
 
 {
-    "email": "heidenreich.nicolas@example.net",
+    "email": "tkulas@example.net",
     "password": "Str0ngPass!"
 }
 > {% client.global.set("token", response.body.token); %}
