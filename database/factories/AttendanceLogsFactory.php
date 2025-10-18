@@ -14,9 +14,8 @@ class AttendanceLogsFactory extends Factory
 
     public function definition()
     {
-        // Generate a random clock-in time today between 8AM - 10AM
         $clockIn = $this->faker->dateTimeBetween('08:00', '10:00');
-        // Clock-out time 8-10 hours after clock-in
+
         $clockOut = (clone $clockIn)->modify('+'.rand(8,10).' hours');
 
         $employee = Employee::inRandomOrder()->first();
@@ -29,9 +28,8 @@ class AttendanceLogsFactory extends Factory
             'employee_id' => $employee ? $employee->employee_id : $this->faker->uuid(),
             'clock_in_time' => $clockIn,
             'clock_out_time' => $clockOut,
-            'status' =>  $this->faker->randomElement(['active', 'inactive']),
             'clock_in_latitude' => $lat,
-            'clock_in_longitude' => $long + 0.001, // slight change for clock out
+            'clock_in_longitude' => $long + 0.001,
         ];
     }
 }
