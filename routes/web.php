@@ -47,9 +47,13 @@ Route::post('/logout', [LogoutController::class, 'logout'])->middleware('auth:ad
 /**company registration TODO:protect route */
 Route::get('company/register', [ClientRegistrationController::class, 'showForm'])->name('show.register.client');
 Route::post('company/register/attempt', [ClientRegistrationController::class, 'register'])->name('register.client');
+
 //company dashboard
 Route::get('/dashboard/company', [CompanyDashboardController::class, 'index'])->name('company.dashboard');
-Route::get('/company/{id}', [CompanyDashboardController::class, 'show'])->name('company.dashboard.detail');
+Route::get('/company/detail/{id}', [CompanyDashboardController::class, 'showInfo'])->name('company.dashboard.detail');
+Route::get('company/employees/{id}', [CompanyDashboardController::class, 'showEmployees'])->name('company.dashboard.employees');
+Route::get('company/schedules/{id}', [CompanyDashboardController::class, 'showSchedules'])->name('company.dashboard.schedules');
+Route::get('company/location/{id}', [CompanyDashboardController::class, 'showLocation'])->name('company.dashboard.location');
 
 //email verification
 Route::get('/email/verify', function () {

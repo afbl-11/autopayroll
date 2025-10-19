@@ -20,9 +20,17 @@ class CompanyDashboardController extends Controller
         return view('company.company-dashboard', compact('companies'))->with('title','Company Dashboard');
     }
 
-    public function show($id) {
+    public function showInfo($id) {
         $company = Company::with('employees')
             ->findOrFail($id);
       return view('company.company-information', compact('company'))->with('title', $company->company_name . ' ' . 'Dashboard');
+    }
+    public function showEmployees($id) {
+        $company = Company::with('employees')->findOrFail($id);
+        return view('company.company-employees', compact('company'));
+    }
+    public function showSchedules($id) {
+        $company = Company::with('employees')->findOrFail($id);
+        return view('company.company-schedules', compact('company'));
     }
 }

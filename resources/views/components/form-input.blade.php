@@ -9,7 +9,7 @@
 ])
 
 
-<div @if(!$noDefault){{ $attributes->merge(['class' => 'field-input']) }} @endif>
+<div @if(!$noDefault){{ $attributes->class('field-input') }} @endif>
 
     @if($label)
         <label for="{{ $id }}">{{ $label }}</label>
