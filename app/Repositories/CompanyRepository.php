@@ -34,4 +34,9 @@ class CompanyRepository
     public function getCompanies() {
         return Company::orderBy('company_name')->pluck('company_name', 'company_id')->toArray();
     }
+
+    public function getCompanyWithEmployee() {
+        return Company::orderBy('company_name')
+            ->withCount('employees')->get();
+    }
 }

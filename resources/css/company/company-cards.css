@@ -1,0 +1,83 @@
+.company-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--clr-card-surface);
+    height: 355px;
+    width: 272px;
+    border-radius: 16px;
+    padding: 13px;
+    box-shadow: 2px 5px 6px 0 rgba(136, 125, 125, 0.25);
+}
+a {
+    text-decoration: none;
+    color: var(--clr-primary);
+}
+.company-card:hover {
+    transform: scale(1.1);
+    transition: 0.3s ease-in-out;
+}
+.profile {
+    height: 70%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+}
+.profile-image img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 100%;
+}
+
+.top-bar,
+.description,
+.profile,
+.assigned-employee,
+.address,
+.company-id{
+    display: flex;
+    width: 100%;
+    height: auto;
+}
+
+.top-bar{
+    justify-content: space-between;
+}
+
+
+.description {
+    flex-direction: column;
+    background: #ECEAE7;
+    border-radius: 8px;
+    padding: 5px 10px;
+    gap: 10px;
+    width: 100%;
+    height: auto;
+}
+.description div{
+
+}
+.description p {
+    line-height: 2;
+    font-size: 12px;
+}
+.profile-info   {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+strong{
+    font-size: 9px;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+p {
+    margin: 0;
+}
+
+

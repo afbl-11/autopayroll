@@ -16,7 +16,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{route('show.register.client')}}">
+                    <a href="{{route('company.dashboard')}}">
                         <img src="{{asset('assets/navigations/building.png')}}" alt="Company">
                     </a>
                 </li>

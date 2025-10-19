@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminRegistrationController;
 use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\ClientRegistrationController;
+use App\Http\Controllers\CompanyDashboardController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeDashboardController;
 use App\Http\Controllers\LogoutController;
@@ -46,6 +47,9 @@ Route::post('/logout', [LogoutController::class, 'logout'])->middleware('auth:ad
 /**company registration TODO:protect route */
 Route::get('company/register', [ClientRegistrationController::class, 'showForm'])->name('show.register.client');
 Route::post('company/register/attempt', [ClientRegistrationController::class, 'register'])->name('register.client');
+//company dashboard
+Route::get('/dashboard/company', [CompanyDashboardController::class, 'index'])->name('company.dashboard');
+Route::get('/company/{id}', [CompanyDashboardController::class, 'show'])->name('company.dashboard.detail');
 
 //email verification
 Route::get('/email/verify', function () {
