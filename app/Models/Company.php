@@ -34,4 +34,8 @@ class Company extends Model
     {
         return $this->hasMany(Employee::class, 'company_id', 'company_id');
     }
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class, 'company_id', 'company_id');
+    }
 }

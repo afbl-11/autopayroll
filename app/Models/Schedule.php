@@ -24,4 +24,8 @@ class Schedule extends Model
     public function company() {
         return $this->belongsTo(Company::class, 'company_id', 'company_id');
     }
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class, 'employee_id', 'employee_id');
+    }
 }

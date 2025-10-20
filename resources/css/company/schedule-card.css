@@ -1,0 +1,60 @@
+
+.card-wrapper,
+.profile,
+.input-wrapper,
+.name-wrapper
+{
+    display: flex;
+    /*gap: 3rem;*/
+}
+
+.card-wrapper .profile .image-wrapper img,
+.card-wrapper .profile .image-wrapper{
+    width: 65px;
+    height: 65px;
+    border-radius: 100%;
+}
+
+.card-wrapper{
+    background: #ECEAE7;
+    width: 90%;
+    height: auto;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.card-wrapper .profile {
+    gap: 2rem;
+    align-items: center;
+    width: 35%;
+    padding-right: 10px;
+    border-right: 1px solid var(--clr-primary);
+}
+
+.card-wrapper .input-wrapper {
+    width: 65%;
+    padding-left: 30px;
+}
+
+.shift-wrapper,.schedule-wrapper {
+    width: 50%;
+    justify-content: center;
+}
+
+.card-wrapper .input-wrapper .shift-wrapper select,
+.card-wrapper .input-wrapper .schedule-wrapper select{
+    width: 80%;
+}
+
+.card-wrapper .input-wrapper .input-form select {
+    height: 35px !important;
+    min-height: 35px !important;
+}
+
+.name-wrapper {
+    flex-direction: column;
+    width: 100%;
+}
+p {
+    margin: 0 !important;
+}
