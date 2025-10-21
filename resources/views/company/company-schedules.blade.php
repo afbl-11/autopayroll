@@ -13,23 +13,36 @@
                 </nav>
                 @foreach($company->employees as $employee)
                     <div class="card-content-wrapper">
-                        @foreach($employee->schedules as $schedule)
-
-                        <x-schedule-cards
-                            :image="'assets/profile-pic.png'"
-                            :name="$employee->first_name . ' ' . $employee->last_name"
-                            :id="$employee->employee_id"
-                            :shift="$schedule->shift_name"
-                            :start="$schedule->start_time"
-                            :end="$schedule->end_time"
-                            :schedule="'ij'"
-                            :description="'dodn'"
-                        />
-                        @endforeach
+                        @if($employee->schedules->isNotEmpty())
+                            @foreach($employee->schedules as $schedule)
+                                <x-schedule-cards
+                                    :image="'assets/profile-pic.png'"
+                                    :name="$employee->first_name . ' ' . $employee->last_name"
+                                    :id="$employee->employee_id"
+                                    :options="$shift"
+                                    :start="$schedule->start_time"
+                                    :end="$schedule->end_time"
+                                    schedule="afassa"
+                                    :description="'dodn'"
+                                    :labels="$schedule->shift_name"
+                                />
+                            @endforeach
+                        @else
+                            <x-schedule-cards
+                                :image="'assets/profile-pic.png'"
+                                :name="$employee->first_name . ' ' . $employee->last_name"
+                                :id="$employee->employee_id"
+                                :options="$shift"
+                                :start="''"
+                                :end="''"
+                                schedule="No schedule"
+                                :description="'No schedule assigned'"
+                                :labels="'Unassigned'"
+                            />
+                        @endif
                     </div>
                 @endforeach
             </div>
-
         </div>
     </section>
 

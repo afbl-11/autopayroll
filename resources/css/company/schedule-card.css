@@ -5,7 +5,6 @@
 .name-wrapper
 {
     display: flex;
-    /*gap: 3rem;*/
 }
 
 .card-wrapper .profile .image-wrapper img,
@@ -37,18 +36,23 @@
 }
 
 .shift-wrapper,.schedule-wrapper {
-    width: 50%;
+    width: 60%;
     justify-content: center;
+}
+.shift-wrapper{
+    display: flex;
+    flex-direction: column;
 }
 
 .card-wrapper .input-wrapper .shift-wrapper select,
 .card-wrapper .input-wrapper .schedule-wrapper select{
-    width: 80%;
+    width: 90% ;
 }
 
 .card-wrapper .input-wrapper .input-form select {
     height: 35px !important;
     min-height: 35px !important;
+    padding: 0 0 0 10px !important;
 }
 
 .name-wrapper {

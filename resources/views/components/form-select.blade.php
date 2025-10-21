@@ -1,4 +1,4 @@
-@props(['name' => '', 'id' => '', 'value' => '','label' => '', 'labelOption' => '', 'options' => [], 'selected' => '', 'noDefault' => false])
+@props(['name' => '', 'id' => '', 'value' => '','label' => '', 'labelOption' => '', 'options' => [], 'selected' => '', 'noDefault' => false,'default'=>' '])
 
 <div @if(!$noDefault){{ $attributes->merge(['class' => 'field-input']) }} @endif>
 
@@ -7,7 +7,7 @@
     @endif
 
     <select name="{{$name}}" id="{{$id}}">
-        <option value="">{{$slot}}</option>
+        <option value="">{{$default}}</option>
         @foreach($options as $value => $labelOption)
             <option  value="{{ old($name, $value ?? '') }}" @selected($selected == $value)>{{ $labelOption }}</option>
         @endforeach
@@ -16,3 +16,7 @@
         <small class="error_message">{{ $message }}</small>
         @enderror
 </div>
+
+<script>
+
+</script>

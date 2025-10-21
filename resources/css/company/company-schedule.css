@@ -20,9 +20,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    /*justify-content: center;*/
     height: 100vh;
     gap: 20px;
+    scroll-behavior: smooth;
+    overflow: hidden;
+    overflow-y: scroll;
 }
 
 .card-content-wrapper {

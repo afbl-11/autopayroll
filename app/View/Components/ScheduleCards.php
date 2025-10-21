@@ -15,11 +15,12 @@ class ScheduleCards extends Component
         public ?string $image = null,
         public string $name,
         public string $id,
-        public ?string $shift = null,
+        public ?array $options = null,
         public ?string $start = null,
         public ?string $end = null,
-        public ?string $schedule = null,
+        public ?string $scheduleName = null,
         public ?string $description = null,
+        public ?string $labels = null,
     )
     {}
 

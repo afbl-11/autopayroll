@@ -14,16 +14,19 @@
         <div class="shift-wrapper">
             <x-form-select
                 class="input-form"
-                option
-                id="shift"
-                :value="$shift"/>
+                :options="$options"
+                :id="$id"
+                :name="$id"
+                :default="'current-' . $labels">
 
-            <p>{{'starts at:' . ' ' . $start }}</p>
-            <p>{{'ends at:' . ' ' . $end }}</p>
+            </x-form-select>
+{{--time should also be dynamic--}}
+            <small>{{'starts at:' . ' ' . $start }}</small>
+            <small>{{'ends at:' . ' ' . $end }}</small>
         </div>
         <div class="schedule-wrapper">
             <x-form-select class="input-form"/>
-            <p>{{$description}}</p>
+            <small>{{$description}}</small>
         </div>
     </div>
 </div>
