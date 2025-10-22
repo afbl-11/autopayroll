@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Schedule;
+use App\Models\Shift;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -14,6 +14,6 @@ class SchedulesTableSeeder extends Seeder
      */
     public function run(): void
     {
-        Schedule::factory()->count(3)->create();
+        Shift::factory()->count(3)->create();
     }
 }

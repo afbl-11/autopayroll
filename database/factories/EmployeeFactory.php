@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Company;
-use App\Models\Schedule;
+use App\Models\Shift;
 use App\Models\Employee;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -21,7 +21,7 @@ class EmployeeFactory extends Factory
         $faker = \Faker\Factory::create('en_PH');
 
         $company = Company::inRandomOrder()->first();
-        $schedule = Schedule::inRandomOrder()->first();
+        $schedule = Shift::inRandomOrder()->first();
 
         $barangays = ['Barangay 1', 'Barangay 2', 'Barangay 3', 'Barangay 4'];
         $jobs = ['Janitor', 'Driver', 'Window Washer', 'Electrician'];

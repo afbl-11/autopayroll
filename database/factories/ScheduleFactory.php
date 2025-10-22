@@ -4,11 +4,11 @@ namespace Database\Factories;
 
 use App\Models\Company;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Schedule;
+use App\Models\Shift;
 
 class ScheduleFactory extends Factory
 {
-    protected $model = Schedule::class;
+    protected $model = Shift::class;
 
     public function definition()
     {

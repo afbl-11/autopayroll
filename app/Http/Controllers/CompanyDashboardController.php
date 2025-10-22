@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Company;
-use App\Models\Schedule;
+use App\Models\Shift;
 use App\Repositories\CompanyRepository;
 use App\Repositories\EmployeeRepository;
 
@@ -32,7 +32,7 @@ class CompanyDashboardController extends Controller
     }
     public function showSchedules($id) {
         $company = Company::with(['employees','schedules'])->findOrFail($id);
-        $shift = Schedule::where('company_id', $id)->pluck('shift_name','schedule_id')->toArray();
+        $shift = Shift::where('company_id', $id)->pluck('shift_name','schedule_id')->toArray();
 
         return view('company.company-schedules', compact('company',  'shift'));
     }

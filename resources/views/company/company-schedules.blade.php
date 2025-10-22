@@ -5,7 +5,26 @@
     <section class="main-content">
         <div class="sched-wrapper">
             <div class="sidebar">
+                <h6>Schedules</h6>
+                <div class="sched-list">
+                    <p></p>
+                </div>
+                <div class="sched-list">
 
+                </div>
+                <div class="sched-desc">
+                    <div class="item-wrapper">
+                        <p>working Days</p>
+                    </div>
+
+                    <div class="item-wrapper">
+                        <p>days off</p>
+                    </div>
+
+                    <div class="item-wrapper">
+                        <p>breaks</p>
+                    </div>
+                </div>
             </div>
             <div class="content">
                 <nav>

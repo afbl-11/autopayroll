@@ -18,6 +18,8 @@ class AttendanceLogs extends Model
         'clock_in_date',
         'clock_in_time',
         'clock_out_time',
+        'break_in',
+        'break_out',
         'clock_in_latitude',
         'clock_out_latitude'
     ];

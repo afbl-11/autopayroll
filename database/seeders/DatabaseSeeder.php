@@ -12,7 +12,7 @@ use App\Models\Employee;
 use App\Models\LeaveRequest;
 use App\Models\Payroll;
 use App\Models\PayrollPeriod;
-use App\Models\Schedule;
+use App\Models\Shift;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
 
 
         Company::factory()->count(3)->create();
-        Schedule::factory()->count(3)->create();
+        Shift::factory()->count(3)->create();
         Employee::factory()->count(10)->create();
         Admin::factory()->count(2)->create();
         AttendanceLogs::factory()->count(10)->create();

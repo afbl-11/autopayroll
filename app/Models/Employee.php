@@ -75,9 +75,9 @@ class Employee extends Model
         return $this->belongsTo(Company::class, 'company_id', 'company_id');
     }
 
-    public function schedules()
+    public function shift()
     {
-        return $this->hasMany(Schedule::class, 'schedule_id', 'schedule_id');
+        return $this->hasMany(Shift::class, 'schedule_id', 'schedule_id');
     }
 
     public function attendanceLogs()
