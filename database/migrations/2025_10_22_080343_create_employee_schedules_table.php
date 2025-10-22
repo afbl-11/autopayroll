@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('employee_schedules', function (Blueprint $table) {
-            $table->id()->primary();
+            $table->string('employee_schedules_id')->primary();
 
             $table->string('employee_id');
             $table->foreign('employee_id')
@@ -20,10 +20,15 @@ return new class extends Migration
                 ->on('employees')
                 ->onDelete('cascade');
 
-            $table->foreignId('shift_id')
-                ->references('shift_id')
-                ->on('shifts')
+            $table->foreignId('shift_id')->nullable()
+                ->constrained('shifts', 'shift_id')
                 ->onDelete('set null');
+
+            $table->string('company_id');
+            $table->foreign('company_id')
+                ->references('company_id')
+                ->on('companies')
+                ->onDelete('cascade');
 
             $table->json('working_days'); // example: ["Mon","Tue","Wed","Thu","Fri"]
 
@@ -34,6 +39,8 @@ return new class extends Migration
             $table->time('custom_break_end')->nullable();
             $table->time('custom_lunch_start')->nullable();
             $table->time('custom_lunch_end')->nullable();
+            $table->date('start_date');
+            $table->date('end_date')->nullable();
 
             $table->timestamps();
         });

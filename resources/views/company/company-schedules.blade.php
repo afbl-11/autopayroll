@@ -1,5 +1,14 @@
 @vite('resources/css/company/company-schedule.css')
+@php
 
+$array = [
+    'hello' => 'world',
+    'hello2' => 'world',
+    'hello3' => 'world',
+    'hello4' => 'world',
+    'hello5' => 'world',
+]
+@endphp
 <x-app :noHeader="true" :companyHeader="true" :company="$company">
 
     <section class="main-content">
@@ -28,17 +37,17 @@
             </div>
             <div class="content">
                 <nav>
-
+{{--                    buttons should be here--}}
                 </nav>
                 @foreach($company->employees as $employee)
                     <div class="card-content-wrapper">
-                        @if($employee->schedules->isNotEmpty())
-                            @foreach($employee->schedules as $schedule)
+                        @if($employee->employeeSchedule->isNotEmpty())
+                            @foreach($employee->employeeSchedule as $schedule)
                                 <x-schedule-cards
                                     :image="'assets/profile-pic.png'"
                                     :name="$employee->first_name . ' ' . $employee->last_name"
                                     :id="$employee->employee_id"
-                                    :options="$shift"
+                                    :options="$array"
                                     :start="$schedule->start_time"
                                     :end="$schedule->end_time"
                                     schedule="afassa"
@@ -51,12 +60,12 @@
                                 :image="'assets/profile-pic.png'"
                                 :name="$employee->first_name . ' ' . $employee->last_name"
                                 :id="$employee->employee_id"
-                                :options="$shift"
+                                :options="$array"
                                 :start="''"
                                 :end="''"
                                 schedule="No schedule"
                                 :description="'No schedule assigned'"
-                                :labels="'Unassigned'"
+                                :labels="'dnassigned'"
                             />
                         @endif
                     </div>

@@ -9,6 +9,7 @@ use App\Models\Contracts;
 use App\Models\CreditAdjustment;
 use App\Models\DailyPayrollLog;
 use App\Models\Employee;
+use App\Models\EmployeeSchedule;
 use App\Models\LeaveRequest;
 use App\Models\Payroll;
 use App\Models\PayrollPeriod;
@@ -26,11 +27,12 @@ class DatabaseSeeder extends Seeder
 
 
         Company::factory()->count(3)->create();
-        Shift::factory()->count(3)->create();
         Employee::factory()->count(10)->create();
         Admin::factory()->count(2)->create();
         AttendanceLogs::factory()->count(10)->create();
         Contracts::factory()->count(10)->create();
+        Shift::factory()->count(5)->create();
+        EmployeeSchedule::factory()->count(10)->create();
         CreditAdjustment::factory()->count(10)->create();
         PayrollPeriod::factory()->count(1)->create();
         DailyPayrollLog::factory()->count(10)->create();

@@ -21,7 +21,6 @@ class EmployeeFactory extends Factory
         $faker = \Faker\Factory::create('en_PH');
 
         $company = Company::inRandomOrder()->first();
-        $schedule = Shift::inRandomOrder()->first();
 
         $barangays = ['Barangay 1', 'Barangay 2', 'Barangay 3', 'Barangay 4'];
         $jobs = ['Janitor', 'Driver', 'Window Washer', 'Electrician'];
@@ -54,7 +53,6 @@ class EmployeeFactory extends Factory
         return [
             'employee_id' => Carbon::now()->year . str_pad(rand(1, 9999), 4, '0', STR_PAD_LEFT),
             'company_id' => $company?->company_id,
-            'schedule_id' => $schedule?->schedule_id,
             'first_name' => $faker->firstName,
             'middle_name' => $faker->firstName,
             'last_name' => $faker->lastName,

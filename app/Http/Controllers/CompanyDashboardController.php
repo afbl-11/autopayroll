@@ -31,9 +31,8 @@ class CompanyDashboardController extends Controller
         return view('company.company-employees', compact('company'));
     }
     public function showSchedules($id) {
-        $company = Company::with(['employees','schedules'])->findOrFail($id);
-        $shift = Shift::where('company_id', $id)->pluck('shift_name','schedule_id')->toArray();
+        $company = Company::with(['employees.employeeSchedule'])->findOrFail($id);
 
-        return view('company.company-schedules', compact('company',  'shift'));
+        return view('company.company-schedules', compact('company'));
     }
 }

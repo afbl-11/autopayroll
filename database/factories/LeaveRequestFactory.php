@@ -16,15 +16,14 @@ class LeaveRequestFactory extends Factory
 
     public function definition()
     {
-        // Pick a random employee from the database
         $employee = Employee::inRandomOrder()->first();
-        // Pick a random admin as approver
+
         $approver = Admin::inRandomOrder()->first();
 
         $leaveTypes = ['Sick Leave', 'Vacation Leave', 'Maternity Leave', 'Paternity Leave', 'Emergency Leave'];
         $statuses = ['Pending', 'Approved', 'Rejected'];
 
-        // Generate leave dates
+
         $startDate = $this->faker->dateTimeBetween('-6 months', '+3 months');
         $endDate = (clone $startDate)->modify('+'.rand(1,5).' days');
 
