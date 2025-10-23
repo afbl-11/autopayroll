@@ -16,7 +16,7 @@ class Employee extends Model
     protected $fillable = [
         'employee_id',
         'company_id',
-        'schedule_id',
+        'employee_schedules_id',
         'first_name',
         'middle_name',
         'last_name',
@@ -75,9 +75,9 @@ class Employee extends Model
         return $this->belongsTo(Company::class, 'company_id', 'company_id');
     }
 
-    public function schedule()
+    public function employeeSchedule()
     {
-        return $this->belongsTo(Schedule::class, 'schedule_id', 'schedule_id');
+        return $this->hasMany(EmployeeSchedule::class, 'employee_id', 'employee_id');
     }
 
     public function attendanceLogs()

@@ -22,6 +22,8 @@ return new class extends Migration
 
             $table->date('clock_in_date')->nullable();
             $table->time('clock_in_time')->nullable();
+            $table->time('break_out')->nullable();
+            $table->time('break_in')->nullable();
             $table->time('clock_out_time')->nullable();
 
             $table->decimal('clock_in_latitude', 10, 8)->nullable();

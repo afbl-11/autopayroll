@@ -20,12 +20,6 @@ return new class extends Migration
                 ->on('companies')
                 ->onDelete('cascade');
 
-            $table->integer('schedule_id')->nullable();
-            $table->foreign('schedule_id')
-                ->references('schedule_id')
-                ->on('schedules')
-                ->onDelete('cascade');
-
             $table->string('profile_photo')->nullable();
             $table->string('first_name');
             $table->string('middle_name');

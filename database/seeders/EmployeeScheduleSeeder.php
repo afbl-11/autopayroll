@@ -2,18 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\Shift;
+use App\Models\EmployeeSchedule;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
-class SchedulesTableSeeder extends Seeder
+class EmployeeScheduleSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Shift::factory()->count(3)->create();
+        EmployeeSchedule::factory()->count(10)->create();
     }
 }

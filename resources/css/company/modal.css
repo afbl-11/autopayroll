@@ -1,0 +1,40 @@
+.modal-wrapper {
+    display: flex;
+    flex-direction: column;
+    /*justify-content: space-evenly;*/
+    align-items: center;
+    background: var(--clr-card-surface);
+    width: 70%;
+    height: auto;
+    border-radius: 16px;
+    padding: 2%;
+}
+
+
+.checkbox-group {
+    display: flex;
+}
+.field-row{
+    display: flex !important;
+    gap: 2rem !important;
+}
+
+.field-row:last-child{
+    align-items: center;
+    gap: 10px !important;
+}
+.button-wrapper{
+    display: flex;
+    justify-content: center !important;
+    align-self: center !important;
+    width: 100%;
+}
+.button-filled{
+    width: 40%;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+}

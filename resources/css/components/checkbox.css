@@ -1,0 +1,34 @@
+.custom-checkbox {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 73px;
+    height: 60px;
+    margin: 5px;
+    background-color: var(--clr-card-inner);
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    color: var(--clr-primary);
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+    position: relative;
+    user-select: none;
+}
+
+.custom-checkbox input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.custom-checkbox.active {
+    background-color: var(--clr-yellow);
+    color: #fff;
+    border-color: #4338ca;
+    transform: scale(1.03);
+}
+
+.custom-checkbox:active {
+    transform: scale(0.97);
+}

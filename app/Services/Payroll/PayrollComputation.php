@@ -8,7 +8,7 @@ use App\Models\DailyPayrollLog;
 use App\Models\Employee;
 use App\Models\Payroll;
 use App\Models\PayrollPeriod;
-use App\Models\Schedule;
+use App\Models\Shift;
 use App\Repositories\AttendanceRepository;
 use App\Repositories\CompanyRepository;
 use App\Repositories\EmployeeRepository;
@@ -38,9 +38,9 @@ class PayrollComputation
             return ['error' => 'Attendance not found'];
         };
 
-        $schedule = Schedule::where('company_id', $employee->company_id)->first();
+        $schedule = Shift::where('company_id', $employee->company_id)->first();
         if(!$schedule){
-            return ['error' => 'Schedule not found'];
+            return ['error' => 'Shift not found'];
         }
 
         $regularHours = 8;

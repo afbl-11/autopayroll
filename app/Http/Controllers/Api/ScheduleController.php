@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Schedule;
+use App\Models\Shift;
 use Illuminate\Http\JsonResponse;
 
 class ScheduleController extends Controller
 {
     public function index(): JsonResponse
     {
-        $schedules = Schedule::all();
+        $schedules = Shift::all();
 
         return response()->json([
             'data' => $schedules,

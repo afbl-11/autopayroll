@@ -1,4 +1,4 @@
-.employee-card {
+.company-card {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -14,8 +14,8 @@ a {
     text-decoration: none;
     color: var(--clr-primary);
 }
-.employee-card:hover {
-    transform: scale(1.03);
+.company-card:hover {
+    transform: scale(1.1);
     transition: 0.3s ease-in-out;
 }
 .profile {
@@ -35,13 +35,10 @@ a {
 
 .top-bar,
 .description,
-.type,
-.email,
-.contact,
-.employment_date,
 .profile,
-.type-wrapper,
-.email-wrapper{
+.assigned-employee,
+.address,
+.company-id{
     display: flex;
     width: 100%;
     height: auto;
@@ -78,38 +75,7 @@ strong{
     letter-spacing: 1px;
     font-weight: 600;
 }
-.email {
-    gap: 10px;
-}
-.type-wrapper {
-    gap: 5px;
-}
-.email img,
-.type-wrapper img {
-    width: 15px;
-    height: 15px;
-    justify-content: center;
-    align-self: center;
-}
-.email-wrapper {
-    padding:    5px;
-    background: var(--clr-background);
-    border-radius: 8px;
-    text-align: center;
-    align-items: center;
-    width: auto;
-    height: 20px;
-}
-.email-wrapper p {
-    line-height: 0 !important;
-    letter-spacing: 0 !important;
-    margin-bottom: 0 !important;
-}
-.type{
-    width: 100%;
-    gap:30px;
-    justify-content: space-between;
-}
+
 p {
     margin: 0;
 }
