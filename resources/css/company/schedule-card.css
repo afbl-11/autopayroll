@@ -21,6 +21,10 @@
     padding: 10px;
     border-radius: 8px;
 }
+.card-wrapper:hover {
+    transform: scale(1.05);
+    transition: 0.3s ease-in-out;
+}
 
 .card-wrapper .profile {
     gap: 2rem;

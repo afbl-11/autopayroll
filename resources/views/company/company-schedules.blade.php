@@ -9,36 +9,39 @@ $array = [
     'hello5' => 'world',
 ]
 @endphp
+@push('scripts')
+{{--    script for the checkboxes
+   added here and in the root layout so that responses have no delay
+--}}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const checkboxes = document.querySelectorAll('.custom-checkbox');
+
+            checkboxes.forEach(label => {
+                label.addEventListener('click', e => {
+                    const input = label.querySelector('input[type="checkbox"]');
+                    if (!input) return;
+
+                    input.checked = !input.checked;
+                    label.classList.toggle('active', input.checked);
+                    e.preventDefault();
+                });
+            });
+        });
+    </script>
+@endpush
+
 <x-app :noHeader="true" :companyHeader="true" :company="$company">
 
     <section class="main-content">
         <div class="sched-wrapper">
-            <div class="sidebar">
-                <h6>Schedules</h6>
-                <div class="sched-list">
-                    <p></p>
-                </div>
-                <div class="sched-list">
-
-                </div>
-                <div class="sched-desc">
-                    <div class="item-wrapper">
-                        <p>working Days</p>
-                    </div>
-
-                    <div class="item-wrapper">
-                        <p>days off</p>
-                    </div>
-
-                    <div class="item-wrapper">
-                        <p>breaks</p>
-                    </div>
-                </div>
-            </div>
             <div class="content">
                 <nav>
 {{--                    buttons should be here--}}
                 </nav>
+
+{{--                <x-schedule-modal--}}
+{{--                />--}}
                 @foreach($company->employees as $employee)
                     <div class="card-content-wrapper">
                         @if($employee->employeeSchedule->isNotEmpty())
@@ -76,3 +79,6 @@ $array = [
 
 
 </x-app>
+
+
+{{--todo:fetch the latest schedule of the employee--}}
