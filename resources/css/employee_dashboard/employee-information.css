@@ -32,6 +32,10 @@
     display: flex !important;
     gap: 0 !important;
 }
+.side-content .field-row {
+    gap: 10px !important;
+    flex-direction: column !important;
+}
 
 .content-wrapper .card-wrapper .field-row .field-input input{
     border: none;

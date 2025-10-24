@@ -7,6 +7,7 @@ use App\Models\Employee;
 use App\Repositories\AttendanceRepository;
 use App\Repositories\CompanyRepository;
 use App\Repositories\EmployeeRepository;
+use App\Services\AttendanceService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -18,6 +19,7 @@ class EmployeeDashboardController extends Controller
         protected CompanyRepository $companyRepository,
         protected EmployeeRepository $employeeRepository,
         protected AttendanceRepository $attendanceRepository,
+        protected AttendanceService $attendanceService
     ){}
 
     public function showStep1() {
@@ -56,15 +58,22 @@ class EmployeeDashboardController extends Controller
     }
 
     public function showContract($id) {
-        return view('employee.employee-contract')->with('title','Employee Contract');
+        $employee = Employee::findOrFail($id);
+        return view('employee.employee-contract',compact('employee'))->with('title','Employee Contract');
     }
     public function showAttendance($id) {
-        return view('employee.employee-attendance')->with('title','Employee Attendance');
+        $employee = Employee::with('attendanceLogs')->findOrFail($id);
+        $daysActive = $this->attendanceService->countAttendance($id);
+        $absences = $this->attendanceService->countTotalAbsences($id);
+        $hasAttendance = $this->attendanceService->hasAttendance($id);
+        return view('employee.employee-attendance', compact('employee','daysActive', 'absences','hasAttendance'))->with('title','Employee Attendance');
     }
     public function showPayroll($id) {
-        return view('employee.employee-payroll')->with('title','Employee Payroll');
+        $employee = Employee::findOrFail($id);
+        return view('employee.employee-payroll',compact('employee'))->with('title','Employee Payroll');
     }
     public function showDocuments($id) {
-        return view('employee.employee-documents')->with('title','Employee Documents');
+        $employee = Employee::findOrFail($id);
+        return view('employee.employee-documents',compact('employee'))->with('title','Employee Documents');
     }
 }

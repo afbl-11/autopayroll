@@ -13,7 +13,7 @@
         @if($navigation)
             @include('components.dashboard-navigation', [
                 'type' => $navigationType,
-                'name' => $navigationType === 'company'? $company->company_name : $employee->first_name,
+                'name' => $navigationType === 'company'? $company->company_name : $employee->first_name . ' ' . $employee->last_name,
                 'id' =>  $navigationType === 'company' ? $company->company_id : $employee->employee_id,
                 'image' => 'assets/company-pic.jpg',
 //                 $company->logo ?? $employee->avatar ?? 'assets/default.jpg',
