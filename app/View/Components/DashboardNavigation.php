@@ -6,18 +6,22 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class CompanyHeader extends Component
+class DashboardNavigation extends Component
 {
     /**
      * Create a new component instance.
      */
     public function __construct(
+//        genera
         public string $name,
         public string $id,
-        public ?string $logo,
-        public string $tin,
-        public string $address,
-        public string $industry,
+        public ?string $image,
+//for employees
+        public ?string $position,
+//        for companies
+        public ?string $tin,
+        public ?string $address,
+        public ?string $industry,
         public ?string $latitude,
         public ?string $longitude,
         public ?string $employee_count,

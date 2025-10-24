@@ -1,6 +1,6 @@
 @vite('resources/css/company/company-info.css')
 
-<x-app :noHeader="true" :companyHeader="true" :company="$company">
+<x-app :noHeader="true" :navigation="true" :company="$company">
     <section class="main-content">
         <div class="information-card">
             <h6>Company Information</h6>

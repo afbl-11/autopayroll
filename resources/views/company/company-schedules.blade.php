@@ -31,7 +31,7 @@ $array = [
     </script>
 @endpush
 
-<x-app :noHeader="true" :companyHeader="true" :company="$company">
+<x-app :noHeader="true" :navigation="true" :company="$company">
 
     <section class="main-content">
         <div class="sched-wrapper">
