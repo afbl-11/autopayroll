@@ -1,6 +1,6 @@
 @vite('resources/css/company/company-employee.css')
 
-<x-app :noHeader="true" :companyHeader="true" :company="$company">
+<x-app :noHeader="true" :navigation="true" :company="$company">
     <section class="main-content">
         <div id="employee-cards-container">
             @foreach($company->employees as $employee)

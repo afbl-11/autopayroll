@@ -7,6 +7,7 @@ use App\Models\Employee;
 use App\Repositories\AttendanceRepository;
 use App\Repositories\CompanyRepository;
 use App\Repositories\EmployeeRepository;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 
@@ -19,7 +20,9 @@ class EmployeeDashboardController extends Controller
         protected AttendanceRepository $attendanceRepository,
     ){}
 
-
+    public function showStep1() {
+        return view('employee.addEmp1')->with('title','Add Employee');
+    }
     public function showDashboard(Request $request) {
         $companies = $this->companyRepository->getCompanies();
         $employees = $this->employeeRepository->getEmployees();
@@ -27,10 +30,41 @@ class EmployeeDashboardController extends Controller
         return view('employeeDashboard', compact('employees', 'companies'))->with('title', 'Employee Dashboard');
     }
 
+    public function showInfo($id) {
+        $employee = Employee::findOrFail($id);
+        $fullName = $employee->first_name . ' ' .$employee->middle_name . ' '. $employee->last_name . ' ' . $employee->suffix;
+        $res_address =
+            $employee->country . ', '
+            . $employee->region . ', '
+            . $employee->zip . ', '
+            . $employee->city . ', '
+            . $employee->barangay .', '
+            .$employee->street . ', '
+            .$employee->house_number;
+        $id_address =
+             $employee->id_country . ', '
+             . $employee->id_region . ', '
+             . $employee->id_zip . ', '
+             . $employee->id_city . ', '
+             . $employee->id_barangay .', '
+             .$employee->id_street . ', '
+             .$employee->id_house_number;
 
+        $age = $employee->birthdate->age;
 
+        return view('employee.employee-information', compact('employee','fullName','res_address', 'id_address', 'age'))->with('title','Employee Information');
+    }
 
-    public function showStep1() {
-        return view('employee.addEmp1')->with('title','Add Employee');
+    public function showContract($id) {
+        return view('employee.employee-contract')->with('title','Employee Contract');
+    }
+    public function showAttendance($id) {
+        return view('employee.employee-attendance')->with('title','Employee Attendance');
+    }
+    public function showPayroll($id) {
+        return view('employee.employee-payroll')->with('title','Employee Payroll');
+    }
+    public function showDocuments($id) {
+        return view('employee.employee-documents')->with('title','Employee Documents');
     }
 }

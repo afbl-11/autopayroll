@@ -42,18 +42,34 @@ Route::get('/dashboard', [DashboardController::class, 'showDashboard'])
     ->name('dashboard');
 
 //logout
-Route::post('/logout', [LogoutController::class, 'logout'])->middleware('auth:admin')->name('logout');
+Route::post('/logout', [LogoutController::class, 'logout'])
+    ->middleware('auth:admin')
+    ->name('logout');
 
 /**company registration TODO:protect route */
-Route::get('company/register', [ClientRegistrationController::class, 'showForm'])->name('show.register.client');
-Route::post('company/register/attempt', [ClientRegistrationController::class, 'register'])->name('register.client');
+Route::get('company/register', [ClientRegistrationController::class, 'showForm'])
+    ->middleware(['auth:admin'])
+    ->name('show.register.client');
+Route::post('company/register/attempt', [ClientRegistrationController::class, 'register'])
+    ->middleware(['auth:admin'])
+    ->name('register.client');
 
 //company dashboard
-Route::get('/dashboard/company', [CompanyDashboardController::class, 'index'])->name('company.dashboard');
-Route::get('/company/detail/{id}', [CompanyDashboardController::class, 'showInfo'])->name('company.dashboard.detail');
-Route::get('company/employees/{id}', [CompanyDashboardController::class, 'showEmployees'])->name('company.dashboard.employees');
-Route::get('company/schedules/{id}', [CompanyDashboardController::class, 'showSchedules'])->name('company.dashboard.schedules');
-Route::get('company/location/{id}', [CompanyDashboardController::class, 'showLocation'])->name('company.dashboard.location');
+Route::get('/dashboard/company', [CompanyDashboardController::class, 'index'])
+    ->middleware(['auth:admin'])
+    ->name('company.dashboard');
+Route::get('/company/detail/{id}', [CompanyDashboardController::class, 'showInfo'])
+    ->middleware(['auth:admin'])
+    ->name('company.dashboard.detail');
+Route::get('company/employees/{id}', [CompanyDashboardController::class, 'showEmployees'])
+    ->middleware(['auth:admin'])
+    ->name('company.dashboard.employees');
+Route::get('company/schedules/{id}', [CompanyDashboardController::class, 'showSchedules'])
+    ->middleware(['auth:admin'])
+    ->name('company.dashboard.schedules');
+Route::get('company/location/{id}', [CompanyDashboardController::class, 'showLocation'])
+    ->middleware(['auth:admin'])
+    ->name('company.dashboard.location');
 
 //email verification
 Route::get('/email/verify', function () {
@@ -68,16 +84,40 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
     return back()->with('message', 'Verification link sent!');
-})->middleware(['auth:admin', 'throttle:6,1'])->name('verification.send');
+})->middleware(['auth:admin', 'throttle:6,1']
+)->name('verification.send');
 
 
 //employee dashboard
-Route::get('/employee/dashboard', [EmployeeDashboardController::class, 'showDashboard'])->name('employee.dashboard');
+Route::get('/employee/dashboard', [EmployeeDashboardController::class, 'showDashboard'])
+    ->middleware('auth:admin')
+    ->name('employee.dashboard');
+//only used to filter employees
 Route::get('/employees/filter', [EmployeeDashboardController::class, 'filter'])
+    ->middleware('auth:admin')
     ->name('employee.filter');
 
+Route::get('dashboard/employee/detail/{id}', [EmployeeDashboardController::class, 'showInfo'])
+//    ->middleware('auth:admin')
+    ->name('employee.dashboard.detail');
+
+Route::get('dashboard/employee/contract/{id}', [EmployeeDashboardController::class, 'showContract'])
+    ->middleware('auth:admin')
+    ->name('employee.dashboard.contract');
+
+Route::get('dashboard/employee/attendance/{id}', [EmployeeDashboardController::class, 'showAttendance'])
+    ->middleware('auth:admin')
+    ->name('employee.dashboard.attendance');
+
+Route::get('dashboard/employee/documents/{id}', [EmployeeDashboardController::class, 'showDocuments'])
+    ->middleware('auth:admin')
+    ->name('employee.dashboard.documents');
+
+Route::get('dashboard/employee/payroll/{id}', [EmployeeDashboardController::class, 'showPayroll'])
+    ->middleware('auth:admin')
+    ->name('employee.dashboard.payroll');
 //employee registration
-Route::middleware(['auth:admin', 'verified'])->group(function () {
+Route::middleware(['auth:admin', 'signed'])->group(function () {
 Route::get('/employees/register/1', [EmployeeDashboardController::class, 'showStep1'])->name('employee.register.1');
 Route::get('/employees/register/2', [EmployeeRegistrationController::class, 'showStep2'])->name('employee.register.2');
 Route::get('/employees/register/3', [EmployeeRegistrationController::class, 'showStep3'])->name('employee.register.3');

@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Employee Payroll Page</title> 
+  <title>Employee Payroll Page</title>
   @vite(['resources/css/employeeProfile/empPayroll.css', 'resources/js/employeeProfile/empPayroll.js'])
 </head>
-<body>   
-  <div class="sidebar">@include('layout.sidebar')</div>   
+<body>
+{{--  <div class="sidebar">@include('layout.sidebar')</div>   --}}
     <main>
-        @include('layout.header')
+{{--        @include('layout.header')--}}
         <section class="payroll-history">
           <div class="period-bar">June 1 - June 15, 2025</div>
           <div class="payroll-card kpi-card">
@@ -59,7 +59,7 @@
                           <img src="{{ asset('images/redo.png') }}"> Redo</button>
                       </div>
                 </div>
-              <div class="list two-col">  
+              <div class="list two-col">
                 <div>
                   <div class="row">
                     <div class="label">Phil-Health</div>
@@ -98,7 +98,7 @@
               </div>
               <div class="bottom-buttons" style="display: none;">
                 <button onclick="saveChanges('deductions-card')" id="btn" class="save-btn">
-                  <img src="{{ asset('images/save_icon.png') }}"> Save</button> 
+                  <img src="{{ asset('images/save_icon.png') }}"> Save</button>
                 <button onclick="cancelEdit('deductions-card')" id="btn" class="cancel-btn">Cancel</button>
               </div>
             </div>

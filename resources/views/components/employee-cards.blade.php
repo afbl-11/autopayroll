@@ -1,6 +1,6 @@
 @vite('resources/css/employees/employee_card.css')
 
-<a href="{{route('employee.register.1', ['employee' => $id])}}" >
+<a href="{{route('employee.dashboard.detail', ['id' => $id])}}" >
     <div {{$attributes->merge(['class' => 'employee-card'])}}>
             <div class="top-bar">
                 <x-state status="{{$status}}"></x-state>
