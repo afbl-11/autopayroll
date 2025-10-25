@@ -23,8 +23,8 @@ class Shift extends Model
         'lunch_end',
     ];
 
-    public function employee()
+    public function employeeSchedules()
     {
-        return $this->belongsTo(Employee::class, 'employee_id', 'employee_id');
+        return $this->hasMany(EmployeeSchedule::class, 'shift_id', 'shift_id');
     }
 }

@@ -85,3 +85,4 @@ class Employee extends Model
         return $this->hasMany(AttendanceLogs::class, 'employee_id', 'employee_id');
     }
 }
+

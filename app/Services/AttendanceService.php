@@ -5,11 +5,39 @@ namespace App\Services;
 use App\Models\AttendanceLogs;
 use App\Models\EmployeeSchedule;
 use App\Models\PayrollPeriod;
+use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 
 class AttendanceService
 {
+    private function isScheduledToday($id)
+    {
+        $todayDay = now()->format('D');
+
+        $schedule = EmployeeSchedule::where('employee_id', $id)
+            ->latest('start_date')
+            ->with('shift')
+            ->first();
+
+        if (!$schedule || !$schedule->shift) {
+            return false;
+        }
+
+        $workingDays = is_array($schedule->working_days)
+            ? $schedule->working_days
+            : json_decode($schedule->working_days, true);
+
+        return [
+            'isWorkingDay' => in_array($todayDay, $workingDays),
+            'schedule' => $schedule,
+            ];
+    }
+
+
     public function countAttendance($id):int {
+        /*
+         * This method counts the total attendances from the start to end of the payroll period.
+         * */
         $payroll_period = PayrollPeriod::where('is_closed', false)
             ->latest()
             ->firstOrFail();
@@ -24,6 +52,10 @@ class AttendanceService
     }
 
     public function countTotalAbsences($id):int {
+        /*
+         * This method counts total absences from the start to end of the payroll period
+         * absences from the previous period will not be counted.
+         * */
         $payroll_period = PayrollPeriod::where('is_closed', false)
             ->latest()
             ->firstOrFail();
@@ -55,32 +87,144 @@ class AttendanceService
         return max(0, $expectedWorkingDays - $presentDays);
     }
 
-    public function hasAttendance($id): bool
+    public function computeOvertime($id):int
     {
-        $today = now()->toDateString();
-        $todayDay = now()->format('D'); // "Mon", "Tue", etc....
+        $todayData = $this->isScheduledToday($id);
+        $schedule = $todayData['schedule'];
 
-        $schedule = EmployeeSchedule::where('employee_id', $id)
+        if (!$todayData['isWorkingDay']) {
+            return true;
+        }
+
+        $end_time = Carbon::parse($schedule->shift->end_time);
+
+//        gets the latest/current day log record
+        $log = AttendanceLogs::where('employee_id', $id)
+            ->whereDate('created_at', today())
+            ->latest('created_at')
+            ->first();
+
+        if (!$log || !$log->clock_out_time) {
+            return 0; //no clock out or absent, then no overtime
+        }
+
+        $clock_out = Carbon::parse($log->clock_out_time);
+
+        return $clock_out->greaterThan($end_time)
+            ? (int) round(abs($clock_out->floatDiffInHours($end_time)))
+            : 0;
+    }
+
+    public function totalOvertime($id):int {
+        $totalOvertime = 0;
+
+        $payroll_period = PayrollPeriod::where('is_closed', false)
             ->latest()
             ->firstOrFail();
 
-        $workingDays = is_array($schedule->working_days)
-            ? $schedule->working_days
-            : json_decode($schedule->working_days, true);
+        $payroll_start = $payroll_period->start_date;
+        $payroll_end = $payroll_period->end_date;
 
-        // if today is not a working day, employee is not absent
-        if (!in_array($todayDay, $workingDays)) {
-            return 0;
+        $logs = AttendanceLogs::where('employee_id', $id)
+            ->whereBetween('created_at', [$payroll_start, $payroll_end])
+            ->whereNotNull('clock_out_time')
+            ->get();
+
+        foreach ($logs as $log) {
+            $todayData = $this->isScheduledToday($id);
+            $schedule = $todayData['schedule'];
+
+            if (!$todayData['isWorkingDay']) {
+                continue;
+            }
+
+            $end_time = Carbon::parse($schedule->shift->end_time);
+            $clock_out = Carbon::parse($log->clock_out_time);
+
+            if ($clock_out->greaterThan($end_time)) {
+                $totalOvertime += $clock_out->floatDiffInHours($end_time);
+            }
         }
 
-        //  if employee has attendance today
-        $hasAttendance = AttendanceLogs::where('employee_id', $id)
-            ->whereDate('created_at', $today)
-            ->exists();
+        return (int) round(abs($totalOvertime));
+    }
 
-        return $hasAttendance ? 0 : 1; // 0 = present, 1 = absent
-//        in the payroll service, get this function.if absent,
-// make sure that there is no payroll for the day,
-// but there should be a record or log
+    public function computeLate($id): int {
+
+        $todayData = $this->isScheduledToday($id);
+        $schedule = $todayData['schedule'];
+
+        if (!$todayData['isWorkingDay']) {
+            return true;
+        }
+
+        $log = AttendanceLogs::where('employee_id', $id)
+            ->whereDate('created_at', today())
+            ->latest('clock_in_time')
+            ->first();
+
+        if (!$log || !$log->clock_in_time) return 0;
+
+        $clock_in = Carbon::parse($log->clock_in_time);
+
+        $start_time = Carbon::parse($log->created_at)
+            ->setTimeFromTimeString($schedule->shift->start_time);
+
+        if ($clock_in->lessThanOrEqualTo($start_time)) return 0;
+
+        $lateMinutes = abs($clock_in->diffInMinutes($start_time));
+
+        return $lateMinutes;
+    }
+
+    public function hasLogIn($id): bool {
+
+        $todayData = $this->isScheduledToday($id);
+
+        if (!$todayData['isWorkingDay']) {
+            return true;
+        }
+
+        $today = now()->toDateString();
+
+        return AttendanceLogs::where('employee_id', $id)
+            ->whereDate('created_at', $today)
+            ->whereNotNull('clock_in_time')
+            ->exists();
+    }
+    public function noClockOut($id): bool {
+        $todayData = $this->isScheduledToday($id);
+
+        if (!$todayData['isWorkingDay']) {
+            return true;
+        }
+        $today = now()->toDateString();
+
+        return AttendanceLogs::where('employee_id', $id)
+            ->whereDate('created_at', $today)
+            ->whereNotNull('clock_in_time')
+            ->whereNull('clock_out_time')
+            ->exists();
+    }
+
+    public function totalNoClockOut($id): int
+    {
+        $todayData = $this->isScheduledToday($id);
+
+        if (!$todayData['isWorkingDay']) {
+            return 0;
+        }
+        $payroll_period = PayrollPeriod::where('is_closed', false)
+            ->latest()
+            ->firstOrFail();
+
+        $payroll_start = $payroll_period->start_date;
+        $payroll_end = $payroll_period->end_date;
+
+        return AttendanceLogs::where('employee_id', $id)
+            ->whereBetween('created_at', [$payroll_start, $payroll_end])
+            ->whereNotNull('clock_in_time')
+            ->whereNull('clock_out_time')
+            ->count();
     }
 }

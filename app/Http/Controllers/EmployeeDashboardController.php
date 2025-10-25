@@ -65,8 +65,13 @@ class EmployeeDashboardController extends Controller
         $employee = Employee::with('attendanceLogs')->findOrFail($id);
         $daysActive = $this->attendanceService->countAttendance($id);
         $absences = $this->attendanceService->countTotalAbsences($id);
-        $hasAttendance = $this->attendanceService->hasAttendance($id);
-        return view('employee.employee-attendance', compact('employee','daysActive', 'absences','hasAttendance'))->with('title','Employee Attendance');
+        $overtime = $this->attendanceService->computeOvertime($id);
+        $late = $this->attendanceService->computeLate($id);
+        $hasLogIn = $this->attendanceService->hasLogIn($id);
+        $totalOvertime = $this->attendanceService->totalOvertime($id);
+        $totalNoClockOut = $this->attendanceService->totalNoClockOut($id);
+        $noClock = $this->attendanceService->noClockOut($id);
+        return view('employee.employee-attendance', compact('employee','noClock','totalNoClockOut','totalOvertime','hasLogIn','daysActive','late', 'absences','overtime'))->with('title','Employee Attendance');
     }
     public function showPayroll($id) {
         $employee = Employee::findOrFail($id);
