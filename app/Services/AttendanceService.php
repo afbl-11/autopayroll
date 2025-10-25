@@ -5,35 +5,13 @@ namespace App\Services;
 use App\Models\AttendanceLogs;
 use App\Models\EmployeeSchedule;
 use App\Models\PayrollPeriod;
+use App\Traits\ScheduleTrait;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 
 class AttendanceService
 {
-    private function isScheduledToday($id)
-    {
-        $todayDay = now()->format('D');
-
-        $schedule = EmployeeSchedule::where('employee_id', $id)
-            ->latest('start_date')
-            ->with('shift')
-            ->first();
-
-        if (!$schedule || !$schedule->shift) {
-            return false;
-        }
-
-        $workingDays = is_array($schedule->working_days)
-            ? $schedule->working_days
-            : json_decode($schedule->working_days, true);
-
-        return [
-            'isWorkingDay' => in_array($todayDay, $workingDays),
-            'schedule' => $schedule,
-            ];
-    }
-
-
+    use ScheduleTrait;
     public function countAttendance($id):int {
         /*
          * This method counts the total attendances from the start to end of the payroll period.
@@ -172,9 +150,7 @@ class AttendanceService
 
         if ($clock_in->lessThanOrEqualTo($start_time)) return 0;
 
-        $lateMinutes = abs($clock_in->diffInMinutes($start_time));
-
-        return $lateMinutes;
+        return abs($clock_in->diffInMinutes($start_time));
     }
 
     public function hasLogIn($id): bool {
