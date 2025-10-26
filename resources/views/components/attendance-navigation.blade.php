@@ -10,8 +10,8 @@
     </div>
     <div class="main-content">
         <div class="content-cards">
-            <p>Days Off</p>
-            <strong>6</strong>
+            <p>Total Present Days</p>
+            <strong>{{$daysActive}}</strong>
         </div>
         <div class="content-cards">
 
