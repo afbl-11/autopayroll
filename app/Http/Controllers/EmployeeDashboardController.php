@@ -66,24 +66,30 @@ class EmployeeDashboardController extends Controller
         $daysActive = $this->attendanceService->countAttendance($id);
         $absences = $this->attendanceService->countTotalAbsences($id);
         $overtime = $this->attendanceService->computeOvertime($id);
-        $late = $this->attendanceService->computeLate($id);
+//        $late = $this->attendanceService->computeLate($id);
         $hasLogIn = $this->attendanceService->hasLogIn($id);
         $totalOvertime = $this->attendanceService->totalOvertime($id);
         $totalNoClockOut = $this->attendanceService->totalNoClockOut($id);
         $noClock = $this->attendanceService->noClockOut($id);
         $countLate = $this->attendanceService->countLate($id);
+        [$logs, $late] = $this->attendanceService->getAttendance($id);
 
         return [
             'employee' => $employee,
             'daysActive' => $daysActive,
             'absences' => $absences,
             'overtime' => $overtime,
-            'late' => $late,
+//            'late' => $late,
             'hasLogIn' => $hasLogIn,
             'totalOvertime' => $totalOvertime,
             'totalNoClockOut' => $totalNoClockOut,
             'noClock' => $noClock,
             'countLate' => $countLate,
+            'attendance' =>
+                [
+                    'logs' => $logs,
+                    'late' => $late
+                ],
             ];
     }
     public function showAttendance($id) {

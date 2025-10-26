@@ -114,12 +114,14 @@ class AttendanceService
     }
 
     public function computeLate($id): int {
-
+        /*
+         * computes the late attendance of the employee on the same log
+         * */
         $todayData = $this->isScheduledToday($id);
         $schedule = $todayData['schedule'];
 
         if (!$todayData['isWorkingDay']) {
-            return true;
+            return 0;
         }
 
         $log = AttendanceLogs::where('employee_id', $id)
@@ -140,6 +142,9 @@ class AttendanceService
     }
 
     public function countLate($id): int {
+        /*
+         * counts all the late clock-in of the employee. example 5 late clock-in in 5 working days
+         * */
         $todayData = $this->isScheduledToday($id);
         $schedule = $todayData['schedule'];
 
@@ -198,5 +203,22 @@ class AttendanceService
             ->whereNotNull('clock_in_time')
             ->whereNull('clock_out_time')
             ->count();
+    }
+
+//    public function getHoursWork(): int {
+//
+//    }
+    public function getAttendance($id)  {
+        /*
+         * methods returns clock in and out of employee
+         * */
+        $logs = AttendanceLogs::where('employee_id', $id)
+            ->whereNotNull('clock_in_time')
+            ->get();
+
+        $lateInMinutes = $this->computeLate($id);
+
+        return [$logs, $lateInMinutes];
+
     }
 }

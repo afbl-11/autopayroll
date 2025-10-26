@@ -8,7 +8,7 @@
             <li><a href=""></a>Leave Request</li>
         </ul>
     </div>
-    <div class="main-content">
+    <div class="summary-content">
         <div class="content-cards">
             <p>Days active</p>
             <strong>{{$daysActive}}</strong>
@@ -26,11 +26,11 @@
             <strong>{{$noClockOut}}</strong>
         </div>
         <div class="content-cards">
-            <p>Leave Balance</p>
+            <p>Leave balance</p>
             <strong>{{$leaveBalance}}</strong>
         </div>
         <div class="content-cards">
-            <p>Times been late</p>
+            <p>Lates</p>
             <strong>{{$totalLate}}</strong>
         </div>
     </div>
