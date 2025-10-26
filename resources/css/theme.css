@@ -185,7 +185,7 @@ Logo
     margin-bottom: 0;
 }
 p {
-    color: var(--clr-secondary);
+    color: var(--clr-primary);
 }
 .form-intro {
     margin-bottom: 50px;
