@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\AttendanceLogs;
 use App\Models\EmployeeSchedule;
 use App\Models\PayrollPeriod;
+use App\Traits\PayrollPeriodTrait;
 use App\Traits\ScheduleTrait;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
@@ -12,17 +13,12 @@ use Carbon\CarbonPeriod;
 class AttendanceService
 {
     use ScheduleTrait;
+    use PayrollPeriodTrait;
     public function countAttendance($id):int {
         /*
          * This method counts the total attendances from the start to end of the payroll period.
          * */
-        $payroll_period = PayrollPeriod::where('is_closed', false)
-            ->latest()
-            ->firstOrFail();
-
-
-        $payroll_start = $payroll_period->start_date;
-        $payroll_end = $payroll_period->end_date;
+        [$payroll_start, $payroll_end] = $this->hasPeriod();
 
         return AttendanceLogs::where('employee_id', $id)
             ->whereBetween('created_at', [$payroll_start, $payroll_end])
@@ -34,12 +30,7 @@ class AttendanceService
          * This method counts total absences from the start to end of the payroll period
          * absences from the previous period will not be counted.
          * */
-        $payroll_period = PayrollPeriod::where('is_closed', false)
-            ->latest()
-            ->firstOrFail();
-
-        $payroll_start = $payroll_period->start_date;
-        $payroll_end = $payroll_period->end_date;
+        [$payroll_start, $payroll_end] = $this->hasPeriod();
 
         $schedule = EmployeeSchedule::where('employee_id', $id)
             ->latest()
@@ -96,12 +87,7 @@ class AttendanceService
     public function totalOvertime($id):int {
         $totalOvertime = 0;
 
-        $payroll_period = PayrollPeriod::where('is_closed', false)
-            ->latest()
-            ->firstOrFail();
-
-        $payroll_start = $payroll_period->start_date;
-        $payroll_end = $payroll_period->end_date;
+        [$payroll_start, $payroll_end] = $this->hasPeriod();
 
         $logs = AttendanceLogs::where('employee_id', $id)
             ->whereBetween('created_at', [$payroll_start, $payroll_end])
@@ -153,6 +139,21 @@ class AttendanceService
         return abs($clock_in->diffInMinutes($start_time));
     }
 
+    public function countLate($id): int {
+        $todayData = $this->isScheduledToday($id);
+        $schedule = $todayData['schedule'];
+
+        if (!$todayData['isWorkingDay']) {
+            return 0;
+        }
+        [$payroll_start, $payroll_end] = $this->hasPeriod();
+
+        return AttendanceLogs::where('employee_id', $id)
+            ->whereBetween('created_at', [$payroll_start, $payroll_end])
+            ->whereNotNull('clock_in_time')
+            ->whereTime('clock_in_time', '>', $schedule->shift->start_time)
+            ->count();
+    }
     public function hasLogIn($id): bool {
 
         $todayData = $this->isScheduledToday($id);
@@ -190,12 +191,7 @@ class AttendanceService
         if (!$todayData['isWorkingDay']) {
             return 0;
         }
-        $payroll_period = PayrollPeriod::where('is_closed', false)
-            ->latest()
-            ->firstOrFail();
-
-        $payroll_start = $payroll_period->start_date;
-        $payroll_end = $payroll_period->end_date;
+        [$payroll_start, $payroll_end] = $this->hasPeriod();
 
         return AttendanceLogs::where('employee_id', $id)
             ->whereBetween('created_at', [$payroll_start, $payroll_end])

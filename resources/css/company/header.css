@@ -48,11 +48,10 @@
     width: auto;
     height: auto;
     border-radius: 100%;
-    border: 1px solid var(--clr-primary);
+    /*border: 1px solid var(--clr-primary);*/
     justify-items: center;
     align-self: center;
     display: flex;
-    background-color: var(--clr-green);
 }
 p{
     margin-bottom: 0;

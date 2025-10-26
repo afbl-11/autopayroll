@@ -12,6 +12,12 @@ class AttendanceNavigation extends Component
      * Create a new component instance.
      */
     public function __construct(
+        public $daysActive,
+        public $totalLate,
+        public $totalOvertime,
+        public $noClockOut,
+        public $totalAbsences,
+        public ?string $leaveBalance = '15',
 
     )
     {}

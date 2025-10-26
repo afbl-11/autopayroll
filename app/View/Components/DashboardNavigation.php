@@ -15,7 +15,8 @@ class DashboardNavigation extends Component
 //        genera
         public string $name,
         public string $id,
-        public ?string $image,
+        public ?string $companyLogo = null,
+        public ?string $employeeProfile = null,
 //for employees
         public ?string $position,
 //        for companies

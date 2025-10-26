@@ -3,7 +3,11 @@
 <div {{$attributes->merge(['class'=> 'header'])}}>
     <div class="company-information">
         <div class="company-logo">
-            <img src="{{asset($image)}}" alt="company logo">
+            @if($type === 'company')
+                <img src="{{asset($companyLogo)}}" alt="company logo">
+                @else
+                <img src="{{asset($employeeProfile)}}" alt="employee image">
+            @endif
         </div>
         <div>
             <h6>{{$name}}</h6>

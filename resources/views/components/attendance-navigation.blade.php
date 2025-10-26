@@ -10,22 +10,28 @@
     </div>
     <div class="main-content">
         <div class="content-cards">
-            <p>Total Present Days</p>
+            <p>Days active</p>
             <strong>{{$daysActive}}</strong>
         </div>
         <div class="content-cards">
-
+            <p>Absences</p>
+            <strong>{{$totalAbsences}}</strong>
         </div>
         <div class="content-cards">
-
+            <p>Total overtime</p>
+            <strong>{{$totalOvertime}}</strong>
         </div>
         <div class="content-cards">
-
+            <p>No clock-out</p>
+            <strong>{{$noClockOut}}</strong>
         </div>
-        <div class="content-cards"
-        ></div>
         <div class="content-cards">
-
+            <p>Leave Balance</p>
+            <strong>{{$leaveBalance}}</strong>
+        </div>
+        <div class="content-cards">
+            <p>Times been late</p>
+            <strong>{{$totalLate}}</strong>
         </div>
     </div>
 </div>
