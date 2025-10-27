@@ -37,6 +37,7 @@
                 <select name="region" id="region">
                     <option value="">Select Region</option>
                 </select>
+                <input type="hidden" name="region_name" id="region_name">
             </div>
         </div>
 {{--        province & zip--}}
@@ -46,6 +47,7 @@
                 <select name="province" id="province">
                     <option value="">Select Province</option>
                 </select>
+                <input type="hidden" name="province_name" id="province_name">
             </div>
             <div class="field-input">
                 <label for="region">Postal Code</label>
@@ -59,12 +61,14 @@
                 <select name="city" id="city">
                     <option value="">Select City / Municipality</option>
                 </select>
+                <input type="hidden" name="city_name" id="city_name">
             </div>
             <div class="field-input">
                 <label for="barangay">Barangay</label>
                 <select name="barangay" id="barangay">
                     <option value="">Select Barangay</option>
                 </select>
+                <input type="hidden" name="barangay_name" id="barangay_name">
             </div>
         </div>
 {{--        street & building number--}}

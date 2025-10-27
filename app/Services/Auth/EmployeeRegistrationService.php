@@ -92,7 +92,7 @@ class EmployeeRegistrationService
 
     public function concatenateResAddress() {
         $address = session('register.address');
-        return  $address['province'] . ', ' . $address['city'] . ', ' . $address['barangay'] . ', ' . $address['street'] . ', ' . $address['house_number'];
+        return  $address['province_name'] . ', ' . $address['city_name'] . ', ' . $address['barangay_name'] . ', ' . $address['street'] . ', ' . $address['house_number'];
     }
 
     public function concatenateIdResAddress() {

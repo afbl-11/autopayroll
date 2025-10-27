@@ -38,11 +38,11 @@ class Employee extends Model
 
         // Residential Address
         'country',
-        'region',
-        'province',
+        'region_name',
+        'province_name',
         'zip',
-        'city',
-        'barangay',
+        'city_name',
+        'barangay_name',
         'street',
         'house_number',
 

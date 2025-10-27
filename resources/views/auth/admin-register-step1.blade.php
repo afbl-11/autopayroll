@@ -23,31 +23,33 @@
             </div>
             <form action="{{route('auth.store.step1')}}" method="post">
                 @csrf
+{{--                first name--}}
                 <div class="field-row">
                     <div class="field-input">
                         <label for="first_name">First name</label>
                         <input type="text" name="first_name" id="first_name" required>
                     </div>
                     <div class="field-input">
+                        <label for="middle_name">Middle name</label>
+                        <input type="text" name="middle_name" id="middle_name" required>
+                    </div>
+                </div>
+{{--                last name and suffix--}}
+                <div class="field-row">
+                    <div class="field-input">
                         <label for="last_name">Last name</label>
                         <input type="text" name="last_name" id="last_name" required>
                     </div>
-                </div>
-{{--                tin and role--}}
-                <div class="field-row">
                     <div class="field-input">
-                        <label for="tin">Tax Identification Number</label>
-                        <input type="text" name="tin" id="tin" required>
-                    </div>
-                    <div class="field-input">
-                        <label for="role">Role</label>
-                        <select name="role" id="role" required>
-                            <option value="">Select a Role</option>
-                            <option value="admin">Admin</option>
-                            <option value="hr">HR</option>
+                        <label for="suffix">Suffix</label>
+                        <select name="suffix" id="suffix">
+                            <option value="">None</option>
+                            <option value="Sr.">Sr.</option>
+                            <option value="Jr.">Jr.</option>
                         </select>
                     </div>
                 </div>
+
 {{--                email--}}
                 <div class="field-row">
                     <div class="field-input">
