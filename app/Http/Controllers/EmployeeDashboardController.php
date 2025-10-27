@@ -36,13 +36,14 @@ class EmployeeDashboardController extends Controller
         $employee = Employee::findOrFail($id);
         $fullName = $employee->first_name . ' ' .$employee->middle_name . ' '. $employee->last_name . ' ' . $employee->suffix;
         $res_address =
-            $employee->country . ', '
-            . $employee->region . ', '
-            . $employee->zip . ', '
-            . $employee->city . ', '
-            . $employee->barangay .', '
+            $employee->house_number . ', '
             .$employee->street . ', '
-            .$employee->house_number;
+            . $employee->barangay_name .', '
+            . $employee->city_name . ', '
+            . $employee->province_name . ', '
+            . $employee->zip . ', '
+            . $employee->region_name. ', '
+            .$employee->country ;
         $id_address =
              $employee->id_country . ', '
              . $employee->id_region . ', '
