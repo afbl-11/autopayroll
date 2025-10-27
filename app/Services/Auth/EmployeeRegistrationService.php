@@ -42,6 +42,8 @@ class EmployeeRegistrationService
 
             $data = array_merge($basicInformation, $address, $designation, $credentials);
 
+            $data['profile_photo'] = 'default_profile.png';
+
             $data['password'] = Hash::make($data['password'] ?? 'DefaultPassword123!');
 
             $data['employee_id'] = $this->generateId->generateId(Employee::class, 'employee_id');

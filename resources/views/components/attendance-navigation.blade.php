@@ -8,24 +8,30 @@
             <li><a href=""></a>Leave Request</li>
         </ul>
     </div>
-    <div class="main-content">
+    <div class="summary-content">
         <div class="content-cards">
-            <p>Days Off</p>
-            <strong>6</strong>
+            <p>Days active</p>
+            <strong>{{$daysActive}}</strong>
         </div>
         <div class="content-cards">
-
+            <p>Absences</p>
+            <strong>{{$totalAbsences}}</strong>
         </div>
         <div class="content-cards">
-
+            <p>Total overtime</p>
+            <strong>{{$totalOvertime}}</strong>
         </div>
         <div class="content-cards">
-
+            <p>No clock-out</p>
+            <strong>{{$noClockOut}}</strong>
         </div>
-        <div class="content-cards"
-        ></div>
         <div class="content-cards">
-
+            <p>Leave balance</p>
+            <strong>{{$leaveBalance}}</strong>
+        </div>
+        <div class="content-cards">
+            <p>Lates</p>
+            <strong>{{$totalLate}}</strong>
         </div>
     </div>
 </div>

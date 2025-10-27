@@ -5,46 +5,20 @@ namespace App\Services;
 use App\Models\AttendanceLogs;
 use App\Models\EmployeeSchedule;
 use App\Models\PayrollPeriod;
+use App\Traits\PayrollPeriodTrait;
+use App\Traits\ScheduleTrait;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 
 class AttendanceService
 {
-    private function isScheduledToday($id)
-    {
-        $todayDay = now()->format('D');
-
-        $schedule = EmployeeSchedule::where('employee_id', $id)
-            ->latest('start_date')
-            ->with('shift')
-            ->first();
-
-        if (!$schedule || !$schedule->shift) {
-            return false;
-        }
-
-        $workingDays = is_array($schedule->working_days)
-            ? $schedule->working_days
-            : json_decode($schedule->working_days, true);
-
-        return [
-            'isWorkingDay' => in_array($todayDay, $workingDays),
-            'schedule' => $schedule,
-            ];
-    }
-
-
+    use ScheduleTrait;
+    use PayrollPeriodTrait;
     public function countAttendance($id):int {
         /*
          * This method counts the total attendances from the start to end of the payroll period.
          * */
-        $payroll_period = PayrollPeriod::where('is_closed', false)
-            ->latest()
-            ->firstOrFail();
-
-
-        $payroll_start = $payroll_period->start_date;
-        $payroll_end = $payroll_period->end_date;
+        [$payroll_start, $payroll_end] = $this->hasPeriod();
 
         return AttendanceLogs::where('employee_id', $id)
             ->whereBetween('created_at', [$payroll_start, $payroll_end])
@@ -56,20 +30,20 @@ class AttendanceService
          * This method counts total absences from the start to end of the payroll period
          * absences from the previous period will not be counted.
          * */
-        $payroll_period = PayrollPeriod::where('is_closed', false)
-            ->latest()
-            ->firstOrFail();
-
-        $payroll_start = $payroll_period->start_date;
-        $payroll_end = $payroll_period->end_date;
+        [$payroll_start, $payroll_end] = $this->hasPeriod();
 
         $schedule = EmployeeSchedule::where('employee_id', $id)
             ->latest()
-            ->firstOrFail();
+            ->first();
+
+        if (!$schedule) {
+            return 0;
+        }
+
 
         $workingDays = is_array($schedule->working_days)
             ? $schedule->working_days
-            : json_decode($schedule->working_days, true);
+            : json_decode($schedule->working_days, 0);
 
         $expectedWorkingDays = 0;
 //        loops through the days
@@ -83,6 +57,9 @@ class AttendanceService
             ->selectRaw('COUNT(DISTINCT DATE(created_at)) as present_days')
             ->value('present_days') ?? 0;
 
+        if ($presentDays === 0) {
+            return $expectedWorkingDays;
+        }
 
         return max(0, $expectedWorkingDays - $presentDays);
     }
@@ -93,7 +70,7 @@ class AttendanceService
         $schedule = $todayData['schedule'];
 
         if (!$todayData['isWorkingDay']) {
-            return true;
+            return 0;
         }
 
         $end_time = Carbon::parse($schedule->shift->end_time);
@@ -118,12 +95,7 @@ class AttendanceService
     public function totalOvertime($id):int {
         $totalOvertime = 0;
 
-        $payroll_period = PayrollPeriod::where('is_closed', false)
-            ->latest()
-            ->firstOrFail();
-
-        $payroll_start = $payroll_period->start_date;
-        $payroll_end = $payroll_period->end_date;
+        [$payroll_start, $payroll_end] = $this->hasPeriod();
 
         $logs = AttendanceLogs::where('employee_id', $id)
             ->whereBetween('created_at', [$payroll_start, $payroll_end])
@@ -150,12 +122,14 @@ class AttendanceService
     }
 
     public function computeLate($id): int {
-
+        /*
+         * computes the late attendance of the employee on the same log
+         * */
         $todayData = $this->isScheduledToday($id);
         $schedule = $todayData['schedule'];
 
         if (!$todayData['isWorkingDay']) {
-            return true;
+            return 0;
         }
 
         $log = AttendanceLogs::where('employee_id', $id)
@@ -172,11 +146,27 @@ class AttendanceService
 
         if ($clock_in->lessThanOrEqualTo($start_time)) return 0;
 
-        $lateMinutes = abs($clock_in->diffInMinutes($start_time));
-
-        return $lateMinutes;
+        return abs($clock_in->diffInMinutes($start_time));
     }
 
+    public function countLate($id): int {
+        /*
+         * counts all the late clock-in of the employee. example 5 late clock-in in 5 working days
+         * */
+        $todayData = $this->isScheduledToday($id);
+        $schedule = $todayData['schedule'];
+
+        if (!$todayData['isWorkingDay']) {
+            return 0;
+        }
+        [$payroll_start, $payroll_end] = $this->hasPeriod();
+
+        return AttendanceLogs::where('employee_id', $id)
+            ->whereBetween('created_at', [$payroll_start, $payroll_end])
+            ->whereNotNull('clock_in_time')
+            ->whereTime('clock_in_time', '>', $schedule->shift->start_time)
+            ->count();
+    }
     public function hasLogIn($id): bool {
 
         $todayData = $this->isScheduledToday($id);
@@ -214,17 +204,29 @@ class AttendanceService
         if (!$todayData['isWorkingDay']) {
             return 0;
         }
-        $payroll_period = PayrollPeriod::where('is_closed', false)
-            ->latest()
-            ->firstOrFail();
-
-        $payroll_start = $payroll_period->start_date;
-        $payroll_end = $payroll_period->end_date;
+        [$payroll_start, $payroll_end] = $this->hasPeriod();
 
         return AttendanceLogs::where('employee_id', $id)
             ->whereBetween('created_at', [$payroll_start, $payroll_end])
             ->whereNotNull('clock_in_time')
             ->whereNull('clock_out_time')
             ->count();
+    }
+
+//    public function getHoursWork(): int {
+//
+//    }
+    public function getAttendance($id)  {
+        /*
+         * methods returns clock in and out of employee
+         * */
+        $logs = AttendanceLogs::where('employee_id', $id)
+            ->whereNotNull('clock_in_time')
+            ->get();
+
+        $lateInMinutes = $this->computeLate($id);
+
+        return [$logs, $lateInMinutes];
+
     }
 }

@@ -21,6 +21,7 @@ class BasicInformationRequest extends FormRequest
             'gender' => ['required', 'in:male,female'],
             'marital_status' => ['required', 'in:single,married,widowed'],
             'blood_type' => ['required', 'in:A+,A-,B+,B-,AB+,AB-,O+,O-'],
+            'profile_photo' => ['nullable', 'file', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
 
             'bank_account_number' => ['required', 'digits_between:10,16', 'unique:employees'],
             'sss_number' => ['required', 'digits:10', 'unique:employees'],

@@ -112,7 +112,7 @@ h1,h2,h3,h4,h5,h6 {
         letter-spacing: 1.3px
     }
 
-    p     { font-size: 16px; line-height: 1.6; margin-bottom: 1em; }
+    p     { font-size: 16px; line-height: 1.6;}
     small { font-size: 13.33px; line-height: 1.5; letter-spacing: 1.6px; }
 
     input {font-family: "Helvetica Regular", sans-serif; line-height: 1.6; letter-spacing: 1.6px;}
@@ -185,7 +185,7 @@ Logo
     margin-bottom: 0;
 }
 p {
-    color: var(--clr-secondary);
+    color: var(--clr-primary);
 }
 .form-intro {
     margin-bottom: 50px;

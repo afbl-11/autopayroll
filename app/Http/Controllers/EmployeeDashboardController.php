@@ -61,17 +61,40 @@ class EmployeeDashboardController extends Controller
         $employee = Employee::findOrFail($id);
         return view('employee.employee-contract',compact('employee'))->with('title','Employee Contract');
     }
-    public function showAttendance($id) {
+    public function data($id){
         $employee = Employee::with('attendanceLogs')->findOrFail($id);
         $daysActive = $this->attendanceService->countAttendance($id);
         $absences = $this->attendanceService->countTotalAbsences($id);
         $overtime = $this->attendanceService->computeOvertime($id);
-        $late = $this->attendanceService->computeLate($id);
+//        $late = $this->attendanceService->computeLate($id);
         $hasLogIn = $this->attendanceService->hasLogIn($id);
         $totalOvertime = $this->attendanceService->totalOvertime($id);
         $totalNoClockOut = $this->attendanceService->totalNoClockOut($id);
         $noClock = $this->attendanceService->noClockOut($id);
-        return view('employee.employee-attendance', compact('employee','noClock','totalNoClockOut','totalOvertime','hasLogIn','daysActive','late', 'absences','overtime'))->with('title','Employee Attendance');
+        $countLate = $this->attendanceService->countLate($id);
+        [$logs, $late] = $this->attendanceService->getAttendance($id);
+
+        return [
+            'employee' => $employee,
+            'daysActive' => $daysActive,
+            'absences' => $absences,
+            'overtime' => $overtime,
+//            'late' => $late,
+            'hasLogIn' => $hasLogIn,
+            'totalOvertime' => $totalOvertime,
+            'totalNoClockOut' => $totalNoClockOut,
+            'noClock' => $noClock,
+            'countLate' => $countLate,
+            'attendance' =>
+                [
+                    'logs' => $logs,
+                    'late' => $late
+                ],
+            ];
+    }
+    public function showAttendance($id) {
+
+        return view('employee.employee-attendance',$this->data($id))->with('title','Employee Attendance');
     }
     public function showPayroll($id) {
         $employee = Employee::findOrFail($id);
