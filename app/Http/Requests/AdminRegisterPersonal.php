@@ -16,10 +16,10 @@ class AdminRegisterPersonal extends FormRequest
     {
         return [
             'first_name' => ['required','string','max:255'],
+            'middle_name' => ['required','string','max:255'],
             'last_name' => ['required','string','max:255'],
-            'role' => ['required','in:admin,hr'],
+            'suffix' => [ 'nullable', 'in:Sr.,Jr.,Other'],
             'email' => ['required','email','unique:admins,email'],
-            'tin' => ['required', 'digits_between:9,12','unique:admins,tin'],
             'password' => [
                 'required',
                 'string',

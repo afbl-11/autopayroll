@@ -14,19 +14,19 @@ return new class extends Migration
         Schema::create('admins', function (Blueprint $table) {
             $table->string('admin_id')->primary();
             $table->string('first_name');
+            $table->string('middle_name');
             $table->string('last_name');
+            $table->enum('suffix', ['Sr.','Jr.'])->nullable();
             $table->string('email');
             $table->string('password');
-            $table->string('role');
 
             $table->string('company_name');
-            $table->string('tin');
             $table->string('country');
-            $table->string('region');
-            $table->string('province');
+            $table->string('region_name');
+            $table->string('province_name');
             $table->string('zip');
-            $table->string('city');
-            $table->string('barangay');
+            $table->string('city_name');
+            $table->string('barangay_name');
             $table->string('street');
             $table->string('house_number')->nullable();
             $table->string('email_verified_at')->nullable();
