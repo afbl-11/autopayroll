@@ -12,7 +12,7 @@ class AssignmentRequest extends FormRequest
 
     public function rules() {
         return [
-            'company_id' => ['required', 'string', 'exists:companies,company_id'],
+            'company_id' => ['nullable', 'string', 'exists:companies,company_id'],
             'employment_type' => ['required', 'string', 'in:full-time,part-time,contractual'],
             'contract_start' => ['required', 'date', 'after_or_equal:today'],
             'contract_end' => ['required', 'date', 'after_or_equal:contract_start'],

@@ -34,11 +34,16 @@ class AttendanceService
 
         $schedule = EmployeeSchedule::where('employee_id', $id)
             ->latest()
-            ->firstOrFail();
+            ->first();
+
+        if (!$schedule) {
+            return 0;
+        }
+
 
         $workingDays = is_array($schedule->working_days)
             ? $schedule->working_days
-            : json_decode($schedule->working_days, true);
+            : json_decode($schedule->working_days, 0);
 
         $expectedWorkingDays = 0;
 //        loops through the days
@@ -52,6 +57,9 @@ class AttendanceService
             ->selectRaw('COUNT(DISTINCT DATE(created_at)) as present_days')
             ->value('present_days') ?? 0;
 
+        if ($presentDays === 0) {
+            return $expectedWorkingDays;
+        }
 
         return max(0, $expectedWorkingDays - $presentDays);
     }
@@ -62,7 +70,7 @@ class AttendanceService
         $schedule = $todayData['schedule'];
 
         if (!$todayData['isWorkingDay']) {
-            return true;
+            return 0;
         }
 
         $end_time = Carbon::parse($schedule->shift->end_time);

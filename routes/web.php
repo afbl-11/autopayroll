@@ -98,7 +98,7 @@ Route::get('/employees/filter', [EmployeeDashboardController::class, 'filter'])
     ->name('employee.filter');
 
 Route::get('dashboard/employee/detail/{id}', [EmployeeDashboardController::class, 'showInfo'])
-//    ->middleware('auth:admin')
+    ->middleware('auth:admin')
     ->name('employee.dashboard.detail');
 
 Route::get('dashboard/employee/contract/{id}', [EmployeeDashboardController::class, 'showContract'])
@@ -117,7 +117,7 @@ Route::get('dashboard/employee/payroll/{id}', [EmployeeDashboardController::clas
     ->middleware('auth:admin')
     ->name('employee.dashboard.payroll');
 //employee registration
-Route::middleware(['auth:admin', 'signed'])->group(function () {
+Route::middleware(['auth:admin', 'verified'])->group(function () {
 Route::get('/employees/register/1', [EmployeeDashboardController::class, 'showStep1'])->name('employee.register.1');
 Route::get('/employees/register/2', [EmployeeRegistrationController::class, 'showStep2'])->name('employee.register.2');
 Route::get('/employees/register/3', [EmployeeRegistrationController::class, 'showStep3'])->name('employee.register.3');

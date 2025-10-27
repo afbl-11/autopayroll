@@ -10,7 +10,7 @@
     />
     <section class="main-content">
 
-
+{{--{{$absences}}--}}
         @forelse ($attendance['logs'] as $log)
             <x-attendance-logs
                 :clockIn="$log->clock_in_time"
@@ -28,3 +28,5 @@
     </section>
 
 </x-app>
+
+{{--TODO: fool proof everything--}}

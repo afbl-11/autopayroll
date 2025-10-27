@@ -16,8 +16,12 @@ trait ScheduleTrait
             ->first();
 
         if (!$schedule || !$schedule->shift) {
-            return false;
+            return [
+                'isWorkingDay' => false,
+                'schedule' => null
+            ];
         }
+
 
         $workingDays = is_array($schedule->working_days)
             ? $schedule->working_days
