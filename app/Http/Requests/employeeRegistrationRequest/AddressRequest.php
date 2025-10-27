@@ -12,10 +12,10 @@ class AddressRequest extends FormRequest
     public function rules() {
         return [
             'country' => 'required|string|max:255',
-            'region' => 'required|string|max:255',
-            'province' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
-            'barangay' => 'required|string|max:255',
+            'region_name' => 'required|string|max:255',
+            'province_name' => 'required|string|max:255',
+            'city_name' => 'required|string|max:255',
+            'barangay_name' => 'required|string|max:255',
             'zip' => 'required|digits:4',
             'street' => 'required|string|max:255',
             'house_number' => 'required|string|max:20',

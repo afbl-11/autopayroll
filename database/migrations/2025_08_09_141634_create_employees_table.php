@@ -41,11 +41,11 @@ return new class extends Migration
 
 //            current address
             $table->string('country')->default('Philippines');
-            $table->string('region');
-            $table->string('province');
+            $table->string('region_name');
+            $table->string('province_name');
             $table->string('zip');
-            $table->string('city');
-            $table->string('barangay');
+            $table->string('city_name');
+            $table->string('barangay_name');
             $table->string('street');
             $table->string('house_number')->nullable();
 
