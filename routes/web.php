@@ -21,11 +21,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 /**admin registration*/
-Route::get('/register/admin/credentials', [AdminRegistrationController::class, 'showStep1'])->name('auth.register.step1');
-Route::get('/register/admin/address', [AdminRegistrationController::class, 'showStep2'])->name('auth.register.step2');
+Route::get('/register/admin/credentials', [AdminRegistrationController::class, 'showStep1'])
+    ->name('auth.register.step1');
+Route::get('/register/admin/address', [AdminRegistrationController::class, 'showStep2'])
+    ->name('auth.register.step2');
+Route::post('/register/admin/success', [AdminRegistrationController::class, 'register'])
+    ->name('admin.register');
+Route::post('/register/admin/personal-info', [AdminRegistrationController::class, 'storeStep1'])
+    ->name('auth.store.step1');
 
-Route::post('/register/admin/success', [AdminRegistrationController::class, 'register'])->name('admin.register');
-Route::post('/register/admin/personal-info', [AdminRegistrationController::class, 'storeStep1'])->name('auth.store.step1');
 
 //login
 Route::get('/login', function () {
@@ -47,10 +51,27 @@ Route::post('/logout', [LogoutController::class, 'logout'])
     ->name('logout');
 
 /**company registration TODO:protect route */
-Route::get('company/register', [ClientRegistrationController::class, 'showForm'])
+Route::get('/company/register', [ClientRegistrationController::class, 'showForm'])
     ->middleware(['auth:admin'])
     ->name('show.register.client');
-Route::post('company/register/attempt', [ClientRegistrationController::class, 'register'])
+
+Route::post('/company/register/store', [ClientRegistrationController::class, 'storeBasicInformation'])
+    ->middleware(['auth:admin'])
+    ->name('store.register.client');
+
+Route::get('/company/register/address', [ClientRegistrationController::class, 'showCompanyMap'])
+    ->middleware(['auth:admin'])
+    ->name('show.register.client.map');
+
+Route::post('/company/register/address/store', [ClientRegistrationController::class, 'storeAddress'])
+    ->middleware(['auth:admin'])
+    ->name('store.client.address');
+
+Route::get('/company/register/review', [ClientRegistrationController::class, 'showReview'])
+    ->middleware(['auth:admin'])
+    ->name('show.client.register.review');
+
+Route::post('/company/register/attempt', [ClientRegistrationController::class, 'register'])
     ->middleware(['auth:admin'])
     ->name('register.client');
 

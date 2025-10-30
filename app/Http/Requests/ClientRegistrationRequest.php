@@ -12,16 +12,10 @@ class ClientRegistrationRequest extends FormRequest
     public function rules() {
         return [
             'company_name' => 'required|string|max:255',
-            'country' => 'required|string|max:255',
-            'region' => 'required|string|max:255',
-            'industry' => 'required|string|max:255',
-            'province' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
-            'barangay' => 'required|string|max:255',
-            'zip' => 'required|digits:4',
-            'street' => 'required|string|max:255',
-            'house_number' => 'required|string|max:20',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
             'tin_number' => 'required|digits_between:9,12',
+            'industry' => 'required|string|max:255',
 
         ];
     }
