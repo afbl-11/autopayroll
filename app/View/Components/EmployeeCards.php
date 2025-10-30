@@ -22,6 +22,7 @@ class EmployeeCards extends Component
         public string $username,
         public string $date,
         public ?bool $status,
+        public ?bool $clickable = true,
     )
     {}
 

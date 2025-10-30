@@ -92,6 +92,14 @@ Route::get('company/location/{id}', [CompanyDashboardController::class, 'showLoc
     ->middleware(['auth:admin'])
     ->name('company.dashboard.location');
 
+Route::get('company/employee/assign/{id}', [CompanyDashboardController::class, 'showEmployeeAssign'])
+    ->middleware(['auth:admin'])
+    ->name('company.employee.assign');
+
+Route::post('/company/{company}/employee/assign', [CompanyDashboardController::class, 'assignEmployees'])
+    ->middleware(['auth:admin'])
+    ->name('company.employee.assign.save');
+
 //email verification
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
