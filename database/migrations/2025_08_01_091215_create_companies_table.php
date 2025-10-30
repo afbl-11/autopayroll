@@ -15,18 +15,14 @@ return new class extends Migration
             $table->string('company_id')->primary();
             $table->string('company_logo')->nullable();
             $table->string('company_name');
-            $table->string('country');
-            $table->string('region');
-            $table->string('province');
-            $table->string('city');
-            $table->string('barangay');
-            $table->string('street');
-            $table->string('house_number');
-            $table->string('zip');
+            $table->string('first_name');
+            $table->string('last_name');
+
             $table->string('industry');
             $table->string('tin_number');
             $table->decimal('latitude', 10, 7);
             $table->decimal('longitude', 10, 7);
+            $table->decimal('radius', 10, 7);
             $table->timestamps();
         });
     }

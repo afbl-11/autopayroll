@@ -6,6 +6,7 @@
     'placeholder' => '',
     'value' => '',
     'noDefault' => false,
+    'readOnly' => false,
 ])
 
 
@@ -21,6 +22,10 @@
         id="{{ $id }}"
         placeholder="{{ $placeholder }}"
         value="{{ old($name, $value ?? '') }}"
+        @if($readOnly)
+           readonly
+        @endif
+
     >
             @error($id)
             <small class="error_message">{{ $message }}</small>

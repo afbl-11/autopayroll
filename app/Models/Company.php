@@ -16,19 +16,14 @@ class Company extends Model
     protected $fillable = [
         'company_id',
         'company_name',
+        'first_name',
+        'last_name',
         'company_logo',
-        'country',
-        'region',
-        'province',
-        'city',
-        'barangay',
-        'street',
-        'house_number',
-        'zip',
         'industry',
         'tin_number',
         'latitude',
         'longitude',
+        'radius'
     ];
     public function employees()
     {

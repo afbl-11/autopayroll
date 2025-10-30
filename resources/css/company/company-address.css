@@ -1,0 +1,42 @@
+.main-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+#map {
+    width: 80%;
+    height: 500px;
+    border-radius: 16px;
+}
+#longitude, #latitude {
+    pointer-events: none;
+}
+
+.main-content .field-row  {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px!important;
+}
+.main-content .field-row:first-of-type  {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+}
+.main-content form {
+    width: 80%;
+    height: 100%;
+    display: flex;
+    gap: 20px!important;
+    flex-direction: column;
+}
+.main-content form #submit-btn{
+    margin-top: 25px!important;
+    width: 20% ;
+    float: right ;
+    bottom: 0 ;
+
+}
