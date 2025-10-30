@@ -73,11 +73,11 @@ class EmployeeFactory extends Factory
 
             // Residential Address
             'country' => $resAddress['country'],
-            'region' => $resAddress['region'],
-            'province' => $resAddress['province'],
+            'region_name' => $resAddress['region'],
+            'province_name' => $resAddress['province'],
             'zip' => $resAddress['zip'],
-            'city' => $resAddress['city'],
-            'barangay' => $resAddress['barangay'],
+            'city_name' => $resAddress['city'],
+            'barangay_name' => $resAddress['barangay'],
             'street' => $resAddress['street'],
             'house_number' => $resAddress['house_number'],
 

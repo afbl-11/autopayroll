@@ -2,6 +2,10 @@
 
 <x-app :noHeader="true" :navigation="true" :company="$company">
     <section class="main-content">
+        <form action="{{route('company.employee.assign',['id' => $company->company_id])}}" method="get">
+            @csrf
+            <x-button-submit>Assign Employee</x-button-submit>
+        </form>
         <div id="employee-cards-container">
             @foreach($company->employees as $employee)
                 @php

@@ -110,6 +110,31 @@ strong{
     gap:30px;
     justify-content: space-between;
 }
+/* Hide the checkbox but keep it clickable through the label */
+label > input[type="checkbox"] {
+    display: none;
+}
+
+/* Make the card feel clickable */
+label > .employee-card {
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease, transform 0.25s ease;
+}
+
+/* On hover: subtle lift effect */
+label > .employee-card:hover {
+    transform: scale(1.03);
+    box-shadow: 2px 5px 8px 0 rgba(136, 125, 125, 0.35);
+}
+
+/* When checkbox is checked: highlight the card */
+label > input[type="checkbox"]:checked + .employee-card {
+    border-color: #3b82f6 !important; /* blue highlight */
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25);
+    background-color: rgba(59, 130, 246, 0.08) !important;
+    transform: scale(1.03);
+}
 
 
 
