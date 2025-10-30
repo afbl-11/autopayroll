@@ -13,7 +13,7 @@
                 <x-company-cards
                     :id="$company->company_id"
                     :industry="$company->industry"
-                    :address="$company->country"
+                    :address="$company->address"
                     :logo="'assets/company-pic.jpg'"
                     :name="$company->company_name"
                     :count="$company->employees_count"

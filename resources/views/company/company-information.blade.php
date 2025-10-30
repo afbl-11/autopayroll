@@ -40,21 +40,22 @@
                     class="form-input"
                     label="Full address"
                     id="address"
-                    :value="$company->country"
+                    :value="$company->address"
+                />
+
+            </div>
+            <div class="field-row">
+                <x-form-input
+                    class="form-input"
+                    label="Longitude"
+                    id="longitude"
+                    value="43.1233"
                 />
                 <x-form-input
                     class="form-input"
                     label="Latitude"
                     id="latitude"
                     value="123.4567"
-                />
-            </div>
-            <div class="input-wrapper">
-                <x-form-input
-                    class="form-input"
-                    label="Longitude"
-                    id="longitude"
-                    value="43.1233"
                 />
             </div>
         </div>

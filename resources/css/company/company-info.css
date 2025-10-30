@@ -15,7 +15,7 @@
 .information-card {
     display: flex;
     flex-direction: column;
-    width: 70%;
+    width: 80%;
     height: auto;
     padding: 2%;
     border-radius: 16px;
@@ -34,5 +34,9 @@
 }
 
 #longitude {
-    width: 47% !important;
+    /*width: 47% !important;*/
+}
+
+.field-row {
+    display: flex !important;
 }

@@ -16,7 +16,7 @@ class CompanyCards extends Component
         public string $id,
         public ?string $logo,
         public ?string $industry,
-        public string $address,
+        public ?string $address,
         public ?string $count,
 
     )
