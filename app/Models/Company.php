@@ -21,6 +21,7 @@ class Company extends Model
         'company_logo',
         'industry',
         'tin_number',
+        'address',
         'latitude',
         'longitude',
         'radius'
