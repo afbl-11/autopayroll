@@ -20,6 +20,7 @@ return new class extends Migration
 
             $table->string('industry');
             $table->string('tin_number');
+            $table->string('address');
             $table->decimal('latitude', 10, 7);
             $table->decimal('longitude', 10, 7);
             $table->decimal('radius', 10, 7);
