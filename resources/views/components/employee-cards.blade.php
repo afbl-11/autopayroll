@@ -48,12 +48,6 @@
     </a>
 @else
         <div {{$attributes->merge(['class' => 'employee-card'])}}>
-            <div class="top-bar">
-                <x-state status="{{$status}}"></x-state>
-                ...
-                {{--                TODO: replace this--}}
-            </div>
-
             <div class="profile">
                 <div class="profile-image">
                     <img src="{{asset($image)}}" alt="profile image">
@@ -92,4 +86,5 @@
         </div>
 @endif
 
-{{--TODO: declare variables in the component class and set styling--}}
+
+

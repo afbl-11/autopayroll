@@ -2,7 +2,7 @@
 
 <x-app :noHeader="true" :navigation="true" :company="$company">
     <section  class="main-content">
-        <form action="{{route('company.employee.assign.save', $company->company_id)}}" method="post">
+        <form action="{{route('company.employee.unassign.save', $company->company_id)}}" method="post">
             @csrf
             <nav>
                 <x-button-submit id="button">Save Selection</x-button-submit>

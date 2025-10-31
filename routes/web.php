@@ -79,15 +79,19 @@ Route::post('/company/register/attempt', [ClientRegistrationController::class, '
 Route::get('/dashboard/company', [CompanyDashboardController::class, 'index'])
     ->middleware(['auth:admin'])
     ->name('company.dashboard');
+
 Route::get('/company/detail/{id}', [CompanyDashboardController::class, 'showInfo'])
     ->middleware(['auth:admin'])
     ->name('company.dashboard.detail');
+
 Route::get('company/employees/{id}', [CompanyDashboardController::class, 'showEmployees'])
     ->middleware(['auth:admin'])
     ->name('company.dashboard.employees');
+
 Route::get('company/schedules/{id}', [CompanyDashboardController::class, 'showSchedules'])
     ->middleware(['auth:admin'])
     ->name('company.dashboard.schedules');
+
 Route::get('company/location/{id}', [CompanyDashboardController::class, 'showLocation'])
     ->middleware(['auth:admin'])
     ->name('company.dashboard.location');
@@ -96,9 +100,17 @@ Route::get('company/employee/assign/{id}', [CompanyDashboardController::class, '
     ->middleware(['auth:admin'])
     ->name('company.employee.assign');
 
+Route::get('/company/employee/unassign/{id}', [CompanyDashboardController::class, 'showEmployeeUnassign'])
+    ->middleware('auth:admin')
+    ->name('company.employee.unassign');
+
 Route::post('/company/{company}/employee/assign', [CompanyDashboardController::class, 'assignEmployees'])
     ->middleware(['auth:admin'])
     ->name('company.employee.assign.save');
+
+Route::post('/company/{company}/employee/unassign', [CompanyDashboardController::class, 'unassignEmployees'])
+    ->middleware(['auth:admin'])
+    ->name('company.employee.unassign.save');
 
 //email verification
 Route::get('/email/verify', function () {

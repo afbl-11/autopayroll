@@ -35,3 +35,25 @@
     </main>
 
 </x-root>
+
+{{--for employee assignment checkboxes--}}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const cardWrappers = document.querySelectorAll('.employee-card-wrapper');
+
+        cardWrappers.forEach(wrapper => {
+            const checkbox = wrapper.querySelector('input[type="checkbox"]');
+            const card = wrapper.querySelector('.employee-card');
+
+            if (!checkbox || !card) return;
+
+            card.addEventListener('click', (e) => {
+                e.preventDefault();
+                checkbox.checked = !checkbox.checked;
+
+
+                card.classList.toggle('selected', checkbox.checked);
+            });
+        });
+    });
+</script>

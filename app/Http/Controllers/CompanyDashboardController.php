@@ -8,13 +8,15 @@ use App\Models\Employee;
 use App\Models\Shift;
 use App\Repositories\CompanyRepository;
 use App\Repositories\EmployeeRepository;
+use App\Services\EmployeeAssignmentService;
 use Illuminate\Http\Request;
 
 class CompanyDashboardController extends Controller
 {
     public function __construct(
         protected CompanyRepository $companyRepository,
-        protected EmployeeRepository $employeeRepository
+        protected EmployeeRepository $employeeRepository,
+        protected EmployeeAssignmentService $employeeAssign
     )
     {}
     public function index() {
@@ -44,19 +46,21 @@ class CompanyDashboardController extends Controller
         return view('company.company-employee-assignment', compact('employees', 'company'));
     }
 
+    public function showEmployeeUnassign($id) {
+        $company = Company::with('employees')->find($id);
+        $employees = Employee::where('company_id', $id)->get();
+        return view('company.employee-unassign', compact('company', 'employees'));
+    }
+
     public function assignEmployees(Request $request, $companyId)
     {
-        $request->validate([
-            'employees' => 'array|required',
-        ]);
+       $this->employeeAssign->assignEmployees($request, $companyId);
+        return back();
+    }
 
-        // assign employees to this company
-            Employee::whereIn('employee_id', $request->employees)
-            ->update(['company_id' => $companyId]);
-
-        return redirect()
-            ->route('dashboard', $companyId)
-            ->with('success', 'Employees assigned successfully.');
+    public function unassignEmployees(Request $request, $companyId) {
+        $this->employeeAssign->unassign($request, $companyId);
+        return back();
     }
 
 }
