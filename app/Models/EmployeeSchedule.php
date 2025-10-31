@@ -17,27 +17,18 @@ class EmployeeSchedule extends Model
     protected $fillable = [
         'employee_schedules_id',
         'employee_id',
-        'company_id',
         'shift_id',
         'working_days',
-        'custom_start',
-        'custom_end',
-        'custom_break_start',
-        'custom_break_end',
-        'custom_lunch_start',
-        'custom_lunch_end',
+        'start',
+        'end',
         'start_date',
         'end_date',
     ];
 
     protected $casts = [
         'working_days' => 'array',
-        'custom_start' => 'datetime:H:i',
-        'custom_end' => 'datetime:H:i',
-        'custom_break_start' => 'datetime:H:i',
-        'custom_break_end' => 'datetime:H:i',
-        'custom_lunch_start' => 'datetime:H:i',
-        'custom_lunch_end' => 'datetime:H:i',
+        'start' => 'datetime:H:i',
+        'end' => 'datetime:H:i',
     ];
 
     /**
