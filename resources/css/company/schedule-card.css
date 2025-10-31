@@ -20,6 +20,7 @@
     height: auto;
     padding: 10px;
     border-radius: 8px;
+    box-shadow: 2px 5px 6px 0 rgba(136, 125, 125, 0.25);
 }
 .card-wrapper:hover {
     transform: scale(1.05);
@@ -65,4 +66,8 @@
 }
 p {
     margin: 0 !important;
+}
+.card-wrapper.active {
+    background-color: var(--clr-card-inner);
+    transition: all 0.2s ease;
 }

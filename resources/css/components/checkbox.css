@@ -2,12 +2,13 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 73px;
-    height: 60px;
+    width: 60px;
+    height: 40px;
     margin: 5px;
     background-color: var(--clr-card-inner);
     border: none;
     border-radius: 10px;
+    font-size: 12px;
     font-weight: 600;
     color: var(--clr-primary);
     cursor: pointer;
