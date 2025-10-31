@@ -113,6 +113,7 @@ Route::post('/company/{company}/employee/unassign', [CompanyDashboardController:
     ->name('company.employee.unassign.save');
 
 Route::post('/company/schedule/create', [CompanyDashboardController::class, 'createSchedule'])
+    ->middleware('auth:admin')
     ->name('company.create.schedule');
 
 
