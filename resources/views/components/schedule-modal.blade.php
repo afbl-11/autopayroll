@@ -30,15 +30,7 @@
             <x-form-input type="time" />
 
         </div>
-        <p>Set breaks</p>
-        <div class="field-row">
-            <x-form-input type="time"/>
-            <x-form-input type="time" />
-        </div>
-        <div class="field-row">
-            <input type="checkbox" name="lunch_break" id="lunch_break" >
-            <label for="lunch_break">Lunch Break</label>
-        </div>
+
         <div class="button-wrapper">
             <x-button-submit>Create</x-button-submit>
         </div>

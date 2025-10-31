@@ -1,6 +1,15 @@
 @vite('resources/css/company/schedule-card.css')
 
-<div {{$attributes->class('card-wrapper')}} data-id="{{$id}}" onclick="openScheduleModal(this)">
+<div
+    {{$attributes->class('card-wrapper')}}
+    data-id="{{$id}}"
+    data-name="{{$name}}"
+    data-start="{{$start ?? ''}}"
+    data-end="{{$end ?? ''}}"
+    data-description="{{$description ?? ''}}"
+    data-labels="{{$labels ?? ''}}"
+    onclick="selectScheduleCard(this)"
+>
     <div class="profile">
         <div class="image-wrapper">
             <img src="{{asset($image)}}" alt="profile-pic">
@@ -10,23 +19,60 @@
             <small>{{$id}}</small>
         </div>
     </div>
+
     <div class="input-wrapper">
         <div class="shift-wrapper">
-            <small>{{'starts at:' . ' ' . $start }}</small>
-            <small>{{'ends at:' . ' ' . $end }}</small>
+            <small>{{ 'Starts at: ' . ($start ?: '—') }}</small>
+            <small>{{ 'Ends at: ' . ($end ?: '—') }}</small>
         </div>
-{{--        changed to working days--}}
         <div class="schedule-wrapper">
-            <small>{{$description}}</small>
+            <small>{{ $description ?: 'No schedule assigned' }}</small>
+            <small>{{$scheduleDays}}</small>
         </div>
     </div>
 </div>
-{{--TODO: make desctiption message--}}
+
 <script>
-    function openScheduleModal(card) {
-        const scheduleId = card.dataset.id;
-        console.log('Opening modal for schedule:', scheduleId);
-        const modal = document.getElementById('scheduleModal');
-        modal.classList.add('open');
-    }
+    document.addEventListener('DOMContentLoaded', () => {
+        const cards = document.querySelectorAll('.card-wrapper');
+        const form = document.querySelector('form');
+        const startTime = document.getElementById('start_time');
+        const endTime = document.getElementById('end_time');
+        const dayCheckboxes = document.querySelectorAll('.checkbox-group input[type="checkbox"]');
+
+        // hidden employee input
+        let employeeInput = document.createElement('input');
+        employeeInput.type = 'hidden';
+        employeeInput.name = 'employee_id';
+        employeeInput.id = 'selected_employee_id';
+        form.appendChild(employeeInput);
+
+        cards.forEach(card => {
+            card.addEventListener('click', () => {
+                // remove active from others
+                cards.forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+
+                // extract schedule data
+                const id = card.dataset.id;
+                const start = card.dataset.start || '';
+                const end = card.dataset.end || '';
+                const days = card.dataset.days ? JSON.parse(card.dataset.days) : [];
+
+                // populate fields
+                startTime.value = start;
+                endTime.value = end;
+                employeeInput.value = id;
+
+                // clear all day checkboxes
+                dayCheckboxes.forEach(chk => chk.checked = false);
+
+                // check the days that match
+                days.forEach(day => {
+                    const checkbox = document.getElementById(day.toLowerCase());
+                    if (checkbox) checkbox.checked = true;
+                });
+            });
+        });
+    });
 </script>

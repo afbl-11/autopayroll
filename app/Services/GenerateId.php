@@ -11,18 +11,15 @@ class GenerateId
     {
         $year = Carbon::now()->year;
 
-        $newId = \DB::transaction(function() use ($modelClass, $idColumn, $year) {
-            $lastRecord = $modelClass::where($idColumn, 'like', "$year%")
-                ->orderBy($idColumn, 'desc')
-                ->lockForUpdate()
-                ->first();
+        return DB::transaction(function () use ($modelClass, $idColumn, $year) {
+            do {
+                $randomNumber = str_pad(random_int(1, 9999), 4, '0', STR_PAD_LEFT);
+                $newId = $year . $randomNumber;
+                // Keep looping if this ID already exists
+            } while ($modelClass::where($idColumn, $newId)->exists());
 
-            $newNumber = $lastRecord ? (int)substr($lastRecord->$idColumn, 4) + 1 : 1;
-
-            return $year . str_pad($newNumber, 4, '0', STR_PAD_LEFT);
+            return $newId;
         });
-
-        return $newId;
     }
 
 }

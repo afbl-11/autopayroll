@@ -112,6 +112,11 @@ Route::post('/company/{company}/employee/unassign', [CompanyDashboardController:
     ->middleware(['auth:admin'])
     ->name('company.employee.unassign.save');
 
+Route::post('/company/schedule/create', [CompanyDashboardController::class, 'createSchedule'])
+    ->name('company.create.schedule');
+
+
+
 //email verification
 Route::get('/email/verify', function () {
     return view('auth.verify-email');

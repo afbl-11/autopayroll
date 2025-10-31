@@ -3,20 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateScheduleRequest;
 use App\Models\Company;
 use App\Models\Employee;
+use App\Models\EmployeeSchedule;
 use App\Models\Shift;
 use App\Repositories\CompanyRepository;
 use App\Repositories\EmployeeRepository;
 use App\Services\EmployeeAssignmentService;
+use App\Services\GenerateId;
+use App\Services\ScheduleService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CompanyDashboardController extends Controller
 {
     public function __construct(
         protected CompanyRepository $companyRepository,
         protected EmployeeRepository $employeeRepository,
-        protected EmployeeAssignmentService $employeeAssign
+        protected EmployeeAssignmentService $employeeAssign,
+        protected GenerateId $generateId,
+        protected ScheduleService $scheduleService,
     )
     {}
     public function index() {
@@ -60,6 +67,12 @@ class CompanyDashboardController extends Controller
 
     public function unassignEmployees(Request $request, $companyId) {
         $this->employeeAssign->unassign($request, $companyId);
+        return back();
+    }
+
+    public function createSchedule(CreateScheduleRequest $request) {
+        $this->scheduleService->createSchedule($request->validated());
+
         return back();
     }
 

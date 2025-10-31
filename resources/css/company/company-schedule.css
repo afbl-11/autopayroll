@@ -1,34 +1,46 @@
-.main-content{
-    width: 100%;
-    padding: 2% 5% 0 5%;
-}
-.sched-wrapper{
-    width: 100%;
+.main-content {
     display: flex;
-    align-items: center;
     justify-content: center;
-}
-
-
-.main-content .sched-wrapper .content {
-    /*background: var(--clr-card-surface);*/
-    border-radius:  16px;
-    width: 80%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /*justify-content: center;*/
+    align-items: start;
+    width: 100%;
     height: 100vh;
-    gap: 20px;
-    scroll-behavior: smooth;
-    overflow: hidden;
-    overflow-y: scroll;
-}
+    padding: 50px;
 
-.card-content-wrapper {
+}
+.content-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    background: var(--clr-card-surface);
     width: 100%;
+    height: 500px;
+    padding: 15px;
+    border-radius: 16px;
+}
+.schedule-wrapper{
+    width: 30%;
+}
+.field-row {
+    display: flex !important;
+}
+.field-row .field-input input {
+    width: 100%;
+}
+.employee-card-wrapper {
     display: flex;
     flex-direction: column;
+    justify-content: start;
     align-items: center;
-    justify-content: center;
+    width: 70%;
+    height: 100%;
+    gap: 30px;
+    padding: 10px 0;
+    overflow: scroll ;
+}
+.card-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
 }

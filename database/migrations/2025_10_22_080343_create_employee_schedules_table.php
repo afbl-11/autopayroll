@@ -24,21 +24,10 @@ return new class extends Migration
                 ->constrained('shifts', 'shift_id')
                 ->onDelete('set null');
 
-            $table->string('company_id');
-            $table->foreign('company_id')
-                ->references('company_id')
-                ->on('companies')
-                ->onDelete('cascade');
-
             $table->json('working_days'); // example: ["Mon","Tue","Wed","Thu","Fri"]
 
-            // custom overrides (optional, if no shift template is used)
-            $table->time('custom_start')->nullable();
-            $table->time('custom_end')->nullable();
-            $table->time('custom_break_start')->nullable();
-            $table->time('custom_break_end')->nullable();
-            $table->time('custom_lunch_start')->nullable();
-            $table->time('custom_lunch_end')->nullable();
+            $table->time('start_time')->nullable();
+            $table->time('end_time')->nullable();
             $table->date('start_date');
             $table->date('end_date')->nullable();
 
