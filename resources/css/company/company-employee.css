@@ -16,3 +16,56 @@
 #button {
     float:right;
 }
+
+.main-content nav{
+    display: flex;
+    justify-content: right;
+    width: 100%;
+    height: auto;
+    padding: 0 0 0 5%;
+    margin-bottom: 5%;
+    gap: 30px;
+}
+
+
+.main-content nav a{
+    background: var(--clr-yellow);
+    text-decoration: none;
+    padding: 10px 15px 10px 15px;
+    outline: none;
+    border: none;
+    font-family: 'Helvetica Regular', sans-serif;
+    letter-spacing: 1.5px;
+    border-radius: 8px;
+    color: var(--clr-primary);
+    box-shadow: 2px 5px 5.9px 0 rgba(136, 125, 125, 0.25);
+    font-size: 12px;
+}
+
+.main-content nav a:hover {
+    color: var(--clr-background);
+    background: var(--clr-indigo);
+}
+.button-filled {
+    padding: 10px 15px 10px 15px;
+    max-height: 30px !important;
+    font-size: 12px !important;
+}
+.employee-card-wrapper {
+    display: block;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* optional hover effect */
+.employee-card-wrapper:hover .employee-card {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* when checkbox is checked, target the .employee-card inside the label */
+.employee-card-wrapper input:checked + .employee-card {
+    border: 2px solid #2563eb; /* Tailwind blue-600 */
+    background-color: #eff6ff; /* Tailwind blue-50 */
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2);
+}
