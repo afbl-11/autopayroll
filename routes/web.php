@@ -50,7 +50,7 @@ Route::post('/logout', [LogoutController::class, 'logout'])
     ->middleware('auth:admin')
     ->name('logout');
 
-/**company registration TODO:protect route */
+/**company registration*/
 Route::get('/company/register', [ClientRegistrationController::class, 'showForm'])
     ->middleware(['auth:admin'])
     ->name('show.register.client');
