@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateScheduleRequest;
 use App\Models\Company;
 use App\Models\Employee;
 use App\Models\EmployeeSchedule;
@@ -11,6 +12,7 @@ use App\Repositories\CompanyRepository;
 use App\Repositories\EmployeeRepository;
 use App\Services\EmployeeAssignmentService;
 use App\Services\GenerateId;
+use App\Services\ScheduleService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -21,6 +23,7 @@ class CompanyDashboardController extends Controller
         protected EmployeeRepository $employeeRepository,
         protected EmployeeAssignmentService $employeeAssign,
         protected GenerateId $generateId,
+        protected ScheduleService $scheduleService,
     )
     {}
     public function index() {
@@ -67,43 +70,10 @@ class CompanyDashboardController extends Controller
         return back();
     }
 
-    public function store(Request $request, $companyId)
-    {
-        // Validate incoming form data
-        $validated = $request->validate([
-            'employee_id' => 'required|string|exists:employees,employee_id',
-            'company_id' => 'required|string|exists:companies,company_id',
-            'working_days' => 'nullable|array',
-            'working_days.*' => 'string|in:monday,tuesday,wednesday,thursday,friday,saturday,sunday',
-            'custom_start' => 'nullable|date_format:H:i',
-            'custom_end' => 'nullable|date_format:H:i',
-            'custom_break_start' => 'nullable|date_format:H:i',
-            'custom_break_end' => 'nullable|date_format:H:i',
-            'custom_lunch_start' => 'nullable|date_format:H:i',
-            'custom_lunch_end' => 'nullable|date_format:H:i',
-        ]);
-//        $id = $this->generateId->generateId(EmployeeSchedule::class, 'employee_schedules_id');
-//        dd($id);
-        // Create a new schedule entry
-             EmployeeSchedule::create([
-            'employee_schedules_id' => $this->generateId->generateId(EmployeeSchedule::class,'employee_schedules_id'),
-            'employee_id' => $validated['employee_id'],
-                 'company_id' => 'cpom',
-            'shift_id' => null, // optional, can be assigned later
-            'working_days' => $validated['working_days'] ?? [],
-            'custom_start' => $validated['custom_start'] ?? null,
-            'custom_end' => $validated['custom_end'] ?? null,
-            'custom_break_start' => $validated['custom_break_start'] ?? null,
-            'custom_break_end' => $validated['custom_break_end'] ?? null,
-            'custom_lunch_start' => $validated['custom_lunch_start'] ?? null,
-            'custom_lunch_end' => $validated['custom_lunch_end'] ?? null,
-            'start_date' => now(),
-            'end_date' => null,
-        ]);
+    public function createSchedule(CreateScheduleRequest $request) {
+        $this->scheduleService->createSchedule($request->validated());
 
-        return redirect()
-            ->back()
-            ->with('success', 'Schedule created successfully for the selected employee!');
+        return back();
     }
 
 }

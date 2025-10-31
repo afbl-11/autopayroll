@@ -19,8 +19,8 @@ class EmployeeSchedule extends Model
         'employee_id',
         'shift_id',
         'working_days',
-        'start',
-        'end',
+        'start_time',
+        'end_time',
         'start_date',
         'end_date',
     ];

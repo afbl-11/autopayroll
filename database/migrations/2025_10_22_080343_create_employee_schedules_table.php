@@ -26,8 +26,8 @@ return new class extends Migration
 
             $table->json('working_days'); // example: ["Mon","Tue","Wed","Thu","Fri"]
 
-            $table->time('start')->nullable();
-            $table->time('end')->nullable();
+            $table->time('start_time')->nullable();
+            $table->time('end_time')->nullable();
             $table->date('start_date');
             $table->date('end_date')->nullable();
 

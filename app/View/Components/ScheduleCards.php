@@ -18,7 +18,7 @@ class ScheduleCards extends Component
         public ?array $options = null,
         public ?string $start = null,
         public ?string $end = null,
-        public ?string $scheduleName = null,
+        public  $scheduleDays,
         public ?string $description = null,
         public ?string $labels = null,
     )

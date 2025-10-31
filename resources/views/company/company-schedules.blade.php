@@ -124,16 +124,16 @@
     <section class="main-content">
         <div class="content-wrapper">
             <div class="schedule-wrapper">
-                <form action="{{ route('company.schedule.store', $company->company_id) }}" method="post">
+                <form action="{{ route('company.create.schedule') }}" method="post">
                     @csrf
-                    <input type="text" name="employee_id" id="employee_id">
+                    <input type="hidden" name="employee_id" id="employee_id">
 
                     <h6>Schedules</h6>
                     <div class="checkbox-group">
                         @foreach($daysOfWeek as $days => $daysLabel)
                             <x-form-checkbox
                                 :label="$daysLabel"
-                                :name="$days"
+                                name="working_days[]"
                                 :id="$days"
                                 :value="$days"
                             />
@@ -161,9 +161,9 @@
                                         :image="'assets/profile-pic.png'"
                                         :name="$employee->first_name . ' ' . $employee->last_name"
                                         :id="$employee->employee_id"
-                                        start="8:00:00"
+                                        :start="$schedule->start_time"
                                         :end="$schedule->end_time"
-                                        :scheduleDays="json_encode($schedule->days_of_week)" {{-- assuming you store as array/json --}}
+                                        :scheduleDays="json_encode($schedule->working_days)"
                                         :description="'Current shift'"
                                         :labels="$schedule->shift_name"
                                     />
@@ -173,7 +173,7 @@
                                     :image="'assets/profile-pic.png'"
                                     :name="$employee->first_name . ' ' . $employee->last_name"
                                     :id="$employee->employee_id"
-                                    :start="'8:00:00'"
+                                    :start="''"
                                     :end="''"
                                     :scheduleDays="json_encode([])" {{-- empty array --}}
                                     :description="'No schedule assigned'"

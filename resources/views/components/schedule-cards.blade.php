@@ -27,6 +27,7 @@
         </div>
         <div class="schedule-wrapper">
             <small>{{ $description ?: 'No schedule assigned' }}</small>
+            <small>{{$scheduleDays}}</small>
         </div>
     </div>
 </div>
