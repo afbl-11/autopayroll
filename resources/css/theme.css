@@ -54,7 +54,7 @@ No need to repeat these common styles in other CSS files.
 
     @font-face {
         font-family: 'Helvetica light';
-        src: url('../fonts/helvetica/HelveticaNeueLight.otf');
+        src: url('../../public/fonts/helvetica/HelveticaNeueLight.otf');
         font-weight: 100;
         font-style: normal;
         font-display: swap;
@@ -62,27 +62,27 @@ No need to repeat these common styles in other CSS files.
 
     @font-face {
         font-family: 'Helvetica Regular';
-        src: url('../fonts/helvetica/HelveticaNeueRoman.otf');
+        src: url('../../public/fonts/helvetica/HelveticaNeueRoman.otf');
         font-weight: 300;
         font-style: normal;
         font-display: swap;
     }  @font-face {
         font-family: 'Helvetica medium';
-        src: url('../fonts/helvetica/HelveticaNeueMedium.otf');
+        src: url('../../public/fonts/helvetica/HelveticaNeueMedium.otf');
         font-weight: 900;
         font-style: normal;
         font-display: swap;
     }
     @font-face {
             font-family: 'Helvetica black';
-            src: url('../fonts/helvetica/HelveticaNeueBlack.otf');
+            src: url('../../public/fonts/helvetica/HelveticaNeueBlack.otf');
             font-weight: 500;
             font-style: normal;
             font-display: swap;
         }
     @font-face {
             font-family: 'Quicksand';
-            src: url('../fonts/quicksand/Quicksand_Bold.otf');
+            src: url('../../public/fonts/quicksand/Quicksand_Bold.otf');
             font-weight: 900;
             font-style: normal;
             font-display: swap;
