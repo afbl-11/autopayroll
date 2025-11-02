@@ -10,8 +10,9 @@ Route::get('/test', function () {
     return 'API loaded!';
 });
 
-Route::get('/employees', [EmployeeController::class, 'index']);
+//Route::get('/employees', [EmployeeController::class, 'profile']);
 Route::get('/companies', [CompanyController::class, 'index']);
 Route::get('/schedules', [ScheduleController::class, 'index']);
 
 Route::post('/employee/login', [EmployeeLoginController::class, 'login']);
+Route::get('/employee/{id}/profile', [EmployeeController::class, 'profile']);
