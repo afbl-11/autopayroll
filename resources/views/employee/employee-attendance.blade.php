@@ -2,6 +2,7 @@
 <x-app :navigation="true" navigationType="employee" :employee="$employee" :noHeader="true">
     <x-attendance-navigation
         :daysActive="$daysActive"
+{{--        todo: change: days active's scope should only be the current payroll period--}}
         :totalLate="$countLate"
         :totalOvertime="$totalOvertime"
         :noClockOut="$totalNoClockOut"
