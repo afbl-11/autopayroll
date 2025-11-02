@@ -15,7 +15,7 @@ return new class extends Migration
 
             $table->string('payroll_period_id')->primary();
             $table->date('start_date');
-            $table->date('end_date')->nullable();
+            $table->date('end_date');
             $table->boolean('is_closed')->default(false);
             $table->timestamps();
         });

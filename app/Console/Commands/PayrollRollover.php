@@ -43,26 +43,31 @@ class PayrollRollover extends Command
 
         $openPeriod = PayrollPeriod::where('is_closed', false)
             ->whereNotNull('start_date')
-            ->whereNull('end_date')
+            ->whereNotNull('end_date')
             ->first();
 
         if($openPeriod){
             $openPeriod->update([
                 'is_closed' => true,
-                'end_date' => $today,
             ]);
 
             $this->info("Closed period: {$openPeriod->payroll_period_id}");
         }
 
+        if ($today->day <= 15) {
+            $start_date = $today->copy()->addDay();
+            $end_date = $start_date->copy()->startOfMonth()->addDays(14); // 15th
+        } else {
+            $start_date = $today->copy()->addDay();
+            $end_date = $start_date->copy()->endOfMonth();
+        }
 
         $newPeriod = PayrollPeriod::create([
             'payroll_period_id' => $this->generate->generateId(PayrollPeriod::class, 'payroll_period_id'),
-            'start_date' => $today->copy()->addDay(),
+            'start_date' => $start_date,
+            'end_date' => $end_date,
         ]);
 
         $this->info("New period created: {$newPeriod->payroll_period_id}");
     }
 }
-//todo: make end_date column in migration not nullable,
-//todo: end date in this logic should have a default value: every 15th day of the month & endOfMonth() method.
