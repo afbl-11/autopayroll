@@ -12,10 +12,9 @@ trait ScheduleTrait
 
         $schedule = EmployeeSchedule::where('employee_id', $id)
             ->latest('start_date')
-            ->with('shift')
             ->first();
 
-        if (!$schedule || !$schedule->shift) {
+        if (!$schedule) {
             return [
                 'isWorkingDay' => false,
                 'schedule' => null

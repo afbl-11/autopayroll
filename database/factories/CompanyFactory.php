@@ -26,18 +26,15 @@ class CompanyFactory extends Factory
         return [
             'company_id' =>  Carbon::now()->year . str_pad(rand(1, 9999), 4, '0', STR_PAD_LEFT),
             'company_name' => $this->faker->company,
-            'country' => 'Philippines',
-            'region' => $this->faker->randomElement($regions),
-            'province' => $this->faker->randomElement($provinces),
-            'city' => $this->faker->city,
-            'barangay' => 'Brgy. ' . $this->faker->streetName,
-            'street' => $this->faker->streetName,
-            'house_number' => $this->faker->buildingNumber,
-            'zip' => $this->faker->postcode,
-            'industry' => $this->faker->randomElement(['IT', 'Manufacturing', 'Retail', 'Finance', 'Services']),
-            'tin_number' => $this->faker->numerify('###-###-###-###'),
+            'first_name'   => $this->faker->firstName,
+            'last_name'    => $this->faker->lastName,
+            'company_logo' => null,
+            'industry'     => $this->faker->randomElement(['IT', 'Manufacturing', 'Retail', 'Finance', 'Services']),
+            'tin_number'   => $this->faker->numerify('###-###-###-###'),
+            'address'      => $this->faker->address,
             'latitude'     => $this->faker->latitude(5, 20),
             'longitude'    => $this->faker->longitude(115, 126),
+            'radius'       => $this->faker->numberBetween(100, 1000),
         ];
     }
 }

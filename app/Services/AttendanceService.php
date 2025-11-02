@@ -73,7 +73,7 @@ class AttendanceService
             return 0;
         }
 
-        $end_time = Carbon::parse($schedule->shift->end_time);
+        $end_time = Carbon::parse($schedule->end_time);
 
 //        gets the latest/current day log record
         $log = AttendanceLogs::where('employee_id', $id)
@@ -110,7 +110,7 @@ class AttendanceService
                 continue;
             }
 
-            $end_time = Carbon::parse($schedule->shift->end_time);
+            $end_time = Carbon::parse($schedule->end_time);
             $clock_out = Carbon::parse($log->clock_out_time);
 
             if ($clock_out->greaterThan($end_time)) {
@@ -142,7 +142,7 @@ class AttendanceService
         $clock_in = Carbon::parse($log->clock_in_time);
 
         $start_time = Carbon::parse($log->created_at)
-            ->setTimeFromTimeString($schedule->shift->start_time);
+            ->setTimeFromTimeString($schedule->start_time);
 
         if ($clock_in->lessThanOrEqualTo($start_time)) return 0;
 
@@ -164,7 +164,7 @@ class AttendanceService
         return AttendanceLogs::where('employee_id', $id)
             ->whereBetween('created_at', [$payroll_start, $payroll_end])
             ->whereNotNull('clock_in_time')
-            ->whereTime('clock_in_time', '>', $schedule->shift->start_time)
+            ->whereTime('clock_in_time', '>', $schedule->start_time)
             ->count();
     }
     public function hasLogIn($id): bool {

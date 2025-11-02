@@ -20,10 +20,6 @@ return new class extends Migration
                 ->on('employees')
                 ->onDelete('cascade');
 
-            $table->foreignId('shift_id')->nullable()
-                ->constrained('shifts', 'shift_id')
-                ->onDelete('set null');
-
             $table->json('working_days'); // example: ["Mon","Tue","Wed","Thu","Fri"]
 
             $table->time('start_time')->nullable();
