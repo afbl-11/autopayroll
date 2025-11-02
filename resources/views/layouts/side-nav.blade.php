@@ -17,7 +17,7 @@
                 </li>
                 <li>
                     <a href="{{route('company.dashboard')}}">
-                        <img src="{{asset('assets/navigations/building.png')}}" alt="Company">
+                        <img src="{{asset('assets/navigations/Building.png')}}" alt="Company">
                     </a>
                 </li>
                 <li>
