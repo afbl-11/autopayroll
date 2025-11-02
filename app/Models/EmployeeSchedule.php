@@ -39,8 +39,4 @@ class EmployeeSchedule extends Model
         return $this->belongsTo(Employee::class, 'employee_id', 'employee_id');
     }
 
-    public function shift()
-    {
-        return $this->belongsTo(Shift::class, 'shift_id', 'shift_id');
-    }
 }
