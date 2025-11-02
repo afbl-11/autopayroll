@@ -7,6 +7,7 @@ use App\Models\Shift;
 use App\Models\Employee;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 /**
@@ -59,7 +60,7 @@ class EmployeeFactory extends Factory
             'last_name' => $faker->lastName,
             'email' => $faker->unique()->safeEmail,
             'username' => $faker->unique()->userName,
-            'password' => bcrypt('Str0ngPass!'),
+            'password' => Hash::make('Str0ngPass!'),
             'job_position' => $faker->randomElement($jobs),
             'employment_type' => $faker->randomElement(['full-time', 'part-time', 'contractual']),
             'contract_start' => $faker->dateTimeBetween('-2 years', '-1 year')->format('Y-m-d'),
