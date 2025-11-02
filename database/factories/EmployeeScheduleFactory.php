@@ -43,22 +43,18 @@ class EmployeeScheduleFactory extends Factory
         ? $this->faker->dateTimeBetween($startDate, '+2 months')->format('Y-m-d')
         : null;
 
+    $startHour = $this->faker->numberBetween(7, 10);
+    $endHour = $startHour + $this->faker->numberBetween(7, 9);
+    $start_time = sprintf('%02d:00:00', $startHour);
+    $end_time = sprintf('%02d:00:00', $endHour);
+
     return [
         'employee_schedules_id'  => Carbon::now()->year . str_pad(rand(1, 9999), 4, '0', STR_PAD_LEFT),
         'employee_id' => $employee?->employee_id,
-        'company_id' => $company?->company_id,
-        'shift_id' => $shift?->shift_id,
+        'shift_id' => null,
         'working_days' => json_encode($workingDays),
-
-        // Optional custom schedule overrides
-        'custom_start' => null,
-        'custom_end' => null,
-        'custom_break_start' => null,
-        'custom_break_end' => null,
-        'custom_lunch_start' => null,
-        'custom_lunch_end' => null,
-
-        // Historical schedule support
+        'start_time' => $start_time,
+        'end_time' => $end_time,
         'start_date' => $startDate,
         'end_date' => $endDate,
     ];
