@@ -24,6 +24,7 @@ return new class extends Migration
             $table->decimal('latitude', 10, 7);
             $table->decimal('longitude', 10, 7);
             $table->decimal('radius', 10, 7);
+            $table->string('qr_token')->unique()->nullable();
             $table->timestamps();
         });
     }

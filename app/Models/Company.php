@@ -24,7 +24,8 @@ class Company extends Model
         'address',
         'latitude',
         'longitude',
-        'radius'
+        'radius',
+        'qr_token'
     ];
     public function employees()
     {

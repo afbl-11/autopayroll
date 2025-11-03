@@ -9,6 +9,7 @@ use App\Http\Controllers\EmployeeDashboardController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PayrollController;
+use App\Http\Controllers\QrCodeController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -92,9 +93,9 @@ Route::get('company/schedules/{id}', [CompanyDashboardController::class, 'showSc
     ->middleware(['auth:admin'])
     ->name('company.dashboard.schedules');
 
-Route::get('company/location/{id}', [CompanyDashboardController::class, 'showLocation'])
+Route::get('company/qr/{id}', [QrCodeController::class, 'generate'])
     ->middleware(['auth:admin'])
-    ->name('company.dashboard.location');
+    ->name('company.qr.management');
 
 Route::get('company/employee/assign/{id}', [CompanyDashboardController::class, 'showEmployeeAssign'])
     ->middleware(['auth:admin'])
@@ -182,3 +183,6 @@ Route::post('/employees/register/create', [EmployeeRegistrationController::class
 Route::get('/forgot_password', function () {
     return view('auth.authVerify');
 })->name('forgot.password');
+
+//qr code management
+//Route::get('/company/qr', [QrCodeController::class, 'generate']);
