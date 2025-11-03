@@ -184,5 +184,3 @@ Route::get('/forgot_password', function () {
     return view('auth.authVerify');
 })->name('forgot.password');
 
-//qr code management
-//Route::get('/company/qr', [QrCodeController::class, 'generate']);

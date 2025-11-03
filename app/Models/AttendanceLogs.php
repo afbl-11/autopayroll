@@ -15,6 +15,7 @@ class AttendanceLogs extends Model
     protected $fillable = [
         'log_id',
         'employee_id',
+        'company_id',
         'clock_in_time',
         'clock_out_time',
         'clock_in_latitude',
@@ -30,4 +31,7 @@ class AttendanceLogs extends Model
         return $this->belongsTo(Employee::class, 'employee_id', 'employee_id');
     }
 
+    public function company() {
+        return $this->belongsTo(Company::class, 'company_id', 'company_id');
+    }
 }
