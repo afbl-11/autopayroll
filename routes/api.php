@@ -17,8 +17,8 @@ Route::get('/companies', [CompanyController::class, 'index']);
 Route::get('/schedules', [ScheduleController::class, 'index']);
 
 Route::post('/employee/login', [EmployeeLoginController::class, 'login']);
-Route::get('/employee/{id}/profile', [EmployeeController::class, 'profile']);
-Route::post('/employee/{id}/logout', [EmployeeLogoutController::class, 'logout']);
+Route::middleware('auth:sanctum')->get('/employee/{id}/profile', [EmployeeController::class, 'profile']);
+Route::middleware('auth:sanctum')->post('/employee/{id}/logout', [EmployeeLogoutController::class, 'logout']);
 
 Route::post('/attendance/log', [AttendanceController::class, 'logAttendance'])
         ->middleware('auth:sanctum');
