@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AttendanceController;
 use App\Http\Controllers\Api\EmployeeLoginController;
 use App\Http\Controllers\Api\EmployeeLogoutController;
 use Illuminate\Support\Facades\Route;
@@ -19,3 +20,5 @@ Route::post('/employee/login', [EmployeeLoginController::class, 'login']);
 Route::get('/employee/{id}/profile', [EmployeeController::class, 'profile']);
 Route::post('/employee/{id}/logout', [EmployeeLogoutController::class, 'logout']);
 
+Route::post('/attendance/log', [AttendanceController::class, 'logAttendance'])
+        ->middleware('auth:sanctum');

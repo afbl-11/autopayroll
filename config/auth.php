@@ -40,12 +40,13 @@ return [
             'driver' => 'session',
             'provider' => 'admins',
         ],
+
+        'employee' => [
+            'driver' => 'token',
+            'provider' => 'employees',
+        ],
     ],
 
-    'employee' => [
-        'driver' => 'token', // or sanctum/passport if you're using API tokens
-        'provider' => 'employees',
-    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -70,10 +71,10 @@ return [
             'model' => App\Models\Admin::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'employees' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Employee::class,
+        ],
     ],
 
     /*

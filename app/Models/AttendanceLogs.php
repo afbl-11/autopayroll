@@ -19,12 +19,16 @@ class AttendanceLogs extends Model
         'clock_in_time',
         'clock_out_time',
         'clock_in_latitude',
-        'clock_out_latitude'
+        'clock_in_longitude',
+        'clock_out_latitude',
+        'clock_out_longitude',
     ];
 
     protected $casts = [
         'clock_in_latitude' => 'decimal:8',
-        'clock_out_longitude' => 'decimal:8'
+        'clock_in_longitude' => 'decimal:8',
+        'clock_out_latitude' => 'decimal:8',
+        'clock_out_longitude' => 'decimal:8',
     ];
 
     public function employee() {

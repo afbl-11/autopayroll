@@ -3,26 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Employee;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
-    public function profile(Request $request, $id)
+    public function profile(Request $request)
     {
-
-        $header = $request->header('Authorization');
-
-        if (!$header || !str_starts_with($header, 'Bearer ')) {
-            return response()->json(['message' => 'Unauthorized'], 401);
-        }
-
-        $token = substr($header, 7);
-
-        $employee = Employee::where('employee_id', $id)
-            ->where('api_token', hash('sha256', $token))
-            ->first();
+        $employee = $request->user();
 
         if (!$employee) {
             return response()->json(['message' => 'Unauthorized'], 401);
@@ -39,7 +26,6 @@ class EmployeeController extends Controller
             'email' => $employee->email,
             'username' => $employee->username,
             'phone_number' => $employee->phone_number,
-            'password' => $employee->password,
             'job_position' => $employee->job_position,
             'contract_start' => $employee->contract_start,
             'contract_end' => $employee->contract_end,
@@ -70,10 +56,8 @@ class EmployeeController extends Controller
             'pag_ibig_number' => $employee->pag_ibig_number,
             'tin_number' => $employee->tin_number,
             'uploaded_documents' => $employee->uploaded_documents,
-            'api_token' => $employee->api_token,
             'created_at' => $employee->created_at,
             'updated_at' => $employee->updated_at,
         ]);
     }
-
 }
