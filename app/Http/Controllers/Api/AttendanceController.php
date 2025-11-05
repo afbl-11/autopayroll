@@ -3,93 +3,156 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\AttendanceLogs;
 use App\Models\Company;
-use App\Services\GenerateId;
 use Illuminate\Http\Request;
+use App\Models\AttendanceLogs;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class AttendanceController extends Controller
 {
-    public function __construct(
-        private GenerateId $generateId,
-    ){}
-    public function logAttendance(Request $request)
+    private function validateCompanyQr() {
+
+    }
+    /**
+     * Handle employee clock-in
+     */
+    public function clockIn(Request $request)
     {
-        $employee = $request->employee;
+        $employee = $request->user();
 
-        if (!$employee) {
-            return response()->json(['message' => 'Unauthenticated'], 401);
-        }
-
-        $request->validate([
-            'company_id' => 'required|exists:companies,company_id',
+        $validated = $request->validate([
+            'company_id' => 'required|string',
             'token' => 'required|string',
             'signature' => 'required|string',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
-//            'android_id' => 'nullable|string',
         ]);
 
-        $company = Company::where('company_id', $request->company_id)->first();
+        /*
+         * validate if payload: company id, signature, and token matches the data with the company
+         * */
 
-        if (!$company || $company->qr_token !== $request->token) {
-            return response()->json(['message' => 'Invalid company or QR token'], 403);
+        $company = Company::where('company_id', $validated['company_id'])->first();
+
+        if(!$company || $company->qr_token !== $validated['token']) {
+            return response()->json(['message' => 'Invalid or expired QR code.'], 400);
         }
 
         $expectedSignature = hash_hmac('sha256', $company->qr_token, env('APP_KEY'));
-        if (!hash_equals($expectedSignature, $request->signature)) {
-            return response()->json(['message' => 'Invalid QR signature'], 403);
+        if ($expectedSignature !== $validated['signature']) {
+            return response()->json(['message' => 'QR code signature mismatch.'], 400);
         }
 
-        if ($request->latitude && $request->longitude) {
-            $distance = $this->calculateDistance(
-                $company->latitude,
-                $company->longitude,
-                $request->latitude,
-                $request->longitude
-            );
+        /*
+         * validates the location of the employee
+         * */
 
-            if ($distance > $company->radius) {
-                return response()->json([
-                    'message' => 'You are outside the allowed location range.',
-                    'distance' => round($distance, 2),
-                    'radius' => $company->radius
-                ], 403);
-            }
+        $distance = $this->calculateDistance(
+            $company->latitude,
+            $company->longitude,
+            $validated['latitude'],
+            $validated['longitude']
+        );
+
+        if ($distance > $company->radius) {
+            return response()->json([
+                'message' => 'You are outside the company geofence. Cannot clock in.',
+                'distance_m' => round($distance, 2),
+                'allowed_radius_m' => $company->radius,
+            ], 400);
         }
 
-        $attendance = AttendanceLogs::where('employee_id', $employee->employee_id)
-            ->where('company_id', $company->company_id)
-            ->whereDate('created_at', now()->toDateString())
+        $today = Carbon::today();
+        $existing = AttendanceLogs::where('employee_id', $employee->employee_id)
+            ->whereDate('created_at', $today)
             ->first();
 
-        if ($attendance && !$attendance->clock_out_time) {
-            // Employee is currently clocked in, then Clock out
-            $attendance->update([
-                'clock_out_time' => now(),
-                'clock_out_latitude' => $request->latitude,
-                'clock_out_longitude' => $request->longitude,
-            ]);
-
-            return response()->json(['message' => 'Clocked out successfully']);
+        if ($existing && $existing->clock_in_time) {
+            return response()->json([
+                'message' => 'Already clocked in today.',
+            ], 400);
         }
 
-        AttendanceLogs::create([
-            'log_id' => $this->generateId->generateId(attendanceLogs::class, 'log_id'),
+        $attendance = AttendanceLogs::create([
+            'log_id' => Str::uuid(),
             'employee_id' => $employee->employee_id,
-            'company_id' => $company->company_id,
-            'clock_in_time' => now(),
-            'clock_in_latitude' => $request->latitude,
-            'clock_in_longitude' => $request->longitude,
-//            'android_id' => $request->android_id,
+            'company_id' => $validated['company_id'],
+            'clock_in_time' => now()->format('H:i:s'),
+            'clock_in_latitude' => $validated['latitude'],
+            'clock_in_longitude' => $validated['longitude'],
         ]);
 
-        return response()->json(['message' => 'Clocked in successfully']);
+        return response()->json([
+            'message' => 'Clock-in successful.',
+            'data' => $attendance,
+        ]);
+    }
+
+    /**
+     * Handle employee clock-out
+     */
+    public function clockOut(Request $request)
+    {
+        /*
+         * if attendance scanning comes with options of clockin in and clockin out,
+         * then this method should also validate the qr payload. (copy & paste or helper function)
+         * */
+        $employee = $request->user();
+
+        $validated = $request->validate([
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+        ]);
+
+        $today = Carbon::today();
+
+        $attendance = AttendanceLogs::where('employee_id', $employee->employee_id)
+            ->whereDate('created_at', $today)
+            ->first();
+
+        if (!$attendance) {
+            return response()->json([
+                'message' => 'No clock-in record found for today.',
+            ], 404);
+        }
+
+        if ($attendance->clock_out_time) {
+            return response()->json([
+                'message' => 'Already clocked out today.',
+            ], 400);
+        }
+
+        $attendance->update([
+            'clock_out_time' => now()->format('H:i:s'),
+            'clock_out_latitude' => $validated['latitude'],
+            'clock_out_longitude' => $validated['longitude'],
+        ]);
+
+        return response()->json([
+            'message' => 'Clock-out successful.',
+            'data' => $attendance,
+        ]);
+    }
+
+    public function getTodayAttendance(Request $request)
+    {
+        $employee = $request->user();
+        $today = Carbon::today();
+
+        $attendance = AttendanceLogs::where('employee_id', $employee->employee_id)
+            ->whereDate('created_at', $today)
+            ->first();
+
+        return response()->json([
+            'data' => $attendance,
+        ]);
     }
 
     private function calculateDistance($lat1, $lon1, $lat2, $lon2)
     {
-        $earthRadius = 6371000; // meters
+        $earthRadius = 6371000;
+
         $latFrom = deg2rad($lat1);
         $lonFrom = deg2rad($lon1);
         $latTo = deg2rad($lat2);
@@ -98,10 +161,10 @@ class AttendanceController extends Controller
         $latDelta = $latTo - $latFrom;
         $lonDelta = $lonTo - $lonFrom;
 
-        $angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) +
-                cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
+        $a = sin($latDelta / 2) ** 2 +
+            cos($latFrom) * cos($latTo) * sin($lonDelta / 2) ** 2;
+        $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
 
-        return $earthRadius * $angle;
+        return $earthRadius * $c;
     }
-
 }

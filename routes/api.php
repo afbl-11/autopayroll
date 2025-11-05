@@ -20,5 +20,11 @@ Route::post('/employee/login', [EmployeeLoginController::class, 'login']);
 Route::middleware('auth:sanctum')->get('/employee/{id}/profile', [EmployeeController::class, 'profile']);
 Route::middleware('auth:sanctum')->post('/employee/{id}/logout', [EmployeeLogoutController::class, 'logout']);
 
-Route::post('/attendance/log', [AttendanceController::class, 'logAttendance'])
-        ->middleware('auth:sanctum');
+Route::middleware(['auth:sanctum'])->group(function () {
+
+    Route::post('/attendance/clock-in', [AttendanceController::class, 'clockIn']);
+
+    Route::post('/attendance/clock-out', [AttendanceController::class, 'clockOut']);
+
+    Route::get('/attendance/today', [AttendanceController::class, 'getTodayAttendance']);
+});
