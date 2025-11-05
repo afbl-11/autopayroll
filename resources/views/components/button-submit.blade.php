@@ -3,7 +3,7 @@
 @php
     $btnClass = $icon ? 'button-image' : 'button-filled'
  @endphp
-<button type="submit" {{$attributes->merge(['class' => $btnClass])}}>
+<button type="submit" {{$attributes->class($btnClass)}}>
     @if($icon)
         <img src="{{ asset($icon) }}" alt="icon" >
     @endif
