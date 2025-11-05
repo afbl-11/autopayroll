@@ -78,7 +78,7 @@ class AttendanceController extends Controller
             'log_id' => Str::uuid(),
             'employee_id' => $employee->employee_id,
             'company_id' => $validated['company_id'],
-            'clock_in_time' => now()->format('H:i:s'),
+            'clock_in_time' => now()->format('H:i'),
             'clock_in_latitude' => $validated['latitude'],
             'clock_in_longitude' => $validated['longitude'],
         ]);
@@ -101,9 +101,43 @@ class AttendanceController extends Controller
         $employee = $request->user();
 
         $validated = $request->validate([
+            'company_id' => 'required|string',
+            'token' => 'required|string',
+            'signature' => 'required|string',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
         ]);
+
+
+        $company = Company::where('company_id', $validated['company_id'])->first();
+
+        if(!$company || $company->qr_token !== $validated['token']) {
+            return response()->json(['message' => 'Invalid or expired QR code.'], 400);
+        }
+
+        $expectedSignature = hash_hmac('sha256', $company->qr_token, env('APP_KEY'));
+        if ($expectedSignature !== $validated['signature']) {
+            return response()->json(['message' => 'QR code signature mismatch.'], 400);
+        }
+
+        /*
+         * validates the location of the employee
+         * */
+
+        $distance = $this->calculateDistance(
+            $company->latitude,
+            $company->longitude,
+            $validated['latitude'],
+            $validated['longitude']
+        );
+
+        if ($distance > $company->radius) {
+            return response()->json([
+                'message' => 'You are outside the company geofence. Cannot clock in.',
+                'distance_m' => round($distance, 2),
+                'allowed_radius_m' => $company->radius,
+            ], 400);
+        }
 
         $today = Carbon::today();
 
@@ -124,7 +158,7 @@ class AttendanceController extends Controller
         }
 
         $attendance->update([
-            'clock_out_time' => now()->format('H:i:s'),
+            'clock_out_time' => now()->format('H:i'),
             'clock_out_latitude' => $validated['latitude'],
             'clock_out_longitude' => $validated['longitude'],
         ]);
