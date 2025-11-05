@@ -20,11 +20,20 @@ return new class extends Migration
                 ->on('employees')
                 ->onDelete('cascade');
 
+            $table->string('company_id');
+            $table->foreign('company_id')
+                ->references('company_id')
+                ->on('companies')
+                ->onDelete('cascade');
+
             $table->time('clock_in_time')->nullable();
             $table->time('clock_out_time')->nullable();
 
             $table->decimal('clock_in_latitude', 10, 8)->nullable();
             $table->decimal('clock_in_longitude', 11, 8)->nullable();
+
+            $table->decimal('clock_out_latitude', 10, 8)->nullable();
+            $table->decimal('clock_out_longitude', 11, 8)->nullable();
 
             $table->timestamps();
 

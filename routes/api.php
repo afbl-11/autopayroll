@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AttendanceController;
 use App\Http\Controllers\Api\EmployeeLoginController;
 use App\Http\Controllers\Api\EmployeeLogoutController;
 use Illuminate\Support\Facades\Route;
@@ -16,6 +17,14 @@ Route::get('/companies', [CompanyController::class, 'index']);
 Route::get('/schedules', [ScheduleController::class, 'index']);
 
 Route::post('/employee/login', [EmployeeLoginController::class, 'login']);
-Route::get('/employee/{id}/profile', [EmployeeController::class, 'profile']);
-Route::post('/employee/{id}/logout', [EmployeeLogoutController::class, 'logout']);
+Route::middleware('auth:sanctum')->get('/employee/{id}/profile', [EmployeeController::class, 'profile']);
+Route::middleware('auth:sanctum')->post('/employee/{id}/logout', [EmployeeLogoutController::class, 'logout']);
 
+Route::middleware(['auth:sanctum'])->group(function () {
+
+    Route::post('/attendance/clock-in', [AttendanceController::class, 'clockIn']);
+
+    Route::post('/attendance/clock-out', [AttendanceController::class, 'clockOut']);
+
+    Route::get('/attendance/today', [AttendanceController::class, 'getTodayAttendance']);
+});

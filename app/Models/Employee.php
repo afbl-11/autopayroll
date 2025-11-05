@@ -6,11 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class Employee extends Authenticatable
 {
     use HasFactory;
     use Notifiable;
+    use HasApiTokens;
 
     protected $primaryKey = 'employee_id';
     public $incrementing = false;
@@ -37,7 +39,6 @@ class Employee extends Authenticatable
         'blood_type',
         'religion',
         'phone_number',
-        'api_token',
 
         // Residential Address
         'country',

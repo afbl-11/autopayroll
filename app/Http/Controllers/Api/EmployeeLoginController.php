@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 class EmployeeLoginController extends Controller
 {
@@ -27,9 +26,7 @@ class EmployeeLoginController extends Controller
             return response()->json(['message' => 'Invalid credentials'], 401);
         }
 
-        $token = Str::random(60);
-        $employee->api_token = hash('sha256', $token);
-        $employee->save();
+        $token = $employee->createToken('API Token')->plainTextToken;
 
         return response()->json([
             'employee_id' => $employee->employee_id,

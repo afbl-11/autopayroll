@@ -16,25 +16,21 @@ class EmployeeTokenAuth
      */
     public function handle(Request $request, Closure $next)
     {
+        $header = $request->header('Authorization');
 
-        \Log::info($request->bearerToken(), $request->route('id'));
-        $token = $request->bearerToken();
-        $employeeId = $request->route('id');
-
-        if (!$token || !$employeeId) {
-            return response()->json(['message' => 'Unauthorized'], 401);
+        if (!$header || !str_starts_with($header, 'Bearer ')) {
+            return response()->json(['message' => 'Unauthenticated'], 401);
         }
 
-        $employee = Employee::where('employee_id', $employeeId)
-            ->where('api_token', hash('sha256', $token))
-            ->first();
+        $token = substr($header, 7); // remove "Bearer "
+
+        $employee = Employee::where('api_token', hash('sha256', $token))->first();
 
         if (!$employee) {
-            return response()->json(['message' => 'Unauthorized'], 401);
+            return response()->json(['message' => 'Unauthenticated'], 401);
         }
 
-        $request->attributes->add(['employee' => $employee]);
+        $request->merge(['employee' => $employee]);
         return $next($request);
     }
-
 }
