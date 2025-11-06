@@ -97,6 +97,9 @@ Route::get('company/qr/{id}', [QrCodeController::class, 'generate'])
     ->middleware(['auth:admin'])
     ->name('company.qr.management');
 
+Route::post('/company/{id}/qr/download', [QrCodeController::class, 'download'])->name('company.qr.download');
+
+
 Route::get('company/employee/assign/{id}', [CompanyDashboardController::class, 'showEmployeeAssign'])
     ->middleware(['auth:admin'])
     ->name('company.employee.assign');

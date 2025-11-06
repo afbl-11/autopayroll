@@ -1,44 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ $company->company_name }} - QR Code</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            background: #f5f5f5;
-        }
+@vite(['resources/css/company/qr.css'])
 
-        .qr-container {
-            background: white;
-            padding: 20px 40px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            text-align: center;
-        }
+<x-app :noHeader="true" :navigation="true" :company="$company">
+    <div class="main-content">
+        <div class="qr-wrapper">
+            <h4>{{$company->company_name}}</h4>
+            {!! $qrCode !!}
 
-        h2 {
-            margin-bottom: 15px;
-        }
-
-        .qr {
-            margin: 10px 0;
-        }
-    </style>
-</head>
-<body>
-<div class="qr-container">
-    <h2>{{ $company->company_name }}</h2>
-    <div class="qr">
-        {!! $qrCode !!}
+            <form action="{{ route('company.qr.download', $company->company_id) }}" method="POST">
+                @csrf
+                <x-button-submit>Save</x-button-submit>
+            </form>
+        </div>
     </div>
-    <p><strong>Company ID:</strong> {{ $company->company_id }}</p>
-    <p><strong>Token:</strong> {{ $company->qr_token }}</p>
-</div>
-</body>
-</html>
+</x-app>
