@@ -53,6 +53,8 @@ class DailyPayrollLogFactory extends Factory
             'cash_bond' => $cashBond,
             'late_time' => $lateTime,
             'work_hours' => $workHours,
+            'payroll_date' => $this->faker->date(),
+            'status' => $this->faker->randomElement(['open', 'closed']),
             'clock_in_time' => $clockIn,
             'clock_out_time' => $clockOut,
         ];
