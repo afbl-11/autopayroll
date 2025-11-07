@@ -6,6 +6,7 @@ use App\Http\Controllers\ClientRegistrationController;
 use App\Http\Controllers\CompanyDashboardController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeDashboardController;
+use App\Http\Controllers\EmployeePayrollController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PayrollController;
@@ -143,10 +144,6 @@ Route::post('/email/verification-notification', function (Request $request) {
 Route::get('/employee/dashboard', [EmployeeDashboardController::class, 'showDashboard'])
     ->middleware('auth:admin')
     ->name('employee.dashboard');
-//only used to filter employees
-Route::get('/employees/filter', [EmployeeDashboardController::class, 'filter'])
-    ->middleware('auth:admin')
-    ->name('employee.filter');
 
 Route::get('dashboard/employee/detail/{id}', [EmployeeDashboardController::class, 'showInfo'])
     ->middleware('auth:admin')
@@ -164,9 +161,12 @@ Route::get('dashboard/employee/documents/{id}', [EmployeeDashboardController::cl
     ->middleware('auth:admin')
     ->name('employee.dashboard.documents');
 
-Route::get('dashboard/employee/payroll/{id}', [EmployeeDashboardController::class, 'showPayroll'])
+Route::get('dashboard/employee/payroll/{id}', [EmployeePayrollController::class, 'showPayroll'])
     ->middleware('auth:admin')
     ->name('employee.dashboard.payroll');
+
+
+
 //employee registration
 Route::middleware(['auth:admin', 'verified'])->group(function () {
 Route::get('/employees/register/1', [EmployeeDashboardController::class, 'showStep1'])->name('employee.register.1');

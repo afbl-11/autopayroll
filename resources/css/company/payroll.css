@@ -1,0 +1,85 @@
+.main-content{
+    width: 100%;
+    height: 100vh;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+.main-content nav{
+    display: flex;
+    width: 95%;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+.main-content nav a{
+    background: var(--clr-yellow);
+    text-decoration: none;
+    padding: 7px 15px 7px 15px;
+    outline: none;
+    border: none;
+    font-family: 'Helvetica Regular', sans-serif;
+    letter-spacing: 1.5px;
+    border-radius: 8px;
+    color: var(--clr-primary);
+    box-shadow: 2px 5px 5.9px 0 rgba(136, 125, 125, 0.25);
+    font-size: 12px;
+    float: left;
+}
+
+.main-content nav a:hover {
+    color: var(--clr-background);
+    background: var(--clr-indigo);
+}
+.custom-table {
+    width: 95%;
+    margin-top: 2rem;
+    border-collapse: collapse;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.custom-table caption {
+    caption-side: top;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.custom-table thead {
+    background-color: var(--clr-card-inner);
+    color: var(--clr-primary);
+    text-align: left;
+    font-size: 13px;
+}
+
+.custom-table th,
+.custom-table td {
+    padding: 12px 15px;
+    text-align: center;
+}
+
+.custom-table tbody tr {
+    border-bottom: 1px solid #ddd;
+}
+
+.custom-table tbody tr:nth-child(even) {
+    background-color: var(--clr-background);
+}
+
+.custom-table tbody tr:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+
+.custom-table th:first-child,
+.custom-table td:first-child {
+    border-left: none;
+}
+
+.custom-table th:last-child,
+.custom-table td:last-child {
+    border-right: none;
+}
+
