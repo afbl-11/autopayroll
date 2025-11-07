@@ -92,5 +92,19 @@ class Employee extends Authenticatable
     {
         return $this->hasMany(AttendanceLogs::class, 'employee_id', 'employee_id');
     }
+    public function rates()
+    {
+        return $this->hasMany(EmployeeRate::class, 'employee_id', 'id');
+    }
+    public function currentRate()
+    {
+        return $this->hasOne(EmployeeRate::class, 'employee_id', 'id')
+            ->where('effective_from', '<=', now())
+            ->where(function($query) {
+                $query->where('effective_to', '>=', now())
+                    ->orWhereNull('effective_to');
+            })
+            ->latest('effective_from');
+    }
 }
 
