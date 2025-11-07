@@ -77,6 +77,7 @@ class AttendanceController extends Controller
         $attendance = AttendanceLogs::create([
             'log_id' => Str::uuid(),
             'employee_id' => $employee->employee_id,
+            'log_date' => $today,
             'company_id' => $validated['company_id'],
             'clock_in_time' => now()->format('H:i'),
             'clock_in_latitude' => $validated['latitude'],
