@@ -27,6 +27,8 @@ class DailyPayrollLog extends Model
         'night_differential',
         'holiday_pay',
         'cash_bond',
+        'payroll_date',
+        'status'
     ];
 
     // Relationships

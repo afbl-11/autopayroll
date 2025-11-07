@@ -46,6 +46,9 @@ return new class extends Migration
             $table->dateTime('clock_in_time');
             $table->dateTime('clock_out_time');
 
+            $table->date('payroll_date');
+            $table->enum('status', ['open', 'closed']);
+
             $table->timestamps();
         });
     }
