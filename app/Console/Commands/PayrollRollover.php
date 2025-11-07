@@ -71,3 +71,7 @@ class PayrollRollover extends Command
         $this->info("New period created: {$newPeriod->payroll_period_id}");
     }
 }
+
+/*
+ * method is for creating a new payroll period via a scheduler
+ * */
