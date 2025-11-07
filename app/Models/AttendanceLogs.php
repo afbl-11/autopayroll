@@ -16,6 +16,7 @@ class AttendanceLogs extends Model
         'log_id',
         'employee_id',
         'company_id',
+        'log_date',
         'clock_in_time',
         'clock_out_time',
         'clock_in_latitude',

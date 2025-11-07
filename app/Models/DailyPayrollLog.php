@@ -28,7 +28,11 @@ class DailyPayrollLog extends Model
         'holiday_pay',
         'cash_bond',
         'payroll_date',
-        'status'
+        'status',
+        'late_time',
+        'work_hours',
+        'clock_in_time',
+        'clock_out_time',
     ];
 
     // Relationships

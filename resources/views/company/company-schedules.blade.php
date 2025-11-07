@@ -2,13 +2,13 @@
 
 @php
     $daysOfWeek = [
-           'monday' => 'Mon',
-           'tuesday' => 'Tues',
-           'wednesday' => 'Wed',
-           'thursday' => 'Thurs',
-           'friday' => 'Fri',
-           'saturday' => 'Sat',
-           'sunday' => 'Sun']
+           'Mon' => 'Mon',
+           'Tues' => 'Tues',
+           'Wed' => 'Wed',
+           'Thurs' => 'Thurs',
+           'Fri' => 'Fri',
+           'Sat' => 'Sat',
+           'Sun' => 'Sun']
 @endphp
 @push('scripts')
 {{--    script for the checkboxes
@@ -60,64 +60,6 @@
         });
     </script>
 @endpush
-
-
-{{--<script>--}}
-{{--    document.addEventListener('DOMContentLoaded', () => {--}}
-{{--        const cards = document.querySelectorAll('.card-wrapper');--}}
-{{--        const form = document.querySelector('form');--}}
-{{--        const startTime = document.getElementById('start_time');--}}
-{{--        const endTime = document.getElementById('end_time');--}}
-{{--        const dayCheckboxes = document.querySelectorAll('.checkbox-group input[type="checkbox"]');--}}
-
-{{--        // Hidden input for employee id--}}
-{{--        let employeeInput = document.getElementById('selected_employee_id');--}}
-{{--        if (!employeeInput) {--}}
-{{--            employeeInput = document.createElement('input');--}}
-{{--            employeeInput.type = 'hidden';--}}
-{{--            employeeInput.name = 'employee_id';--}}
-{{--            employeeInput.id = 'selected_employee_id';--}}
-{{--            form.appendChild(employeeInput);--}}
-{{--        }--}}
-
-{{--        cards.forEach(card => {--}}
-{{--            card.addEventListener('click', () => {--}}
-{{--                // remove active from all cards--}}
-{{--                cards.forEach(c => c.classList.remove('active'));--}}
-{{--                card.classList.add('active');--}}
-
-{{--                // read data--}}
-{{--                const id = card.dataset.id;--}}
-{{--                const start = card.dataset.start || '';--}}
-{{--                const end = card.dataset.end || '';--}}
-{{--                let days = [];--}}
-
-{{--                try {--}}
-{{--                    days = card.dataset.days ? JSON.parse(card.dataset.days) : [];--}}
-{{--                } catch {--}}
-{{--                    days = [];--}}
-{{--                }--}}
-
-{{--                // assign values (empty if no schedule)--}}
-{{--                employeeInput.value = id;--}}
-{{--                startTime.value = start;--}}
-{{--                endTime.value = end;--}}
-
-{{--                // reset checkboxes--}}
-{{--                dayCheckboxes.forEach(chk => chk.checked = false);--}}
-
-{{--                // if there are days, mark them--}}
-{{--                if (days.length > 0) {--}}
-{{--                    days.forEach(day => {--}}
-{{--                        const checkbox = document.getElementById(day.toLowerCase());--}}
-{{--                        if (checkbox) checkbox.checked = true;--}}
-{{--                    });--}}
-{{--                }--}}
-{{--            });--}}
-{{--        });--}}
-{{--    });--}}
-{{--</script>--}}
-
 
 <x-app :noHeader="true" :navigation="true" :company="$company">
 

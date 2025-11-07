@@ -71,7 +71,7 @@
         </tr>
     @empty
         <tr>
-            <td colspan="10">No existing payroll log</td>
+            <td colspan="12">No existing payroll log</td>
         </tr>
     @endforelse
     </tbody>

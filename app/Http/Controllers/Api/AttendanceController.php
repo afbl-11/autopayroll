@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Company;
+use App\Services\Payroll\CreateDailyPayroll;
 use Illuminate\Http\Request;
 use App\Models\AttendanceLogs;
 use Illuminate\Support\Str;
@@ -11,9 +12,9 @@ use Carbon\Carbon;
 
 class AttendanceController extends Controller
 {
-    private function validateCompanyQr() {
-
-    }
+    public function __construct(
+        protected CreateDailyPayroll $dailyPayroll,
+    ){}
     /**
      * Handle employee clock-in
      */
@@ -77,6 +78,7 @@ class AttendanceController extends Controller
         $attendance = AttendanceLogs::create([
             'log_id' => Str::uuid(),
             'employee_id' => $employee->employee_id,
+            'log_date' => $today,
             'company_id' => $validated['company_id'],
             'clock_in_time' => now()->format('H:i'),
             'clock_in_latitude' => $validated['latitude'],
@@ -162,6 +164,8 @@ class AttendanceController extends Controller
             'clock_out_latitude' => $validated['latitude'],
             'clock_out_longitude' => $validated['longitude'],
         ]);
+
+        $this->dailyPayroll->createDailyPayroll($employee->employee_id);
 
         return response()->json([
             'message' => 'Clock-out successful.',

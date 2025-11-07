@@ -35,6 +35,8 @@ return new class extends Migration
             $table->decimal('clock_out_latitude', 10, 8)->nullable();
             $table->decimal('clock_out_longitude', 11, 8)->nullable();
 
+            $table->date('log_date');
+
             $table->timestamps();
 
         });

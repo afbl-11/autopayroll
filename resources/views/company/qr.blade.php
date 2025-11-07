@@ -5,6 +5,7 @@
         <div class="qr-wrapper">
             <h4>{{$company->company_name}}</h4>
             {!! $qrCode !!}
+            {{$signature}}
 
             <form action="{{ route('company.qr.download', $company->company_id) }}" method="POST">
                 @csrf
