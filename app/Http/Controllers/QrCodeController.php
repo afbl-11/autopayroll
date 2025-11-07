@@ -18,21 +18,23 @@ class QrCodeController extends Controller
             abort(404, 'Company not found');
         }
 
-        // Ensure token exists
         if (!$company->qr_token) {
             $company->qr_token = Str::uuid();
             $company->save();
         }
+        //for  ease of testing purposes
+        $signature = hash_hmac('sha256', $company->qr_token, env('APP_KEY'));
 
         $payload = [
             'company_id' => $company->company_id,
             'token' => $company->qr_token,
-            'signature' => hash_hmac('sha256', $company->qr_token, env('APP_KEY')),
+            'signature' => $signature,
         ];
+
 
         $qrCode = QrCode::size(250)->generate(json_encode($payload));
 
-        return view('company.qr', compact('company', 'qrCode'));
+        return view('company.qr', compact('company', 'qrCode', 'signature'));
     }
 
     public function download($companyId)
