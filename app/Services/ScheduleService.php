@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\EmployeeSchedule;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class ScheduleService
 {
@@ -32,6 +33,7 @@ class ScheduleService
         });
 
         $data['start_date'] = Carbon::now()->toDateString();
+        $data['employee_schedules_id'] = Str::uuid();
 
         if (isset($data['working_days'])) {
             $data['working_days'] = collect($data['working_days'])->flatten()->toArray();
