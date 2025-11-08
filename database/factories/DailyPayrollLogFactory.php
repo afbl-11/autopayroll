@@ -58,18 +58,15 @@ class DailyPayrollLogFactory extends Factory
             'daily_payroll_id' => Str::uuid(), // UUID primary key
             'employee_id' => $employee->employee_id,
             'payroll_period_id' => $period->payroll_period_id,
-            'log_id' => $attendance->log_id,
             'gross_salary' => $grossSalary,
             'net_salary' => $netSalary,
             'deduction' => $deduction,
             'overtime' => $overtime,
             'night_differential' => $nightDifferential,
             'holiday_pay' => $holidayPay,
-            'cash_bond' => $cashBond,
             'late_time' => $lateTime,
             'work_hours' => $workHours,
             'payroll_date' => $this->faker->date(),
-            'status' => $this->faker->randomElement(['open', 'closed']),
             'clock_in_time' => $clockIn,
             'clock_out_time' => $clockOut,
         ];

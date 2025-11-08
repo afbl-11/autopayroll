@@ -25,11 +25,6 @@ return new class extends Migration
                 ->on('payroll_periods')
                 ->onDelete('cascade');
 
-            $table->foreignUuid('log_id')
-                ->references('log_id')
-                ->on('attendance_logs')
-                ->onDelete('cascade');
-
             $table->decimal('gross_salary',10,2);
             $table->decimal('net_salary',10,2);
             $table->decimal('deduction',10,2);  //late
@@ -37,7 +32,6 @@ return new class extends Migration
             $table->decimal('overtime',10,2);
             $table->decimal('night_differential',10,2);
             $table->decimal('holiday_pay',10,2);
-            $table->decimal('cash_bond',10,2);
 
             $table->integer('late_time');
             $table->integer('work_hours');
@@ -45,7 +39,6 @@ return new class extends Migration
             $table->dateTime('clock_out_time');
 
             $table->date('payroll_date');
-            $table->enum('status', ['open', 'closed']);
 
             $table->timestamps();
         });
