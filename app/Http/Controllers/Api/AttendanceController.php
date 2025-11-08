@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Services\Payroll\CreateDailyPayroll;
+use App\Traits\ScheduleTrait;
 use Illuminate\Http\Request;
 use App\Models\AttendanceLogs;
 use Illuminate\Support\Str;
@@ -12,6 +13,7 @@ use Carbon\Carbon;
 
 class AttendanceController extends Controller
 {
+    use ScheduleTrait;
     public function __construct(
         protected CreateDailyPayroll $dailyPayroll,
     ){}
@@ -73,6 +75,14 @@ class AttendanceController extends Controller
             return response()->json([
                 'message' => 'Already clocked in today.',
             ], 400);
+        }
+
+        $data = $this->isScheduledToday($employee->employee_id);
+        $isWorkingDay = $data['isWorkingDay'];
+        $schedule = $data['schedule'];
+
+        if (!$isWorkingDay || !$schedule) {
+            return response()->json(['message' => "Employee $employee->employee_id has no schedule today."], 401);
         }
 
         $attendance = AttendanceLogs::create([
