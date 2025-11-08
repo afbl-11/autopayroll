@@ -11,9 +11,10 @@ class PayrollPeriod extends Model
 
     protected $primaryKey = 'payroll_period_id';
 
-    public $incrementing = false;
+    public $incrementing = true;
 
     protected $keyType = 'string';
+
 
 
     protected $fillable = [

@@ -26,7 +26,7 @@ class CreditAdjustmentFactory extends Factory
         $statuses = ['approved','rejected'];
 
         return [
-            'adjustment_id' => Carbon::now()->year . str_pad(rand(1, 9999), 4, '0', STR_PAD_LEFT),
+            'adjustment_id' => Str::uuid(),
             'employee_id' => $employee ? $employee->employee_id : $this->faker->uuid(),
             'approver_id' => $approver ? $approver->admin_id : $this->faker->uuid(),
             'adjustment_type' => $this->faker->randomElement($types),

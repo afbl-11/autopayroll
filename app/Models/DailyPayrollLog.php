@@ -11,7 +11,7 @@ class DailyPayrollLog extends Model
 
     protected $table = 'daily_payroll_logs';
     protected $primaryKey = 'daily_payroll_id';
-    public $incrementing = false;
+    public $incrementing = true;
     protected $keyType = 'string';
 
 
@@ -19,16 +19,13 @@ class DailyPayrollLog extends Model
         'daily_payroll_id',
         'employee_id',
         'payroll_period_id',
-        'log_id',
         'gross_salary',
         'net_salary',
         'deduction',
         'overtime',
         'night_differential',
         'holiday_pay',
-        'cash_bond',
         'payroll_date',
-        'status',
         'late_time',
         'work_hours',
         'clock_in_time',

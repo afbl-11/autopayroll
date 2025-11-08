@@ -17,6 +17,7 @@ use App\Traits\PayrollPeriodTrait;
 use App\Traits\ScheduleTrait;
 use Carbon\Carbon;
 use http\Exception;
+use Illuminate\Support\Str;
 
 class PayrollComputation
 {
@@ -26,10 +27,8 @@ class PayrollComputation
     ){}
 
     public function computeLateDeduction($rate, $regularHours, $late_time)  {
-
         $deductible = ($rate / $regularHours) / 60;
         return  $deductible * $late_time;
-
     }
 
 /*
@@ -38,24 +37,19 @@ class PayrollComputation
  * */
     public function computeNightDifferential($hourlyRate, $clock_in, $clock_out, $night_diff_start, $night_diff_end,$ndRate) {
 
-        $ndHours = $clock_in->max($night_diff_start)->diffInMinutes($clock_out->min($night_diff_end));
-        return $hourlyRate * $ndRate *  $ndHours;
+        $ndHours = $clock_in->max($night_diff_start)
+            ->diffInHours($clock_out->min($night_diff_end));
+
+        return $hourlyRate * $ndHours * $ndRate;
     }
 
     public function computeOvertime($hourlyRate, $overtimeHours, $overtimeRate) {
-        return  $hourlyRate * $overtimeRate * $overtimeHours;
+        return  abs($hourlyRate * $overtimeRate * $overtimeHours);
     }
 
-    public function computePayroll($employee_id) : DailyPayrollLog {
-//todo: refactor calculation
+    public function computePayroll($employee_id): DailyPayrollLog {
+
         $data = $this->isScheduledToday($employee_id);
-
-        $period = PayrollPeriod::where('is_closed',false)
-            ->latest()
-            ->first();
-
-        $periodId = $period->payroll_period_id;
-
         $isWorkingDay = $data['isWorkingDay'];
         $schedule = $data['schedule'];
 
@@ -63,16 +57,12 @@ class PayrollComputation
             throw new \Exception("Employee $employee_id has no schedule today.");
         }
 
-        $employee = Employee::with('currentRate')
-            ->where('employee_id', $employee_id)
-            ->first();
-        $rate = $employee->currentRate?->rate ?? 540;
-        //todo: divide the rate into 8
+        $employee = Employee::with('currentRate')->find($employee_id);
+        $rate = $employee->currentRate?->rate ?? 0;
 
-        $regularHours = 8;
+        $regularHours = 9;
         $dailyRate = $rate;
         $hourlyRate = $dailyRate / $regularHours;
-        $cashBond = 0;
 
         $startTime = Carbon::parse($schedule->start_time);
         $endTime = Carbon::parse($schedule->end_time);
@@ -80,28 +70,34 @@ class PayrollComputation
 
         $night_diff_start = Carbon::parse('22:00');
         $night_diff_end = Carbon::parse('06:00')->addDay();
-        $ndRate = 0.10;
+        $nightDiffRate = 1.10;
 
         $attendance = AttendanceLogs::where('employee_id', $employee_id)
             ->whereNotNull('clock_in_time')
             ->whereNotNull('clock_out_time')
-            ->latest('log_date')
+            ->latest('clock_in_time')
             ->first();
 
         $clock_in = Carbon::parse($attendance->clock_in_time);
         $clock_out = Carbon::parse($attendance->clock_out_time);
-        $workHours = $clock_in->diffInMinutes($clock_out);
+        $workHours = $clock_in->diffInHours($clock_out);
+
         $late_time = $startTime->diffInMinutes($clock_in);
 
+        if($clock_in > $schedule->start_time) {
+           $clock_in = Carbon::parse($schedule->start_time);
+           $workHours = $clock_in->diffInHours($clock_out);
+        }
+
         if ($clock_out > $endTime) {
-            $overtime_hours = $clock_out->diffInMinutes($endTime, false);
-            $overtimePay = $this->computeOvertime($hourlyRate, $overtime_hours,$overtimeRate);
+            $overtime_hours = $clock_out->diffInHours($endTime, false);
+            $overtimePay = $this->computeOvertime($hourlyRate,$overtimeRate, $overtime_hours);
         } else {
             $overtimePay = 0;
         }
 
         if ($clock_out > $night_diff_start) {
-            $nightDiffPay =  $this->computeNightDifferential($hourlyRate, $clock_in,$clock_out,$night_diff_start,$night_diff_end, $ndRate);
+            $nightDiffPay =  $this->computeNightDifferential($hourlyRate, $clock_in,$clock_out,$night_diff_start,$night_diff_end, $nightDiffRate);
         } else {
             $nightDiffPay = 0;
         }
@@ -111,22 +107,25 @@ class PayrollComputation
         $gross_daily_salary = $hourlyRate * $workHours ;
 
         $holidayPay = $dailyRate * 0;
-//        TODO: we need to know if it is a holiday ( could be handled from credit adjustment)
+//        TODO: we need to know if it is a holiday (could be handled from credit adjustment temporarily)
 
         $net_salary = ($gross_daily_salary + $holidayPay + $overtimePay + $nightDiffPay) - $late_deductions;
 
+        $period = PayrollPeriod::where('is_closed',false)
+            ->latest()
+            ->first();
+        $periodId = $period->payroll_period_id;
+
         return DailyPayrollLog::create([
-            'daily_payroll_id' => '2004',
+            'daily_payroll_id' => Str::uuid(),
             'employee_id' => $employee->employee_id,
             'payroll_period_id' => $periodId,
-            'log_id' => $attendance->log_id,
             'gross_salary' => $gross_daily_salary,
             'net_salary' => $net_salary,
             'deduction' => $late_deductions,
             'overtime' => $overtimePay,
             'night_differential' => $nightDiffPay,
             'holiday_pay' => $holidayPay,
-            'cash_bond' => $cashBond,
             'work_hours' => $workHours,
             'late_time' => $late_time,
             'clock_in_time' => $clock_in,

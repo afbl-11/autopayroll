@@ -28,7 +28,7 @@ class LeaveRequestFactory extends Factory
         $endDate = (clone $startDate)->modify('+'.rand(1,5).' days');
 
         return [
-            'leave_request_id' => Carbon::now()->year . str_pad(rand(1, 9999), 4, '0', STR_PAD_LEFT),
+            'leave_request_id' => Str::uuid(),
             'employee_id' => $employee ? $employee->employee_id : $this->faker->uuid(),
             'approver_id' => $approver ? $approver->admin_id : $this->faker->uuid(),
             'leave_type' => $this->faker->randomElement($leaveTypes),

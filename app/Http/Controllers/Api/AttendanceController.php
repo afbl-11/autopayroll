@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Services\Payroll\CreateDailyPayroll;
+use App\Traits\ScheduleTrait;
 use Illuminate\Http\Request;
 use App\Models\AttendanceLogs;
 use Illuminate\Support\Str;
@@ -12,6 +13,7 @@ use Carbon\Carbon;
 
 class AttendanceController extends Controller
 {
+    use ScheduleTrait;
     public function __construct(
         protected CreateDailyPayroll $dailyPayroll,
     ){}
@@ -75,12 +77,19 @@ class AttendanceController extends Controller
             ], 400);
         }
 
+        $data = $this->isScheduledToday($employee->employee_id);
+        $isWorkingDay = $data['isWorkingDay'];
+        $schedule = $data['schedule'];
+
+        if (!$isWorkingDay || !$schedule) {
+            return response()->json(['message' => "Employee $employee->employee_id has no schedule today."], 401);
+        }
+
         $attendance = AttendanceLogs::create([
             'log_id' => Str::uuid(),
             'employee_id' => $employee->employee_id,
-            'log_date' => $today,
             'company_id' => $validated['company_id'],
-            'clock_in_time' => now()->format('H:i'),
+            'clock_in_time' => now(),
             'clock_in_latitude' => $validated['latitude'],
             'clock_in_longitude' => $validated['longitude'],
         ]);
@@ -160,7 +169,7 @@ class AttendanceController extends Controller
         }
 
         $attendance->update([
-            'clock_out_time' => now()->format('H:i'),
+            'clock_out_time' => now()->addHour(3),
             'clock_out_latitude' => $validated['latitude'],
             'clock_out_longitude' => $validated['longitude'],
         ]);

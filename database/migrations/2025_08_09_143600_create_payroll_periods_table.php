@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('payroll_periods', function (Blueprint $table) {
 
-            $table->string('payroll_period_id')->primary();
+            $table->uuid('payroll_period_id')->primary();
             $table->date('start_date');
             $table->date('end_date');
             $table->boolean('is_closed')->default(false);

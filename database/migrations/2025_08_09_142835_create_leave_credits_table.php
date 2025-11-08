@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('leave_credits', function (Blueprint $table) {
-            $table->string('employee_id');
+            $table->uuid('employee_id');
             $table->enum('leave_type', ['vacation', 'sick','official business','emergency']);
 
             $table->decimal('credit_days', 5, 2);
