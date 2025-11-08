@@ -98,7 +98,7 @@ class Employee extends Authenticatable
     }
     public function currentRate()
     {
-        return $this->hasOne(EmployeeRate::class, 'employee_id', 'id')
+        return $this->hasOne(EmployeeRate::class, 'employee_id', 'employee_id')
             ->where('effective_from', '<=', now())
             ->where(function($query) {
                 $query->where('effective_to', '>=', now())
