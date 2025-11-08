@@ -26,8 +26,8 @@
             <small>{{ 'Ends at: ' . ($end ?: '—') }}</small>
         </div>
         <div class="schedule-wrapper">
-            <small>{{ $description ?: 'No schedule assigned' }}</small>
-            <small>{{$scheduleDays}}</small>
+            <small>{{ $description ?: 'No schedule assigned' }}</small> <br>
+            <small>{{ implode(', ',  json_decode($scheduleDays)) }}</small>
         </div>
     </div>
 </div>

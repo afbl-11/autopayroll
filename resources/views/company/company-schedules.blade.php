@@ -10,7 +10,6 @@
            'Sat' => 'Sat',
            'Sun' => 'Sun']
 @endphp
-@push('scripts')
 {{--    script for the checkboxes
    added here and in the root layout so that responses have no delay
 --}}
@@ -105,7 +104,7 @@
                                         :id="$employee->employee_id"
                                         :start="$schedule->start_time"
                                         :end="$schedule->end_time"
-                                        :scheduleDays="json_encode($schedule->working_days)"
+                                        :scheduleDays="$schedule->working_days"
                                         :description="'Current shift'"
                                         :labels="$schedule->shift_name"
                                     />

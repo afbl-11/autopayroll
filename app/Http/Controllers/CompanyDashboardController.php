@@ -42,7 +42,9 @@ class CompanyDashboardController extends Controller
         return view('company.company-employees', compact('company'));
     }
     public function showSchedules($id) {
-        $company = Company::with(['employees.employeeSchedule'])->find($id);
+        $company = Company::with(['employees.employeeSchedule' => function($query) {
+            $query->whereNull('end_date');
+        }])->find($id);
 
         return view('company.company-schedules', compact('company'));
     }
