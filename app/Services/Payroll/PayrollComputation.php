@@ -26,10 +26,8 @@ class PayrollComputation
     ){}
 
     public function computeLateDeduction($rate, $regularHours, $late_time)  {
-
         $deductible = ($rate / $regularHours) / 60;
         return  $deductible * $late_time;
-
     }
 
 /*
@@ -48,14 +46,8 @@ class PayrollComputation
 
     public function computePayroll($employee_id) : DailyPayrollLog {
 //todo: refactor calculation
+
         $data = $this->isScheduledToday($employee_id);
-
-        $period = PayrollPeriod::where('is_closed',false)
-            ->latest()
-            ->first();
-
-        $periodId = $period->payroll_period_id;
-
         $isWorkingDay = $data['isWorkingDay'];
         $schedule = $data['schedule'];
 
@@ -115,8 +107,12 @@ class PayrollComputation
 
         $net_salary = ($gross_daily_salary + $holidayPay + $overtimePay + $nightDiffPay) - $late_deductions;
 
+        $period = PayrollPeriod::where('is_closed',false)
+            ->latest()
+            ->first();
+        $periodId = $period->payroll_period_id;
+
         return DailyPayrollLog::create([
-            'daily_payroll_id' => '2004',
             'employee_id' => $employee->employee_id,
             'payroll_period_id' => $periodId,
             'log_id' => $attendance->log_id,

@@ -7,6 +7,7 @@ use App\Models\Employee;
 use App\Models\PayrollPeriod;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class PayrollFactory extends Factory
 {
@@ -46,11 +47,11 @@ class PayrollFactory extends Factory
         $statuses = ['released', 'processing'];
 
         $payDateStart = $periodStart > $payDateEnd ? $payDateEnd : $periodStart;
-
+        $period = PayrollPeriod::inRandomOrder()->first();
         return [
-            'payroll_id' => Carbon::now()->year . str_pad(rand(1, 9999), 4, '0', STR_PAD_LEFT),
+            'payroll_id' => Str::uuid(),
             'employee_id' =>$this->faker->randomElement($employeeIds),
-            'payroll_period_id' => $payroll_period ? $payroll_period->payroll_period_id : $this->faker->uuid(),
+            'payroll_period_id' => $period->payroll_period_id,
             'rate' => $rate,
             'gross_salary' => $grossSalary,
             'net_pay' => $netPay,

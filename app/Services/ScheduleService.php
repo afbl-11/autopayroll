@@ -31,9 +31,7 @@ class ScheduleService
             }
         });
 
-        $data['employee_schedules_id'] = $this->generateId->generateId(EmployeeSchedule::class, 'employee_schedules_id');
         $data['start_date'] = Carbon::now()->toDateString();
-
 
         if (isset($data['working_days'])) {
             $data['working_days'] = collect($data['working_days'])->flatten()->toArray();

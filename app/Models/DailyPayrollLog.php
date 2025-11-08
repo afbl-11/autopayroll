@@ -11,12 +11,11 @@ class DailyPayrollLog extends Model
 
     protected $table = 'daily_payroll_logs';
     protected $primaryKey = 'daily_payroll_id';
-    public $incrementing = false;
+    public $incrementing = true;
     protected $keyType = 'string';
 
 
     protected $fillable = [
-        'daily_payroll_id',
         'employee_id',
         'payroll_period_id',
         'log_id',

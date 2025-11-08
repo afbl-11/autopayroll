@@ -9,11 +9,11 @@ class AttendanceLogs extends Model
 {
     use HasFactory;
     protected $primaryKey = 'log_id';
-    public $incrementing = false;
+    public $incrementing = true;
     protected $keyType = 'string';
 
+
     protected $fillable = [
-        'log_id',
         'employee_id',
         'company_id',
         'log_date',

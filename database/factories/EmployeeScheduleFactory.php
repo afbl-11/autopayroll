@@ -8,6 +8,7 @@ use App\Models\EmployeeSchedule;
 use App\Models\Shift;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\EmployeeSchedule>
@@ -46,7 +47,7 @@ class EmployeeScheduleFactory extends Factory
     $end_time = sprintf('%02d:00', $endHour);
 
     return [
-        'employee_schedules_id'  => Carbon::now()->year . str_pad(rand(1, 9999), 4, '0', STR_PAD_LEFT),
+        'employee_schedules_id'  => Str::uuid(),
         'employee_id' => $employee?->employee_id,
         'working_days' => json_encode($workingDays),
         'start_time' => $start_time,

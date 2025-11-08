@@ -30,7 +30,7 @@ class AttendanceLogsFactory extends Factory
         $clockOutLong = $clockInLong + $this->faker->randomFloat(6, -0.001, 0.001);
 
         return [
-            'log_id' => Carbon::now()->year . str_pad(rand(1, 9999), 4, '0', STR_PAD_LEFT),
+            'log_id' => Str::uuid(),
             'employee_id' => $employee ? $employee->employee_id : $this->faker->uuid(),
             'company_id' => $company ? $company->company_id : $this->faker->uuid(),
             'clock_in_time' => $clockIn,

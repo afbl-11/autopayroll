@@ -9,8 +9,9 @@ class Payroll extends Model
 {
     use HasFactory;
     protected $primaryKey = 'payroll_id';
-    public $incrementing = false;
+    public $incrementing = true;
     protected $keyType = 'string';
+
 
     protected $fillable = [
         'employee_id',

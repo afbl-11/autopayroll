@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('payrolls', function (Blueprint $table) {
-            $table->string('payroll_id')->primary();
+            $table->uuid('payroll_id')->primary();
 
             $table->string('employee_id');
             $table->foreign('employee_id')
@@ -20,8 +20,7 @@ return new class extends Migration
                 ->on('employees')
                 ->onDelete('cascade');
 
-            $table->string('payroll_period_id');
-            $table->foreign('payroll_period_id')
+            $table->foreignUuid('payroll_period_id')
                 ->references('payroll_period_id')
                 ->on('payroll_periods')
                 ->onDelete('cascade');

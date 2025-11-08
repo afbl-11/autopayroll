@@ -9,11 +9,11 @@ class LeaveRequest extends Model
 {
     use HasFactory;
     protected $primaryKey = 'leave_request_id';
-    public $incrementing = false;
+    public $incrementing = true;
     protected $keyType = 'string';
 
+
     protected $fillable = [
-        'leave_request_id',
         'employee_id',
         'approver_id',
         'leave_type',

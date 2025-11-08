@@ -11,11 +11,11 @@ class EmployeeSchedule extends Model
 
     protected $table = 'employee_schedules';
     protected $primaryKey = 'employee_schedules_id';
-    public $incrementing = false;
+    public $incrementing = true;
     protected $keyType = 'string';
 
+
     protected $fillable = [
-        'employee_schedules_id',
         'employee_id',
         'shift_id',
         'working_days',
