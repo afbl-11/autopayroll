@@ -12,8 +12,8 @@ class CreditAdjustment extends Model
     public $incrementing = true;
     protected $keyType = 'string';
 
-
     protected $fillable = [
+        'adjustment_id',
         'employee_id',
         'approver_id',
         'adjustment_type',

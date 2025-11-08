@@ -10,6 +10,7 @@ class EmployeeRate extends Model
     public $incrementing = true;
 
     protected $fillable = [
+        'employee_rate_id',
         'employee_id',
         'rate',
         'effective_from',

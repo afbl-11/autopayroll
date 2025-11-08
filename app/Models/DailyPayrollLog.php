@@ -16,6 +16,7 @@ class DailyPayrollLog extends Model
 
 
     protected $fillable = [
+        'daily_payroll_id',
         'employee_id',
         'payroll_period_id',
         'log_id',

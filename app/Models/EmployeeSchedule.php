@@ -16,6 +16,7 @@ class EmployeeSchedule extends Model
 
 
     protected $fillable = [
+        'employee_schedules_id',
         'employee_id',
         'shift_id',
         'working_days',

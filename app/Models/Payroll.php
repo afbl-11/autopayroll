@@ -14,6 +14,7 @@ class Payroll extends Model
 
 
     protected $fillable = [
+        'payroll_id',
         'employee_id',
         'payroll_period_id',
         'rate',
