@@ -78,9 +78,8 @@ class AttendanceController extends Controller
         $attendance = AttendanceLogs::create([
             'log_id' => Str::uuid(),
             'employee_id' => $employee->employee_id,
-            'log_date' => $today,
             'company_id' => $validated['company_id'],
-            'clock_in_time' => now()->format('H:i'),
+            'clock_in_time' => now(),
             'clock_in_latitude' => $validated['latitude'],
             'clock_in_longitude' => $validated['longitude'],
         ]);
@@ -160,7 +159,7 @@ class AttendanceController extends Controller
         }
 
         $attendance->update([
-            'clock_out_time' => now()->format('H:i'),
+            'clock_out_time' => now()->addHour(3),
             'clock_out_latitude' => $validated['latitude'],
             'clock_out_longitude' => $validated['longitude'],
         ]);

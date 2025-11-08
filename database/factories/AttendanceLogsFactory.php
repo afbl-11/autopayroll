@@ -34,7 +34,6 @@ class AttendanceLogsFactory extends Factory
             'employee_id' => $employee ? $employee->employee_id : $this->faker->uuid(),
             'company_id' => $company ? $company->company_id : $this->faker->uuid(),
             'clock_in_time' => $clockIn,
-            'log_date' => Carbon::now()->toDateString(),
             'clock_out_time' => $clockOut,
             'clock_in_latitude' => $clockInLat,
             'clock_in_longitude' => $clockInLong,
