@@ -7,6 +7,7 @@ use App\Models\AttendanceLogs;
 use App\Models\DailyPayrollLog;
 use App\Models\Employee;
 use App\Models\PayrollPeriod;
+use App\Traits\PayrollPeriodTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Auth;
@@ -19,6 +20,7 @@ class DailyPayrollLogFactory extends Factory
 {
     protected $model = DailyPayrollLog::class;
 
+        use PayrollPeriodTrait;
     public function definition(): array
     {
         // -----------------------------
@@ -26,7 +28,7 @@ class DailyPayrollLogFactory extends Factory
         // -----------------------------
 
         // Employee: pick random or create
-        $employee = Employee::inRandomOrder()->first() ?? Employee::factory()->create();
+        $employee = Employee::inRandomOrder()->first();
 
         // Payroll Period: pick random or create
         $period = PayrollPeriod::inRandomOrder()->first();
@@ -45,7 +47,12 @@ class DailyPayrollLogFactory extends Factory
         $cashBond = $this->faker->randomFloat(2, 0, 200);
 
         // Simulate clock-in/out times
-        $clockIn = Carbon::now()->subHours(rand(9, 10));
+        [$payroll_start, $payroll_end] = $this->hasPeriod();
+        $payroll_start = Carbon::parse($payroll_start);
+        $payroll_end = Carbon::parse($payroll_end);
+//        dd($payroll_start, $payroll_end);
+        $clockIn = Carbon::createFromTimestamp(rand($payroll_start->timestamp, $payroll_end->timestamp));
+//        dd($clockIn);
         $clockOut = (clone $clockIn)->addHours(rand(8, 10));
 
         $workHours = $clockIn->diffInHours($clockOut);
@@ -68,8 +75,8 @@ class DailyPayrollLogFactory extends Factory
             'holiday_pay' => $holidayPay,
             'late_time' => $lateTime,
             'work_hours' => $workHours,
-            'payroll_date' => $this->faker->date(),
             'clock_in_time' => $clockIn,
+            'payroll_date' => $clockIn->format('Y-m-d'),
             'clock_out_time' => $clockOut,
         ];
     }

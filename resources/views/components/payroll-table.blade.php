@@ -10,7 +10,6 @@
         <th>Deduction</th>
         <th>Holiday Pay</th>
         <th>Night Differential</th>
-        <th>Status</th>
     </tr>
     </thead>
 
@@ -26,7 +25,6 @@
             <td>{{$summary->deduction}}</td>
             <td>{{$summary->holiday_pay}}</td>
             <td>{{$summary->night_differential}}</td>
-            <td>{{$summary->status}}</td>
         </tr>
     @empty
         <tr>
@@ -42,13 +40,13 @@
         <th>Pag Ibig</th>
         <th>Phil-Health</th>
         <th>SSS</th>
-        <th>Cash Bond</th>
         <th>Late Deduction</th>
         <th>Holiday</th>
         <th>Night Differential</th>
         <th>Overtime</th>
         <th>Gross Salary</th>
         <th>Net Salary</th>
+        <th>Status</th>
 
     </tr>
     </thead>
@@ -62,12 +60,12 @@
             <td>{{$summary->phil_health_deductions}}</td>
             <td>{{$summary->sss_deductions}}</td>
             <td>{{$summary->late_deductions}}</td>
-            <td>{{$summary->cash_bond}}</td>
             <td>{{$summary->holiday}}</td>
             <td>{{$summary->night_differential}}</td>
             <td>{{$summary->overtime}}</td>
             <td>{{$summary->gross_salary}}</td>
             <td>{{$summary->net_pay}}</td>
+            <td>{{$summary->status}}</td>
         </tr>
     @empty
         <tr>

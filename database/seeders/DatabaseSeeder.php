@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
     {
 
 
-//        Admin::factory()->count(2)->create();
+        Admin::factory()->count(1)->create();
         Company::factory()->count(3)->create();
         Employee::factory()->count(10)->create();
         AttendanceLogs::factory()->count(10)->create();
@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
         EmployeeSchedule::factory()->count(10)->create();
         CreditAdjustment::factory()->count(10)->create();
         PayrollPeriod::factory()->count(1)->create();
-        DailyPayrollLog::factory()->count(10)->create();
+        DailyPayrollLog::factory()->count(40)->create();
 //        LeaveRequest::factory()->count(10)->create();
         Payroll::factory()->count(10)->create();
     }

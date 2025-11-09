@@ -63,7 +63,6 @@ class PayrollFactory extends Factory
             'sss_deductions' => $sss,
             'phil_health_deductions' => $philHealth,
             'late_deductions' => $late,
-            'cash_bond' => $cashBond,
             'holiday' => $holiday,
             'night_differential' => $nightDiff,
             'overtime' => $overtime,

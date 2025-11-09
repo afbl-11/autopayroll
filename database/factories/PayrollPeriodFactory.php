@@ -20,7 +20,7 @@ class PayrollPeriodFactory extends Factory
      */
     public function definition(): array
     {
-        $startDate = $this->faker->dateTimeBetween('now', '+1 month');
+        $startDate = Carbon::now()->startOfMonth();
         $endDate = (clone $startDate)->modify('+14 days');
         $admin = Admin::inRandomOrder()->first();
         return [
@@ -28,7 +28,7 @@ class PayrollPeriodFactory extends Factory
             'admin_id' => $admin->admin_id,
             'start_date' => $startDate->format('Y-m-d'),
             'end_date' => $endDate->format('Y-m-d'),
-            'is_closed' => $this->faker->boolean(20),
+            'is_closed' => $this->faker->boolean(0),
         ];
     }
 }

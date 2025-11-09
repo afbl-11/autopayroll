@@ -13,6 +13,6 @@ class DailyPayrollSeeder extends Seeder
      */
     public function run(): void
     {
-        DailyPayrollLog::factory()->count(10)->create();
+        DailyPayrollLog::factory()->count(30)->create();
     }
 }
