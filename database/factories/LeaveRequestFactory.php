@@ -7,6 +7,7 @@ use App\Models\Employee;
 use App\Models\Admin;
 use App\Services\GenerateId;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 
@@ -26,9 +27,10 @@ class LeaveRequestFactory extends Factory
 
         $startDate = $this->faker->dateTimeBetween('-6 months', '+3 months');
         $endDate = (clone $startDate)->modify('+'.rand(1,5).' days');
-
+        $admin = Admin::inRandomOrder()->first();
         return [
             'leave_request_id' => Str::uuid(),
+            'admin_id' => $admin->admin_id,
             'employee_id' => $employee ? $employee->employee_id : $this->faker->uuid(),
             'approver_id' => $approver ? $approver->admin_id : $this->faker->uuid(),
             'leave_type' => $this->faker->randomElement($leaveTypes),

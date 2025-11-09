@@ -8,6 +8,7 @@ use App\Models\Admin;
 use App\Services\GenerateId;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class CreditAdjustmentFactory extends Factory
@@ -24,9 +25,11 @@ class CreditAdjustmentFactory extends Factory
 
         $types = ['attendance','leave','official business'];
         $statuses = ['approved','rejected'];
+        $admin = Admin::inRandomOrder()->first();
 
         return [
             'adjustment_id' => Str::uuid(),
+            'admin_id' => $admin->admin_id,
             'employee_id' => $employee ? $employee->employee_id : $this->faker->uuid(),
             'approver_id' => $approver ? $approver->admin_id : $this->faker->uuid(),
             'adjustment_type' => $this->faker->randomElement($types),

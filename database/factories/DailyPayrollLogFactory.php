@@ -2,12 +2,14 @@
 
 namespace Database\Factories;
 
+use App\Models\Admin;
 use App\Models\AttendanceLogs;
 use App\Models\DailyPayrollLog;
 use App\Models\Employee;
 use App\Models\PayrollPeriod;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 /**
@@ -51,11 +53,11 @@ class DailyPayrollLogFactory extends Factory
 
         $netSalary = ($grossSalary + $overtime + $nightDifferential + $holidayPay) - $deduction - $cashBond;
 
-        // -----------------------------
-        // 3️⃣ Return factory array
-        // -----------------------------
+        $admin = Admin::inRandomOrder()->first();
+
         return [
-            'daily_payroll_id' => Str::uuid(), // UUID primary key
+            'daily_payroll_id' => Str::uuid(),
+            'admin_id' => $admin->admin_id,
             'employee_id' => $employee->employee_id,
             'payroll_period_id' => $period->payroll_period_id,
             'gross_salary' => $grossSalary,

@@ -26,9 +26,9 @@ class DatabaseSeeder extends Seeder
     {
 
 
+//        Admin::factory()->count(2)->create();
         Company::factory()->count(3)->create();
         Employee::factory()->count(10)->create();
-        Admin::factory()->count(2)->create();
         AttendanceLogs::factory()->count(10)->create();
         Contracts::factory()->count(10)->create();
 

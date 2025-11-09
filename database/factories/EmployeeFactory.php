@@ -2,11 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Models\Admin;
 use App\Models\Company;
 use App\Models\Shift;
 use App\Models\Employee;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -50,9 +52,11 @@ class EmployeeFactory extends Factory
             'street' => $faker->streetName,
             'house_number' => $faker->buildingNumber,
         ];
+        $admin = Admin::inRandomOrder()->first();
 
         return [
             'employee_id' => Carbon::now()->year . str_pad(rand(1, 9999), 4, '0', STR_PAD_LEFT),
+            'admin_id' => $admin->admin_id,
             'company_id' => $company?->company_id,
             'first_name' => $faker->firstName,
             'middle_name' => $faker->firstName,
