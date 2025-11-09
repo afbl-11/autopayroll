@@ -17,11 +17,8 @@ class DashboardController extends Controller
     ){}
     public function showDashboard() {
         $data = $this->service->getDashboardData();
-//        $temp  = \App\Models\Company::withoutGlobalScope(AdminScope::class)->get();
-        $temp = Auth::guard('admin')->user();
 
-
-        return view('admin.admin', array_merge($data, ['temp' => $temp]));
+        return view('admin.admin', $data);
     }
 
 

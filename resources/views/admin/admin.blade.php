@@ -6,7 +6,6 @@
                     <div class="header">
                         <h5>Payroll Summary</h5>
                     </div>
-
                     <div class="table-data">
                         <div class="data-wrapper">
                             <div class="table-item">
@@ -92,6 +91,5 @@
                 </div>
             </div>
         </div>
-            {{$temp}}
 </x-app>
 
