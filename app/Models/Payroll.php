@@ -35,16 +35,16 @@ class Payroll extends Model
     ];
 
     protected $casts = [
-        'rate' => 'decimal:8,2',
-        'gross_salary' => 'decimal:8,2',
-        'net_pay' => 'decimal:8,2',
-        'pag_ibig_deductions' => 'decimal:8,2',
-        'phil_health_deductions' => 'decimal:8,2',
-        'late_deductions' => 'decimal:8,2',
-        'cash_bond' => 'decimal:8,2',
-        'holiday' => 'decimal:8,2',
-        'night_differential' => 'decimal:8,2',
-        'overtime' => 'decimal:8,2',
+        'rate' => 'decimal:2',
+        'gross_salary' => 'decimal:2',
+        'net_pay' => 'decimal:2',
+        'pag_ibig_deductions' => 'decimal:2',
+        'phil_health_deductions' => 'decimal:2',
+        'late_deductions' => 'decimal:2',
+        'cash_bond' => 'decimal:2',
+        'holiday' => 'decimal:2',
+        'night_differential' => 'decimal:2',
+        'overtime' => 'decimal:2',
         'pay_date' => 'date'
     ];
 

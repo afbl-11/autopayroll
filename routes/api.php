@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AttendanceController;
 use App\Http\Controllers\Api\EmployeeLoginController;
 use App\Http\Controllers\Api\EmployeeLogoutController;
+use App\Http\Controllers\Api\PayrollController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\CompanyController;
@@ -27,4 +28,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/attendance/clock-out', [AttendanceController::class, 'clockOut']);
 
     Route::get('/attendance/today', [AttendanceController::class, 'getTodayAttendance']);
+
+    Route::get('/payroll/view', [PayrollController::class, 'showPayroll']);
 });
