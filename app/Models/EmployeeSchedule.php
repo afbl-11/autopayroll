@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\AdminScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,6 +18,7 @@ class EmployeeSchedule extends Model
 
     protected $fillable = [
         'employee_schedules_id',
+        'admin_id',
         'employee_id',
         'shift_id',
         'working_days',
@@ -40,4 +42,13 @@ class EmployeeSchedule extends Model
         return $this->belongsTo(Employee::class, 'employee_id', 'employee_id');
     }
 
+    protected static function booted() {
+        static::addGlobalScope(new AdminScope);
+
+        static::creating(function ($model) {
+            if($admin = auth('admin')->user()){
+                $model->admin_id = $admin->admin_id;
+            }
+        });
+    }
 }

@@ -14,6 +14,12 @@ return new class extends Migration
         Schema::create('attendance_logs', function (Blueprint $table) {
             $table->uuid('log_id')->primary();
 
+            $table->string('admin_id');
+            $table->foreign('admin_id')
+                ->references('admin_id')
+                ->on('admins')
+                ->onDelete('cascade');
+
             $table->string('employee_id');
             $table->foreign('employee_id')
                 ->references('employee_id')

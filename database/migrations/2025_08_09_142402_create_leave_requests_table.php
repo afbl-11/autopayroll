@@ -15,6 +15,12 @@ return new class extends Migration
         Schema::create('leave_request', function (Blueprint $table) {
             $table->uuid('leave_request_id')->primary();
 
+            $table->string('admin_id');
+            $table->foreign('admin_id')
+                ->references('admin_id')
+                ->on('admins')
+                ->onDelete('cascade');
+
             $table->string('employee_id');
             $table->foreign('employee_id')
                 ->references('employee_id')

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\AdminScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,6 +15,7 @@ class Contracts extends Model
 
     protected $fillable = [
         'contact_id',
+        'admin_id',
         'employee_id',
         'rate',
         'signed_date',
@@ -27,5 +29,14 @@ class Contracts extends Model
 
     public function employee() {
         return $this->belongsTo(Employee::class, 'employee_id', 'employee_id');
+    }
+    protected static function booted() {
+        static::addGlobalScope(new AdminScope);
+
+        static::creating(function ($model) {
+            if($admin = auth('admin')->user()){
+                $model->admin_id = $admin->admin_id;
+            }
+        });
     }
 }

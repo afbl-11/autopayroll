@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\AdminScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,6 +18,7 @@ class DailyPayrollLog extends Model
 
     protected $fillable = [
         'daily_payroll_id',
+        'admin_id',
         'employee_id',
         'payroll_period_id',
         'gross_salary',
@@ -47,5 +49,14 @@ class DailyPayrollLog extends Model
     public function attendanceLog()
     {
         return $this->belongsTo(AttendanceLog::class, 'log_id', 'log_id');
+    }
+    protected static function booted() {
+        static::addGlobalScope(new AdminScope);
+
+        static::creating(function ($model) {
+            if($admin = auth('admin')->user()){
+                $model->admin_id = $admin->admin_id;
+            }
+        });
     }
 }

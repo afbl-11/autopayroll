@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->string('company_id')->primary();
+
+            $table->string('admin_id');
+            $table->foreign('admin_id')
+                ->references('admin_id')
+                ->on('admins')
+                ->onDelete('cascade');
+
             $table->string('company_logo')->nullable();
             $table->string('company_name');
             $table->string('first_name');
