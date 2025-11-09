@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\AdminScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,6 +16,7 @@ class AttendanceLogs extends Model
 
     protected $fillable = [
         'log_id',
+        'admin_id',
         'employee_id',
         'company_id',
         'clock_in_time',
@@ -38,5 +40,15 @@ class AttendanceLogs extends Model
 
     public function company() {
         return $this->belongsTo(Company::class, 'company_id', 'company_id');
+    }
+
+    protected static function booted() {
+        static::addGlobalScope(new AdminScope);
+
+        static::creating(function ($model) {
+           if($admin = auth('admin')->user()){
+               $model->admin_id = $admin->admin_id;
+           }
+        });
     }
 }

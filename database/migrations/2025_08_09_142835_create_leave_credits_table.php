@@ -15,6 +15,12 @@ return new class extends Migration
             $table->uuid('employee_id');
             $table->enum('leave_type', ['vacation', 'sick','official business','emergency']);
 
+            $table->string('admin_id');
+            $table->foreign('admin_id')
+                ->references('admin_id')
+                ->on('admins')
+                ->onDelete('cascade');
+
             $table->decimal('credit_days', 5, 2);
             $table->decimal('used_days', 5, 2)->default(0);
             $table->timestamps();

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\AdminScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -20,6 +21,7 @@ class Employee extends Authenticatable
 
     protected $fillable = [
         'employee_id',
+        'admin_id',
         'company_id',
         'employee_schedules_id',
         'first_name',
@@ -105,6 +107,16 @@ class Employee extends Authenticatable
                     ->orWhereNull('effective_to');
             })
             ->latest('effective_from');
+    }
+
+    protected static function booted() {
+        static::addGlobalScope(new AdminScope);
+
+        static::creating(function ($model) {
+            if($admin = auth('admin')->user()){
+                $model->admin_id = $admin->admin_id;
+            }
+        });
     }
 }
 

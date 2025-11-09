@@ -14,6 +14,12 @@ return new class extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->string('employee_id')->primary();
 
+            $table->string('admin_id');
+            $table->foreign('admin_id')
+                ->references('admin_id')
+                ->on('admins')
+                ->onDelete('cascade');
+
             $table->string('company_id')->nullable();
             $table->foreign('company_id')
                 ->references('company_id')

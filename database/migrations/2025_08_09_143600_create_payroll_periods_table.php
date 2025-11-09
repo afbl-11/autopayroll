@@ -14,6 +14,13 @@ return new class extends Migration
         Schema::create('payroll_periods', function (Blueprint $table) {
 
             $table->uuid('payroll_period_id')->primary();
+
+            $table->string('admin_id');
+            $table->foreign('admin_id')
+                ->references('admin_id')
+                ->on('admins')
+                ->onDelete('cascade');
+
             $table->date('start_date');
             $table->date('end_date');
             $table->boolean('is_closed')->default(false);

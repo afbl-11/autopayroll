@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\AdminScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,6 +16,7 @@ class Payroll extends Model
 
     protected $fillable = [
         'payroll_id',
+        'admin_id',
         'employee_id',
         'payroll_period_id',
         'rate',
@@ -50,5 +52,15 @@ class Payroll extends Model
     }
     public function payrollPeriod() {
         return $this->belongsTo(PayrollPeriod::class, 'payroll_period_id', 'payroll_period_id');
+    }
+
+    protected static function booted() {
+        static::addGlobalScope(new AdminScope);
+
+        static::creating(function ($model) {
+            if($admin = auth('admin')->user()){
+                $model->admin_id = $admin->admin_id;
+            }
+        });
     }
 }
