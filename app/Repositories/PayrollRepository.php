@@ -67,8 +67,7 @@ class PayrollRepository
     {
         return Payroll::sum('pag_ibig_deductions')
             + Payroll::sum('sss_deductions')
-            + Payroll::sum('late_deductions')
-            + Payroll::sum('cash_bond');
+            + Payroll::sum('late_deductions');
     }
 
 

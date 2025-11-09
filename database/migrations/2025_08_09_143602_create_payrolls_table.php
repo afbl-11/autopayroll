@@ -44,7 +44,6 @@ return new class extends Migration
             $table->decimal('phil_health_deductions', 10, 2);
             $table->decimal('sss_deductions', 10, 2);
             $table->decimal('late_deductions', 10, 2)->nullable();
-            $table->decimal('cash_bond', 10, 2)->nullable();
 
 
             // additional pay

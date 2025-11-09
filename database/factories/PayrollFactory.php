@@ -2,11 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Models\Admin;
 use App\Models\Payroll;
 use App\Models\Employee;
 use App\Models\PayrollPeriod;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class PayrollFactory extends Factory
@@ -48,8 +50,10 @@ class PayrollFactory extends Factory
 
         $payDateStart = $periodStart > $payDateEnd ? $payDateEnd : $periodStart;
         $period = PayrollPeriod::inRandomOrder()->first();
+        $admin = Admin::inRandomOrder()->first();
         return [
             'payroll_id' => Str::uuid(),
+            'admin_id' => $admin->admin_id,
             'employee_id' =>$this->faker->randomElement($employeeIds),
             'payroll_period_id' => $period->payroll_period_id,
             'rate' => $rate,
@@ -59,7 +63,6 @@ class PayrollFactory extends Factory
             'sss_deductions' => $sss,
             'phil_health_deductions' => $philHealth,
             'late_deductions' => $late,
-            'cash_bond' => $cashBond,
             'holiday' => $holiday,
             'night_differential' => $nightDiff,
             'overtime' => $overtime,

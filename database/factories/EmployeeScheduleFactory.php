@@ -2,12 +2,14 @@
 
 namespace Database\Factories;
 
+use App\Models\Admin;
 use App\Models\Company;
 use App\Models\Employee;
 use App\Models\EmployeeSchedule;
 use App\Models\Shift;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 /**
@@ -45,9 +47,10 @@ class EmployeeScheduleFactory extends Factory
     $endHour = $startHour + $this->faker->numberBetween(7, 9);
     $start_time = sprintf('%02d:00', $startHour);
     $end_time = sprintf('%02d:00', $endHour);
-
+    $admin = Admin::inRandomOrder()->first();
     return [
         'employee_schedules_id'  => Str::uuid(),
+        'admin_id' => $admin->admin_id,
         'employee_id' => $employee?->employee_id,
         'working_days' => json_encode($workingDays),
         'start_time' => $start_time,

@@ -2,10 +2,12 @@
 
 namespace Database\Factories;
 
+use App\Models\Admin;
 use App\Models\AttendanceLogs;
 use App\Models\Company;
 use App\Models\Employee;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 
@@ -28,9 +30,11 @@ class AttendanceLogsFactory extends Factory
         // add small variation for clock out
         $clockOutLat = $clockInLat + $this->faker->randomFloat(6, -0.001, 0.001);
         $clockOutLong = $clockInLong + $this->faker->randomFloat(6, -0.001, 0.001);
+        $admin = Admin::inRandomOrder()->first();
 
         return [
             'log_id' => Str::uuid(),
+            'admin_id' => $admin->admin_id,
             'employee_id' => $employee ? $employee->employee_id : $this->faker->uuid(),
             'company_id' => $company ? $company->company_id : $this->faker->uuid(),
             'clock_in_time' => $clockIn,
