@@ -21,8 +21,8 @@ class LeaveRequestFactory extends Factory
 
         $approver = Admin::inRandomOrder()->first();
 
-        $leaveTypes = ['Sick Leave', 'Vacation Leave', 'Maternity Leave', 'Paternity Leave', 'Emergency Leave'];
-        $statuses = ['Pending', 'Approved', 'Rejected'];
+        $leaveTypes = ['sick', 'vacation', 'maternity', 'bereavement', 'emergency'];
+        $statuses = ['pending','approved','rejected','need revision'];
 
 
         $startDate = $this->faker->dateTimeBetween('-6 months', '+3 months');

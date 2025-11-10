@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AttendanceController;
 use App\Http\Controllers\Api\EmployeeLoginController;
 use App\Http\Controllers\Api\EmployeeLogoutController;
+use App\Http\Controllers\Api\LeaveRequestController;
 use App\Http\Controllers\Api\PayrollController;
 use App\Http\Controllers\Api\ResetPasswordController;
 use Illuminate\Support\Facades\Route;
@@ -32,4 +33,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/payroll/view', [PayrollController::class, 'showPayroll']);
 
     Route::post('/employee/password-reset', [ResetPasswordController::class, 'resetPassword']);
+
+    Route::post('/employee/leave-request', [LeaveRequestController::class, 'leaveRequest']);
 });
