@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Company;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -15,9 +16,12 @@ class EmployeeController extends Controller
             return response()->json(['message' => 'Unauthorized'], 401);
         }
 
+        $company = Company::find($employee->company_id);
+
         return response()->json([
             'employee_id' => $employee->employee_id,
             'company_id' => $employee->company_id,
+            'company' => $company->company_name ?? 'N/A',
             'profile_photo' => $employee->profile_photo,
             'first_name' => $employee->first_name,
             'middle_name' => $employee->middle_name,
