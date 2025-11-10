@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AttendanceController;
 use App\Http\Controllers\Api\EmployeeLoginController;
 use App\Http\Controllers\Api\EmployeeLogoutController;
 use App\Http\Controllers\Api\PayrollController;
+use App\Http\Controllers\Api\ResetPasswordController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\CompanyController;
@@ -13,7 +14,6 @@ Route::get('/test', function () {
     return 'API loaded!';
 });
 
-//Route::get('/employees', [EmployeeController::class, 'profile']);
 Route::get('/companies', [CompanyController::class, 'index']);
 Route::get('/schedules', [ScheduleController::class, 'index']);
 
@@ -30,4 +30,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/attendance/today', [AttendanceController::class, 'getTodayAttendance']);
 
     Route::get('/payroll/view', [PayrollController::class, 'showPayroll']);
+
+    Route::post('/employee/password-reset', [ResetPasswordController::class, 'resetPassword']);
 });
