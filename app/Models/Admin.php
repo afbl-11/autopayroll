@@ -46,4 +46,12 @@ class Admin extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function announcement() {
+        return $this->hasMany(Announcement::class, 'admin_id', 'admin_id');
+    }
+
+    public function employee() {
+        return $this->hasMany(Employee::class, 'admin_id', 'admin_id');
+    }
 }
