@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AnnouncementController;
 use App\Http\Controllers\Api\AttendanceController;
 use App\Http\Controllers\Api\CreditAdjustmentController;
 use App\Http\Controllers\Api\EmployeeLoginController;
@@ -46,6 +47,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/employee/show/adjustment-request', [CreditAdjustmentController::class, 'showAdjustmentRequest']);
 
     Route::get('/employee/track/adjustment-request', [CreditAdjustmentController::class, 'trackAdjustmentRequest']);
+
+    Route::get('/employee/announcements', [AnnouncementController::class, 'getAnnouncements']);
 
 });
     Route::get('/employee/credit-adjustment/types', [CreditAdjustmentController::class, 'adjustmentTypes']);
