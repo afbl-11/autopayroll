@@ -17,8 +17,9 @@ class SemiPayroll extends TestCase
        $service = app(ComputeSemi::class);
        $result = $service->calculateSemiPayroll();
 
-        dd($result);
+//        dd($result);
 
-        $response->assertStatus(200);
+        $this->assertTrue($result, 'Payroll calculation did not return true');
+        $this->assertDatabaseCount('payrolls', 1);
     }
 }
