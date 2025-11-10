@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class LeaveRequest extends Model
 {
     use HasFactory;
+    protected $table = 'leave_request';
     protected $primaryKey = 'leave_request_id';
     public $incrementing = true;
     protected $keyType = 'string';

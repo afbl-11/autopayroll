@@ -20,7 +20,7 @@ class PayrollController extends Controller
 
 
         if ($payroll->isEmpty()) {
-            return response()->json(['message' => 'Unauthorized'], 401);
+            return response()->json(['message' => 'no record'], 401);
         }
 
         return response()->json([
