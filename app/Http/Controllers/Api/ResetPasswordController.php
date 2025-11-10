@@ -14,6 +14,13 @@ class ResetPasswordController extends Controller
     {
         $employee = $request->user();
 
+        if (!$employee) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Employee not found or not authenticated'
+            ], 401);
+        }
+
         try {
             $request->validate([
                 'password' => 'required|min:8',
