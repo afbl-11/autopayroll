@@ -19,6 +19,10 @@ class CreditAdjustment extends Model
         'employee_id',
         'approver_id',
         'adjustment_type',
+        'subtype',
+        'start_date',
+        'end_date',
+        'attachment_path',
         'reason',
         'status',
         'affected_date'
@@ -26,6 +30,7 @@ class CreditAdjustment extends Model
 
     protected $casts = [
         'affected_date' => 'date'
+
     ];
 
     public function employee() {

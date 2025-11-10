@@ -12,6 +12,7 @@ class Admin extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
     use HasFactory;
+
     protected $primaryKey = 'admin_id';
     public $incrementing = false;
     protected $keyType = 'string';

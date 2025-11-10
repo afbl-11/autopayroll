@@ -39,7 +39,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/employee/show/leave-request', [LeaveRequestController::class, 'showLeaveRequest']);
 
-    Route::get('employee/track/leave-request', [LeaveRequestController::class, 'trackLeaveRequest']);
+    Route::get('/employee/track/leave-request', [LeaveRequestController::class, 'trackLeaveRequest']);
 
-    Route::get('employee/credit-adjustment/types', [CreditAdjustmentController::class, 'adjustmentTypes']);
+    Route::post('/employee/credit-adjustment', [CreditAdjustmentController::class, 'adjustmentRequest']);
+
+    Route::get('/employee/show/adjustment-request', [CreditAdjustmentController::class, 'showAdjustmentRequest']);
+
+    Route::get('/employee/track/adjustment-request', [CreditAdjustmentController::class, 'trackAdjustmentRequest']);
+
 });
+    Route::get('/employee/credit-adjustment/types', [CreditAdjustmentController::class, 'adjustmentTypes']);
