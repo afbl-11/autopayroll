@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use App\Models\LeaveRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -59,6 +60,60 @@ class LeaveRequestController extends Controller
             'success' => true,
             'message' => 'Leave request submitted successfully',
             'leave' => $leave
+        ]);
+    }
+
+    public function showLeaveRequest(Request $request) {
+        $employee = $request->user();
+
+        if (!$employee) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Employee not found or not authenticated'
+            ], 401);
+        }
+
+        $leaveRequest = LeaveRequest::where('employee_id', $employee->employee_id)->get();
+
+        if (!$leaveRequest) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Leave request not found'
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $leaveRequest
+        ]);
+    }
+
+    public function trackLeaveRequest(Request $request) {
+
+        $employee = $request->user();
+
+        if (!$employee) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Employee not found or not authenticated'
+            ]);
+        }
+
+        $leaveRequest = LeaveRequest::where('employee_id', $employee->employee_id)
+            ->whereNull('approver_id')
+            ->where('status', 'pending')
+            ->get();
+
+        if ($leaveRequest->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'No pending leave request found'
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $leaveRequest
         ]);
     }
 }

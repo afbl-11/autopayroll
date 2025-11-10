@@ -35,4 +35,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/employee/password-reset', [ResetPasswordController::class, 'resetPassword']);
 
     Route::post('/employee/leave-request', [LeaveRequestController::class, 'leaveRequest']);
+
+    Route::get('/employee/show/leave-request', [LeaveRequestController::class, 'showLeaveRequest']);
+
+    Route::get('employee/track/leave-request', [LeaveRequestController::class, 'trackLeaveRequest']);
 });
