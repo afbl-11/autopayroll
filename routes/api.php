@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AttendanceController;
+use App\Http\Controllers\Api\CreditAdjustmentController;
 use App\Http\Controllers\Api\EmployeeLoginController;
 use App\Http\Controllers\Api\EmployeeLogoutController;
 use App\Http\Controllers\Api\LeaveRequestController;
@@ -39,4 +40,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/employee/show/leave-request', [LeaveRequestController::class, 'showLeaveRequest']);
 
     Route::get('employee/track/leave-request', [LeaveRequestController::class, 'trackLeaveRequest']);
+
+    Route::get('employee/credit-adjustment/types', [CreditAdjustmentController::class, 'adjustmentTypes']);
 });
