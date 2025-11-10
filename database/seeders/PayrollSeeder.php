@@ -13,6 +13,6 @@ class PayrollSeeder extends Seeder
      */
     public function run(): void
     {
-        Payroll::factory()->count(10)->create();
+        Payroll::factory()->count(30)->create();
     }
 }
