@@ -26,16 +26,23 @@ return new class extends Migration
                 ->on('employees')
                 ->onDelete('cascade');
 
-            $table->string('approver_id');
+            $table->string('approver_id')->nullable();
             $table->foreign('approver_id')
                 ->references('admin_id')
                 ->on('admins')
                 ->onDelete('cascade');
 
-            $table->enum('adjustment_type',['attendance','leave','official business']);
-            $table->string('reason');
-            $table->enum('status',['approved','rejected']);
-            $table->date('affected_date');
+            $table->date('affected_date')->nullable();
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
+
+            $table->enum('adjustment_type',['attendance','leave','payroll', 'official_business']);
+            $table->string('subtype')->nullable();
+
+            $table->text('reason')->nullable();
+            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->string('attachment_path')->nullable();
+
             $table->timestamps();
         });
     }
