@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminRegistrationController;
+use App\Http\Controllers\AnnouncementsController;
 use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\ClientRegistrationController;
 use App\Http\Controllers\CompanyDashboardController;
@@ -186,6 +187,25 @@ Route::get('dashboard/employee/payroll/{id}', [EmployeePayrollController::class,
     ->middleware('auth:admin')
     ->name('employee.dashboard.payroll');
 
+Route::get('/announcements', [AnnouncementsController::class, 'getAnnouncements'])
+    ->middleware('auth:admin')
+    ->name('announcements');
+
+Route::get('/announcements/detail/{id}', [AnnouncementsController::class, 'getAnnouncementDetail'])
+    ->middleware('auth:admin')
+    ->name('announce.detail');
+
+Route::post('/announcement/delete/{id}', [AnnouncementsController::class, 'deleteAnnouncement'])
+    ->middleware('auth:admin')
+    ->name('delete.announcement');
+
+Route::get('/announcement/create/', [AnnouncementsController::class, 'createAnnouncement'])
+    ->middleware('auth:admin')
+    ->name('create.announcement');
+
+Route::post('/announcement/post/success', [AnnouncementsController::class, 'postAnnouncement'])
+    ->middleware('auth:admin')
+    ->name('post.announcement');
 
 
 //employee registration
