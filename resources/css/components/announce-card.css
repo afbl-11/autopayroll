@@ -1,0 +1,30 @@
+.announce-card {
+    width: 95%;
+    height: 100px;
+    display: flex;
+    /*justify-content: center;*/
+    box-shadow: 2px 5px 5.9px 0 rgba(136, 125, 125, 0.25);
+    background: var(--clr-card-surface);
+    border-radius: 16px;
+    align-items: center;
+}
+.announce-card:hover {
+    background: #ecf1f1;
+    cursor: pointer;
+}
+
+.announce-card .title {
+    font-weight: 600;
+}
+.announce-card .title,
+.announce-card .date {
+    width: 20%;
+    text-align: center;
+}
+
+.announce-card .message {
+    width: 60%;
+    text-align: start;
+    overflow:clip;
+    color: var(--clr-secondary);
+}
