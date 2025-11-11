@@ -26,7 +26,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{{route('announcements')}}">
                         <img src="{{ asset('assets/navigations/bell.png') }}" alt="Notifications Icon">
                     </a>
                 </li>
