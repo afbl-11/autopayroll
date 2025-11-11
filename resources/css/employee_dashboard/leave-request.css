@@ -102,3 +102,7 @@ form {
     background: var(--clr-primary) !important;
     color: var(--clr-background);
 }
+#empty {
+    text-align: center;
+    margin-top: 150px;
+}
