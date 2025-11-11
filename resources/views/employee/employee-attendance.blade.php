@@ -8,6 +8,7 @@
         :noClockOut="$totalNoClockOut"
         :totalAbsences="$absences"
         leaveBalance="15"
+        :id="$employee->employee_id"
     />
     <section class="main-content">
 
