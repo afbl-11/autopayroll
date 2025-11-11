@@ -18,7 +18,7 @@
                 <h6>Request List</h6>
             </nav>
             <div class="request-cards">
-                @foreach($leave as $leaves)
+                @forelse($leave as $leaves)
                     <x-leave-card
                         :leaveId="$leaves->leave_request_id"
                         :employeeId="$employee->employee_id"
@@ -27,7 +27,9 @@
                         :date="\Carbon\Carbon::parse($leaves->submission_date)->format('Y-m-d')"
                         :status="$leaves->status"
                     />
-                @endforeach
+                    @empty
+                    <p id="empty" >Employee currently don't have a request</p>
+                @endforelse
             </div>
         </div>
 
