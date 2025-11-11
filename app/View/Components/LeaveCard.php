@@ -6,20 +6,18 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class AttendanceNavigation extends Component
+class LeaveCard extends Component
 {
     /**
      * Create a new component instance.
      */
     public function __construct(
-        public $daysActive = null,
-        public $totalLate = null,
-        public $totalOvertime = null,
-        public $noClockOut = null,
-        public $totalAbsences = null,
-        public $leaveBalance = null,
-        public $id
-
+        public $leaveId = null,
+        public $employeeId = null,
+        public $leaveType = null,
+        public $message = null,
+        public $date = null,
+        public $status = null,
     )
     {}
 
@@ -28,6 +26,6 @@ class AttendanceNavigation extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.attendance-navigation');
+        return view('components.leave-card');
     }
 }

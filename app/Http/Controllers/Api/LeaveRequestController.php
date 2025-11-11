@@ -25,8 +25,8 @@ class LeaveRequestController extends Controller
 
         try {
             $request->validate([
-                'start_date' => 'required|date|before_or_equal:end_date',
-                'end_date' => 'required|date|after_or_equal:start_date',
+                'start_date' => 'required|date_format:Y-m-d|before_or_equal:end_date',
+                'end_date'   => 'required|date_format:Y-m-d|after_or_equal:start_date',
                 'reason' => 'required|string|max:255',
                 'leave_type' => 'required|in:sick,vacation,maternity,bereavement,emergency',
                 'attachment' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',

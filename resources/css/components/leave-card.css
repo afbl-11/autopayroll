@@ -1,0 +1,36 @@
+.leave-card {
+    display: flex;
+    /*justify-content: center;*/
+    width: 100%;
+    height: 50px;
+    padding: 10px;
+    background: var(--clr-card-surface);
+    border-bottom: 1px solid var(--clr-muted);
+}
+
+.leave-card:hover {
+    background-color: #f1f1f1;;
+    cursor: pointer;
+}
+
+.leave-card .leave-type  {
+    font-weight: 600;
+}
+.leave-card .leave-type ,
+.leave-card .leave-date,
+.leave-card .status {
+    display: flex;
+    width: 10%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.leave-card .leave-message {
+    color: var(--clr-secondary);
+    align-items: center;
+    text-align: start;
+    display: flex;
+    width: 70%;
+    padding-left: 10px;
+    overflow: clip;
+}

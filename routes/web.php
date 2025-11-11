@@ -7,6 +7,7 @@ use App\Http\Controllers\CompanyDashboardController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeDashboardController;
 use App\Http\Controllers\EmployeePayrollController;
+use App\Http\Controllers\LeaveRequestController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PayrollController;
@@ -156,6 +157,26 @@ Route::get('dashboard/employee/contract/{id}', [EmployeeDashboardController::cla
 Route::get('dashboard/employee/attendance/{id}', [EmployeeDashboardController::class, 'showAttendance'])
     ->middleware('auth:admin')
     ->name('employee.dashboard.attendance');
+
+Route::get('dashboard/employee/leave-request/{id}', [LeaveRequestController::class, 'showLeaveRequest'])
+    ->middleware('auth:admin')
+    ->name('employee.leave.request');
+
+Route::get('/dashboard/employee/leave-detail/{leaveId}/{employeeId}', [LeaveRequestController::class, 'showLeaveRequestDetail'])
+    ->middleware('auth:admin')
+    ->name('employee.leave.detail');
+
+Route::post('/dashboard/employee/leave/approve/{employeeId}/{leaveId}', [LeaveRequestController::class, 'approveLeaveRequest'])
+    ->middleware('auth:admin')
+    ->name('approve.leave');
+
+Route::post('/dashboard/employee/leave/revise/{employeeId}/{leaveId}', [LeaveRequestController::class, 'reviseLeaveRequest'])
+    ->middleware('auth:admin')
+    ->name('revise.leave');
+
+Route::post('/dashboard/employee/leave/reject/{employeeId}/{leaveId}', [LeaveRequestController::class, 'rejectLeaveRequest'])
+    ->middleware('auth:admin')
+    ->name('reject.leave');
 
 Route::get('dashboard/employee/documents/{id}', [EmployeeDashboardController::class, 'showDocuments'])
     ->middleware('auth:admin')

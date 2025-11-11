@@ -3,9 +3,9 @@
 <div {{$attributes->class('content-wrapper')}}>
     <div class="links">
         <ul>
-            <li><a href="">Attendance</a></li>
+            <li><a href="{{route('employee.dashboard.attendance', ['id' => $id])}}">Attendance</a></li>
             <li><a href=""></a>Absences</li>
-            <li><a href=""></a>Leave Request</li>
+            <li><a href="{{route('employee.leave.request', ['id' => $id])}}">Leave Request</a></li>
         </ul>
     </div>
     <div class="summary-content">
