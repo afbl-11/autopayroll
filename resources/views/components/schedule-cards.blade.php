@@ -4,8 +4,8 @@
     {{$attributes->class('card-wrapper')}}
     data-id="{{$id}}"
     data-name="{{$name}}"
-    data-start="{{$start ?? ''}}"
-    data-end="{{$end ?? ''}}"
+    data-start="{{formatTimeOrDash($start) ?? ''}}"
+    data-end="{{formatTimeOrDash($end) ?? ''}}"
     data-description="{{$description ?? ''}}"
     data-labels="{{$labels ?? ''}}"
     onclick="selectScheduleCard(this)"
@@ -22,8 +22,8 @@
 
     <div class="input-wrapper">
         <div class="shift-wrapper">
-            <small>{{ 'Starts at: ' . ($start ?: '—') }}</small>
-            <small>{{ 'Ends at: ' . ($end ?: '—') }}</small>
+            <small>Starts at: {{ formatTimeOrDash($start) }}</small>
+            <small>Ends at: {{ formatTimeOrDash($end) }}</small>
         </div>
         <div class="schedule-wrapper">
             <small>{{ $description ?: 'No schedule assigned' }}</small> <br>

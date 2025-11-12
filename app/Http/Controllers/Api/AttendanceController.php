@@ -97,6 +97,7 @@ class AttendanceController extends Controller
             'admin_id' => $employee->admin_id,
             'employee_id' => $employee->employee_id,
             'company_id' => $validated['company_id'],
+            'log_date' => now()->format('Y-m-d'),
             'clock_in_time' => now(),
             'clock_in_latitude' => $validated['latitude'],
             'clock_in_longitude' => $validated['longitude'],

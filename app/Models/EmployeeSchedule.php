@@ -30,8 +30,8 @@ class EmployeeSchedule extends Model
 
     protected $casts = [
         'working_days' => 'array',
-        'start' => 'datetime:H:i',
-        'end' => 'datetime:H:i',
+//        'start_time' => 'datetime:H:i',
+//        'end_time' => 'datetime:H:i',
     ];
 
     /**

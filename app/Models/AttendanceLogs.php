@@ -19,6 +19,8 @@ class AttendanceLogs extends Model
         'admin_id',
         'employee_id',
         'company_id',
+        'log_date',
+        'is_adjusted',
         'clock_in_time',
         'clock_out_time',
         'clock_in_latitude',
@@ -28,6 +30,7 @@ class AttendanceLogs extends Model
     ];
 
     protected $casts = [
+        'log_date' => 'date_format:Y-m-d',
         'clock_in_latitude' => 'decimal:8',
         'clock_in_longitude' => 'decimal:8',
         'clock_out_latitude' => 'decimal:8',

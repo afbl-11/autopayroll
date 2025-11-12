@@ -16,7 +16,6 @@
 @push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- existing checkbox behavior ---
             const checkboxes = document.querySelectorAll('.custom-checkbox');
 
             checkboxes.forEach(label => {
@@ -30,7 +29,6 @@
                 });
             });
 
-            // --- NEW: handle clicking employee schedule cards ---
             const cards = document.querySelectorAll('.card-wrapper');
             const employeeIdInput = document.querySelector('#employee_id');
             const startTimeInput = document.querySelector('#custom_start');
@@ -45,6 +43,8 @@
                     // populate hidden field
                     employeeIdInput.value = employeeId;
 
+                    startTimeInput.value = start ? start.slice(0,5) : '';
+                    endTimeInput.value = end ? end.slice(0,5) : '';
                     // populate time fields
                     startTimeInput.value = start;
                     endTimeInput.value = end;
