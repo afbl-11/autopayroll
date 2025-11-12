@@ -41,7 +41,7 @@ No need to repeat these common styles in other CSS files.
 
 
     /*status colors*/
-    --clr-yellow: #FFD858;
+    --clr-yellow: rgb(255, 216, 88);
     --clr-red: #BA2A2A;
     --clr-green: #3CBF6C;
     --clr-light-green: #6FEA95;

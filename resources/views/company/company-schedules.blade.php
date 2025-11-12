@@ -99,7 +99,7 @@
                             @if($employee->employeeSchedule->isNotEmpty())
                                 @foreach($employee->employeeSchedule as $schedule)
                                     <x-schedule-cards
-                                        :image="'assets/profile-pic.png'"
+                                        :image="'assets/default_profile.png'"
                                         :name="$employee->first_name . ' ' . $employee->last_name"
                                         :id="$employee->employee_id"
                                         :start="$schedule->start_time"
@@ -111,7 +111,7 @@
                                 @endforeach
                             @else
                                 <x-schedule-cards
-                                    :image="'assets/profile-pic.png'"
+                                    :image="'assets/default_profile.png'"
                                     :name="$employee->first_name . ' ' . $employee->last_name"
                                     :id="$employee->employee_id"
                                     :start="''"

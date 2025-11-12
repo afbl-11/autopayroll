@@ -78,6 +78,7 @@ class DailyPayrollLogFactory extends Factory
             'clock_in_time' => $clockIn,
             'payroll_date' => $clockIn->format('Y-m-d'),
             'clock_out_time' => $clockOut,
+            'is_adjusted' => false,
         ];
     }
 }
