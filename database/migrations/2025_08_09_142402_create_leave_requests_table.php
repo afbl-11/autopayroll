@@ -33,6 +33,8 @@ return new class extends Migration
                 ->on('admins')
                 ->onDelete('cascade');
 
+            $table->boolean('is_adjusted')->default(false);
+
             $table->enum('leave_type', ['sick', 'vacation', 'maternity', 'bereavement', 'emergency']);
             $table->date('start_date');
             $table->date('end_date');

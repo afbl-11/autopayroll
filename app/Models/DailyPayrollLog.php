@@ -32,6 +32,7 @@ class DailyPayrollLog extends Model
         'work_hours',
         'clock_in_time',
         'clock_out_time',
+        'is_adjusted',
     ];
 
     // Relationships

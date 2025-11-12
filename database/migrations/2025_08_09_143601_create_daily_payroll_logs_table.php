@@ -45,6 +45,7 @@ return new class extends Migration
             $table->dateTime('clock_out_time');
 
             $table->date('payroll_date');
+            $table->boolean('is_adjusted')->default(false);
 
             $table->timestamps();
         });

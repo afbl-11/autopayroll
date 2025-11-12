@@ -35,6 +35,10 @@ return new class extends Migration
             $table->dateTime('clock_in_time')->nullable();
             $table->dateTime('clock_out_time')->nullable();
 
+            $table->date('log_date')->nullable();
+            $table->enum('status', ['present', 'absent', 'on_leave', 'official_business']);
+            $table->boolean('is_adjusted')->default(false);
+
             $table->decimal('clock_in_latitude', 10, 8)->nullable();
             $table->decimal('clock_in_longitude', 11, 8)->nullable();
 
