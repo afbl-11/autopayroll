@@ -24,6 +24,13 @@ class AttendanceController extends Controller
     {
         $employee = $request->user();
 
+        if(!$employee){
+            return response()->json([
+                'success' => false,
+                'message' => 'Employee not found'
+            ]);
+        }
+
         $validated = $request->validate([
             'company_id' => 'required|string',
             'token' => 'required|string',
@@ -87,6 +94,7 @@ class AttendanceController extends Controller
 
         $attendance = AttendanceLogs::create([
             'log_id' => Str::uuid(),
+            'admin_id' => $employee->admin_id,
             'employee_id' => $employee->employee_id,
             'company_id' => $validated['company_id'],
             'clock_in_time' => now(),
