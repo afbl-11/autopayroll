@@ -49,7 +49,7 @@ class DailyPayrollLog extends Model
 
     public function attendanceLog()
     {
-        return $this->belongsTo(AttendanceLog::class, 'log_id', 'log_id');
+        return $this->belongsTo(AttendanceLogs::class, 'log_id', 'log_id');
     }
     protected static function booted() {
         static::addGlobalScope(new AdminScope);
