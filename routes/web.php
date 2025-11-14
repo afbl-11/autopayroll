@@ -5,6 +5,7 @@ use App\Http\Controllers\AnnouncementsController;
 use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\ClientRegistrationController;
 use App\Http\Controllers\CompanyDashboardController;
+use App\Http\Controllers\CreditAdjustmentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeDashboardController;
 use App\Http\Controllers\EmployeePayrollController;
@@ -222,6 +223,10 @@ Route::post('/employees/register/designation', [EmployeeRegistrationController::
 Route::post('/employees/register/credentials', [EmployeeRegistrationController::class, 'storeCredentials'])->name('store.employee.register.4');
 Route::post('/employees/register/create', [EmployeeRegistrationController::class, 'createEmployee'])->name('employee.create');
 });
+
+Route::get('/adjustments', [CreditAdjustmentController::class, 'showAdjustments'])
+    ->middleware('auth:admin')
+    ->name('adjustments');
 
 //password management
 Route::get('/forgot_password', function () {

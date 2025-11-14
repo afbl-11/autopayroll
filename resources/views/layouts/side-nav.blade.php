@@ -21,7 +21,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{{route('adjustments')}}">
                         <img src="{{ asset('assets/navigations/compliance.png') }}" alt="Compliance Icon">
                     </a>
                 </li>

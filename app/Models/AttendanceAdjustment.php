@@ -15,6 +15,7 @@ class AttendanceAdjustment extends Model
         'attendance_adjustment_id',
         'log_id',
         'employee_id',
+        'company_id',
         'admin_id',
         'clock_in_time',
         'clock_out_time',
