@@ -178,7 +178,7 @@ class AttendanceController extends Controller
         }
 
         $attendance->update([
-            'clock_out_time' => now()->addHour(3),
+            'clock_out_time' => now(),
             'clock_out_latitude' => $validated['latitude'],
             'clock_out_longitude' => $validated['longitude'],
         ]);

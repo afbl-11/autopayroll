@@ -49,7 +49,7 @@ class CreateDailyPayroll
         }
         /*
          * computes payroll, then creates the payroll log
-         * todo: should check if created successfully after log out, if not, run again
+
          * */
         return $this->payroll->computePayroll($employee_id);
     }

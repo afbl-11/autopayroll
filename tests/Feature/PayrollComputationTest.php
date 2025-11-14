@@ -20,13 +20,14 @@ class PayrollComputationTest extends TestCase
     public function it_computes_the_payroll_for_an_employee()
     {
 
-        $employee = Employee::find('20252255');
+        $employee = Employee::find('20253105');
 
 //        dd($employee);
 
         $service = app(PayrollComputation::class);
         $result = $service->computePayroll($employee->employee_id);
 
+        dd($result);
 
         $this->assertNotNull($result);
         $this->assertTrue($result['net_salary'] >= 0);
