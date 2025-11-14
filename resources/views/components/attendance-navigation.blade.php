@@ -4,7 +4,7 @@
     <div class="links">
         <ul>
             <li><a href="{{route('employee.dashboard.attendance', ['id' => $id])}}">Attendance</a></li>
-            <li><a href=""></a>Absences</li>
+{{--            <li><a href=""></a>Absences</li>--}}
             <li><a href="{{route('employee.leave.request', ['id' => $id])}}">Leave Request</a></li>
         </ul>
     </div>
