@@ -11,8 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('daily_payroll_logs', function (Blueprint $table) {
-            $table->uuid('daily_payroll_id')->primary();
+        Schema::create('payroll_adjustments', function (Blueprint $table) {
+            $table->uuid('payroll_adjustment_id')->primary();
+
+            $table->string('daily_payroll_id');
+            $table->foreign('daily_payroll_id')
+                ->references('daily_payroll_id')
+                ->on('daily_payroll_logs')
+                ->onDelete('cascade');
 
             $table->string('admin_id');
             $table->foreign('admin_id')
@@ -31,21 +37,15 @@ return new class extends Migration
                 ->on('payroll_periods')
                 ->onDelete('cascade');
 
-            $table->decimal('gross_salary',10,2);
-            $table->decimal('net_salary',10,2);
-            $table->decimal('deduction',10,2);  //late
+            $table->decimal('gross_salary',10,2)->nullable();
+            $table->decimal('net_salary',10,2)->nullable();
+            $table->decimal('deduction',10,2)->nullable();  //late
 
-            $table->decimal('overtime',10,2);
-            $table->decimal('night_differential',10,2);
-            $table->decimal('holiday_pay',10,2);
+            $table->decimal('overtime',10,2)->nullable();
+            $table->decimal('night_differential',10,2)->nullable();
+            $table->decimal('holiday_pay',10,2)->nullable();
 
-            $table->integer('late_time');
-            $table->integer('work_hours');
-            $table->dateTime('clock_in_time');
-            $table->dateTime('clock_out_time');
-
-            $table->date('payroll_date');
-            $table->boolean('is_adjusted')->default(false);
+            $table->date('adjusted_date');
 
             $table->timestamps();
         });
@@ -56,6 +56,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('daily_payroll_logs');
+        Schema::dropIfExists('payroll_adjustments');
     }
 };

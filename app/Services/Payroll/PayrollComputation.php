@@ -119,6 +119,7 @@ class PayrollComputation
         return DailyPayrollLog::create([
             'daily_payroll_id' => Str::uuid(),
             'employee_id' => $employee->employee_id,
+            'admin_id' => $employee->admin_id,
             'payroll_period_id' => $periodId,
             'gross_salary' => $gross_daily_salary,
             'net_salary' => $net_salary,

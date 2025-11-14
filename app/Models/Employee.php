@@ -96,7 +96,7 @@ class Employee extends Authenticatable
     }
     public function rates()
     {
-        return $this->hasMany(EmployeeRate::class, 'employee_id', 'id');
+        return $this->hasMany(EmployeeRate::class, 'employee_id', 'employee_id');
     }
     public function currentRate()
     {
@@ -108,7 +108,10 @@ class Employee extends Authenticatable
             })
             ->latest('effective_from');
     }
-
+    public function creditAdjustments()
+    {
+        return $this->hasMany(CreditAdjustment::class, 'employee_id', 'employee_id');
+    }
     protected static function booted() {
         static::addGlobalScope(new AdminScope);
 

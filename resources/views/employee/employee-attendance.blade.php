@@ -12,11 +12,10 @@
     />
     <section class="main-content">
 
-{{--{{$absences}}--}}
         @forelse ($attendance['logs'] as $log)
             <x-attendance-logs
-                :clockIn="$log->clock_in_time"
-                :clockOut="$log->clock_out_time"
+                :clockIn="formatTimeOrDash($log->clock_in_time)"
+                :clockOut="formatTimeOrDash($log->clock_out_time)"
 {{--                :dayDate=""--}}
 {{--                :dayWeek=""--}}
 {{--                :duration=""--}}

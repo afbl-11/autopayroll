@@ -11,8 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('attendance_logs', function (Blueprint $table) {
-            $table->uuid('log_id')->primary();
+        Schema::create('attendance_adjustments', function (Blueprint $table) {
+            $table->uuid('attendance_adjustment_id')->primary();
+
+            $table->foreignUuid('log_id')
+               ->references('log_id')
+                ->on('attendance_logs')
+                ->onDelete('cascade');
+
 
             $table->string('admin_id');
             $table->foreign('admin_id')
@@ -35,19 +41,8 @@ return new class extends Migration
             $table->dateTime('clock_in_time')->nullable();
             $table->dateTime('clock_out_time')->nullable();
 
-            $table->date('log_date')->nullable();
-            $table->enum('status', ['present', 'absent', 'on_leave', 'official_business']);
-            $table->boolean('is_adjusted')->default(false);
-
-            $table->decimal('clock_in_latitude', 10, 8)->nullable();
-            $table->decimal('clock_in_longitude', 11, 8)->nullable();
-
-            $table->decimal('clock_out_latitude', 10, 8)->nullable();
-            $table->decimal('clock_out_longitude', 11, 8)->nullable();
-
-
+            $table->enum('status', ['present', 'absent', 'on_leave', 'official_business'])->nullable();
             $table->timestamps();
-
         });
     }
 
@@ -56,6 +51,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('attendance_logs');
+        Schema::dropIfExists('attendance_adjustments');
     }
 };

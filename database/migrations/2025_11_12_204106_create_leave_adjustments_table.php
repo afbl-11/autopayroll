@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Employee;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,8 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('leave_request', function (Blueprint $table) {
-            $table->uuid('leave_request_id')->primary();
+        Schema::create('leave_adjustments', function (Blueprint $table) {
+            $table->uuid('leave_adjustment_id')->primary();
+
+            $table->foreignuuid('leave_request_id')
+                ->references('leave_request_id')
+                ->on('leave_request')
+                ->onDelete('cascade');
 
             $table->string('admin_id');
             $table->foreign('admin_id')
@@ -27,21 +31,12 @@ return new class extends Migration
                 ->on('employees')
                 ->onDelete('cascade');
 
-            $table->string('approver_id')->nullable();
-            $table->foreign('approver_id')
-                ->references('admin_id')
-                ->on('admins')
-                ->onDelete('cascade');
 
-            $table->boolean('is_adjusted')->default(false);
-
-            $table->enum('leave_type', ['sick', 'vacation', 'maternity', 'bereavement', 'emergency']);
-            $table->date('start_date');
-            $table->date('end_date');
-            $table->string('reason');
-            $table->enum('status', ['pending','approved','rejected','need revision'])->default('pending');
+            $table->enum('leave_type', ['sick', 'vacation', 'maternity', 'bereavement', 'emergency'])->nullable();
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
+            $table->enum('status', ['pending','approved','rejected','need revision'])->default('pending')->nullable();
             $table->string('supporting_doc')->nullable(); //images, word, pdf file
-            $table->date('submission_date');
             $table->timestamps();
         });
     }
@@ -51,6 +46,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('leave_request');
+        Schema::dropIfExists('leave_adjustments');
     }
 };

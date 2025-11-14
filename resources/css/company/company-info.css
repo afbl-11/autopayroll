@@ -4,6 +4,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    padding-bottom: 50px;
 }
 .information-card h6:last-child {
     margin-top: 10px;
@@ -23,6 +25,7 @@
     background-color: var(--clr-card-surface);
     gap: 20px;
     pointer-events: none;
+    box-shadow: 2px 5px 5.9px 0 rgba(136, 125, 125, 0.25);
 }
 .form-input {
     width: 50% !important;
@@ -33,9 +36,6 @@
     border-bottom: 1px solid var(--clr-primary) !important; ;
 }
 
-#longitude {
-    /*width: 47% !important;*/
-}
 
 .field-row {
     display: flex !important;

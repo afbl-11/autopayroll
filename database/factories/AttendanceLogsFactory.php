@@ -31,7 +31,7 @@ class AttendanceLogsFactory extends Factory
         $clockOutLat = $clockInLat + $this->faker->randomFloat(6, -0.001, 0.001);
         $clockOutLong = $clockInLong + $this->faker->randomFloat(6, -0.001, 0.001);
         $admin = Admin::inRandomOrder()->first();
-
+        $status =['present', 'absent', 'on_leave', 'official_business'];
         return [
             'log_id' => Str::uuid(),
             'admin_id' => $admin->admin_id,
@@ -43,6 +43,9 @@ class AttendanceLogsFactory extends Factory
             'clock_in_longitude' => $clockInLong,
             'clock_out_latitude' => $clockOutLat,
             'clock_out_longitude' => $clockOutLong,
+            'log_date' => Carbon::now()->format('Y-m-d'),
+            'is_adjusted' => false,
+            'status' => $status[0],
 //            'android_id' => $employee ? 'device-' . $this->faker->uuid() : null,
         ];
     }

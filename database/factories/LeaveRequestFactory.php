@@ -34,6 +34,7 @@ class LeaveRequestFactory extends Factory
             'employee_id' => $employee ? $employee->employee_id : $this->faker->uuid(),
             'approver_id' => $approver ? $approver->admin_id : $this->faker->uuid(),
             'leave_type' => $this->faker->randomElement($leaveTypes),
+            'is_adjusted' => false,
             'start_date' => $startDate->format('Y-m-d'),
             'end_date' => $endDate->format('Y-m-d'),
             'reason' => $this->faker->sentence(6),

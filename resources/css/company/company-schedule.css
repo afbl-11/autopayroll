@@ -16,9 +16,11 @@
     height: 500px;
     padding: 15px;
     border-radius: 16px;
+    box-shadow: 2px 5px 5.9px 0 rgba(136, 125, 125, 0.25);
 }
 .schedule-wrapper{
     width: 30%;
+
 }
 .field-row {
     display: flex !important;
@@ -43,4 +45,13 @@
     justify-content: start;
     align-items: center;
     width: 100%;
+}
+.button-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.button-filled {
+    width: 100% !important;
 }

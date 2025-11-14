@@ -16,7 +16,7 @@ class ImageLink extends Component
 
     public function __construct(protected  $user = null, protected bool $admin = false)
     {
-        $this->image = "/assets/profile-pic.png";
+        $this->image = "/assets/default_profile.png";
         $this->profileRoute = "admin.profile";
     }
 

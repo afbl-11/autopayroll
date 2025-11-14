@@ -27,6 +27,11 @@
     transition: 0.3s ease-in-out;
 }
 
+.card-wrapper:active {
+    transform:scale(0.97);
+    transition: 0.3s ease-in-out;
+}
+
 .card-wrapper .profile {
     gap: 2rem;
     align-items: center;
@@ -60,4 +65,5 @@ p {
 .card-wrapper.active {
     background-color: var(--clr-card-inner);
     transition: all 0.2s ease;
+    box-shadow: 2px 5px 5.9px 0 rgba(136, 133, 125, 0.25);
 }

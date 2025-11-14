@@ -26,7 +26,8 @@ class LeaveRequest extends Model
         'reason',
         'status',
         'supporting_doc',
-        'submission_date'
+        'submission_date',
+        'is_adjusted',
     ];
 
     protected $casts = [

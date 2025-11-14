@@ -15,12 +15,19 @@
     transition: all 0.15s ease-in-out;
     position: relative;
     user-select: none;
+    box-shadow: 2px 5px 5.9px 0 rgba(136, 125, 125, 0.25);
+}
+.custom-checkbox:hover,
+.custom-checkbox.active:hover{
+    transform: scale(1.1);
+
 }
 
 .custom-checkbox input {
     position: absolute;
     opacity: 0;
     pointer-events: none;
+
 }
 
 .custom-checkbox.active {
@@ -30,6 +37,9 @@
     transform: scale(1.03);
 }
 
-.custom-checkbox:active {
+.custom-checkbox:active,
+.custom-checkbox.active:active {
+    transform: scale(0.97);
+}{
     transform: scale(0.97);
 }
