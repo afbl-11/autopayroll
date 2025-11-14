@@ -34,4 +34,29 @@ class CreditAdjustmentController extends Controller
 
         return view('creditAdjustment.creditAdjustment', compact('employees'))->with(['title' => 'Credit Adjustments']);
     }
+
+    public function rejectRequest(Request $request) {
+
+        $validated = $request->validate([
+            'adjustment_id' => 'required|exists:credit_adjustments,adjustment_id',
+        ]);
+
+        $this->adjustmentService->rejectRequest($validated);
+
+       return back();
+
+
+    }
+
+    public function approveRequest(Request $request)
+    {
+        $validated = $request->validate([
+            'adjustment_id' => 'required|exists:credit_adjustments,adjustment_id',
+        ]);
+
+        $this->adjustmentService->approveRequest($validated);
+
+        return back();
+
+    }
 }

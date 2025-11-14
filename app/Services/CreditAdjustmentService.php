@@ -18,7 +18,7 @@ class CreditAdjustmentService
         $employee = Employee::find($data['employee_id']);
 
         $log = AttendanceLogs::where('employee_id', $employee->employee_id)
-            ->where('log_id', $data['log_id'])
+            ->where('log_date', $data['log_date'])
             ->first();
 
         $logDate = Carbon::parse($log->log_date)->format('Y-m-d');
@@ -38,15 +38,6 @@ class CreditAdjustmentService
             'clock_in_time' => $clock_in,
             'is_adjusted' => true,
         ]);
-
-        return [
-            'attendance_adjustment_id' => Str::uuid(),
-            'log_id' => $data['log_id'],
-            'company_id' => $employee->company_id,
-            'employee_id' => $data['employee_id'],
-            'admin_id' => $employee->admin_id,
-            'clock_in_time' =>$clock_in,
-        ];
     }
 
     public function adjustClockOut(array $data) {
@@ -153,10 +144,20 @@ class CreditAdjustmentService
         ]);
       }
 
-      public function showRequests() {
-            $requests = CreditAdjustment::where('status', 'pending')->get();
+      public function rejectRequest(array $data) {
 
+          $requests = CreditAdjustment::where('adjustment_id', $data['adjustment_id'])->first();
 
+          $requests->update([
+              'status' => 'rejected'
+          ]);
+      }
 
+      public function approveRequest(array $data) {
+        $requests = CreditAdjustment::where('adjustment_id', $data['adjustment_id'])->first();
+
+        $requests->update([
+            'status' => 'approved'
+        ]);
       }
 }

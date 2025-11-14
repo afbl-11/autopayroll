@@ -18,6 +18,11 @@ class AdjustmentCard extends Component
         public $employeeId = null,
         public $requestId = null,
         public $link = null,
+        public $date = null,
+        public $startDate = null,
+        public $endDate = null,
+        public $message = null,
+
 
     )
     {

@@ -228,6 +228,15 @@ Route::get('/adjustments', [CreditAdjustmentController::class, 'showAdjustments'
     ->middleware('auth:admin')
     ->name('adjustments');
 
+Route::post('/adjustments/reject', [CreditAdjustmentController::class, 'rejectRequest'])
+    ->middleware('auth:admin')
+    ->name('reject.adjustment');
+
+Route::post('/adjustments/approve', [CreditAdjustmentController::class, 'approveRequest'])
+    ->middleware('auth:admin')
+    ->name('approve.adjustment');
+
+
 //password management
 Route::get('/forgot_password', function () {
     return view('auth.authVerify');

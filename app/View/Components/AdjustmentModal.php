@@ -17,8 +17,11 @@ class AdjustmentModal extends Component
         public $type = null,
         public $employeeId = null,
         public $requestId = null,
+        public $logDate = null,
+        public $affected_date = null,
         public $startDate = null,
         public $endDate = null,
+        public $name = null
 
 
     )

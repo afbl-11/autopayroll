@@ -2,11 +2,8 @@
 
 <x-app :noDefault="true" :noHeader="true">
     <div class="content-wrapper">
-
-        <!-- Left: Employee Cards -->
         <section class="main-content">
             @include('components.header', ['title' => $title, 'source' => 'admin.profile'])
-
             @foreach($employees as $employee)
                 @foreach($employee->creditAdjustments as $requests)
                     <x-adjustment-card
@@ -16,9 +13,16 @@
                         :message="$requests->reason"
                         :employeeId="$employee->employee_id"
                         :requestId="$requests->adjustment_id"
+                        :date="$requests->affected_date"
+                        :startDate="$requests->start_date"
+                        :endDate="$requests->end_date"
+                        data-name="{{$employee->first_name . ' ' . $employee->last_name}}"
+                        data-type="{{$requests->adjustment_type}}"
+                        data-message="{{$requests->reason}}"
                     />
                 @endforeach
             @endforeach
+
         </section>
 
         <!-- Right: Side Content Accordion -->
@@ -38,6 +42,7 @@
                                     @csrf
                                     <input type="hidden" name="employee_id" class="employee_id">
                                     <input type="hidden" name="request_id" class="request_id">
+                                    <input type="hidden" name="affected_date" class="affected_date">
 
                                     <x-form-input
                                         type="time"
@@ -58,6 +63,7 @@
                                     @csrf
                                     <input type="hidden" name="employee_id" class="employee_id">
                                     <input type="hidden" name="request_id" class="request_id">
+                                    <input type="hidden" name="affected_date" class="affected_date">
 
                                    <x-form-input
                                         label="Time out"
@@ -78,6 +84,7 @@
                                     @csrf
                                     <input type="hidden" name="employee_id" class="employee_id">
                                     <input type="hidden" name="request_id" class="request_id">
+                                    <input type="hidden" name="affected_date" class="affected_date">
 
                                     <x-form-input
                                         label="Time in"
@@ -124,6 +131,8 @@
                                     @csrf
                                     <input type="hidden" name="employee_id" class="employee_id">
                                     <input type="hidden" name="request_id" class="request_id">
+                                    <input type="hidden" name="start_date" class="start_date">
+                                    <input type="hidden" name="end_date" class="end_date">
 
                                     <x-form-input
                                         label="Start Date"
@@ -155,6 +164,8 @@
                             @csrf
                             <input type="hidden" name="employee_id" class="employee_id">
                             <input type="hidden" name="request_id" class="request_id">
+                            <input type="hidden" name="affected_date" class="affected_date">
+
 
                             <x-form-input
                                 label="Date"
@@ -185,7 +196,13 @@
         </section>
 
     </div>
+    <div id="adjustment-modal" class="adjustment-modal hidden">
+        <div id="adjustment-modal-container">
+            @include('components.adjustment-modal')
+        </div>
+    </div>
 </x-app>
+
 <script>
     document.addEventListener('DOMContentLoaded', () => {
 
@@ -234,16 +251,61 @@
                 // Get employee and request IDs
                 const employeeId = card.dataset.employee;
                 const requestId = card.dataset.request;
+                const date = card.dataset.affectedDate;
+                const startDate = card.dataset.startDate;
+                const endDate = card.dataset.endDate;
 
                 // Prefill hidden inputs in all forms
                 document.querySelectorAll('.adjustment-form input.employee_id').forEach(input => input.value = employeeId);
                 document.querySelectorAll('.adjustment-form input.request_id').forEach(input => input.value = requestId);
-
-                // Automatically open Attendance accordion by default
-                // const attendanceAccordion = document.querySelector('.accordion-group[data-type="attendance"] .accordion-body');
-                // attendanceAccordion.classList.add('open');
+                document.querySelectorAll('.adjustment-form input.affected_date').forEach(input => input.value = date);
+                document.querySelectorAll('.adjustment-form input.start_date').forEach(input => input.value = startDate);
+                document.querySelectorAll('.adjustment-form input.end_date').forEach(input => input.value = endDate);
             });
         });
 
     });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const modal = document.getElementById('adjustment-modal');
+
+        document.querySelectorAll('.adjustment-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const name = card.dataset.name;
+                const type = card.dataset.type;
+                const message = card.dataset.message;
+                const affectedDate = card.dataset.affectedDate || '';
+                const startDate = card.dataset.startDate || '';
+                const endDate = card.dataset.endDate || '';
+                const requestId = card.dataset.request;
+
+                // Fill hidden inputs for forms
+                document.getElementById('modal-reject-id').value = requestId;
+                document.getElementById('modal-approve-id'). value = requestId;
+
+
+
+                const modal = document.getElementById('adjustment-modal');
+
+                // Fill modal fields
+                document.getElementById('modal-name').textContent = name;
+                document.getElementById('modal-type').textContent = type;
+                document.getElementById('modal-message').textContent = message;
+                document.getElementById('modal-affected-date').value = affectedDate;
+                document.getElementById('modal-start-date').value = startDate;
+                document.getElementById('modal-end-date').value = endDate;
+
+                // Show modal
+                modal.classList.remove('hidden');
+            });
+        });
+
+        // Close modal on click outside
+        modal.addEventListener('click', e => {
+            if (e.target === modal) {
+                modal.classList.add('hidden');
+            }
+        });
+    });
+
 </script>

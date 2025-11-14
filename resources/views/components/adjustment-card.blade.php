@@ -5,6 +5,12 @@
     {{$attributes->class('adjustment-card')}}
     data-employee="{{$employeeId}}"
     data-request="{{$requestId}}"
+    data-name="{{$name}}"
+    data-type="{{$type}}"
+    data-message="{{$message}}"
+    data-affected-date="{{ $date ? \Carbon\Carbon::parse($date)->format('Y-m-d') : '' }}"
+    data-start-date="{{ $startDate ? \Carbon\Carbon::parse($startDate)->format('Y-m-d') : '' }}"
+    data-end-date="{{ $endDate ? \Carbon\Carbon::parse($endDate)->format('Y-m-d') : '' }}"
 
 >
     <div class="card-wrapper">
@@ -19,9 +25,6 @@
                <small>Adjustment Type: {{$type}}</small>
             </div>
         </div>
-    </div>
-    <div class="link">
-{{--        <a href="{{route($link)}}">View Details</a>--}}
     </div>
 </div>
 
