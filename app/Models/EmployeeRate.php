@@ -12,6 +12,7 @@ class EmployeeRate extends Model
     protected $fillable = [
         'employee_rate_id',
         'employee_id',
+        'admin_id',
         'rate',
         'effective_from',
         'effective_to'

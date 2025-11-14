@@ -13,7 +13,12 @@ form{
     margin-top: 20px;
     width: 70%;
 }
-
+.field-row:first-of-type {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    width: 47%;
+}
 .field-row {
     display: flex !important;
     /*gap: 5rem !important;*/
@@ -53,5 +58,26 @@ form{
 
 .radio-group {
     margin-bottom: 30px;
-    width: 100%;
+    width: 47%;
+}
+.field-row a {
+    margin-top: 30px;
+    background: var(--clr-yellow);
+    text-decoration: none;
+    padding: 15px;
+    outline: none;
+    border: none;
+    font-family: 'Helvetica Regular', sans-serif;
+    letter-spacing: 1.5px;
+    border-radius: 8px;
+    color: var(--clr-primary);
+    box-shadow: 2px 5px 5.9px 0 rgba(136, 125, 125, 0.25);
+    font-size: 12px;
+    float: left;
+}
+
+.field-row a:hover {
+    background: var(--clr-primary);
+    transition: 0.3s ease-in-out;
+    color: var(--clr-background);
 }
