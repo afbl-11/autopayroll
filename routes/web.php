@@ -236,6 +236,26 @@ Route::post('/adjustments/approve', [CreditAdjustmentController::class, 'approve
     ->middleware('auth:admin')
     ->name('approve.adjustment');
 
+Route::post('adjustments/alter/clock-in', [CreditAdjustmentController::class, 'alterClockIn'])
+    ->middleware('auth:admin')
+    ->name('alter.clock-in');
+
+Route::post('/adjustments/alter/clock-out', [CreditAdjustmentController::class, 'alterClockOut'])
+    ->middleware('auth:admin')
+    ->name('alter.clock-out');
+
+Route::post('/adjustments/alter/attendance', [CreditAdjustmentController::class, 'alterAttendance'])
+    ->middleware('auth:admin')
+    ->name('alter.attendance');
+
+Route::post('/adjustments/alter/leave', [CreditAdjustmentController::class, 'alterLeave'])
+    ->middleware('auth:admin')
+    ->name('alter.leave');
+
+Route::post('/adjustments/alter/OB', [CreditAdjustmentController::class, 'alterClockInOut'])
+    ->middleware('auth:admin')
+    ->name('alter.clock.in.out');
+
 
 //password management
 Route::get('/forgot_password', function () {

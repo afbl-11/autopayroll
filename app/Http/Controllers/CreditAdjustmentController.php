@@ -13,17 +13,6 @@ class CreditAdjustmentController extends Controller
     public function __construct(
         protected CreditAdjustmentService $adjustmentService,
     ){}
-    public function adjustClockIn(Request $request) {
-
-        $validated = $request->validate([
-           'employee_id' => 'required|exists:employees,employee_id',
-            'log_id' => 'required|exists:attendance_logs,log_id',
-            'new_clock_in' => 'required|date_format:H:i',
-            'log_date' => 'required|date_format:Y-m-d',
-        ]);
-
-        $this->adjustmentService->adjustClockIn($validated);
-    }
 
     public function showAdjustments() {
        $employees = Employee::whereHas('creditAdjustments', function($query) {
@@ -58,5 +47,72 @@ class CreditAdjustmentController extends Controller
 
         return back();
 
+    }
+
+    public function alterClockIn(Request $request) {
+
+        $validated = $request->validate([
+            'employee_id' => 'required|exists:employees,employee_id',
+            'clock_in_time' => 'required|date_format:H:i',
+            'affected_date' => 'required|date_format:Y-m-d',
+        ]);
+
+        $this->adjustmentService->adjustClockIn($validated);
+
+        return back();
+    }
+
+    public function alterClockOut(Request $request) {
+        $validated = $request->validate([
+            'employee_id' => 'required|exists:employees,employee_id',
+            'clock_out_time' => 'required|date_format:H:i',
+            'affected_date' => 'required|date_format:Y-m-d',
+        ]);
+
+        $this->adjustmentService->adjustClockOut($validated);
+
+        return back();
+    }
+
+    public function alterAttendance(Request $request) {
+        $validated = $request->validate([
+            'employee_id' => 'required|exists:employees,employee_id',
+            'affected_date' => 'required|date_format:Y-m-d',
+            'log_date' => 'required|date_format:Y-m-d',
+
+        ]);
+
+        $this->adjustmentService->markPresent($validated);
+
+        return back();
+    }
+
+    public function alterLeave(Request $request) {
+        $validated = $request->validate([
+               'employee_id' => 'required|exists:employees,employee_id',
+               'start_date' => 'required|date_format:Y-m-d',
+               'end_date' => 'required|date_format:Y-m-d',
+            'new_start_date' => 'required|date_format:Y-m-d',
+            'new_end_date' => 'required|date_format:Y-m-d',
+        ]);
+
+        $this->adjustmentService->adjustLeaveDate($validated);
+
+        return back();
+    }
+
+
+    public function alterClockInOut(Request $request)
+    {
+        $validated = $request->validate([
+            'employee_id' => 'required|exists:employees,employee_id',
+            'clock_in_time' => 'required|date_format:H:i',
+            'clock_out_time' => 'required|date_format:H:i',
+            'affected_date' => 'required|date_format:Y-m-d',
+        ]);
+
+        $this->adjustmentService->adjustClockInOut($validated);
+
+        return back();
     }
 }

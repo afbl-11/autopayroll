@@ -6,6 +6,7 @@
             @include('components.header', ['title' => $title, 'source' => 'admin.profile'])
             @foreach($employees as $employee)
                 @foreach($employee->creditAdjustments as $requests)
+                        {{dd($employee)}}
                     <x-adjustment-card
                         :image="$employee->profile_photo"
                         :name="$employee->first_name . ' ' . $employee->last_name"
@@ -20,6 +21,9 @@
                         data-type="{{$requests->adjustment_type}}"
                         data-message="{{$requests->reason}}"
                     />
+                    @if($requests->count() === 0)
+                        qaweijfpfeij
+                    @endif
                 @endforeach
             @endforeach
 
@@ -38,7 +42,7 @@
                         <div class="sub-accordion">
                             <div class="sub-header">Clock In</div>
                             <div class="sub-body">
-                                <form class="adjustment-form" data-action="clock-in" onsubmit="submitForm(event)">
+                                <form class="adjustment-form" data-action="clock-in" onsubmit="submitForm(event)" action="{{route('alter.clock-in')}}" method="post">
                                     @csrf
                                     <input type="hidden" name="employee_id" class="employee_id">
                                     <input type="hidden" name="request_id" class="request_id">
@@ -59,7 +63,7 @@
                         <div class="sub-accordion">
                             <div class="sub-header">Clock Out</div>
                             <div class="sub-body">
-                                <form class="adjustment-form" data-action="clock-out" onsubmit="submitForm(event)">
+                                <form class="adjustment-form" data-action="clock-out" onsubmit="submitForm(event)" action="{{route('alter.clock-out')}}" method="post">
                                     @csrf
                                     <input type="hidden" name="employee_id" class="employee_id">
                                     <input type="hidden" name="request_id" class="request_id">
@@ -69,6 +73,7 @@
                                         label="Time out"
                                         name="clock_out_time"
                                         id="clock_out_time"
+                                        type="time"
                                    />
 
                                     <x-button-submit>Apply</x-button-submit>
@@ -76,11 +81,11 @@
                             </div>
                         </div>
 
-                        <!-- Mark Present -->
+                        <!-- clock in and out -->
                         <div class="sub-accordion">
-                            <div class="sub-header">Mark Present</div>
+                            <div class="sub-header">Clock in & out</div>
                             <div class="sub-body">
-                                <form class="adjustment-form" data-action="mark-present" onsubmit="submitForm(event)">
+                                <form class="adjustment-form" data-action="mark-present" onsubmit="submitForm(event)" action="{{route('alter.clock.in.out')}}" method="post" >
                                     @csrf
                                     <input type="hidden" name="employee_id" class="employee_id">
                                     <input type="hidden" name="request_id" class="request_id">
@@ -90,12 +95,14 @@
                                         label="Time in"
                                         name="clock_in_time"
                                         id="clock_in_time"
+                                        type="time"
                                     />
 
                                     <x-form-input
                                         label="Time out"
                                         name="clock_out_time"
                                         id="clock_out_time"
+                                        type="time"
                                     />
 
                                     <x-button-submit>Apply</x-button-submit>
@@ -127,7 +134,7 @@
                         <div class="sub-accordion">
                             <div class="sub-header">Adjust Leave Dates</div>
                             <div class="sub-body">
-                                <form action="" class="adjustment-form">
+                                <form action="" class="adjustment-form" action="{{route('alter.leave')}}" method="post">
                                     @csrf
                                     <input type="hidden" name="employee_id" class="employee_id">
                                     <input type="hidden" name="request_id" class="request_id">
@@ -136,15 +143,15 @@
 
                                     <x-form-input
                                         label="Start Date"
-                                        name="start_date"
-                                        id="start_date"
+                                        name="new_start_date"
+                                        id="new_start_date"
                                         type="date"
                                     />
 
                                     <x-form-input
                                         label="End date"
-                                        name="end_date"
-                                        id="end_date"
+                                        name="new_end_date"
+                                        id="new_end_date"
                                         type="date"
                                     />
 
@@ -160,33 +167,18 @@
                 <div class="accordion-group" data-type="official-business">
                     <div class="accordion-header">Official Business Adjustments</div>
                     <div class="accordion-body">
-                        <form action="" class="adjustment-form">
+                        <form class="adjustment-form" action="{{route('alter.attendance')}}" method="post">
                             @csrf
                             <input type="hidden" name="employee_id" class="employee_id">
                             <input type="hidden" name="request_id" class="request_id">
                             <input type="hidden" name="affected_date" class="affected_date">
 
-
                             <x-form-input
                                 label="Date"
                                 type="date"
-                                name="date"
-                                id="date"
+                                name="log_date"
+                                id="log_date"
                             />
-
-                            <x-form-input
-                                label="Time in"
-                                name="clock_in_time"
-                                id="clock_in_time"
-                                type="time"
-                            />
-                            <x-form-input
-                                label="Time out"
-                                name="clock_out_time"
-                                id="clock_out_time"
-                                type="time"
-                            />
-
                             <x-button-submit >Apply</x-button-submit>
                         </form>
                     </div>
@@ -281,7 +273,7 @@
 
                 // Fill hidden inputs for forms
                 document.getElementById('modal-reject-id').value = requestId;
-                document.getElementById('modal-approve-id'). value = requestId;
+                document.getElementById('modal-approve-id').value = requestId;
 
 
 

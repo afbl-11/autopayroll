@@ -18,16 +18,16 @@ class CreditAdjustmentService
         $employee = Employee::find($data['employee_id']);
 
         $log = AttendanceLogs::where('employee_id', $employee->employee_id)
-            ->where('log_date', $data['log_date'])
+            ->where('log_date', $data['affected_date'])
             ->first();
 
         $logDate = Carbon::parse($log->log_date)->format('Y-m-d');
 
-        $clock_in = $logDate . ' ' . $data['new_clock_in'];
+        $clock_in = $logDate . ' ' . $data['clock_in_time'];
 
         AttendanceAdjustment::create([
             'attendance_adjustment_id' => Str::uuid(),
-            'log_id' => $data['log_id'],
+            'log_id' => $log->log_id,
             'company_id' => $employee->company_id,
             'employee_id' => $data['employee_id'],
             'admin_id' => $employee->admin_id,
@@ -43,28 +43,28 @@ class CreditAdjustmentService
     public function adjustClockOut(array $data) {
 
         $employee = Employee::find($data['employee_id']);
+
         $log = AttendanceLogs::where('employee_id', $employee->employee_id)
-                ->where('log_id', $data['log_id'])
-                ->first();
+            ->where('log_date', $data['affected_date'])
+            ->first();
 
         $logDate = Carbon::parse($log->log_date)->format('Y-m-d');
 
-        $clock_out = $logDate . ' ' . $data['new_clock_out'];
+        $clock_out = $logDate . ' ' . $data['clock_out_time'];
 
         AttendanceAdjustment::create([
             'attendance_adjustment_id' => Str::uuid(),
-            'log_id' => $data['log_id'],
+            'log_id' => $log->log_id,
             'company_id' => $employee->company_id,
             'employee_id' => $data['employee_id'],
             'admin_id' => $employee->admin_id,
-            'clock_out_time' => $clock_out,
+            'clock_out_time' =>$clock_out,
         ]);
 
         $log->update([
             'clock_out_time' => $clock_out,
             'is_adjusted' => true,
         ]);
-
     }
 
     /*
@@ -74,10 +74,6 @@ class CreditAdjustmentService
 
         $employee = Employee::find($data['employee_id']);
 
-        if(AttendanceLogs::where('employee_id', $employee->employee_id)->where('log_date', $data['log_date'])->exists()) {
-            return null;
-        }
-
         AttendanceLogs::create([
             'log_id' => Str::uuid(),
             'employee_id' => $data['employee_id'],
@@ -85,11 +81,13 @@ class CreditAdjustmentService
             'company_id' => $employee->company_id,
             'status' => 'official_business',
             'log_date' => $data['log_date'],
+
         ]);
+        $log = AttendanceLogs::where('log_date', $data['log_date'])->first();
 
         AttendanceAdjustment::create([
             'attendance_adjustment_id' => Str::uuid(),
-            'log_id' => $data['log_id'],
+            'log_id' => $log->log_id,
             'company_id' => $employee->company_id,
             'employee_id' => $data['employee_id'],
             'admin_id' => $employee->admin_id,
@@ -159,5 +157,10 @@ class CreditAdjustmentService
         $requests->update([
             'status' => 'approved'
         ]);
+      }
+
+      public function adjustClockInOut(array $data) {
+        $this->adjustClockIn($data);
+        $this->adjustClockOut($data);
       }
 }
