@@ -19,6 +19,7 @@ class AssignmentRequest extends FormRequest
             'job_position' => ['required', 'string', 'max:255'],
             'uploaded_documents' => ['nullable', 'array'],
             'uploaded_documents.*' => ['file', 'mimes:pdf,jpg,jpeg,png', 'max:5120'],
+            'rate' => ['required','regex:/^\d+(\.\d{1,2})?$/'],
         ];
     }
 }

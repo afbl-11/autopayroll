@@ -5,12 +5,16 @@ namespace App\Services\Auth;
 use App\Models\Company;
 use App\Models\Employee;
 use App\Services\GenerateId;
+use App\Services\Payroll\EmployeeRatesService;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
 class EmployeeRegistrationService
 {
-    public function __construct(protected   GenerateId $generateId){}
+    public function __construct(
+        protected   GenerateId $generateId,
+        protected EmployeeRatesService $ratesService,
+    ){}
 
     public function storeBasicInformation(array $data)
     {
@@ -23,7 +27,6 @@ class EmployeeRegistrationService
 
     public function getEmail() {
         $email = session('register.address');
-//        $email['email'] = 'example@gmail.com';
         return $email['email'] ?? null;
     }
     public function storeDesignation(array $data)
@@ -33,7 +36,7 @@ class EmployeeRegistrationService
         public function storeCredentials(array $data){
         session(['register.credentials' => $data]);
     }
-    public function createEmployee(): Employee
+    public function createEmployee()
     {
             $basicInformation = session('register.basicInformation');
             $address = session('register.address');
@@ -48,6 +51,11 @@ class EmployeeRegistrationService
 
             $data['employee_id'] = $this->generateId->generateId(Employee::class, 'employee_id');
 
+            $rateData = [
+              'employee_id' => $data['employee_id'],
+              'rate' => $data['rate'],
+            ];
+
             if (request()->hasFile('uploaded_documents')) {
                 $uploadedFiles = [];
 
@@ -58,14 +66,16 @@ class EmployeeRegistrationService
 
                 $data['uploaded_documents'] = json_encode($uploadedFiles);
             }
+
+
             session()->forget('register.basicInformation');
             session()->forget('register.address');
             session()->forget('register.designation');
             session()->forget('register.credentials');
 
-            return Employee::create($data);
+            Employee::create($data);
 
-
+            $this->ratesService->createRate($rateData);
     }
 
     public function getEmployeeInformation()

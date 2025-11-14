@@ -5,18 +5,20 @@ namespace App\Services\Payroll;
 use App\Models\Employee;
 use App\Models\EmployeeRate;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class EmployeeRatesService
 {
     public function createRate(array $data) : EmployeeRate {
 
-        $employee = Employee::find($data['employeeId']);
+        $admin = Auth::guard('admin')->id();
+        $employee = Employee::find($data['employee_id']);
 
         return EmployeeRate::create([
            'employee_rate_id' => Str::uuid(),
-            'employee_id' => $data['employeeId'],
-            'admin_id' => $employee->admin_id,
+            'employee_id' => $data['employee_id'],
+            'admin_id' => $admin,
             'rate' => $data['rate'],
             'effective_from' => Carbon::now()->format('Y-m-d'),
         ]);
