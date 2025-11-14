@@ -27,8 +27,7 @@
                 <li><a href="{{route('employee.dashboard.detail', ['id' => $id])}}">Personal Information</a></li>
                 <li><a href="{{route('employee.dashboard.attendance', ['id' => $id])}}">Attendance</a></li>
                 <li><a href="{{route('employee.dashboard.payroll', ['id' => $id])}}">Payroll</a></li>
-                <li><a href="{{route('employee.dashboard.documents', ['id' => $id])}}">Documents</a></li>
-                <li><a href="{{route('employee.dashboard.contract', ['id' => $id])}}">Contract</a></li>
+{{--                <li><a href="{{route('employee.dashboard.documents', ['id' => $id])}}">Documents</a></li> todo: balik mo to--}}
             </ul>
         @endif
     </nav>
