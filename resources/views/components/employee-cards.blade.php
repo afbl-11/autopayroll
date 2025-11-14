@@ -24,7 +24,9 @@
                     <p>{{"@" . $username}}</p>
                 </div>
                 <div class="type">
-                    <p>{{$position}}</p>
+                    <div class="position-wrapper">
+                        <p>{{$position}}</p>
+                    </div>
                     <div class="type-wrapper">
                         <img src="{{asset('assets/employeeProfile/Time.png')}}" alt="icon">
                         <p>{{$type}}</p>

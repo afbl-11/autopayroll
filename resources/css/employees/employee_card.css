@@ -81,8 +81,25 @@ strong{
 .email {
     gap: 10px;
 }
+.type{
+    display: flex;
+    width: 100%;
+    justify-content: start;
+
+}
 .type-wrapper {
+    display: flex;
+    justify-content: end;
+    width: 35%;
     gap: 5px;
+    float: right;
+
+}
+.position-wrapper {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 70%;
 }
 .email img,
 .type-wrapper img {
@@ -105,11 +122,7 @@ strong{
     letter-spacing: 0 !important;
     margin-bottom: 0 !important;
 }
-.type{
-    width: 100%;
-    gap:30px;
-    justify-content: space-between;
-}
+
 .employee-card-wrapper input[type="checkbox"] {
     display: none;
 }
