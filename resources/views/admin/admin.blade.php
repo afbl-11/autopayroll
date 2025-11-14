@@ -1,7 +1,6 @@
     @vite(['resources/css/admin_dashboard/dashboard.css', 'resources/js/app.js', 'resources/css/theme.css','resources/css/includes/sidebar.css'])
 <x-app title="Dashboard" :user="$adminFirstName" :admin="true" >
         <div class="main">
-            <div class="content">
                 <div class="summary-wrapper">
                     <div class="header">
                         <h5>Payroll Summary</h5>
@@ -37,7 +36,6 @@
                 </div>
 
                 <div class="section">
-
                     <div class="attendance-overview">
                         <h5>Attendance Overview</h5>
                         <div class="attendance-data">
@@ -90,6 +88,5 @@
                     <small id="small">End of List</small>
                 </div>
             </div>
-        </div>
 </x-app>
 
