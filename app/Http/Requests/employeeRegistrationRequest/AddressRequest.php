@@ -21,10 +21,10 @@ class AddressRequest extends FormRequest
             'house_number' => 'required|string|max:20',
 
             'id_country' => 'required|string|max:255',
-            'id_region' => 'required|string|max:255',
-            'id_province' => 'required|string|max:255',
-            'id_city' => 'required|string|max:255',
-            'id_barangay' => 'required|string|max:255',
+            'id_region_name' => 'required|string|max:255',
+            'id_province_name' => 'required|string|max:255',
+            'id_city_name' => 'required|string|max:255',
+            'id_barangay_name' => 'required|string|max:255',
             'id_zip' => 'required|digits:4',
             'id_street' => 'required|string|max:255',
             'id_house_number' => 'required|string|max:20',
@@ -32,7 +32,7 @@ class AddressRequest extends FormRequest
             'phone_number' => [
                 'required',
                 'string',
-                'regex:/^\d{11}$/',//TODO: forms should start with a +63
+                'regex:/^\d{11}$/',//
             ],
             'email' => 'nullable|string|email|max:255|unique:employees,email',
         ];

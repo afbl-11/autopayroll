@@ -2,6 +2,7 @@ import { getRegions, getProvinces, getCities, getBarangays } from "./psgc.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
 
+    const countrySelect = document.getElementById('country');
     const regionSelect1 = document.getElementById("region");
     const provinceSelect1 = document.getElementById("province");
     const citySelect1 = document.getElementById("city");
@@ -94,10 +95,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         barangayNameInput.value = selected?.dataset?.name || "";
     });
 
-    // --- Checkbox logic (keep your original read-only system) ---
+    // --- Checkbox logic ---
     checkbox.addEventListener("change", async () => {
         if (checkbox.checked) {
             copyTextFields();
+            countrySelect2.value = "Philippines";
             countrySelect2.classList.add("read-mode-only");
 
             regionSelect2.value = regionSelect1.value;
@@ -152,7 +154,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     function clearSecondAddress() {
-        ["id_zip", "id_street", "id_house-number"].forEach(id => {
+        ["id_zip", "id_street", "id_house_number"].forEach(id => {
             const el = document.getElementById(id);
             if (el) el.value = "";
         });
