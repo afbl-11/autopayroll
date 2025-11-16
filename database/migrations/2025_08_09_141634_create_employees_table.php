@@ -71,6 +71,7 @@ return new class extends Migration
             $table->string('pag_ibig_number');
             $table->string('tin_number');
 
+            $table->string('android_id')->unique()->nullable();
             $table->json('uploaded_documents')->nullable();
             $table->timestamps();
         });
