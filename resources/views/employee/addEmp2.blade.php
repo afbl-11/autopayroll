@@ -58,7 +58,6 @@
                         <div class="field-row">
                             <x-form-select name="id_country" id="id_country" label="Country" :options="['Philippines' => 'Philippines']" value="philippines" required></x-form-select>
                             <x-form-select name="id_region" id="id_region" label="Region"></x-form-select>
-                            <input type="hidden" name="id_country" id="id_country">
                         </div>
 
                         {{-- province & zip --}}

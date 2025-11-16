@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\EmployeeLoginController;
 use App\Http\Controllers\Api\EmployeeLogoutController;
 use App\Http\Controllers\Api\LeaveRequestController;
 use App\Http\Controllers\Api\PayrollController;
+use App\Http\Controllers\Api\PayrollWebController;
 use App\Http\Controllers\Api\ResetPasswordController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\EmployeeController;
@@ -52,3 +53,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 });
     Route::get('/employee/credit-adjustment/types', [CreditAdjustmentController::class, 'adjustmentTypes']);
+
+    Route::get('/employee/payroll/{employeeId}', [PayrollWebController::class, 'getPayroll'])
+    ->name('get.payroll');

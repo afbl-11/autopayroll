@@ -264,5 +264,5 @@ Route::get('/forgot_password', function () {
 
 
 Route::get('/new-payroll', function () {
-    return view('tempPayroll');
+    return view('payroll.payroll');
 })->name('new.payroll');
