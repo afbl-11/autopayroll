@@ -126,5 +126,9 @@ class Employee extends Authenticatable
     public function leaves() {
         return $this->hasMany(LeaveRequest::class, 'employee_id', 'employee_id');
     }
+
+    public function dailyPayrolls() {
+        return $this->hasMany(DailyPayrollLog::class, 'employee_id', 'employee_id');
+    }
 }
 

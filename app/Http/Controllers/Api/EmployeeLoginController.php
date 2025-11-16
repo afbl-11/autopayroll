@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Employee;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -32,6 +33,18 @@ class EmployeeLoginController extends Controller
                 'success' => false,
                 'message' => 'You cannot log in with this device. It is already linked to another employee.',
             ], 401);
+        }
+
+        $deviceRestriction = Employee::where('employee_id', $employee->employee_id)
+            ->whereNotNull('android_id')
+            ->where('android_id', '!=', $request->android_id)
+            ->exists();
+
+        if($deviceRestriction) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Account is currently logged in another device.'
+            ],401);
         }
 
         if (!$employee || !Hash::check($request->password, $employee->password)) {
