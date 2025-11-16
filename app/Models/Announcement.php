@@ -19,6 +19,7 @@ class Announcement extends Model
         'end_date',
         'created_by',
         'is_active',
+        'attachments',
     ];
 
     public function admin(){

@@ -25,6 +25,7 @@ return new class extends Migration
             $table->dateTime('start_date')->nullable();
             $table->dateTime('end_date')->nullable();
             $table->string('created_by');
+            $table->json('attachments')->nullable();
             $table->boolean('is_active')->default(true);
 
             $table->timestamps();
