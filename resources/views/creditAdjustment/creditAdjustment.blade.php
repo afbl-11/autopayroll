@@ -6,7 +6,6 @@
             @include('components.header', ['title' => $title, 'source' => 'admin.profile'])
             @foreach($employees as $employee)
                 @foreach($employee->creditAdjustments as $requests)
-                        {{dd($employee)}}
                     <x-adjustment-card
                         :image="$employee->profile_photo"
                         :name="$employee->first_name . ' ' . $employee->last_name"
@@ -22,7 +21,7 @@
                         data-message="{{$requests->reason}}"
                     />
                     @if($requests->count() === 0)
-                        qaweijfpfeij
+
                     @endif
                 @endforeach
             @endforeach
@@ -300,4 +299,5 @@
         });
     });
 
+//todo: error
 </script>

@@ -262,3 +262,7 @@ Route::get('/forgot_password', function () {
     return view('auth.authVerify');
 })->name('forgot.password');
 
+
+Route::get('/new-payroll', function () {
+    return view('tempPayroll');
+})->name('new.payroll');
