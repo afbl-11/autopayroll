@@ -14,6 +14,7 @@ class EmployeeLoginController extends Controller
         $request->validate([
             'identifier' => 'required|string',
             'password' => 'required|string',
+            'android_id' => 'required|string',
         ]);
 
         $identifier = $request->identifier;
@@ -22,11 +23,25 @@ class EmployeeLoginController extends Controller
             ->orWhere('email', $identifier)
             ->first();
 
+        $androidUsedByOther = Employee::where('android_id', $request->android_id)
+            ->where('employee_id', '!=', $employee->employee_id)
+            ->exists();
+
+        if ($androidUsedByOther) {
+            return response()->json([
+                'success' => false,
+                'message' => 'You cannot log in with this device. It is already linked to another employee.',
+            ], 401);
+        }
+
         if (!$employee || !Hash::check($request->password, $employee->password)) {
             return response()->json(['message' => 'Invalid credentials'], 401);
         }
 
         $token = $employee->createToken('API Token')->plainTextToken;
+
+        $employee['android_id'] = $request->android_id;
+        $employee->save();
 
         return response()->json([
             'employee_id' => $employee->employee_id,
