@@ -56,20 +56,26 @@
                         </div>
                         {{-- country & region --}}
                         <div class="field-row">
-                            <x-form-select name="id_country" id="id_country" label="Country" :options="['philippines' => 'Philippines']" value="philippines" required></x-form-select>
+                            <x-form-select name="id_country" id="id_country" label="Country" :options="['Philippines' => 'Philippines']" value="philippines" required></x-form-select>
                             <x-form-select name="id_region" id="id_region" label="Region"></x-form-select>
+                            <input type="hidden" name="id_country" id="id_country">
                         </div>
 
                         {{-- province & zip --}}
                         <div class="field-row">
                            <x-form-select name="id_province" id="id_province" label="Province" required>Select Province</x-form-select>
                             <x-form-input name="id_zip" id="id_zip" label="Postal Code" required placeholder="e.g. 6800"></x-form-input>
+                            <input type="hidden" name="id_province_name" id="id_province_name">
                         </div>
 
                         {{-- city & barangay --}}
                         <div class="field-row">
                             <x-form-select name="id_city" id="id_city" label="City" required>Select City/Municipality</x-form-select>
+                            <input type="hidden" name="id_city_name" id="id_city_name">
                             <x-form-select name="id_barangay" id="id_barangay" label="Barangay" required>Select Barangay</x-form-select>
+                            <input type="hidden" name="id_barangay_name" id="id_barangay_name">
+
+
                         </div>
 
                         {{-- street & building number --}}

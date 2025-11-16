@@ -41,6 +41,7 @@ class Employee extends Authenticatable
         'blood_type',
         'religion',
         'phone_number',
+        'android_id',
 
         // Residential Address
         'country',

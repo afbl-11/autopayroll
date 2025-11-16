@@ -22,7 +22,7 @@ class AnnouncementService
             'message' => $data['message'],
             'start_date' => Carbon::now(),
             'end_date' => Carbon::now()->addDay(10),
-            'is_active' => 0,
+            'is_active' => 1,
             'created_by' => $fullName,
       ]);
     }

@@ -10,12 +10,15 @@ nav h4 {
 }
 .main {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 95%;
+    /*background: black;*/
 
 }
 .summary-wrapper {
-    width: 1000px;
+    width: 100%;
     height: 243px;
     background: var(--clr-card-surface);
     border-radius: 8px;
@@ -65,8 +68,7 @@ display: flex;
 .section {
     margin-top: 30px;
     display: flex;
-    /*background: var(--clr-indigo);*/
-    width: 1000px;
+    width: 100%;
     height: auto;
     gap: 30px;
 }
@@ -144,6 +146,7 @@ display: flex;
     height: 319px;
     border-radius: 8px;
     margin-bottom: 30px;
+    width: 100%;
 }
 
 .requests-wrapper {
@@ -151,6 +154,7 @@ display: flex;
     justify-content: center;
     align-items: center;
     height: 200px;
+    width: 100%;
     border: 1px solid #ccc;
     border-radius: 8px;
     margin-top: 10px;

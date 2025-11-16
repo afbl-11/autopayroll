@@ -36,7 +36,7 @@ class AttendanceController extends Controller
             'token' => 'required|string',
             'signature' => 'required|string',
             'latitude' => 'required|numeric',
-            'longitude' => 'required|numeric',
+            'longitude' => 'required|numeric'
         ]);
 
         /*

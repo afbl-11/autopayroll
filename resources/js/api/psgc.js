@@ -15,6 +15,13 @@ export async function getCities(provinceCode) {
     return response.json();
 }
 
+export async function getNCRCities(regionCode) {
+    const response = await fetch(`${BASE_URL}/regions/${regionCode}/cities/`);
+    if (!response.ok) throw new Error("Failed to fetch NCR cities");
+    return response.json();
+}
+
+
 export async function getBarangays(cityCode) {
     const response = await fetch(`${BASE_URL}/cities-municipalities/${cityCode}/barangays/`);
     return response.json();
