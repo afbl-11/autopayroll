@@ -7,7 +7,7 @@
         : ($source !== '#' ? route($source) : '#');
 @endphp
 
-<div @if(!$noDefault){{ $attributes->merge(['class' => 'field-input']) }} @endif>
+<div @if(!$noDefault){{ $attributes->class('field-input') }} @endif>
     <a href="{{ $url }}">
         {{ $slot }}
     </a>
