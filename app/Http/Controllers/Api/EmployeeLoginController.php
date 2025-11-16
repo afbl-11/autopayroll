@@ -34,6 +34,18 @@ class EmployeeLoginController extends Controller
             ], 401);
         }
 
+        $deviceRestriction = Employee::where('employee_id', $employee->employee_id)
+            ->whereNotNull('android_id')
+            ->where('android_id', '!=', $request->android_id)
+            ->exists();
+
+        if($deviceRestriction) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Account is currently logged in another device.'
+            ],401);
+        }
+
         if (!$employee || !Hash::check($request->password, $employee->password)) {
             return response()->json(['message' => 'Invalid credentials'], 401);
         }
