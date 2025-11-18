@@ -30,11 +30,11 @@
                         <img src="{{ asset('assets/navigations/bell.png') }}" alt="Notifications Icon">
                     </a>
                 </li>
-                <li>
-                    <a href="{{route('new.payroll')}}">
-                        payroll
-                    </a>
-                </li>
+{{--                <li>--}}
+{{--                    <a href="{{route('new.payroll')}}">--}}
+{{--                        payroll--}}
+{{--                    </a>--}}
+{{--                </li>--}}
             </ul>
         </div>
 
@@ -43,7 +43,7 @@
         <div class="logout">
             <ul>
                 <li>
-                    <a href="#">
+                    <a href="{{route('admin.settings')}}">
                         <img src="{{ asset('assets/navigations/settings.png') }}" alt="Settings Icon">
                     </a>
                 </li>

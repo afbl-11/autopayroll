@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Admin;
 use App\Models\Company;
+use App\Models\LeaveCredits;
 use App\Models\Shift;
 use App\Models\Employee;
 use Carbon\Carbon;
@@ -18,6 +19,7 @@ use Illuminate\Support\Str;
 class EmployeeFactory extends Factory
 {
     protected $model = Employee::class;
+
 
     public function definition(): array
     {

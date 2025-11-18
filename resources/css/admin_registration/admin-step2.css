@@ -16,7 +16,7 @@
     justify-items: center;
 }
 .field-row {
-    display: flex;
+    display: flex !important;
     gap: 76px;
     margin-bottom: 30px;
     width: 100%;

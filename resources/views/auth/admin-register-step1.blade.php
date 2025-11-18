@@ -25,21 +25,24 @@
                 @csrf
 {{--                first name--}}
                 <div class="field-row">
-                    <div class="field-input">
-                        <label for="first_name">First name</label>
-                        <input type="text" name="first_name" id="first_name" required>
-                    </div>
-                    <div class="field-input">
-                        <label for="middle_name">Middle name</label>
-                        <input type="text" name="middle_name" id="middle_name" required>
-                    </div>
+                  <x-form-input
+                    label="First Name"
+                    name="first_name"
+                    id="first_name"
+                  />
+                  <x-form-input
+                    label="Middle Name"
+                    name="middle_name"
+                    id="middle_name"
+                  />
                 </div>
 {{--                last name and suffix--}}
                 <div class="field-row">
-                    <div class="field-input">
-                        <label for="last_name">Last name</label>
-                        <input type="text" name="last_name" id="last_name" required>
-                    </div>
+                   <x-form-input
+                        label="Last Name"
+                        name="last_name"
+                        id="last_name"
+                   />
                     <div class="field-input">
                         <label for="suffix">Suffix</label>
                         <select name="suffix" id="suffix">
@@ -52,21 +55,21 @@
 
 {{--                email--}}
                 <div class="field-row">
-                    <div class="field-input">
-                        <label for="email">Email</label>
-                        <input type="email" name="email" id="email" required>
-                    </div>
+                   <x-form-input
+                       label="Email Address"
+                       type="email"
+                       name="email"
+                       id="email"
+                   />
                 </div>
 {{--                password--}}
                 <div class="field-row">
-                    <div class="field-input ">
-                        <label for="password">Password</label>
-                        <input type="password" name="password" id="password" required>
-                    </div>
-{{--                    <div class="field-input ">--}}
-{{--                        <label for="confirm_password">Confirm Password</label>--}}
-{{--                        <input type="password" name="confirm_password" id="confirm-password" required>--}}
-{{--                    </div>--}}
+                   <x-form-input
+                    label="Password"
+                    type="password"
+                    name="password"
+                    id="password"
+                   />
                 </div>
 
                 <button type="submit" class="button-filled">Continue</button>

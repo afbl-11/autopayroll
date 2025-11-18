@@ -5,6 +5,7 @@ namespace App\Services\Auth;
 use App\Models\Company;
 use App\Models\Employee;
 use App\Services\GenerateId;
+use App\Services\LeaveCreditService;
 use App\Services\Payroll\EmployeeRatesService;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -14,6 +15,7 @@ class EmployeeRegistrationService
     public function __construct(
         protected   GenerateId $generateId,
         protected EmployeeRatesService $ratesService,
+        protected LeaveCreditService $creditService,
     ){}
 
     public function storeBasicInformation(array $data)
@@ -36,6 +38,10 @@ class EmployeeRegistrationService
         public function storeCredentials(array $data){
         session(['register.credentials' => $data]);
     }
+
+    /**
+     * @throws \Exception
+     */
     public function createEmployee()
     {
             $basicInformation = session('register.basicInformation');
@@ -76,6 +82,7 @@ class EmployeeRegistrationService
             Employee::create($data);
 
             $this->ratesService->createRate($rateData);
+            $this->creditService->createCreditRecord($data['employee_id'], $data['admin_id'] );
     }
 
     public function getEmployeeInformation()

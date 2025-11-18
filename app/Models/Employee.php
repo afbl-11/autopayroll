@@ -95,10 +95,20 @@ class Employee extends Authenticatable
     {
         return $this->hasMany(AttendanceLogs::class, 'employee_id', 'employee_id');
     }
+
+    public function leaveCredits() {
+        return $this->hasMany(LeaveCredits::class, 'employee_id', 'employee_id');
+    }
+
+    public function getCreditDays()
+    {
+        return $this->leaveCredits->first()?->credit_days ?? 0;
+    }
     public function rates()
     {
         return $this->hasMany(EmployeeRate::class, 'employee_id', 'employee_id');
     }
+
     public function currentRate()
     {
         return $this->hasOne(EmployeeRate::class, 'employee_id', 'employee_id')

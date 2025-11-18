@@ -2,23 +2,22 @@
 <x-app :navigation="true" navigationType="employee" :employee="$employee" :noHeader="true">
     <x-attendance-navigation
         :daysActive="$daysActive"
-{{--        todo: change: days active's scope should only be the current payroll period--}}
         :totalLate="$countLate"
         :totalOvertime="$totalOvertime"
         :noClockOut="$totalNoClockOut"
         :totalAbsences="$absences"
-        leaveBalance="15"
+        :leaveBalance="$creditDays"
         :id="$employee->employee_id"
     />
     <section class="main-content">
 
         @forelse ($attendance['logs'] as $log)
             <x-attendance-logs
-                :clockIn="formatTimeOrDash($log->clock_in_time)"
-                :clockOut="formatTimeOrDash($log->clock_out_time)"
-{{--                :dayDate=""--}}
-{{--                :dayWeek=""--}}
-{{--                :duration=""--}}
+                :clockIn="$log['clock_in_time']"
+                :clockOut="$log['clock_out_time']"
+                :dayDate="$log['day']"
+                :dateWeek="$log['date']"
+                :duration="$log['duration']"
                 :late="$attendance['late']"
 {{--                :overtime=""--}}
 {{--                :regularHours--}}

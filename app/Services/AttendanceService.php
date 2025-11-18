@@ -217,16 +217,42 @@ class AttendanceService
 //
 //    }
     public function getAttendance($id)  {
-        /*
-         * methods returns clock in and out of employee
-         * */
         $logs = AttendanceLogs::where('employee_id', $id)
             ->whereNotNull('clock_in_time')
-            ->get();
+            ->get()
+            ->map(function ($log) {
+
+                // Parse clock in/out as Carbon instances
+                $clockIn = Carbon::parse($log->clock_in_time);
+                $clockOut = $log->clock_out_time ? Carbon::parse($log->clock_out_time) : null;
+
+                // Only date
+                $date = $clockIn->toDateString();
+
+                // Day of the week (Monday, Tuesday, Wednesday…)
+                $dayOfWeek = $clockIn->format('l');
+                $minutes = $clockIn->diffInminutes($clockOut);
+                $hours = floor($minutes * 100 / 60) / 100;
+                return [
+                    'date' => $date,
+                    'day' => $dayOfWeek,
+                    'clock_in_time' => $clockIn->toTimeString(),
+                    'clock_out_time' => $clockOut?->toTimeString(),
+                    'duration' => $hours,
+                ];
+            });
 
         $lateInMinutes = $this->computeLate($id);
 
         return [$logs, $lateInMinutes];
+    }
 
+    public function getWorkingHours($id): float {
+
+
+        $start_time = Carbon::parse($logs->clock_in_time);
+        $end_time = Carbon::parse($logs->clock_out_time);
+
+        return abs($end_time->diffInMinutes($start_time)) / 60;
     }
 }

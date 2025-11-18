@@ -3,6 +3,7 @@
 namespace App\Services\Auth;
 use App\Models\Admin;
 use App\Services\GenerateId;
+use App\Services\Payroll\PayrollPeriodService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
 
@@ -10,7 +11,8 @@ class AdminRegistration
 {
 
     public function __construct(
-        protected GenerateId $generateId
+        protected GenerateId $generateId,
+        protected PayrollPeriodService $periodService,
     )
     {}
 
@@ -26,7 +28,10 @@ class AdminRegistration
         $data['password'] = Hash::make($data['password']);
         $data['admin_id'] = $this->generateId->generateId(Admin::class, 'admin_id');
 
+
         $admin = Admin::create($data);
+
+        $this->periodService->createPeriod($data['admin_id']);
 
         event(new Registered($admin));
 
