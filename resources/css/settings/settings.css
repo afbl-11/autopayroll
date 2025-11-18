@@ -1,0 +1,196 @@
+.main-content {
+    width:100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+.links {
+    width: 100%;
+}
+.settings-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 50%;
+    height: 50%;
+    padding: 15px  ;
+    background: var(--clr-card-surface);
+    border-radius: 16px;
+    box-shadow: 2px 5px 6px 0 rgba(136, 125, 125, 0.25);
+}
+#delete-acc {
+    width: 30%;
+    background: var(--clr-red);
+    color: var(--clr-background);
+}
+
+.settings-row {
+    width: 100%;
+    padding: 10px;
+    border-bottom: 1px solid var(--clr-muted);
+}
+
+.settings-row:hover {
+    background: #eff2f3;
+}
+.settings-row p{
+    font-weight: 600;
+}
+a {
+    width: 100%;
+    text-decoration: none;
+}
+.accordion {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+}
+.accordion form {
+    margin-top: 30px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0 30px;
+}
+
+.field-input input   {
+    width: 100% !important;
+    border: none !important;
+    border-radius: 0 !important;
+    border-bottom: 1px solid var(--clr-muted) !important;
+}
+.hidden {
+    /*display: none;*/
+}
+
+/*change password*/
+.password-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:40%;
+    max-height: 400px;
+    padding: 20px;
+    background: var(--clr-card-surface);
+    border-radius: 16px;
+    box-shadow: 2px 5px 6px 0 rgba(136, 125, 125, 0.25);
+}
+.password-wrapper form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.main-content .settings-wrapper form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.delete-btn {
+    background: var(--clr-red);
+    color: var(--clr-background);
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.delete-btn:hover {
+    background: var(--clr-yellow);
+    color: var(--clr-primary);
+}
+
+/* Modal hidden by default */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 50;
+}
+
+/* Show modal when checkbox is checked */
+.modal-toggle:checked + label + .modal {
+    display: flex;
+}
+
+.modal-overlay {
+    position: absolute;
+    inset: 0;
+    cursor: pointer;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    width: 90%;
+    max-width: 400px;
+    z-index: 10;
+    position: relative;
+    text-align: center;
+
+}
+
+.modal-content h2 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.modal-content p {
+    margin-bottom: 1.5rem;
+    color: #555;
+}
+
+.password-input {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.btn-cancel {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+    background: #f0f0f0;
+    cursor: pointer;
+}
+
+.btn-confirm {
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    background: #e53e3e;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.modal form {
+    display: flex;
+    flex-direction: column;
+}
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.modal-toggle {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    width: 0;
+    height: 0;
+}

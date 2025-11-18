@@ -25,4 +25,8 @@ class LeaveCredits extends Model
         'used_days' => 'float',
         'credit_days' => 'float',
     ];
+
+    public function employee() {
+        return $this->belongsTo('App\Models\Employee', 'employee_id', 'employee_id');
+    }
 }

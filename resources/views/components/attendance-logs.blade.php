@@ -3,7 +3,7 @@
 <div {{$attributes->class('logs-wrapper')}}>
     <div class="data-wrapper">
 {{--        date--}}
-        <p>{{ $dateWeek && $dayDate ? $dateWeek . ', ' . $dayDate : 'no data' }}</p>
+        <p>{{$dayDate }}</p>
         <div class="stats">
             <div class="stats-wrapper">
                 <p>Clock-in</p>

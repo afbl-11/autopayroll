@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminRegistrationController;
 use App\Http\Controllers\AnnouncementsController;
 use App\Http\Controllers\Api\EmployeeController;
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\ClientRegistrationController;
 use App\Http\Controllers\CompanyDashboardController;
 use App\Http\Controllers\CreditAdjustmentController;
@@ -156,7 +158,7 @@ Route::get('dashboard/employee/contract/{id}', [EmployeeDashboardController::cla
     ->middleware('auth:admin')
     ->name('employee.dashboard.contract');
 
-Route::get('dashboard/employee/attendance/{id}', [EmployeeDashboardController::class, 'showAttendance'])
+Route::get('dashboard/employee/attendance/{id}', [AttendanceController::class, 'showAttendance'])
     ->middleware('auth:admin')
     ->name('employee.dashboard.attendance');
 
@@ -266,3 +268,27 @@ Route::get('/forgot_password', function () {
 Route::get('/new-payroll', function () {
     return view('payroll.payroll');
 })->name('new.payroll');
+
+Route::get('/admin/settings', [AdminController::class, 'showSettings'])
+    ->middleware('auth:admin')
+    ->name('admin.settings');
+
+Route::post('/admin/settings/success/change-location', [AdminController::class, 'changeLocation'])
+    ->middleware('auth:admin')
+    ->name('change.location');
+
+Route::post('/admin/settings/success/change-password', [AdminController::class, 'changePassword'])
+    ->middleware('auth:admin')
+    ->name('change.password');
+
+Route::post('/admin/settings/delete-account', [AdminController::class, 'deleteAccount'])
+    ->middleware('auth:admin')
+    ->name('delete.account');
+
+Route::get('/admin/changes-password', [AdminController::class, 'showChangePassword'])
+    ->middleware('auth:admin')
+    ->name('change.password.view');
+
+Route::get('/admin/change-location', [AdminController::class, 'showChangeLocation'])
+    ->middleware('auth:admin')
+    ->name('change.location.view');

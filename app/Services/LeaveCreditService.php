@@ -12,9 +12,9 @@ class LeaveCreditService
 {
     public function createCreditRecord($employeeId, $adminId) :? LeaveCredits {
 
-        if(!Auth::guard('admin')->check()){
-            throw new \Exception('Unauthorized: Only admins can create leave credits.');
-        }
+//        if(!Auth::guard('admin')->check()){
+//            throw new \Exception('Unauthorized: Only admins can create leave credits.');
+//        }
 
         $credit = 15.0;
         $used_days = 0;
