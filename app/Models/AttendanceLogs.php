@@ -32,8 +32,8 @@ class AttendanceLogs extends Model
 
     protected $casts = [
         'log_date' => 'date:Y-m-d',
-        'clock_in_time' => 'date:H:i',
-        'clock_out_time' => 'date:H:i',
+//        'clock_in_time' => 'date:H:i',
+//        'clock_out_time' => 'date:H:i',
         'clock_in_latitude' => 'decimal:8',
         'clock_in_longitude' => 'decimal:8',
         'clock_out_latitude' => 'decimal:8',

@@ -56,3 +56,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/employee/payroll/{employeeId}', [PayrollWebController::class, 'getPayroll'])
     ->name('get.payroll');
+
+    Route::middleware('auth:sanctum')->get('/employee/leave-credit', [\App\Http\Controllers\Api\DashboardController::class, 'getLeaveCredits']);
+
+    Route::middleware('auth:sanctum')->get('/employee/absences', [\App\Http\Controllers\Api\DashboardController::class, 'getAbsences']);
+
+    Route::middleware('auth:sanctum')->get('/employee/work-hours', [\App\Http\Controllers\Api\DashboardController::class, 'getTotalWorkedHours']);
+
+    Route::middleware('auth:sanctum')->get('/employee/schedules', [\App\Http\Controllers\Api\ScheduleController::class, 'getSchedule']);
