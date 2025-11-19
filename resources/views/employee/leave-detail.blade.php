@@ -2,12 +2,12 @@
 
 <x-app  :navigation="true" navigationType="employee" :employee="$employee" :noHeader="true">
     <x-attendance-navigation
-        daysActive=""
-        totalLate=""
-        totalOvertime=""
-        noClockOut=""
-        totalAbsences=""
-        leaveBalance=""
+        :daysActive="$reports['daysActive']"
+        :totalLate="$reports['countLate']"
+        :totalOvertime="$reports['totalOvertime']"
+        :noClockOut="$reports['totalNoClockOut']"
+        :totalAbsences="$reports['absences']"
+        :leaveBalance="$reports['creditDays']"
         :id="$employee->employee_id"
     />
 
