@@ -12,7 +12,6 @@
     <section class="main-content">
 
         @forelse ($attendance['logs'] as $log)
-{{--            {{dd($timeline)}}--}}
             <x-attendance-logs
                 :clockIn="$log['clock_in_time']"
                 :clockOut="$log['clock_out_time']"
