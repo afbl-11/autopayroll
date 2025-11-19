@@ -20,6 +20,10 @@ class AttendanceLogs extends Component
         public $late = null,
         public $overtime = null,
         public $regularHours = null,
+        public $startPercent = null,
+        public $workedPercent = null,
+        public $labels = null,
+        public $timeline = null,
 
     )
     {}

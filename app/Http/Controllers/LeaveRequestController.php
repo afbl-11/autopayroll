@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Employee;
 use App\Models\LeaveRequest;
+use App\Services\AttendanceReport;
 use App\Services\LeaveRequestService;
 use Carbon\Carbon;
 
@@ -12,6 +13,7 @@ class LeaveRequestController extends Controller
 {
     public function __construct(
        protected LeaveRequestService $leaveRequestService,
+        protected AttendanceReport $report
     ){}
 
     public function showLeaveRequest($id) {
@@ -20,8 +22,8 @@ class LeaveRequestController extends Controller
             ->orderByRaw("CASE WHEN status = 'pending' THEN 0 ELSE 1 END")
             ->orderBy('created_at', 'desc')
             ->get();
-
-        return view('employee.leaveRequest',compact('employee', 'leave'))->with('title','Leave Request');
+        $reports = $this->report->data($id);
+        return view('employee.leaveRequest',compact('employee', 'leave','reports'))->with('title','Leave Request');
     }
 
     public function showLeaveRequestDetail($leaveId,$employeeId) {

@@ -91,14 +91,14 @@ class AttendanceController extends Controller
         if (!$isWorkingDay || !$schedule) {
             return response()->json(['message' => "Employee $employee->employee_id has no schedule today."], 401);
         }
-
+        $clockIn = Carbon::today()->setHour(8)->setMinute(0)->setSecond(0);
         $attendance = AttendanceLogs::create([
             'log_id' => Str::uuid(),
             'admin_id' => $employee->admin_id,
             'employee_id' => $employee->employee_id,
             'company_id' => $validated['company_id'],
             'log_date' => now()->format('Y-m-d'),
-            'clock_in_time' => now(),
+            'clock_in_time' => $clockIn,
             'clock_in_latitude' => $validated['latitude'],
             'clock_in_longitude' => $validated['longitude'],
         ]);
@@ -176,9 +176,9 @@ class AttendanceController extends Controller
                 'message' => 'Already clocked out today.',
             ], 400);
         }
-
+        $clockOut = Carbon::today()->setHour(17)->setMinute(0)->setSecond(0);
         $attendance->update([
-            'clock_out_time' => now()->addHour(8),
+            'clock_out_time' => $clockOut,
             'clock_out_latitude' => $validated['latitude'],
             'clock_out_longitude' => $validated['longitude'],
         ]);

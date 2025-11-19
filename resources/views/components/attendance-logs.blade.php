@@ -1,30 +1,53 @@
 @vite('resources/css/components/attendance-logs.css')
 
 <div {{$attributes->class('logs-wrapper')}}>
+
+    {{-- DATE & CLOCK-IN/CLOCK-OUT --}}
     <div class="data-wrapper">
-{{--        date--}}
-        <p>{{$dayDate }}</p>
+        <p>{{ $dayDate }}</p>
+
         <div class="stats">
             <div class="stats-wrapper">
                 <p>Clock-in</p>
-                <p>{{$clockIn ? : 'no data'}}</p>
+                <p>{{ $clockIn ?? 'no data' }}</p>
             </div>
+
             <div class="stats-wrapper">
                 <p>Clock out</p>
-                <p>{{$clockOut ? : 'no data'}}</p>
+                <p>{{ $clockOut ?? 'no data' }}</p>
             </div>
         </div>
     </div>
+
+    {{-- WORK HOURS TIMELINE --}}
     <div class="data-wrapper" id="work-hours">
-        @if(!$regularHours)
+
+        @if(empty($timeline) || is_null($timeline['startPercent']))
             <h6>No data</h6>
+        @else
+            <div class="timeline-wrapper">
+                <div class="timeline">
+                    <div class="timeline-track"></div>
+
+                    <div class="timeline-progress"
+                         style="left: {{ $timeline['startPercent'] }}%; width: {{ $timeline['workedPercent'] }}%;">
+                    </div>
+                </div>
+
+                <div class="timeline-labels">
+{{--                    {{dd($timeline['labels'])}}--}}
+                    @foreach ($timeline['labels'] as $label)
+                        <span>{{ $label }}</span>
+                    @endforeach
+                </div>
+            </div>
         @endif
-{{--        the time range should depend on what time the employees start is--}}
     </div>
+
     <div class="data-wrapper">
         <div class="stats-wrapper">
             <p>Duration</p>
-            <p>{{$duration ? : 'no data'}}</p>
+            <p>{{ $duration ?? 'no data' }}</p>
         </div>
     </div>
 

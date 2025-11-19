@@ -19,8 +19,7 @@
                 :dateWeek="$log['date']"
                 :duration="$log['duration']"
                 :late="$attendance['late']"
-{{--                :overtime=""--}}
-{{--                :regularHours--}}
+                :timeline="$timeline"
             />
             @empty
                 <h6>No Log Data</h6>

@@ -249,7 +249,7 @@ class AttendanceService
 
     public function getWorkingHours($id): float {
 
-
+        $logs = AttendanceLogs::where('employee_id', $id)->first();
         $start_time = Carbon::parse($logs->clock_in_time);
         $end_time = Carbon::parse($logs->clock_out_time);
 
