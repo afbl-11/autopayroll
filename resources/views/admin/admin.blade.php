@@ -1,5 +1,5 @@
-    @vite(['resources/css/admin_dashboard/dashboard.css', 'resources/js/app.js', 'resources/css/theme.css','resources/css/includes/sidebar.css'])
-<x-app title="Dashboard" :user="$adminFirstName" :admin="true" >
+    @vite(['resources/css/admin_dashboard/dashboard.css','resources/css/employee_dashboard/leave-request.css', 'resources/js/app.js', 'resources/css/theme.css','resources/css/includes/sidebar.css'])
+<x-app title="Dashboard" :user="$data['adminFirstName']" :admin="true" >
         <div class="main">
                 <div class="summary-wrapper">
                     <div class="header">
@@ -10,25 +10,25 @@
                             <div class="table-item">
                                 <h6>Paid Employees</h6>
                                 <div class="data">
-                                    <h4>{{$employee_count}}</h4>
+                                    <h4>{{$data['employee_count']}}</h4>
                                 </div>
                             </div>
                             <div class="table-item">
                                 <h6>Total Payroll</h6>
                                 <div class="data">
-                                    <h4>{{$total_payroll}}</h4>
+                                    <h4>{{$data['total_payroll']}}</h4>
                                 </div>
                             </div>
                             <div class="table-item">
                                 <h6>Total Deductions</h6>
                                 <div class="data">
-                                    <h4>{{$total_deductions}}</h4>
+                                    <h4>{{$data['total_deductions']}}</h4>
                                 </div>
                             </div>
                             <div class="table-item">
                                 <h6>Upcoming Pay Date</h6>
                                 <div class="data">
-                                    <h4>{{$end_period}}</h4>
+                                    <h4>{{$data['end_period']}}</h4>
                                 </div>
                             </div>
                         </div>
@@ -66,7 +66,7 @@
                         </div>
 
                         <div class="company-cards-wrapper">
-                            @foreach($company as $companies)
+                            @foreach($data['company'] as $companies)
                                 <div class="company-cards">
                                     <div class="card-data">{{ $companies->company_name }}</div>
                                     <div class="card-data" id="company_address">
@@ -83,7 +83,19 @@
                 <div class="leave-requests">
                     <h5>Leave Requests</h5>
                     <div class="requests-wrapper">
-                        <p>No Leave Requests</p>
+{{--                        <div class="request-cards">--}}
+                        @forelse($employee as $leaves)
+                            <x-leave-card
+                                :leaveId="$leaves->leave_request_id"
+                                :employeeId="$leaves->employee_id"
+                                :leave_type="$leaves->leave_type"
+                                :message="$leaves->reason"
+                                :date="\Carbon\Carbon::parse($leaves->submission_date)->format('Y-m-d')"
+                                :status="$leaves->latest_status"
+                            />
+                        @empty
+                            <p id="empty" >Employee currently don't have a request</p>
+                        @endforelse
                     </div>
                     <small id="small">End of List</small>
                 </div>

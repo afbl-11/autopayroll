@@ -19,7 +19,7 @@ class AttendanceReport
         $daysActive = $this->attendanceService->countAttendance($id);
         $absences = $this->attendanceService->countTotalAbsences($id);
         $overtime = $this->attendanceService->computeOvertime($id);
-        $creditDays = $employee->getCreditDays();
+        $creditDays = $employee->getCreditDays()  ?: 0;
         $hasLogIn = $this->attendanceService->hasLogIn($id);
         $totalOvertime = $this->attendanceService->totalOvertime($id);
         $totalNoClockOut = $this->attendanceService->totalNoClockOut($id);

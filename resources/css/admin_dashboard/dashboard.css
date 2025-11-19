@@ -151,13 +151,15 @@ display: flex;
 
 .requests-wrapper {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    /*justify-content: center;*/
     align-items: center;
     height: 200px;
     width: 100%;
     border: 1px solid #ccc;
     border-radius: 8px;
     margin-top: 10px;
+    overflow: scroll;
 }
 
 

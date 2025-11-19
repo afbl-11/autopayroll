@@ -17,11 +17,8 @@ class LeaveRequestController extends Controller
     ){}
 
     public function showLeaveRequest($id) {
-        $employee = Employee::find($id);
-        $leave = LeaveRequest::where('employee_id', $id)
-            ->orderByRaw("CASE WHEN status = 'pending' THEN 0 ELSE 1 END")
-            ->orderBy('created_at', 'desc')
-            ->get();
+
+       [$employee, $leave] = $this->leaveRequestService->showRequests($id);
         $reports = $this->report->data($id);
         return view('employee.leaveRequest',compact('employee', 'leave','reports'))->with('title','Leave Request');
     }
@@ -34,7 +31,9 @@ class LeaveRequestController extends Controller
 
         $duration = Carbon::parse($leave->start_date)->diffInDays(Carbon::parse($leave->end_date));
 
-        return view('employee.leave-detail',compact('employee', 'leave', 'leaveCount', 'duration'))->with('title','Leave Request');
+        $reports = $this->report->data($leaveId);
+
+        return view('employee.leave-detail',compact('employee', 'leave', 'leaveCount', 'duration', 'reports'))->with('title','Leave Request');
     }
 
     public function approveLeaveRequest($employeeId, $leaveId) {
