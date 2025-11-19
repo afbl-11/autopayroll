@@ -12,6 +12,7 @@
     <section class="main-content">
 
         @forelse ($attendance['logs'] as $log)
+{{--            {{dd($timeline)}}--}}
             <x-attendance-logs
                 :clockIn="$log['clock_in_time']"
                 :clockOut="$log['clock_out_time']"
@@ -19,8 +20,7 @@
                 :dateWeek="$log['date']"
                 :duration="$log['duration']"
                 :late="$attendance['late']"
-{{--                :overtime=""--}}
-{{--                :regularHours--}}
+                :timeline="$timeline"
             />
             @empty
                 <h6>No Log Data</h6>
