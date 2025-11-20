@@ -10,11 +10,9 @@ use Illuminate\Support\Str;
 
 class LeaveCreditService
 {
-    public function createCreditRecord($employeeId, $adminId) :? LeaveCredits {
+    public function createCreditRecord($employeeId) :? LeaveCredits {
 
-//        if(!Auth::guard('admin')->check()){
-//            throw new \Exception('Unauthorized: Only admins can create leave credits.');
-//        }
+        $adminId = Auth::guard('admin')->id();
 
         $credit = 15.0;
         $used_days = 0;
