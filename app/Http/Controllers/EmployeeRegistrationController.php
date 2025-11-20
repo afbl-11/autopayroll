@@ -39,7 +39,7 @@ class EmployeeRegistrationController extends Controller
         if (isset($data['message'])) {
             return redirect()->route('employee.register.1')
                 ->with('error', $data['message']);
-//            TODO: make a dedicated view
+/z/            TODO: make a dedicated view
         }
 
         return view('employee.addEmp5', compact('data', 'address','idAddress'))->with('title', 'Add Employee');
