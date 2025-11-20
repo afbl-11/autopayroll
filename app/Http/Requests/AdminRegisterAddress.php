@@ -14,7 +14,7 @@ class AdminRegisterAddress extends FormRequest
             'company_name' => 'required|string|max:255',
             'country' => 'required|string|max:255',
             'region_name' => 'required|string|max:255',
-            'province_name' => 'required|string|max:255',
+            'province_name' => 'nullable|string|max:255',
             'city_name' => 'required|string|max:255',
             'barangay_name' => 'required|string|max:255',
             'zip' => 'required|digits:4',

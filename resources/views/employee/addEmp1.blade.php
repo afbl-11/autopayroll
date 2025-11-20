@@ -65,7 +65,7 @@
                             :options="[
                                 'single' => 'Single',
                                 'married' => 'Married',
-                                'widow' => 'Widow'
+                                'widowed' => 'Widow'
                             ]"
                             label="Civil Status"
                             name="marital_status"

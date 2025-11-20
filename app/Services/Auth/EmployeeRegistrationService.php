@@ -7,6 +7,7 @@ use App\Models\Employee;
 use App\Services\GenerateId;
 use App\Services\LeaveCreditService;
 use App\Services\Payroll\EmployeeRatesService;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
@@ -57,6 +58,9 @@ class EmployeeRegistrationService
 
             $data['employee_id'] = $this->generateId->generateId(Employee::class, 'employee_id');
 
+            $adminID = Auth::guard('admin')->user()->id;
+            $data['admin_id'] = $adminID;
+
             $rateData = [
               'employee_id' => $data['employee_id'],
               'rate' => $data['rate'],
@@ -82,7 +86,7 @@ class EmployeeRegistrationService
             Employee::create($data);
 
             $this->ratesService->createRate($rateData);
-            $this->creditService->createCreditRecord($data['employee_id'], $data['admin_id'] );
+            $this->creditService->createCreditRecord($data['employee_id']);
     }
 
     public function getEmployeeInformation()
@@ -114,6 +118,6 @@ class EmployeeRegistrationService
 
     public function concatenateIdResAddress() {
         $address = session('register.address');
-        return  $address['id_province'] . ', ' . $address['id_city'] . ', ' . $address['id_barangay'] . ', ' . $address['id_street'] . ', ' . $address['id_house_number'];
+        return  $address['id_province_name'] . ', ' . $address['id_city_name'] . ', ' . $address['id_barangay_name'] . ', ' . $address['id_street'] . ', ' . $address['id_house_number'];
     }
 }

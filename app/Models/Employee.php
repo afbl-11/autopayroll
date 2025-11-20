@@ -55,11 +55,11 @@ class Employee extends Authenticatable
 
         // ID Address
         'id_country',
-        'id_region',
-        'id_province',
+        'id_region_name',
+        'id_province_name',
         'id_zip',
-        'id_city',
-        'id_barangay',
+        'id_city_name',
+        'id_barangay_name',
         'id_street',
         'id_house_number',
 

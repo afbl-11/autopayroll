@@ -34,3 +34,15 @@ float: right;
 #password-rules li {
     margin-bottom: 3px;
 }
+
+.create-intro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.create-intro img {
+    max-width: 600px;
+    max-height: 600px;
+}

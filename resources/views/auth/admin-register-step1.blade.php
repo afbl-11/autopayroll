@@ -9,12 +9,12 @@
 
 </head>
 <body>
-        <div class="logo">
-            <h1 id="logo">Auto<span>Payroll</span></h1>
+        <div >
+            <h1 class="logo">Auto<span>Payroll</span></h1>
         </div>
     <div class="container" >
         <div class="create-intro">
-
+            <img src="{{asset('assets/Business Plan-cuate.png')}}" alt="">
         </div>
         <div class="form-container">
             <div class="form-intro">
@@ -69,6 +69,7 @@
                     type="password"
                     name="password"
                     id="password"
+                    togglePassword="true"
                    />
                 </div>
 
@@ -76,13 +77,6 @@
             </form>
         </div>
     </div>
-
-{{--
-    TODO: password reveal
-    TODO: password validation - front-end
-    TODO: email verification
-     --}}
-
-
 </body>
 </html>
+

@@ -73,8 +73,9 @@
                     :value="$data['radius']"
                 />
             </div>
-
-            <x-button-submit>Create Client</x-button-submit>
+            <div class="button">
+                <x-button-submit>Create Client</x-button-submit>
+            </div>
         </form>
     </div>
 </x-app>

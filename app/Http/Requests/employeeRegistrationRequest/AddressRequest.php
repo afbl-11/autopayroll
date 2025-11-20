@@ -13,7 +13,7 @@ class AddressRequest extends FormRequest
         return [
             'country' => 'required|string|max:255',
             'region_name' => 'required|string|max:255',
-            'province_name' => 'required|string|max:255',
+            'province_name' => 'nullable|string|max:255',
             'city_name' => 'required|string|max:255',
             'barangay_name' => 'required|string|max:255',
             'zip' => 'required|digits:4',
@@ -22,7 +22,7 @@ class AddressRequest extends FormRequest
 
             'id_country' => 'required|string|max:255',
             'id_region_name' => 'required|string|max:255',
-            'id_province_name' => 'required|string|max:255',
+            'id_province_name' => 'nullable|string|max:255',
             'id_city_name' => 'required|string|max:255',
             'id_barangay_name' => 'required|string|max:255',
             'id_zip' => 'required|digits:4',
