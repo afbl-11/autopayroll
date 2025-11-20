@@ -69,6 +69,7 @@
                     type="password"
                     name="password"
                     id="password"
+                    togglePassword="true"
                    />
                 </div>
 
@@ -76,13 +77,6 @@
             </form>
         </div>
     </div>
-
-{{--
-    TODO: password reveal
-    TODO: password validation - front-end
-    TODO: email verification
-     --}}
-
-
 </body>
 </html>
+

@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('company_name');
             $table->string('country');
             $table->string('region_name');
-            $table->string('province_name');
+            $table->string('province_name')->nullable();
             $table->string('zip');
             $table->string('city_name');
             $table->string('barangay_name');
