@@ -9,12 +9,12 @@
 
 </head>
 <body>
-        <div class="logo">
-            <h1 id="logo">Auto<span>Payroll</span></h1>
+        <div >
+            <h1 class="logo">Auto<span>Payroll</span></h1>
         </div>
     <div class="container" >
         <div class="create-intro">
-
+            <img src="{{asset('assets/Business Plan-cuate.png')}}" alt="">
         </div>
         <div class="form-container">
             <div class="form-intro">
