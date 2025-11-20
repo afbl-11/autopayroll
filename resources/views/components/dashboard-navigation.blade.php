@@ -21,6 +21,8 @@
                 <li><a href="{{route('company.dashboard.employees', ['id' => $id])}}">Employees</a></li>
                 <li><a href="{{route('company.dashboard.schedules', ['id' => $id])}}">Schedules</a></li>
                 <li><a href="{{route('company.qr.management', ['id' => $id])}}">QR Management</a></li>
+                <li><a href="{{route('company.location.change', ['id' => $id])}}">Location</a></li>
+
             </ul>
         @elseif($type === 'employee')
             <ul>

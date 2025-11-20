@@ -1,9 +1,9 @@
 @vite('resources/css/company/company-cards.css')
 
 <a href="{{route('company.dashboard.detail',['id'=> $id])}}">
-    <div {{$attributes->merge(['class' => 'company-card'])}}>
+    <div {{$attributes->class('company-card')}}>
         <div class="top-bar">
-            ...
+{{--            ...--}}
         </div>
 
         <div class="profile">
@@ -27,8 +27,6 @@
             <div class="address">
                 <p>{{$address}}</p>
             </div>
-
-
         </div>
     </div>
 </a>
