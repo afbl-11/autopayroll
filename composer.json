@@ -10,7 +10,8 @@
         "laravel/framework": "^12.0",
         "laravel/sanctum": "^4.2",
         "laravel/tinker": "^2.10.1",
-        "simplesoftwareio/simple-qrcode": "4.0.0"
+        "simplesoftwareio/simple-qrcode": "4.0.0",
+        "ext-curl": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

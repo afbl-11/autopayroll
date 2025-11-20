@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\LeaveRequestController;
 use App\Http\Controllers\Api\PayrollController;
 use App\Http\Controllers\Api\PayrollWebController;
 use App\Http\Controllers\Api\ResetPasswordController;
+use App\Http\Controllers\OtpController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\CompanyController;
@@ -64,3 +65,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::middleware('auth:sanctum')->get('/employee/work-hours', [\App\Http\Controllers\Api\DashboardController::class, 'getTotalWorkedHours']);
 
     Route::middleware('auth:sanctum')->get('/employee/schedules', [\App\Http\Controllers\Api\ScheduleController::class, 'getSchedule']);
+
+Route::post('/otp/send', [OtpController::class, 'sendOtp']);
+Route::post('/otp/verify', [OtpController::class, 'verifyOtp']);
+Route::post('/send-otp', [OTPController::class, 'sendOtp']);
