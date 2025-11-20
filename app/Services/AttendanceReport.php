@@ -13,7 +13,7 @@ class AttendanceReport
         protected AttendanceService $attendanceService,
     ){}
 
-    public function data($id){ //todo:this one
+    public function data($id){
         $employee = Employee::with('attendanceLogs')->find($id);
 
         $daysActive = $this->attendanceService->countAttendance($id);
@@ -31,9 +31,15 @@ class AttendanceReport
             $query->whereNull('end_date');
         }])->find($id);
 
-        $start_time =  $sched->employeeSchedule->first()->start_time;
-        $end_time =  $sched->employeeSchedule->first()->end_time;
+        $firstSchedule = $sched->employeeSchedule->first();
 
+        if ($firstSchedule) {
+            $start_time = $firstSchedule->start_time;
+            $end_time = $firstSchedule->end_time;
+        } else {
+            $start_time = null;
+            $end_time = null;
+        }
         $log = AttendanceLogs::where('employee_id',$id)->first();
 
         if($log) {
