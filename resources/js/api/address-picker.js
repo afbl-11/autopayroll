@@ -1,109 +1,116 @@
-import { getRegions, getProvinces, getCities, getBarangays } from "./psgc.js";
+import {
+    getRegions,
+    getProvinces,
+    getCities,
+    getNCRCities,
+    getBarangays
+} from "./psgc.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
+
     const regionSelect = document.getElementById("region");
     const provinceSelect = document.getElementById("province");
     const citySelect = document.getElementById("city");
     const barangaySelect = document.getElementById("barangay");
 
-    // hidden name inputs
     const regionNameInput = document.getElementById("region_name");
     const provinceNameInput = document.getElementById("province_name");
     const cityNameInput = document.getElementById("city_name");
     const barangayNameInput = document.getElementById("barangay_name");
 
+    const NCR_CODE = "130000000"; // <<< THIS IS ACTUAL PSGC NCR CODE
+
     function createOption(code, name) {
         const option = document.createElement("option");
-        option.value = code;           // keep code so nested fetch endpoints work
+        option.value = code;
         option.textContent = name;
-        option.setAttribute("data-name", name);
+        option.dataset.name = name;
         return option;
     }
 
-    // load regions
+    // Load regions
     const regions = await getRegions();
-    regions.forEach(region => {
-        regionSelect.appendChild(createOption(region.code, region.name));
-    });
+    regions.forEach(r => regionSelect.appendChild(createOption(r.code, r.name)));
 
-
+    // ---------------------------
+    // REGION CHANGE
+    // ---------------------------
     regionSelect.addEventListener("change", async () => {
 
         provinceSelect.innerHTML = "<option value=''>Select Province</option>";
-        citySelect.innerHTML = "<option value=''>Select City / Municipality</option>";
+        citySelect.innerHTML = "<option value=''>Select City</option>";
         barangaySelect.innerHTML = "<option value=''>Select Barangay</option>";
+
         provinceNameInput.value = "";
         cityNameInput.value = "";
         barangayNameInput.value = "";
 
-        // set region name hidden input
-        const selectedRegionOption = regionSelect.options[regionSelect.selectedIndex];
-        regionNameInput.value = selectedRegionOption?.dataset?.name || "";
+        const selectedRegion = regionSelect.selectedOptions[0];
+        regionNameInput.value = selectedRegion?.dataset?.name || "";
 
         if (!regionSelect.value) return;
 
-        // load provinces by region code
+        // ---------- NCR LOGIC ----------
+        if (regionSelect.value === NCR_CODE) {
+            console.log("NCR detected — skipping provinces");
+
+            // disable province
+            provinceSelect.disabled = true;
+
+            // load NCR cities
+            const cities = await getNCRCities(NCR_CODE);
+            cities.forEach(c => citySelect.appendChild(createOption(c.code, c.name)));
+
+            return; // <<< IMPORTANT: stop here (skip province fetch)
+        }
+
+        // ---------- NORMAL REGIONS ----------
+        provinceSelect.disabled = false;
+
         const provinces = await getProvinces(regionSelect.value);
-        provinces.forEach(prov => {
-            provinceSelect.appendChild(createOption(prov.code, prov.name));
-        });
+        provinces.forEach(p => provinceSelect.appendChild(createOption(p.code, p.name)));
     });
 
-
+    // ---------------------------
+    // PROVINCE CHANGE (NOT USED FOR NCR)
+    // ---------------------------
     provinceSelect.addEventListener("change", async () => {
-        citySelect.innerHTML = "<option value=''>Select City / Municipality</option>";
+
+        if (provinceSelect.disabled) return; // NCR case → skip listener
+
+        citySelect.innerHTML = "<option value=''>Select City</option>";
         barangaySelect.innerHTML = "<option value=''>Select Barangay</option>";
         cityNameInput.value = "";
         barangayNameInput.value = "";
 
-        const selectedProvinceOption = provinceSelect.options[provinceSelect.selectedIndex];
-        provinceNameInput.value = selectedProvinceOption?.dataset?.name || "";
+        const selectedProvince = provinceSelect.selectedOptions[0];
+        provinceNameInput.value = selectedProvince?.dataset?.name || "";
 
         if (!provinceSelect.value) return;
 
         const cities = await getCities(provinceSelect.value);
-        cities.forEach(city => {
-            citySelect.appendChild(createOption(city.code, city.name));
-        });
+        cities.forEach(c => citySelect.appendChild(createOption(c.code, c.name)));
     });
 
-
+    // ---------------------------
+    // CITY CHANGE (WORKS FOR ALL)
+    // ---------------------------
     citySelect.addEventListener("change", async () => {
+
         barangaySelect.innerHTML = "<option value=''>Select Barangay</option>";
         barangayNameInput.value = "";
 
-        const selectedCityOption = citySelect.options[citySelect.selectedIndex];
-        cityNameInput.value = selectedCityOption?.dataset?.name || "";
+        const selectedCity = citySelect.selectedOptions[0];
+        cityNameInput.value = selectedCity?.dataset?.name || "";
 
         if (!citySelect.value) return;
 
         const barangays = await getBarangays(citySelect.value);
-        barangays.forEach(b => {
-            barangaySelect.appendChild(createOption(b.code, b.name));
-        });
+        barangays.forEach(b => barangaySelect.appendChild(createOption(b.code, b.name)));
     });
 
     barangaySelect.addEventListener("change", () => {
-        const selectedBarangayOption = barangaySelect.options[barangaySelect.selectedIndex];
-        barangayNameInput.value = selectedBarangayOption?.dataset?.name || "";
-    });
-
-    const form = document.querySelector("form");
-    form.addEventListener("submit", (e) => {
-        // region
-        const rOpt = regionSelect.options[regionSelect.selectedIndex];
-        regionNameInput.value = regionNameInput.value || rOpt?.dataset?.name || rOpt?.text || "";
-
-        // province
-        const pOpt = provinceSelect.options[provinceSelect.selectedIndex];
-        provinceNameInput.value = provinceNameInput.value || pOpt?.dataset?.name || pOpt?.text || "";
-
-        // city
-        const cOpt = citySelect.options[citySelect.selectedIndex];
-        cityNameInput.value = cityNameInput.value || cOpt?.dataset?.name || cOpt?.text || "";
-
-        // barangay
-        const bOpt = barangaySelect.options[barangaySelect.selectedIndex];
-        barangayNameInput.value = barangayNameInput.value || bOpt?.dataset?.name || bOpt?.text || "";
+        const selectedBarangay = barangaySelect.selectedOptions[0];
+        barangayNameInput.value = selectedBarangay?.dataset?.name || "";
     });
 });
