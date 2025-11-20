@@ -48,7 +48,7 @@ return new class extends Migration
 //            current address
             $table->string('country')->default('Philippines');
             $table->string('region_name');
-            $table->string('province_name');
+            $table->string('province_name')->nullable();
             $table->string('zip');
             $table->string('city_name');
             $table->string('barangay_name');
@@ -57,11 +57,11 @@ return new class extends Migration
 
 //            address on id
             $table->string('id_country')->default('Philippines');
-            $table->string('id_region');
-            $table->string('id_province');
+            $table->string('id_region_name');
+            $table->string('id_province_name')->nullable();
             $table->string('id_zip');
-            $table->string('id_city');
-            $table->string('id_barangay');
+            $table->string('id_city_name');
+            $table->string('id_barangay_name');
             $table->string('id_street');
             $table->string('id_house_number')->nullable();
 
