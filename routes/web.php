@@ -126,6 +126,14 @@ Route::post('/company/schedule/create', [CompanyDashboardController::class, 'cre
     ->middleware('auth:admin')
     ->name('company.create.schedule');
 
+Route::get('/company/location/change/{id}', [CompanyDashboardController::class, 'showLocationChange'])
+    ->middleware(['auth:admin'])
+    ->name('company.location.change');
+
+Route::post('/company/change/client-address/{id}', [CompanyDashboardController::class, 'storeUpdatedClientAddress'])
+    ->middleware(['auth:admin'])
+    ->name('company.change.client.address');
+
 
 
 //email verification
