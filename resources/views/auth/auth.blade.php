@@ -12,7 +12,7 @@
                 </div>
 
                 <div class="field-row">
-                    <x-form-input type="password" name="password" id="password" label="Password" class="toggleEye" required></x-form-input>
+                    <x-form-input type="password" name="password" id="password" label="Password" class="toggleEye" required togglePassword="true"></x-form-input>
 
                     <a href="{{route('forgot.password')}}"><small>Forgot Password</small></a>
                 </div>
@@ -23,17 +23,27 @@
 
     </section>
 </x-root>
-  <script>
-    function togglePassword() {
-    const passwordInput = document.getElementById("password");
-    const icon = document.querySelector(".toggleEye");
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll(".toggle-eye").forEach((eye) => {
+            eye.addEventListener("click", function () {
+                const input = document.getElementById(this.dataset.target);
+                if (!input) return;
 
-    if (passwordInput.type === "password") {
-        passwordInput.type = "text";
-        icon.textContent = "⌣";
-    } else {
-        passwordInput.type = "password";
-        icon.textContent = "👁";
-    }
-}
- </script>
+                const eyeIcon = this.querySelector(".eye-icon");
+                const eyeOffIcon = this.querySelector(".eye-off-icon");
+
+                if (input.type === "password") {
+                    input.type = "text";
+                    eyeIcon.style.display = "none";
+                    eyeOffIcon.style.display = "block";
+                } else {
+                    input.type = "password";
+                    eyeIcon.style.display = "block";
+                    eyeOffIcon.style.display = "none";
+                }
+            });
+        });
+    });
+
+</script>
