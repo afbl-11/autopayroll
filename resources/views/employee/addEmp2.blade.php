@@ -1,9 +1,9 @@
  @vite([
-      'resources/css/employee_registration/address.css',
-      'resources/js/api/address-picker.js',
-      'resources/js/api/address-sync.js',
-      'resources/js/empOnboarding/addEmp.js',
-      'resources/js/address-retrieve.js',
+        'resources/css/employee_registration/address.css',
+        'resources/js/empOnboarding/addEmp.js',
+        'resources/js/api/employee-address.js',
+
+
     ])
 <x-app :title="$title" :showProgression="true">
     <section class="main-content">
@@ -58,6 +58,7 @@
                         <div class="field-row">
                             <x-form-select name="id_country" id="id_country" label="Country" :options="['Philippines' => 'Philippines']" value="philippines" required></x-form-select>
                             <x-form-select name="id_region" id="id_region" label="Region"></x-form-select>
+                            <input type="hidden" name="id_region_name" id="id_region_name">
                         </div>
 
                         {{-- province & zip --}}
@@ -87,6 +88,6 @@
                     </div>
                 </form>
             </div>
-        </div>
     </section>
 </x-app>
+
