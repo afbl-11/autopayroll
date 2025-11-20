@@ -79,5 +79,13 @@ strong{
 p {
     margin: 0;
 }
+.address p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
+}
+.address {
+    max-width: 100%;
+}
 
