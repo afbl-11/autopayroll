@@ -54,7 +54,7 @@ class EmployeeRegistrationService
 
             $data['profile_photo'] = 'default_profile.png';
 
-            $data['password'] = hash('sha256',$data['password'] ?? 'DefaultPassword123!');
+            $data['password'] = Hash::make($data['password'] ?? 'DefaultPassword123!');
 
             $data['employee_id'] = $this->generateId->generateId(Employee::class, 'employee_id');
 
