@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Company;
+use App\Models\CreditAdjustment;
 use App\Models\Employee;
 use App\Models\PayrollPeriod;
 use App\Repositories\AdminRepository;
@@ -96,4 +97,11 @@ class DashboardService
         return $totalDeductions;
     }
 
+    public function showAdjustmentRequest() {
+        return CreditAdjustment::where('status', 'pending')->get();
+    }
+
+    public function getAttendance() {
+        $employee = Employee::where('status', 'active');
+    }
 }

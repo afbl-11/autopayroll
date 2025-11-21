@@ -3,7 +3,7 @@
         <div class="main">
                 <div class="summary-wrapper">
                     <div class="header">
-                        <h5>Payroll Summary</h5>
+                        <h6>Payroll Summary</h6>
                     </div>
                     <div class="table-data">
                         <div class="data-wrapper">
@@ -37,27 +37,25 @@
 
                 <div class="section">
                     <div class="attendance-overview">
-                        <h5>Attendance Overview</h5>
-                        <div class="attendance-data">
-                            <h6>Number of Absences</h6>
-                            <h6 class="value">-</h6>
-                        </div>
-                        <div class="attendance-data">
-                            <h6>Early Clock-ins</h6>
-                            <h6 class="value">-</h6>
-                        </div>
-                        <div class="attendance-data">
-                            <h6>Late Cock-ins</h6>
-                            <h6 class="value">-</h6>
-                        </div>
-                        <div class="attendance-data">
-                            <h6>Overtimes Logged</h6>
-                            <h6 class="value">-</h6>
-                        </div>
+                        <h6>Attendance Overview</h6>
+                        <div class="attendance-list">
+                            @foreach($attendance as $log)
+                                @php
+                                    $attendance = $log->attendanceLogs->first();
+                                @endphp
+                                <x-attendance-overview
+                                    source="employee.dashboard.attendance"
+                                    :employeeId="$log->employee_id"
+                                    :name="$log->first_name .' ' . $log->last_name"
+                                    :profile="'assets/default_profile.png'"
+                                    :status="$attendance?->status"
+                                />
 
+                            @endforeach
+                        </div>
                     </div>
                     <div class="manpower-distribution">
-                        <h5>Manpower Distribution</h5>
+                        <h6>Manpower Distribution</h6>
 
                         <div class="table-headers">
                             <p>Company</p>
@@ -80,25 +78,50 @@
 
                 </div>
 
-                <div class="leave-requests">
-                    <h5>Leave Requests</h5>
-                    <div class="requests-wrapper">
-                        <div class="request-cards">
-                        @forelse($employee as $leaves)
-                            <x-leave-card
-                                :leaveId="$leaves->leave_request_id"
-                                :employeeId="$leaves->employee_id"
-                                :leave_type="$leaves->leave_type"
-                                :message="$leaves->reason"
-                                :date="\Carbon\Carbon::parse($leaves->submission_date)->format('Y-m-d')"
-                                :status="$leaves->latest_status"
-                            />
-                        @empty
-                            <p id="empty" >Employee currently don't have a request</p>
-                        @endforelse
+                <div class="requests">
+                    <div class="leave-requests">
+                        <h6>Leave Requests</h6>
+                        <div class="requests-wrapper">
+                            <div class="request-cards">
+                            @forelse($employee as $leaves)
+                                <x-leave-card
+                                    source="employee.leave.detail"
+                                    :leaveId="$leaves->leave_request_id"
+                                    :employeeId="$leaves->employee_id"
+                                    :leave_type="$leaves->leave_type"
+                                    :message="$leaves->reason"
+                                    :date="\Carbon\Carbon::parse($leaves->submission_date)->format('Y-m-d')"
+{{--                                    :status="$leaves->status"--}}
+                                />
+                            @empty
+                                <p id="empty" >Employee currently don't have a request</p>
+                            @endforelse
+                            </div>
+                        </div>
+                    </div>
+{{--                    credit adjustments request--}}
+                    <div class="leave-requests">
+                        <h6>Adjustment Requests</h6>
+                        <div class="requests-wrapper">
+                            <div class="request-cards">
+                                @forelse($adjustment as $request)
+                                    <x-leave-card
+                                        source="adjustments"
+                                        :leaveId="$request->adjustment_id"
+                                        :employeeId="$request->employee_id"
+                                        :leave_type="$request->adjustment_type"
+                                        :message="$request->reason"
+                                        :date="\Carbon\Carbon::parse($request->created_at)->format('Y-m-d')"
+{{--                                        :status="$request->status"--}}
+                                    />
+                                @empty
+                                    <p id="empty" >Employee currently don't have a request</p>
+                                @endforelse
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+
         </div>
 </x-app>
 

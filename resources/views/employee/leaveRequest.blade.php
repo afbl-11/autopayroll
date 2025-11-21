@@ -20,6 +20,7 @@
             <div class="request-cards">
                 @forelse($leave as $leaves)
                     <x-leave-card
+                        source="employee.leave.detail"
                         :leaveId="$leaves->leave_request_id"
                         :employeeId="$employee->employee_id"
                         :leave_type="$leaves->leave_type"

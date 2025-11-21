@@ -5,6 +5,7 @@
     padding: 10px;
     background: var(--clr-card-surface);
     border-bottom: 1px solid rgba(156, 163, 175, 0.5);
+
 }
 
 .leave-card:hover {
