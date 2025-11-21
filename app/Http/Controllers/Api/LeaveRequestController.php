@@ -7,6 +7,7 @@ use App\Models\Admin;
 use App\Models\LeaveRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
@@ -42,11 +43,11 @@ class LeaveRequestController extends Controller
         if ($request->hasFile('attachment')) {
             $attachmentPath = $request->file('attachment')->store('leave_attachments');
         }
-        $admin = Admin::first();
+//        $admin = Auth::guard('admin')->id();
 
         $leave = $employee->leaves()->create([
             'leave_request_id' => Str::uuid(),
-            'admin_id' => $admin->admin_id,
+            'admin_id' => $employee->admin_id,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
             'reason' => $request->reason,

@@ -79,7 +79,6 @@ class AttendanceReport
 
     public function generateTimeline($scheduleStart, $scheduleEnd, $clockIn, $clockOut)
     {
-        // Convert to Carbon
         $timelineStart = Carbon::parse($scheduleStart);
         $timelineEnd   = Carbon::parse($scheduleEnd);
         $totalMinutes  = $timelineEnd->diffInMinutes($timelineStart);
@@ -87,7 +86,6 @@ class AttendanceReport
         $startPercent = null;
         $workedPercent = null;
 
-        // ---- Generate timeline labels (every 2 hours) ----
         $labels = [];
         $pointer = $timelineStart->copy();
 
@@ -96,7 +94,6 @@ class AttendanceReport
             $pointer->addHours(2);
         }
 
-        // ---- If there is no clock in/out, just return labels ----
         if (!$clockIn || !$clockOut) {
             return [
                 'labels' => $labels,
@@ -105,7 +102,7 @@ class AttendanceReport
             ];
         }
 
-        // ---- Calculate bar percentages ----
+
         $clockInC  = Carbon::parse($clockIn);
         $clockOutC = Carbon::parse($clockOut);
 

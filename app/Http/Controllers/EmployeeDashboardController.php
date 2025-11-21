@@ -46,10 +46,10 @@ class EmployeeDashboardController extends Controller
             .$employee->country ;
         $id_address =
              $employee->id_country . ', '
-             . $employee->id_region . ', '
+             . $employee->id_region_name . ', '
              . $employee->id_zip . ', '
-             . $employee->id_city . ', '
-             . $employee->id_barangay .', '
+             . $employee->id_city_name . ', '
+             . $employee->id_barangay_name .', '
              .$employee->id_street . ', '
              .$employee->id_house_number;
 

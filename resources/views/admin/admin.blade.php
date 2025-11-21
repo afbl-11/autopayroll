@@ -97,7 +97,6 @@
                             <p id="empty" >Employee currently don't have a request</p>
                         @endforelse
                     </div>
-                    <small id="small">End of List</small>
                 </div>
             </div>
 </x-app>

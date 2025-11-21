@@ -102,7 +102,7 @@ class Employee extends Authenticatable
 
     public function getCreditDays()
     {
-        return $this->leaveCredits->first()?->credit_days ?? 0;
+        return $this->leaveCredits->first()?->credit_days ?: 0;
     }
     public function rates()
     {
@@ -123,15 +123,15 @@ class Employee extends Authenticatable
     {
         return $this->hasMany(CreditAdjustment::class, 'employee_id', 'employee_id');
     }
-    protected static function booted() {
-        static::addGlobalScope(new AdminScope);
-
-        static::creating(function ($model) {
-            if($admin = auth('admin')->user()){
-                $model->admin_id = $admin->admin_id;
-            }
-        });
-    }
+//    protected static function booted() {
+//        static::addGlobalScope(new AdminScope);
+//
+//        static::creating(function ($model) {
+//            if($admin = auth('admin')->user()){
+//                $model->admin_id = $admin->admin_id;
+//            }
+//        });
+//    }
 
     public function leaves() {
         return $this->hasMany(LeaveRequest::class, 'employee_id', 'employee_id');

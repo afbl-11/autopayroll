@@ -31,7 +31,7 @@ class LeaveRequestController extends Controller
 
         $duration = Carbon::parse($leave->start_date)->diffInDays(Carbon::parse($leave->end_date));
 
-        $reports = $this->report->data($leaveId);
+        $reports = $this->report->data($employeeId);
 
         return view('employee.leave-detail',compact('employee', 'leave', 'leaveCount', 'duration', 'reports'))->with('title','Leave Request');
     }

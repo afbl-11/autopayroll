@@ -152,9 +152,9 @@ display: flex;
 .requests-wrapper {
     display: flex;
     flex-direction: column;
-    /*justify-content: center;*/
+    justify-content: center;
     align-items: center;
-    height: 200px;
+    height: 250px;
     width: 100%;
     border: 1px solid #ccc;
     border-radius: 8px;
