@@ -4,6 +4,7 @@
     padding: 5px;
     border-radius: 16px;
     text-align: center;
+    max-height: 25px;
 
 }
 
@@ -13,6 +14,7 @@
     padding: 5px;
     border-radius: 16px;
     text-align: center;
+    max-height: 25px;
 }
 small {
     color: var(--clr-primary);

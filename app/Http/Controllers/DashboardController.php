@@ -16,13 +16,16 @@ class DashboardController extends Controller
     public function __construct(
         protected DashboardService $service,
         protected LeaveRequestService $leaveRequestService,
+        protected EmployeeRepository $employeeRepository,
     ){}
     public function showDashboard() {
         $data = $this->service->getDashboardData();
 
         $employee = $this->leaveRequestService->showAllLeaveRequests();
+        $adjustment = $this->service->showAdjustmentRequest();
+        $attendance = $this->employeeRepository->getEmployees();
 
-        return view('admin.admin', compact('employee',  'data'));
+        return view('admin.admin', compact('employee',  'data','adjustment', 'attendance'));
     }
 
 

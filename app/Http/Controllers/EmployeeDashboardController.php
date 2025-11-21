@@ -59,7 +59,7 @@ class EmployeeDashboardController extends Controller
     }
 
     public function showContract($id) {
-        $employee = Employee::findOrFail($id);
+        $employee = Employee::find($id);
         return view('employee.employee-contract',compact('employee'))->with('title','Employee Contract');
     }
 

@@ -1,0 +1,31 @@
+.status-overview-card {
+    width: 100%;
+    display: flex;
+    padding: 10px;
+    height: auto;
+    justify-content: space-between;
+    align-items: start;
+    border-bottom: 1px solid var(--clr-muted);
+    cursor: pointer;
+}
+
+.status-overview-card:hover {
+    background: #f1f1f1;
+    transition: 0.3s ease-in-out;
+}
+
+img {
+    max-width: 55px;
+    max-height: 55px ;
+}
+.name p {
+    text-align: start;
+}
+
+.profile {
+    width: 20%;
+}
+.name {
+    width: 60%;
+}
+
