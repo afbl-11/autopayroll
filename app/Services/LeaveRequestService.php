@@ -19,7 +19,7 @@ class LeaveRequestService
         $employee = Employee::find($employeeId);
         $leave = LeaveRequest::find($leaveId);
 
-        $leaveDuration = Carbon::parse($leave->start_date)->diffInDays(Carbon::parse($leave->end_date)) + 1;
+        $leaveDuration = Carbon::parse($leave->start_date)->diffInDays(Carbon::parse($leave->end_date));
         $creditUsed = $leaveDuration;
 
         $leaveCredit = LeaveCredits::where('employee_id', $employeeId)->first();

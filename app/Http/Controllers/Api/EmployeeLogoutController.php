@@ -27,6 +27,6 @@ class EmployeeLogoutController extends Controller
 
         return response()->json([
             'message' => 'Logged out successfully',
-        ]);
+        ], 200);
     }
 }

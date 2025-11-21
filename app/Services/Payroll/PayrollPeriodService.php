@@ -11,7 +11,9 @@ class PayrollPeriodService
     public function createPeriod($adminId)
     {
         // Check if an open period already exists
-        $periodExists = PayrollPeriod::where('is_closed', false)->exists();
+        $periodExists = PayrollPeriod::where('is_closed', false)
+            ->where('admin_id', $adminId)
+            ->exists();
 
         if (!$periodExists) {
 
