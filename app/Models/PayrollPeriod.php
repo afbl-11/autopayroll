@@ -26,13 +26,4 @@ class PayrollPeriod extends Model
         'is_closed',
     ];
 
-    protected static function booted() {
-        static::addGlobalScope(new AdminScope);
-
-        static::creating(function ($model) {
-            if($admin = auth('admin')->user()){
-                $model->admin_id = $admin->admin_id;
-            }
-        });
-    }
 }
