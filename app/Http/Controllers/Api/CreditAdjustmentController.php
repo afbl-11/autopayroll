@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\AdjustmentType;
+use App\Models\AttendanceLogs;
 use App\Models\CreditAdjustment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -64,6 +65,20 @@ class CreditAdjustmentController extends Controller
                 'errors' => $e->errors()
             ], 422);
         }
+
+        $log = AttendanceLogs::where('employee_id', $validated['employee_id'])
+            ->where('log_date',  $validated['affected_date'])
+            ->first();
+
+        if($validated['main_type'] == 'attendance') {
+            if(!$log){
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Log not found on requested date'
+                ]);
+            }
+        }
+
 
         $attachmentPath = null;
         if ($request->hasFile('attachment')) {

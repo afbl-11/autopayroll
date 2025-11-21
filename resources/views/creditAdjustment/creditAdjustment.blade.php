@@ -45,7 +45,7 @@
                                     @csrf
                                     <input type="hidden" name="employee_id" class="employee_id">
                                     <input type="hidden" name="request_id" class="request_id">
-                                    <input type="hidden" name="affected_date" class="affected_date">
+                                    <x-form-input type="text" name="affected_date" class="affected_date" label="Log Date Affected"/>
 
                                     <x-form-input
                                         type="time"
@@ -66,7 +66,7 @@
                                     @csrf
                                     <input type="hidden" name="employee_id" class="employee_id">
                                     <input type="hidden" name="request_id" class="request_id">
-                                    <input type="hidden" name="affected_date" class="affected_date">
+                                    <x-form-input type="text" name="affected_date" class="affected_date" label="Log Date Affected"/>
 
                                    <x-form-input
                                         label="Time out"
@@ -88,7 +88,7 @@
                                     @csrf
                                     <input type="hidden" name="employee_id" class="employee_id">
                                     <input type="hidden" name="request_id" class="request_id">
-                                    <input type="hidden" name="affected_date" class="affected_date">
+                                    <x-form-input type="text" name="affected_date" class="affected_date" label="Log Date Affected"/>
 
                                     <x-form-input
                                         label="Time in"
@@ -137,8 +137,8 @@
                                     @csrf
                                     <input type="hidden" name="employee_id" class="employee_id">
                                     <input type="hidden" name="request_id" class="request_id">
-                                    <input type="hidden" name="start_date" class="start_date">
-                                    <input type="hidden" name="end_date" class="end_date">
+                                    <x-form-input type="text" name="start_date" class="start_date" label="Start Date Affected"/>
+                                    <x-form-input type="text" name="end_date" class="end_date" label="End Date Affected"/>
 
                                     <x-form-input
                                         label="Start Date"
@@ -170,7 +170,7 @@
                             @csrf
                             <input type="hidden" name="employee_id" class="employee_id">
                             <input type="hidden" name="request_id" class="request_id">
-                            <input type="hidden" name="affected_date" class="affected_date">
+                            <x-form-input type="text" name="affected_date" class="affected_date" label="Log Date Affected"/>
 
                             <x-form-input
                                 label="Date"
