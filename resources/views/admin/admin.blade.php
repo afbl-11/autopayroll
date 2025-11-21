@@ -8,7 +8,7 @@
                     <div class="table-data">
                         <div class="data-wrapper">
                             <div class="table-item">
-                                <h6>Paid Employees</h6>
+                                <h6>Employees</h6>
                                 <div class="data">
                                     <h4>{{$data['employee_count']}}</h4>
                                 </div>
@@ -16,13 +16,13 @@
                             <div class="table-item">
                                 <h6>Total Payroll</h6>
                                 <div class="data">
-                                    <h4>{{$data['total_payroll']}}</h4>
+                                    <h4>{{$data['totalPayroll']}}</h4>
                                 </div>
                             </div>
                             <div class="table-item">
                                 <h6>Total Deductions</h6>
                                 <div class="data">
-                                    <h4>{{$data['total_deductions']}}</h4>
+                                    <h4>{{$data['totalDeduction']}}</h4>
                                 </div>
                             </div>
                             <div class="table-item">
@@ -61,18 +61,18 @@
 
                         <div class="table-headers">
                             <p>Company</p>
-                            <p>Address</p>
+                            <p>Industry</p>
                             <p>Manpower</p>
+                            <p>Payroll</p>
                         </div>
 
                         <div class="company-cards-wrapper">
                             @foreach($data['company'] as $companies)
-                                <div class="company-cards">
+                                <div class="company-cards" onclick="window.location.href='{{route('company.dashboard.detail', ['id' => $companies->company_id])}}'">
                                     <div class="card-data">{{ $companies->company_name }}</div>
-                                    <div class="card-data" id="company_address">
-                                        <small>{{ $companies->city . ', ' . $companies->barangay }}</small>
-                                    </div>
+                                    <div class="card-data">{{ $companies->industry }}</div>
                                     <div class="card-data">{{ $companies->employees_count }}</div>
+                                    <div class="card-data">{{ $companies->companyPayroll}}</div>
                                 </div>
                             @endforeach
                         </div>
@@ -83,7 +83,7 @@
                 <div class="leave-requests">
                     <h5>Leave Requests</h5>
                     <div class="requests-wrapper">
-{{--                        <div class="request-cards">--}}
+                        <div class="request-cards">
                         @forelse($employee as $leaves)
                             <x-leave-card
                                 :leaveId="$leaves->leave_request_id"
@@ -99,5 +99,6 @@
                     </div>
                 </div>
             </div>
+        </div>
 </x-app>
 

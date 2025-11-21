@@ -105,17 +105,25 @@ display: flex;
 }
 .table-headers {
     display: grid;
-    grid-template-columns: 2fr 2fr 1fr;
+    grid-template-columns: repeat(4, 1fr);
     border-bottom: 2px solid var(--clr-muted)   ;
     padding-bottom: 5px;
     margin-top: 20px;
+    padding-left: 30px;
 }
 
 .company-cards {
     display: grid;
-    grid-template-columns: 2fr 2fr 1fr;
+    grid-template-columns: repeat(4, 1fr);
     padding: 10px 0;
     border-bottom: 1px solid var(--clr-muted);
+    padding-left: 10px;
+}
+
+.company-cards:hover {
+    background: #f1f1f1;
+    transform: scale(1.010);
+    transition: 0.3s ease-in-out;
 }
 
 .company-cards .card-data {
