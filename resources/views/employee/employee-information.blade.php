@@ -36,14 +36,14 @@
                         />
                     </div>
 {{--                    place of birth--}}
-                    <div class="field-row">
-                        <x-form-input
-                            label="Place of Birth"
-                            name="address"
-                            id="address"
-                            :value="$res_address"
-                        />
-                    </div>
+{{--                    <div class="field-row">--}}
+{{--                        <x-form-input--}}
+{{--                            label="Place of Birth"--}}
+{{--                            name="address"--}}
+{{--                            id="address"--}}
+{{--                            :value="$res_address"--}}
+{{--                        />--}}
+{{--                    </div>--}}
 {{--                    birthdate and age--}}
                     <div class="field-row">
                         <x-form-input
