@@ -112,17 +112,17 @@
                     </div>
                 </div>
 
-                <!-- Payroll Accordion -->
-                <div class="accordion-group" data-type="payroll">
-                    <div class="accordion-header">Payroll Adjustments</div>
-                    <div class="accordion-body">
+{{--                <!-- Payroll Accordion -->--}}
+{{--                <div class="accordion-group" data-type="payroll">--}}
+{{--                    <div class="accordion-header">Payroll Adjustments</div>--}}
+{{--                    <div class="accordion-body">--}}
 
 
-                       <div class="sub-accordion">
-                           <div class="sub-header"></div>
-                       </div>
-                    </div>
-                </div>
+{{--                       <div class="sub-accordion">--}}
+{{--                           <div class="sub-header"></div>--}}
+{{--                       </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
 
                 <!-- Leave Accordion -->
                 <div class="accordion-group" data-type="leave">
