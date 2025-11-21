@@ -26,8 +26,8 @@
     max-height: 30px !important;
     font-size: 13px !important;
     width: 40% !important;
-    background: var(--clr-red) !important;
-    color: var(--clr-background) !important;
+    background: var(--clr-yellow) !important;
+    color: var(--clr-primary) !important;
 }
 .action .button-filled:hover {
     background: var(--clr-primary) !important;

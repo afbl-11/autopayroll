@@ -5,9 +5,9 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"/>
 <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 
-<x-app :title="$title" :noDefault="true">
+<x-app  :noHeader="true" :navigation="true" :company="$company">
 
-    <section class="main-content">
+    <section class="main-content" style="margin-top:50px">
         <form action="{{route('company.change.client.address', ['id' => $id])}}" method="post">
             @csrf
             <div class="field-row">

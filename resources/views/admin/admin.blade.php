@@ -39,7 +39,7 @@
                     <div class="attendance-overview">
                         <h6>Attendance Overview</h6>
                         <div class="attendance-list">
-                            @foreach($attendance as $log)
+                            @forelse($attendance as $log)
                                 @php
                                     $attendance = $log->attendanceLogs->first();
                                 @endphp
@@ -50,8 +50,9 @@
                                     :profile="'assets/default_profile.png'"
                                     :status="$attendance?->status"
                                 />
-
-                            @endforeach
+                            @empty
+                                <p>No Record Found</p>
+                            @endforelse
                         </div>
                     </div>
                     <div class="manpower-distribution">

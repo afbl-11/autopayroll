@@ -8,7 +8,7 @@
 
             <form action="{{ route('company.qr.download', $company->company_id) }}" method="POST">
                 @csrf
-                <x-button-submit>Save</x-button-submit>
+{{--                <x-button-submit>Save</x-button-submit>--}}
             </form>
         </div>
     </div>

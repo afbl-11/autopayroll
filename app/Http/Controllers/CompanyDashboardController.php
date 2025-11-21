@@ -37,7 +37,7 @@ class CompanyDashboardController extends Controller
 
     public function showInfo($id) {
         $company = Company::with('employees')
-            ->findOrFail($id);
+            ->find($id);
       return view('company.company-information', compact('company'))->with('title', $company->company_name . ' ' . 'Dashboard');
     }
     public function showEmployees($id) {
@@ -83,7 +83,9 @@ class CompanyDashboardController extends Controller
 
     public function showLocationChange(string $id)
     {
-        return view('company.company-location', compact('id'))->with(['title' => 'Change Company Location']);
+        $company = Company::with('employees')
+            ->find($id);
+        return view('company.company-location', compact('id', 'company'))->with(['title' => 'Change Company Location']);
     }
 
     public function storeUpdatedClientAddress(CompanyAddressRequest $request, $id)
