@@ -239,3 +239,134 @@ footer .logo {
     padding: 0 !important;
     margin: 0 !important;
 }
+
+@media (max-width: 1150px) {
+
+    .logo-wrapper h1 {
+        margin-left: -90px;
+    }
+
+    nav {
+        flex-direction: column !important;
+        gap: 20px;
+        padding-bottom: 15px;
+    }
+
+    .container nav .buttons {
+        width: 90%;
+        justify-content: center;
+        margin-right: 0;
+        position: absolute;
+        margin-top: 125px;
+    }
+
+    .left-content-wrapper,
+    .right-content-wrapper {
+        width: 100%;
+        text-align: center;
+    }
+
+    .img-1 {
+        width: 20px;
+        height: 450px;
+    }
+
+    .right-content-wrapper {
+        display: flex;
+        justify-content: center;
+    }
+
+    .introduction-wrapper {
+        margin-top: 20px;
+    }
+
+    .cards-wrapper {
+        grid-template-columns: repeat(2, 1fr);
+        width: 90%;
+    }
+
+    .content-wrapper {
+        flex-direction: column;
+        gap: 30px;
+        text-align: center;
+    }
+
+    .content-wrapper .info-message {
+        width: 90%;
+        padding-left: 0;
+        align-items: center;
+    }
+
+    .banner .button-filled {
+        width: 50% !important;
+    }
+
+    .info-card-header {
+        width: 90%;
+    }
+
+    footer .logo {
+        font-size: 120px;
+    }
+}
+
+
+@media (max-width: 900px) {
+
+    .logo-wrapper h1 {
+        margin-left: -50px;
+    }
+    
+    .container nav {
+        flex-direction: column;
+    }
+
+    .container nav .buttons {
+        gap: 10px;
+        flex-direction: column;
+    }
+
+    .container nav .buttons form .button-filled {
+        width: 90%;
+    }
+
+    .introduction-wrapper {
+        flex-direction: column-reverse;
+        text-align: center;
+        padding: 20px;
+        margin-bottom: 400px;
+    }
+
+    .left-content-wrapper {
+        width: 100%;
+        align-items: center;
+        margin-top: 850px;
+    }
+    .right-content-wrapper img {
+        width: 80%;
+        margin-top: 1250px;
+    }
+
+    .cards-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .content-wrapper {
+        flex-direction: column;
+        padding: 20px;
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .banner .button-filled {
+        width: 80% !important;
+    }
+
+    .banner-header {
+        text-align: center;
+    }
+
+    footer .logo {
+        font-size: 90px;
+    }
+}

@@ -37,7 +37,7 @@
                 </div>
             </div>
             <div class="right-content-wrapper">
-                <img src="{{asset('assets/landing/image1.png')}}" alt="">
+                <img class="img-1" src="{{asset('assets/landing/image1.png')}}" alt="">
             </div>
         </div>
         <div class="separator"></div>
