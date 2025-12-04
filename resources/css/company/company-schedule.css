@@ -22,6 +22,11 @@
     width: 30%;
 
 }
+
+.schedule-wrapper p {
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
 .field-row {
     display: flex !important;
 }
@@ -54,4 +59,48 @@
 
 .button-filled {
     width: 100% !important;
+}
+
+@media (max-width: 1400px) {
+
+    .content-wrapper {
+        margin-left: 50px;
+    }
+    
+}
+
+
+@media (max-width: 1150px) {
+
+    .content-wrapper {
+        height: auto;
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+        width: 80%;
+        align-items: center;
+    }
+    
+    .schedule-wrapper {
+        width: 90%;
+    }
+
+    .employee-card-wrapper {
+        width: 90%;
+        padding: 0;
+    }
+
+    .field-row {
+        flex-direction: column !important;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 800px) {
+
+    .content-wrapper {
+        width: 75%;
+        margin-left: 70px;
+    }
+
 }
