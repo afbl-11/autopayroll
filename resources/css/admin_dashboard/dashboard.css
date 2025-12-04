@@ -200,11 +200,7 @@ nav h4 {
     justify-content: flex-start !important;
 }
 
-/* =============================
-       RESPONSIVE (applied like your first CSS)
-============================= */
 
-/* 1500px – tighten layout */
 @media (max-width: 1500px) {
     .section {
         gap: 20px;
@@ -214,7 +210,7 @@ nav h4 {
     }
 }
 
-/* 1200px – similar to your attendance/payroll wrap */
+
 @media (max-width: 1200px) {
     .section {
         flex-direction: column;
@@ -227,7 +223,6 @@ nav h4 {
     }
 }
 
-/* 1070px – summary stacks like your categories */
 @media (max-width: 1070px) {
     .data-wrapper {
         flex-direction: column;
@@ -244,7 +239,6 @@ nav h4 {
     }
 }
 
-/* 800px – similar to manpower collapse */
 @media (max-width: 800px) {
     .table-headers,
     .company-cards {
@@ -263,7 +257,6 @@ nav h4 {
     }
 }
 
-/* 650px – mobile stacking (like your first CSS) */
 @media (max-width: 650px) {
     .requests {
         flex-direction: column;
