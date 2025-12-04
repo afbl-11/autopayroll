@@ -2,6 +2,7 @@
 aside {
     display: flex;
     flex-direction: column;
+    min-width: 95px;
     width: 5%;
     background: var(--clr-indigo);
     height: 100vh;

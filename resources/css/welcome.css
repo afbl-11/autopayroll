@@ -344,6 +344,7 @@ footer .logo {
     }
     .right-content-wrapper img {
         width: 80%;
+        height: 350px;
         margin-top: 1250px;
     }
 
@@ -358,6 +359,10 @@ footer .logo {
         margin-bottom: 40px;
     }
 
+    .content-wrapper img {
+        width: 80%;
+    }
+
     .banner .button-filled {
         width: 80% !important;
     }
@@ -367,6 +372,6 @@ footer .logo {
     }
 
     footer .logo {
-        font-size: 90px;
+        font-size: 75px;
     }
 }
