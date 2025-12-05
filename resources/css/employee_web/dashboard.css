@@ -1,0 +1,8 @@
+.main-content {
+    margin-left: 5%;
+    width: 95%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--clr-background);
+}

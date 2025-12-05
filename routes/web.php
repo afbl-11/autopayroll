@@ -300,3 +300,7 @@ Route::get('/admin/changes-password', [AdminController::class, 'showChangePasswo
 Route::get('/admin/change-location', [AdminController::class, 'showChangeLocation'])
     ->middleware('auth:admin')
     ->name('change.location.view');
+
+Route::get('/employee/new-dashboard', function () {
+    return view('employee_web.dashboard');
+});
