@@ -1,11 +1,11 @@
-/* Sidebar Variables */
+
 :root {
     --sidebar-width-collapsed: 80px;
     --sidebar-width-expanded: 260px;
     --sidebar-bg: var(--clr-indigo);
 }
 
-/* MAIN CONTAINER (Default = Collapsed) */
+
 .sidebar-container {
     width: var(--sidebar-width-collapsed);
     height: 100vh;
@@ -23,13 +23,13 @@
     box-shadow: 4px 0 10px rgba(0,0,0,0.1);
 }
 
-/* EXPANDED STATE */
+
 .sidebar-container.expanded {
     width: var(--sidebar-width-expanded);
     padding: 20px 15px; /* Add padding back when expanded for aesthetics */
 }
 
-/* HEADER */
+
 .sidebar-header {
     display: flex;
     align-items: center;
@@ -60,7 +60,7 @@
     display: block;
 }
 
-/* NAVIGATION */
+
 .nav-menu {
     flex-grow: 1;
     width: 100%;
@@ -93,7 +93,7 @@
     margin: 0 auto; /* Center in parent */
 }
 
-/* Expanded Link Styling */
+
 .sidebar-container.expanded .nav-link {
     width: 100%; /* Full width */
     height: auto;
@@ -118,7 +118,7 @@
     display: inline-block;
 }
 
-/* Active/Hover States */
+
 .nav-link:hover {
     background-color: rgba(255, 255, 255, 0.1);
     color: #fff;
@@ -131,31 +131,23 @@
     box-shadow: 0 4px 12px rgba(255, 216, 88, 0.2);
 }
 
-/* ==================================================
-   BOTTOM SECTION (MODIFIED FOR LOGOUT + TOGGLE) 
-   ================================================== */
-
 .sidebar-footer {
     margin-top: auto;
     padding-top: 20px;
-    /* Added bottom padding for better visual balance */
     padding-bottom: 20px; 
     border-top: 1px solid rgba(255,255,255,0.1);
     display: flex;
     align-items: center;
-    /* Default: Center because only Toggle is visible in collapsed mode */
     justify-content: center; 
     width: 100%;
 }
 
-/* When Expanded: Spread Logout (Left) and Toggle (Right) */
 .sidebar-container.expanded .sidebar-footer {
     justify-content: space-between; 
-    padding-left: 10px; /* Matches your header padding */
+    padding-left: 10px;
     padding-right: 10px;
 }
 
-/* Toggle Button Styling (Unchanged) */
 .toggle-btn {
     background: none;
     border: none;
@@ -175,16 +167,12 @@
     background-color: rgba(255,255,255,0.05);
 }
 
-/* NEW: LOGOUT STYLES */
-
-/* Hidden by default (when collapsed) */
 .logout-form {
     display: none; 
     opacity: 0;
     transition: opacity 0.3s ease;
 }
 
-/* Visible only when expanded */
 .sidebar-container.expanded .logout-form {
     display: block;
     opacity: 1;
@@ -193,13 +181,13 @@
 .logout-btn {
     background: none;
     border: none;
-    color: #ff6b6b; /* Red accent */
+    color: #ff6b6b;
     font-family: 'Helvetica Regular', sans-serif;
     font-size: 0.95rem;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 12px; /* Space between icon and text */
+    gap: 12px;
     padding: 8px 12px;
     border-radius: 8px;
     transition: background 0.2s;

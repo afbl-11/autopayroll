@@ -77,43 +77,43 @@
         const toggleBtn = document.getElementById('sidebarToggle');
         const toggleIcon = document.getElementById('toggleIcon');
         
-        // Helper: Update icon orientation
+
         function updateIcon(isExpanded) {
             if (isExpanded) {
-                // If open, show arrow pointing left (to collapse)
+
                 toggleIcon.classList.remove('fa-angle-double-right');
                 toggleIcon.classList.add('fa-angle-double-left');
             } else {
-                // If closed, show arrow pointing right (to expand)
+
                 toggleIcon.classList.remove('fa-angle-double-left');
                 toggleIcon.classList.add('fa-angle-double-right');
             }
         }
 
-        // 1. Check LocalStorage for saved preference (Sidebar Expanded?)
+
         const isExpanded = localStorage.getItem('sidebar-expanded') === 'true';
         
         if (isExpanded) {
             sidebar.classList.add('expanded');
-            // If main-content exists (on dashboard), shift it
+
             if (mainContent) mainContent.classList.add('main-content-expanded');
             updateIcon(true);
         }
 
-        // 2. Toggle Click Event
+
         toggleBtn.addEventListener('click', function() {
             sidebar.classList.toggle('expanded');
             
             const expanded = sidebar.classList.contains('expanded');
             
-            // Adjust main content margin if present
+
             if (mainContent) {
                 mainContent.classList.toggle('main-content-expanded');
             }
             
             updateIcon(expanded);
             
-            // Save state
+
             localStorage.setItem('sidebar-expanded', expanded);
         });
     });

@@ -301,6 +301,14 @@ Route::get('/admin/change-location', [AdminController::class, 'showChangeLocatio
     ->middleware('auth:admin')
     ->name('change.location.view');
 
+
+
+//Employee Web Stuff
+
 Route::get('/employee/new-dashboard', function () {
     return view('employee_web.dashboard');
+});
+
+Route::get('/employee/payroll', function () {
+    return view('employee_web.PayrollViewingModule.payrollScreen');
 });

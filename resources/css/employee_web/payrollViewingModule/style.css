@@ -1,0 +1,108 @@
+:root {
+    --sidebar-width-collapsed: 80px;
+    --sidebar-width-expanded: 260px;
+}
+
+.main-content {
+    margin-left: var(--sidebar-width-collapsed);
+    width: calc(100% - var(--sidebar-width-collapsed));
+    
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--clr-background);
+    padding-bottom: 50px;
+    
+    transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.main-content.main-content-expanded {
+    margin-left: var(--sidebar-width-expanded);
+    width: calc(100% - var(--sidebar-width-expanded));
+}
+
+@media (max-width: 768px) {
+    .main-content, 
+    .main-content.main-content-expanded {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+}
+
+.form-label {
+    letter-spacing: 1px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.input-group-text {
+    background-color: #fff !important;
+    border-right: none;
+    border-color: #dee2e6;
+    border-radius: 8px 0 0 8px;
+}
+
+.form-control, .form-select {
+    border-radius: 8px;
+    padding: 10px 15px;
+    border-color: #dee2e6;
+    box-shadow: none !important;
+    transition: border-color 0.2s;
+}
+
+.input-group .form-control {
+    border-left: none;
+    border-radius: 0 8px 8px 0;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--clr-yellow);
+}
+
+.table thead th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: var(--clr-secondary);
+}
+
+.table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(255, 216, 88, 0.05);
+}
+
+.table td {
+    vertical-align: middle;
+    padding-top: 1.2rem;
+    padding-bottom: 1.2rem;
+    color: var(--clr-primary);
+}
+
+.btn-light {
+    background-color: #fff;
+    color: var(--clr-secondary);
+    transition: all 0.2s;
+}
+
+.btn-light:hover {
+    background-color: var(--clr-yellow);
+    border-color: var(--clr-yellow) !important;
+    color: var(--clr-indigo);
+}
+
+.page-link {
+    color: var(--clr-secondary);
+    border-radius: 6px;
+    margin: 0 2px;
+    border: none;
+}
+
+.page-item.active .page-link {
+    background-color: var(--clr-yellow) !important;
+    border-color: var(--clr-yellow) !important;
+    color: var(--clr-indigo) !important;
+    font-weight: bold;
+}

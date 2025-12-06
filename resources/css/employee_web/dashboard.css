@@ -1,12 +1,12 @@
-/* Sidebar Sync Variables */
+
 :root {
     --sidebar-width-collapsed: 80px;
     --sidebar-width-expanded: 260px;
 }
 
-/* MAIN CONTENT (Responsive logic) */
+
 .main-content {
-    /* DEFAULT STATE: Sidebar is Collapsed */
+    
     margin-left: var(--sidebar-width-collapsed);
     width: calc(100% - var(--sidebar-width-collapsed));
     
@@ -16,18 +16,18 @@
     background: var(--clr-background);
     padding-bottom: 50px;
     
-    /* Smooth Transition */
+    
     transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
                 width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* EXPANDED STATE (Applied via JS when sidebar opens) */
+
 .main-content.main-content-expanded {
     margin-left: var(--sidebar-width-expanded);
     width: calc(100% - var(--sidebar-width-expanded));
 }
 
-/* MOBILE OVERRIDE */
+
 @media (max-width: 768px) {
     .main-content, 
     .main-content.main-content-expanded {
@@ -36,8 +36,8 @@
     }
 }
 
-/* (Include the rest of your card/theme styles here...) */
-/* CARD STYLES */
+
+
 .card-theme {
     background-color: var(--clr-card-surface, #F6F5F2);
     border: none;
