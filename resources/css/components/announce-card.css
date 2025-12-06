@@ -7,6 +7,7 @@
     background: var(--clr-card-surface);
     border-radius: 16px;
     align-items: center;
+    margin-left: 30px;
 }
 .announce-card:hover {
     background: #ecf1f1;
@@ -27,4 +28,59 @@
     text-align: start;
     overflow:clip;
     color: var(--clr-secondary);
+}
+
+@media (max-width: 1400px) {
+    .announce-card {
+        margin-left: 35px;
+        width: 90%;
+    }
+}
+
+@media (max-width: 1150px) {
+    .announce-card {
+        margin-left: 50px;
+        width: 85%;
+    }
+
+    .announce-card .title,
+    .announce-card .date {
+        width: 25%;
+    }
+
+    .announce-card .message {
+        width: 50%;
+    }
+}
+
+@media (max-width: 800px) {
+    .announce-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        padding: 20px;
+        width: 75%;
+        margin-left: 70px;
+        height: auto;
+    }
+
+    .announce-card .title{
+        width: 100%;
+        text-align: left;
+    }
+    .announce-card .date{
+        width: 100%;
+        text-align: right;
+    }
+    .announce-card .message {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 600px) {
+    .announce-card {
+        width: 65%;
+    }
 }

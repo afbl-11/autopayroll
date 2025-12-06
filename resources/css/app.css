@@ -15,6 +15,7 @@ header {
     grid-template-columns: 1fr auto;
     align-items: center;
     justify-content: center;
+    margin-left: 50px;
 }
 
 .user-profile{
@@ -22,4 +23,38 @@ header {
     justify-content: center;
     align-items: center;
     gap: 30px;
+}
+
+@media (max-width: 1400px) {
+    header {
+        width: 95%;
+    }
+}
+
+@media (max-width: 1150px) {
+    header {
+        width: 90%;
+    }
+}
+
+@media (max-width: 800px) {
+    header {
+        width: 80%;
+    }
+
+    header h3 {
+        font-size: 25px;
+    }
+
+    .user-profile h6 {
+        font-size: 13px;
+        margin-right: -12px;
+        margin-left: 32px;
+    }
+}
+
+@media (max-width: 600px) {
+    .user-profile h6 {
+        margin-right: -32px;
+    }
 }
