@@ -23,23 +23,28 @@ header {
     justify-content: center;
     align-items: center;
     gap: 30px;
+    margin-right: 20px;
 }
 
 @media (max-width: 1400px) {
     header {
         width: 95%;
     }
+    .user-profile {
+        margin-right: 0;
+    }
 }
 
-@media (max-width: 1150px) {
+@media (max-width: 1100px) {
     header {
-        width: 90%;
+        width: 92%;
     }
 }
 
 @media (max-width: 800px) {
     header {
-        width: 80%;
+        width: 85%;
+        margin-left: 65px;
     }
 
     header h3 {
@@ -53,7 +58,11 @@ header {
     }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 550px) {
+    header {
+        width: 80%;
+        margin-left: 60px;
+    }
     .user-profile h6 {
         margin-right: -32px;
     }
