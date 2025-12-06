@@ -1,14 +1,120 @@
 @vite(['resources/css/theme.css', 'resources/css/includes/sidebar.css'])
 
-<aside>
-    <x-logo-minimized></x-logo-minimized>
-    <div class="nav-menu">
-        {{-- Nav links add here --}}
+<aside class="sidebar-container" id="sidebar">
+    <div class="sidebar-header">
+        <div class="logo-wrapper">
+            <x-logo-minimized></x-logo-minimized>
+        </div>
+        <span class="brand-name">AutoPayroll</span>
     </div>
-    <div class="logout">
-        <form action="{{ route('logout') }}" method="post">
+
+    <nav class="nav-menu">
+        <ul class="nav-list">
+            <li class="nav-item">
+                <a href="#" class="nav-link active">
+                    <i class="fas fa-th-large"></i>
+                    <span class="link-text">Dashboard</span>
+                </a>
+            </li>
+            
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    <span class="link-text">Payslips</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-user-clock"></i>
+                    <span class="link-text">Attendance</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-sliders-h"></i>
+                    <span class="link-text">Credit Adjustment</span>
+                </a>
+            </li>
+            
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-file-signature"></i>
+                    <span class="link-text">Leave Filing</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-cog"></i>
+                    <span class="link-text">Settings</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="sidebar-footer">
+        
+        <form action="{{ route('logout') }}" method="post" class="logout-form">
             @csrf
-            <x-button-submit icon="assets/navigations/exit.png"></x-button-submit>
+            <button type="submit" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </button>
         </form>
+
+        <button id="sidebarToggle" class="toggle-btn">
+            <i class="fas fa-angle-double-right" id="toggleIcon"></i>
+        </button>
     </div>
 </aside>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.querySelector('.main-content');
+        const toggleBtn = document.getElementById('sidebarToggle');
+        const toggleIcon = document.getElementById('toggleIcon');
+        
+        // Helper: Update icon orientation
+        function updateIcon(isExpanded) {
+            if (isExpanded) {
+                // If open, show arrow pointing left (to collapse)
+                toggleIcon.classList.remove('fa-angle-double-right');
+                toggleIcon.classList.add('fa-angle-double-left');
+            } else {
+                // If closed, show arrow pointing right (to expand)
+                toggleIcon.classList.remove('fa-angle-double-left');
+                toggleIcon.classList.add('fa-angle-double-right');
+            }
+        }
+
+        // 1. Check LocalStorage for saved preference (Sidebar Expanded?)
+        const isExpanded = localStorage.getItem('sidebar-expanded') === 'true';
+        
+        if (isExpanded) {
+            sidebar.classList.add('expanded');
+            // If main-content exists (on dashboard), shift it
+            if (mainContent) mainContent.classList.add('main-content-expanded');
+            updateIcon(true);
+        }
+
+        // 2. Toggle Click Event
+        toggleBtn.addEventListener('click', function() {
+            sidebar.classList.toggle('expanded');
+            
+            const expanded = sidebar.classList.contains('expanded');
+            
+            // Adjust main content margin if present
+            if (mainContent) {
+                mainContent.classList.toggle('main-content-expanded');
+            }
+            
+            updateIcon(expanded);
+            
+            // Save state
+            localStorage.setItem('sidebar-expanded', expanded);
+        });
+    });
+</script>
