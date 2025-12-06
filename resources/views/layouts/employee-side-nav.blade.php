@@ -3,7 +3,7 @@
 <aside>
     <x-logo-minimized></x-logo-minimized>
     <div class="nav-menu">
-        {{-- Navigation links will go here in the future --}}
+        {{-- Nav links add here --}}
     </div>
     <div class="logout">
         <form action="{{ route('logout') }}" method="post">

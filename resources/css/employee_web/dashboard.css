@@ -1,8 +1,88 @@
+/* Import Theme Styles logic if not already handled by Vite order */
+/* @import '../theme.css'; */
+
+/* Layout Fixes */
 .main-content {
+    /* Adjusted to match your previous CSS but added padding for web */
     margin-left: 5%;
     width: 95%;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     background: var(--clr-background);
+    padding-bottom: 50px;
+}
+
+/* CUSTOM DASHBOARD COMPONENTS 
+   Integrating Bootstrap with Theme.css variables 
+*/
+
+/* Card Styling using Theme Colors */
+.card-theme {
+    background-color: var(--clr-card-surface); /* #F6F5F2 */
+    border: none;
+    border-radius: 16px;
+    transition: transform 0.2s ease;
+}
+
+.card-theme:hover {
+    transform: translateY(-2px);
+}
+
+/* Typography Overrides to match Theme Fonts */
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    font-family: 'Helvetica medium', sans-serif;
+    color: var(--clr-primary);
+}
+
+/* Custom Badges */
+.bg-theme-yellow {
+    background-color: var(--clr-yellow) !important;
+}
+
+/* Stats Card Borders */
+.border-start-theme-yellow {
+    border-left: 5px solid var(--clr-yellow);
+}
+
+.border-start-theme-red {
+    border-left: 5px solid var(--clr-red);
+}
+
+/* Icons */
+.icon-box {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+/* Table Customization */
+.table-light-custom th {
+    background-color: transparent;
+    border-bottom: 2px solid #e9e9e9;
+    font-family: 'Helvetica Regular', sans-serif;
+    letter-spacing: 1px;
+}
+
+.table td {
+    vertical-align: middle;
+    color: var(--clr-primary);
+    border-bottom: 1px solid #eee;
+    padding: 15px 10px;
+}
+
+/* Letter Spacing Utility */
+.ls-1 {
+    letter-spacing: 1.5px;
+}
+
+/* Responsive Tweaks */
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+    }
 }
