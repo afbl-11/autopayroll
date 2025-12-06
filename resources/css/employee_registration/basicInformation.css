@@ -36,3 +36,58 @@ form {
 #age {
     pointer-events: none;
 }
+
+@media (max-width: 1150px) {
+    .form-wrapper{
+        width: 80%;
+        margin-left: 50px;
+        margin-bottom: 20px;
+    }
+}
+
+
+@media (max-width: 900px) {
+
+    .form-wrapper {
+        width: 75%;
+        margin-left: 60px;
+        margin-bottom: 30px;
+    }
+
+    /* Stack fields vertically */
+    .field-row {
+        flex-direction: column !important;
+        gap: 1rem !important;
+        width: 100%;
+    }
+
+    .field-row:last-of-type {
+        max-width: 100%;
+    }
+
+    .button-filled {
+        float: none;
+        width: 100%;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 800px) {
+    .form-wrapper {
+        width: 70%;
+        margin-left: 70px;
+    }
+}
+
+@media (max-width: 700px) {
+    .form-wrapper {
+        width: 65%;
+        margin-left: 80px;
+    }
+}
+
+@media (max-width: 600px) {
+    .form-wrapper {
+        width: 60%;
+    }
+}

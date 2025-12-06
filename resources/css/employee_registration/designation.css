@@ -17,7 +17,7 @@ form{
     display: flex !important;
     justify-content: center;
     align-items: center;
-    width: 47%;
+    width: 55%;
 }
 .field-row {
     display: flex !important;
@@ -81,3 +81,97 @@ form{
     transition: 0.3s ease-in-out;
     color: var(--clr-background);
 }
+
+
+@media (max-width: 1350px) {
+    .form-wrapper {
+        margin-left: 50px;
+        width: 80%;
+    }
+
+    .field-row:first-of-type {
+        width: 60%;
+    }
+
+    .field-row:first-of-type select {
+        margin-right: -25px;
+    }
+
+}
+
+@media (max-width: 1100px) {
+    .field-row:first-of-type {
+        width: 65%;
+    }
+}
+
+@media (max-width: 1000px) {
+    .field-row:first-of-type {
+        width: 70%;
+    }
+}
+
+@media (max-width: 950px) {
+    .form-wrapper {
+        width: 80%;
+        margin-left: 70px;
+    }
+
+    .field-row {
+        flex-direction: column !important;
+        width: 100%;
+        gap: 1rem !important;
+    }
+
+    .radio-group {
+        width: 100%;
+    }
+
+    .button-filled {
+        float: none;
+        width: 100%;
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .field-row:first-of-type {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        width: 100% !important;
+        gap: 1rem !important;
+    }
+
+    .field-row:first-of-type select {
+        width: 100% !important;
+        margin-bottom: -15px;
+    }
+
+    .field-row:first-of-type > *:first-child {
+        width: 100% !important;
+    }
+
+    .field-row:first-of-type a {
+        width: 100% !important;
+        text-align: center;
+    }
+}
+
+@media (max-width: 800px) {
+     .form-wrapper {
+        width: 70%;
+        margin-left: 80px;
+    }
+}
+
+@media (max-width: 700px) {
+     .form-wrapper {
+        width: 65%;
+    }
+}
+
+@media (max-width: 600px) {
+     .form-wrapper {
+        width: 60%;
+    }
+}
+
