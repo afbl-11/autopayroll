@@ -30,11 +30,11 @@
                         <img src="{{ asset('assets/navigations/bell.png') }}" alt="Notifications Icon">
                     </a>
                 </li>
-{{--                <li>--}}
-{{--                    <a href="{{route('new.payroll')}}">--}}
-{{--                        payroll--}}
-{{--                    </a>--}}
-{{--                </li>--}}
+               <li>
+                  <a href="{{route('new.payroll')}}">
+                        payroll
+                    </a>
+               </li>
             </ul>
         </div>
 
