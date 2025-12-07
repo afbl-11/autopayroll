@@ -2,6 +2,7 @@
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <x-root>
     @include('layouts.employee-side-nav')
@@ -17,7 +18,6 @@
             </div>
 
             <div class="row g-3 mb-5">
-                
                 <div class="col-xl-3 col-md-6 col-sm-6">
                     <div class="card-credit credit-vacation">
                         <div class="credit-icon bg-vacation-light">
@@ -57,8 +57,7 @@
                         <h3 class="fw-bold mb-0">7 <small class="fs-6 text-muted fw-normal">days</small></h3>
                     </div>
                 </div>
-
-                </div>
+            </div>
 
             <div class="row g-4">
                 
@@ -103,7 +102,8 @@
                                     </button>
                                     
                                     <button type="button" class="btn fw-bold d-flex align-items-center gap-2" 
-                                            onclick="window.location.href='#'"
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#fileLeaveModal"
                                             style="height: 42px; background-color: var(--clr-yellow); color: var(--clr-indigo); white-space: nowrap;">
                                         <i class="bi bi-plus-circle-fill"></i> 
                                         <span>File Leave</span>
@@ -205,7 +205,71 @@
 
             </div>
         </div>
-    </main>
+
+        <div class="modal fade" id="fileLeaveModal" tabindex="-1" aria-labelledby="fileLeaveModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content border-0 shadow-lg" style="border-radius: 15px;">
+                    
+                    <div class="modal-header border-0 pb-0">
+                        <button type="button" class="btn p-0 text-dark fw-bold fs-5" data-bs-dismiss="modal" style="border: none; background: none;">
+                            <i class="bi bi-arrow-left"></i> File a Leave
+                        </button>
+                    </div>
+
+                    <div class="modal-body p-4">
+                        <form action="#" method="POST" enctype="multipart/form-data">
+                            @csrf 
+
+                            <div class="form-floating mb-3">
+                                <select class="form-select border-secondary-subtle" id="leaveType" name="leave_type" aria-label="Leave Type" style="border-radius: 10px;">
+                                    <option selected>Sick Leave</option>
+                                    <option value="vacation">Vacation Leave</option>
+                                    <option value="maternity">Maternity Leave</option>
+                                    <option value="emergency">Bereavement Leave</option>
+                                </select>
+                                <label for="leaveType" class="text-muted">Leave Type</label>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="form-floating mb-3">
+                                    <input type="date" class="form-control border-secondary-subtle" id="startDate" name="start_date" style="border-radius: 10px;">
+                                    <label for="startDate" class="text-muted">Start Date</label>
+                                </div>
+
+                                <div class="form-floating">
+                                    <input type="date" class="form-control border-secondary-subtle" id="endDate" name="end_date" style="border-radius: 10px;">
+                                    <label for="endDate" class="text-muted">End Date</label>
+                                </div>
+                            </div>
+
+                            <div class="form-floating mb-4">
+                                <textarea class="form-control border-secondary-subtle" placeholder="Reason" id="leaveReason" name="reason" style="height: 120px; border-radius: 10px;"></textarea>
+                                <label for="leaveReason" class="text-muted">Reason</label>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="attachment" class="w-100 cursor-pointer">
+                                    <div class="btn w-100 d-flex align-items-center justify-content-center py-2 text-dark" 
+                                        style="border-radius: 25px; border: 1px solid #ced4da; background-color: white;">
+                                        <i class="bi bi-paperclip me-2 fs-5"></i> 
+                                        <span id="fileName" class="fw-normal">Attach Image / File</span>
+                                    </div>
+                                    <input type="file" id="attachment" name="attachment" class="d-none" onchange="updateFileName(this)">
+                                </label>
+                            </div>
+
+                            <div class="d-grid">
+                                <button type="button" class="btn text-white py-3 fw-bold" style="background-color: #1a202c; border-radius: 25px;">
+                                    SUBMIT
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </main>
 </x-root>
 
 <script>
@@ -265,4 +329,18 @@
 
         renderCalendar();
     });
+
+    // FUNCTION FOR FILE ATTACHMENT NAME UPDATE
+    function updateFileName(input) {
+        if (input.files && input.files.length > 0) {
+            var fileName = input.files[0].name;
+            document.getElementById('fileName').innerText = fileName;
+            
+            // Visual feedback: change border to green/solid
+            const btn = input.parentElement.querySelector('.btn');
+            btn.classList.remove('btn-outline-secondary');
+            btn.classList.add('btn-outline-success');
+            btn.style.borderStyle = 'solid';
+        }
+    }
 </script>
