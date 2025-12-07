@@ -12,42 +12,42 @@
         <ul class="nav-list">
             <li class="nav-item">
                 <a href="#" class="nav-link active">
-                    <i class="fas fa-th-large"></i>
+                    <i class="bi bi-grid-fill"></i>
                     <span class="link-text">Dashboard</span>
                 </a>
             </li>
             
             <li class="nav-item">
                 <a href="#" class="nav-link">
-                    <i class="fas fa-file-invoice-dollar"></i>
+                    <i class="bi bi-receipt"></i>
                     <span class="link-text">Payslips</span>
                 </a>
             </li>
 
             <li class="nav-item">
                 <a href="#" class="nav-link">
-                    <i class="fas fa-user-clock"></i>
-                    <span class="link-text">Attendance</span>
+                    <i class="bi bi-megaphone-fill"></i>
+                    <span class="link-text">Announcements</span>
                 </a>
             </li>
 
             <li class="nav-item">
                 <a href="#" class="nav-link">
-                    <i class="fas fa-sliders-h"></i>
+                    <i class="bi bi-sliders"></i>
                     <span class="link-text">Credit Adjustment</span>
                 </a>
             </li>
             
             <li class="nav-item">
                 <a href="#" class="nav-link">
-                    <i class="fas fa-file-signature"></i>
+                    <i class="bi bi-file-earmark-text-fill"></i>
                     <span class="link-text">Leave Filing</span>
                 </a>
             </li>
 
             <li class="nav-item">
                 <a href="#" class="nav-link">
-                    <i class="fas fa-cog"></i>
+                    <i class="bi bi-gear-fill"></i>
                     <span class="link-text">Settings</span>
                 </a>
             </li>
@@ -59,13 +59,13 @@
         <form action="{{ route('logout') }}" method="post" class="logout-form">
             @csrf
             <button type="submit" class="logout-btn">
-                <i class="fas fa-sign-out-alt"></i>
+                <i class="bi bi-box-arrow-right"></i>
                 <span>Logout</span>
             </button>
         </form>
 
         <button id="sidebarToggle" class="toggle-btn">
-            <i class="fas fa-angle-double-right" id="toggleIcon"></i>
+            <i class="bi bi-chevron-double-right" id="toggleIcon"></i>
         </button>
     </div>
 </aside>
@@ -77,43 +77,38 @@
         const toggleBtn = document.getElementById('sidebarToggle');
         const toggleIcon = document.getElementById('toggleIcon');
         
-
+        // Updated function to use Bootstrap Icon classes
         function updateIcon(isExpanded) {
             if (isExpanded) {
-
-                toggleIcon.classList.remove('fa-angle-double-right');
-                toggleIcon.classList.add('fa-angle-double-left');
+                // If expanded, show 'Left' arrow to collapse
+                toggleIcon.classList.remove('bi-chevron-double-right');
+                toggleIcon.classList.add('bi-chevron-double-left');
             } else {
-
-                toggleIcon.classList.remove('fa-angle-double-left');
-                toggleIcon.classList.add('fa-angle-double-right');
+                // If collapsed, show 'Right' arrow to expand
+                toggleIcon.classList.remove('bi-chevron-double-left');
+                toggleIcon.classList.add('bi-chevron-double-right');
             }
         }
-
 
         const isExpanded = localStorage.getItem('sidebar-expanded') === 'true';
         
         if (isExpanded) {
             sidebar.classList.add('expanded');
-
             if (mainContent) mainContent.classList.add('main-content-expanded');
             updateIcon(true);
         }
-
 
         toggleBtn.addEventListener('click', function() {
             sidebar.classList.toggle('expanded');
             
             const expanded = sidebar.classList.contains('expanded');
             
-
             if (mainContent) {
                 mainContent.classList.toggle('main-content-expanded');
             }
             
             updateIcon(expanded);
             
-
             localStorage.setItem('sidebar-expanded', expanded);
         });
     });

@@ -312,3 +312,7 @@ Route::get('/employee/new-dashboard', function () {
 Route::get('/employee/payroll', function () {
     return view('employee_web.PayrollViewingModule.payrollScreen');
 });
+
+Route::get('/employee/announcement', function () {
+    return view('employee_web.announcementModule.announcementScreen');
+});

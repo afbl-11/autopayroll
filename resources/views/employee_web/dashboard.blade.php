@@ -1,7 +1,7 @@
 @vite(['resources/css/employee_web/dashboard.css', 'resources/css/theme.css', 'resources/css/includes/sidebar.css'])
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
 <x-root>
     @include('layouts.employee-side-nav')
@@ -13,11 +13,6 @@
                 <div class="col-md-8">
                     <h2 class="fw-bold mb-1" style="color: var(--clr-primary);">Good Evening, Marc Jurell!</h2>
                     <p class="text-muted mb-0">Developer • Jurell Company</p>
-                </div>
-                <div class="col-md-4 text-end">
-                    <span class="badge bg-theme-yellow fs-6 px-3 py-2 rounded-3 shadow-sm">
-                        ID: 20253698
-                    </span>
                 </div>
             </div>
 
@@ -57,7 +52,7 @@
                                 <h2 class="mb-0 fw-bold display-6">15</h2>
                             </div>
                             <div class="icon-box bg-white text-warning shadow-sm">
-                                <i class="fas fa-plane-departure"></i>
+                                <i class="bi bi-person-walking"></i>
                             </div>
                         </div>
                     </div>
@@ -70,7 +65,7 @@
                                 <h2 class="mb-0 fw-bold display-6">3</h2>
                             </div>
                             <div class="icon-box bg-white text-danger shadow-sm">
-                                <i class="fas fa-exclamation-triangle"></i>
+                                <i class="bi bi-exclamation-triangle-fill"></i>
                             </div>
                         </div>
                     </div>
@@ -119,10 +114,10 @@
                             <p class="small text-uppercase text-muted mb-3">Shift Schedule</p>
                             <div class="d-flex justify-content-center align-items-center gap-3 mb-3">
                                 <div><h2 class="fw-bold mb-0">07:00</h2><small>AM</small></div>
-                                <i class="fas fa-arrow-right text-warning"></i>
+                                <i class="bi bi-arrow-right text-warning fs-4"></i>
                                 <div><h2 class="fw-bold mb-0">05:00</h2><small>PM</small></div>
                             </div>
-                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -161,12 +156,20 @@
                                             <td>8h 59m</td>
                                             <td class="text-end pe-3"><span class="badge bg-theme-yellow rounded-pill">Present</span></td>
                                         </tr>
+                                        <tr>
+                                            <td class="ps-3 fw-bold">Dec 03, 2025</td>
+                                            <td>06:45 AM</td>
+                                            <td>05:15 PM</td>
+                                            <td>9h 30m</td>
+                                            <td class="text-end pe-3"><span class="badge bg-theme-yellow rounded-pill">Present</span></td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="col-lg-4">
                     <div class="card card-theme shadow-sm h-100">
                         <div class="card-header bg-transparent border-0 pt-4 px-4">
@@ -181,6 +184,16 @@
                                 <div>
                                     <h6 class="fw-bold mb-1">Christmas Party</h6>
                                     <p class="text-muted small mb-0">Main Hall • 6:00 PM</p>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex gap-3">
+                                <div class="icon-box bg-light text-warning rounded-3" style="width: 50px; height: 50px;">
+                                    <i class="bi bi-megaphone-fill"></i>
+                                </div>
+                                <div>
+                                    <h6 class="fw-bold mb-1">System Maintenance</h6>
+                                    <p class="text-muted small mb-0">Down for 2 hours tonight.</p>
                                 </div>
                             </div>
                         </div>

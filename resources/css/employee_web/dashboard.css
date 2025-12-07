@@ -4,9 +4,7 @@
     --sidebar-width-expanded: 260px;
 }
 
-
 .main-content {
-    
     margin-left: var(--sidebar-width-collapsed);
     width: calc(100% - var(--sidebar-width-collapsed));
     
@@ -15,7 +13,6 @@
     flex-direction: column;
     background: var(--clr-background);
     padding-bottom: 50px;
-    
     
     transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
                 width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -27,7 +24,7 @@
     width: calc(100% - var(--sidebar-width-expanded));
 }
 
-
+/*Mobile */
 @media (max-width: 768px) {
     .main-content, 
     .main-content.main-content-expanded {
