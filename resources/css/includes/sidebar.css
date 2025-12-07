@@ -1,51 +1,160 @@
-
 aside {
     display: flex;
     flex-direction: column;
-    min-width: 95px;
-    width: 5%;
-    background: var(--clr-indigo);
-    height: 100vh;
+    align-items: center;
     position: fixed;
-    padding: 2% 0 2% 0;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 95px;               
+    background: var(--clr-indigo);
+    padding: 20px 0;
+    transition: width 0.3s ease;
+    overflow: hidden;
+    z-index: 100;
 }
+
+aside:hover {
+    width: 220px;              
+}
+
 .nav-wrapper > ul,
 .nav-wrapper > ul li {
     list-style: none;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
     align-items: center;
-    height: 80%;
-}
-
-li {
-    align-items: center;
-    justify-content: center;
+    gap: 25px;
 }
 
 .nav-menu {
+    width: 100%;
     height: 80%;
-    margin: 30px auto  ;
+    margin-top: 40px;
+}
+
+.nav-wrapper ul li a, .logout ul li a, .logout span {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: #fff;
+    width: 100%;
+    padding: 8px 20px;
+    transition: transform 0.2s ease;
+}
+
+.nav-wrapper ul li a:hover {
+    transform: scale(1.08);
+}
+
+.nav-wrapper ul li a img {
+    width: 22px;
+    height: 22px;
+}
+
+.nav-wrapper ul li a span, .logout span {
+    display: none;
+    font-size: 15px;
+}
+
+aside:hover .nav-wrapper ul li a span, aside:hover .logout span {
+    display: inline;
+}
+
+aside:hover .nav-wrapper > ul,
+aside:hover .nav-wrapper > ul li {
+    align-items: flex-start !important;
+}
+
+aside:hover .nav-wrapper ul li a {
+    justify-content: center !important;
+    padding-left: 50px; 
 }
 
 .logout {
     height: 20%;
-    bottom: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
+    width: 100%;
     border-top: 1px solid var(--clr-muted);
-}
-.logout > ul {
-    text-align: center;
-    list-style: none;
-}
-.logout > form {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 20px;
+}
+
+.logout img {
+    width: 22px;
+    height: 22px;
+}
+
+aside:hover .logout {
+    align-items: flex-start;
+}
+
+aside:hover .logout ul {
+    padding-left: 30px;
+}
+
+.logout ul span{
+    margin-left: -18px;
+}
+
+.logout-btn button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;               
+    background: none;
+    border: none;
+    width: 100%;
+    padding: 10px 20px;
+    color: #fff;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.logout-btn button img {
+    width: 22px;
+    height: 22px;
+}
+
+.logout-btn button span {
+    font-size: 15px;
+    margin-left: -15px; 
+}
+
+aside:hover .logout-btn button {
+    justify-content: flex-start;
+    padding-left: 50px; 
+    text-align: left;
+}
+
+.logo-container {
+    height: 60px;    
+    width: 100%;
+    margin-left: -30px;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    color: white;
+    font-size: 25px;
+    transition: opacity .2s ease;
+}
+
+.logo.expanded {
+    opacity: 0;
+    margin-top: -75px;
+    margin-left: -25px;
+}
+
+aside:hover .logo.minimized {
+    opacity: 0;
+}
+
+aside:hover .logo.expanded {
+    opacity: 1;
 }
