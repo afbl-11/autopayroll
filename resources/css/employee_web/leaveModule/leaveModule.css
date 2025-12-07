@@ -1,8 +1,3 @@
-/*==========================================
-   LEAVE MODULE CSS
-============================================*/
-
-/* --- 1. LAYOUT LOGIC (Responsive Sidebar) --- */
 :root {
     --sidebar-width-collapsed: 80px;
     --sidebar-width-expanded: 260px;

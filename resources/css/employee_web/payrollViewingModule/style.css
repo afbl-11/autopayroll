@@ -63,12 +63,10 @@
     box-shadow: 0 0 0 0.2rem rgba(255, 216, 88, 0.15) !important;
 }
 
-/* --- Table Styling Adjustments --- */
-
 .table thead th {
     background-color: #f8f9fa;
     font-weight: 700;
-    color: #64748b; /* Slightly softer than pure gray */
+    color: #64748b;
     letter-spacing: 0.8px;
     font-size: 0.75rem;
 }
@@ -78,7 +76,7 @@
 }
 
 .table-hover tbody tr:hover {
-    background-color: rgba(255, 216, 88, 0.08); /* Slightly more visible hover */
+    background-color: rgba(255, 216, 88, 0.08);
 }
 
 .table td {
@@ -89,8 +87,6 @@
     font-size: 0.95rem;
 }
 
-/* --- Action Button Styling (New) --- */
-
 .btn-icon {
     width: 36px;
     height: 36px;
@@ -98,53 +94,32 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border-radius: 8px; /* Softer corners */
-    border: 1px solid transparent; /* Hide border by default */
+    border-radius: 8px;
+    border: 1px solid transparent;
     background-color: transparent;
     transition: all 0.2s ease;
 }
 
-.btn-icon:hover:not(:disabled) {
-    background-color: var(--clr-yellow);
-    color: var(--clr-indigo);
-    transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
-
-.btn-icon i {
-    font-size: 1.1rem;
-    transition: color 0.2s;
-}
-
-.btn-icon:disabled {
-    opacity: 0.5;
-    background-color: #f8f9fa;
-}
-
-/* --- Badge Adjustment --- */
-.badge {
-    font-weight: 500;
-    letter-spacing: 0.5px;
-}
-
-/* --- Pagination --- */
-.page-link {
-    color: var(--clr-secondary);
+.btn-icon-square {
+    width: 38px;
+    height: 38px;
+    padding: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     border-radius: 6px;
-    margin: 0 3px;
-    border: none;
-    font-size: 0.9rem;
-    
-    /* --- CHANGED LINES BELOW --- */
-    min-width: 32px;      /* Ensures single numbers (1, 2) stay square */
-    width: auto;          /* Allows "Previous/Next" to expand */
-    padding: 0 12px;      /* Adds breathing room for text */
-    /* -------------------------- */
-    
-    height: 32px;
+    line-height: 1 !important;
+    transition: all 0.2s;
+}
+
+.btn-square-md {
+    width: 38px;
+    height: 38px;
+    padding: 0;
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 6px;
 }
 
 .page-item.active .page-link {
