@@ -316,3 +316,7 @@ Route::get('/employee/payroll', function () {
 Route::get('/employee/announcement', function () {
     return view('employee_web.announcementModule.announcementScreen');
 });
+
+Route::get('/employee/leave-module', function () {
+    return view('employee_web.leaveModule.dashboard');
+});

@@ -1,8 +1,3 @@
-/*==========================================
-   ANNOUNCEMENT.CSS
-============================================*/
-
-/* --- 1. LAYOUT LOGIC (Responsive Sidebar) --- */
 :root {
     --sidebar-width-collapsed: 80px;
     --sidebar-width-expanded: 260px;
@@ -34,7 +29,6 @@
     }
 }
 
-/* --- 2. ANNOUNCEMENT CARD STYLES --- */
 .announcement-card {
     background-color: #fff;
     border: 1px solid #e0e0e0;
@@ -62,17 +56,15 @@
     font-size: 1.4rem;
 }
 
-/* --- 3. TABS / FILTER STYLING (FIXED) --- */
 .filter-tabs {
     border-bottom: 2px solid #f0f0f0;
     margin-bottom: 2rem;
-    display: flex;      /* Ensure flex behavior */
-    gap: 40px;          /* FORCE SPACE between items */
+    display: flex;
+    gap: 40px;
 }
 
-/* Ensure the list item doesn't shrink */
 .filter-tabs .nav-item {
-    margin-bottom: -2px; /* Allow active border to overlap */
+    margin-bottom: -2px;
 }
 
 .filter-tabs .nav-link {
@@ -96,7 +88,6 @@
     background-color: transparent;
 }
 
-/* Yellow Underline for Active Tab */
 .filter-tabs .nav-link.active::after {
     content: '';
     position: absolute;
@@ -108,7 +99,6 @@
     border-radius: 2px 2px 0 0;
 }
 
-/* --- 4. ICON COLORS --- */
 .icon-admin { color: var(--clr-primary); }
 .icon-payroll { color: #2ecc71; }
 .icon-memo { color: var(--clr-yellow); }
