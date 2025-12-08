@@ -8,7 +8,6 @@
     @include('layouts.employee-side-nav')
     
     <main class="main-content">
-        
         <div class="container-fluid p-0">
             
             <div class="row mb-4">
@@ -20,7 +19,7 @@
 
             <div class="row g-4 mb-5">
                 <div class="col-xl-4 col-md-6">
-                    <div class="card border-0 shadow-sm h-100 py-2" style="border-left: 5px solid #fd7e14;">
+                    <div class="card-stat border-bottom-orange shadow-sm">
                         <div class="card-body d-flex align-items-center p-4">
                             <div class="bg-warning bg-opacity-10 rounded-circle p-3 me-3">
                                 <i class="bi bi-hourglass-split text-warning fs-3"></i>
@@ -34,7 +33,7 @@
                 </div>
 
                 <div class="col-xl-4 col-md-6">
-                    <div class="card border-0 shadow-sm h-100 py-2" style="border-left: 5px solid #0d6efd;">
+                    <div class="card-stat border-bottom-blue shadow-sm">
                         <div class="card-body d-flex align-items-center p-4">
                             <div class="bg-primary bg-opacity-10 rounded-circle p-3 me-3">
                                 <i class="bi bi-clock-history text-primary fs-3"></i>
@@ -48,7 +47,7 @@
                 </div>
                 
                 <div class="col-xl-4 col-md-12">
-                    <div class="card border-0 shadow-sm h-100 py-2" style="border-left: 5px solid #198754;">
+                    <div class="card-stat border-bottom-green shadow-sm">
                         <div class="card-body d-flex align-items-center p-4">
                             <div class="bg-success bg-opacity-10 rounded-circle p-3 me-3">
                                 <i class="bi bi-check-circle-fill text-success fs-3"></i>

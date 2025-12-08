@@ -305,7 +305,7 @@ Route::get('/admin/change-location', [AdminController::class, 'showChangeLocatio
 
 //Employee Web Stuff
 
-Route::get('/employee/new-dashboard', function () {
+Route::get('/employee/dashboard', function () {
     return view('employee_web.dashboard');
 });
 

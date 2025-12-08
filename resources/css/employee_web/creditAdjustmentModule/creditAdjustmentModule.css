@@ -1,36 +1,26 @@
-/* Resources/css/creditAdjustmentModule/creditAdjustmentModule.css */
-
 :root {
     --sidebar-width-collapsed: 80px;
     --sidebar-width-expanded: 260px;
 }
 
-/* --- LAYOUT & RESPONSIVENESS --- */
 .main-content {
-    /* FORCE the margin to respect the sidebar width */
-    margin-left: var(--sidebar-width-collapsed) !important;
-    width: calc(100% - var(--sidebar-width-collapsed)) !important;
+    margin-left: var(--sidebar-width-collapsed);
+    width: calc(100% - var(--sidebar-width-collapsed));
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     background: var(--clr-background);
-    
-    /* Padding handles the internal spacing, preventing content from touching edges */
-    padding: 2.5rem 4rem; 
-    
+    padding: 2.5rem 4rem;
     transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
                 width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* When sidebar expands, this class is added by employee-side-nav.blade.php */
 .main-content.main-content-expanded {
-    margin-left: var(--sidebar-width-expanded) !important;
-    width: calc(100% - var(--sidebar-width-expanded)) !important;
+    margin-left: var(--sidebar-width-expanded);
+    width: calc(100% - var(--sidebar-width-expanded));
 }
 
-/* Mobile Breakpoint: Matched to 768px (same as announcement.css) */
-/* This ensures content doesn't jump behind sidebar on standard laptops */
-@media (max-width: 768px) {
+@media (max-width: 992px) {
     .main-content, 
     .main-content.main-content-expanded {
         margin-left: 0 !important;
@@ -39,10 +29,24 @@
     }
 }
 
-/* --- CARD & FORM STYLING --- */
-.card {
-    transition: transform 0.2s ease-in-out;
+.card-stat {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    border-bottom-width: 5px;
+    border-bottom-style: solid;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+    height: 100%;
 }
+
+.card-stat:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.08) !important;
+}
+
+.border-bottom-orange { border-bottom-color: #fd7e14; }
+.border-bottom-blue { border-bottom-color: #0d6efd; }
+.border-bottom-green { border-bottom-color: #198754; }
 
 .form-control:focus, 
 .form-select:focus {
@@ -54,7 +58,6 @@
     cursor: pointer;
 }
 
-/* --- STATUS BADGES --- */
 .status-approved {
     background-color: #d1e7dd;
     color: #0f5132;

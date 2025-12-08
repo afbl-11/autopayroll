@@ -29,7 +29,6 @@
     }
 }
 
-/* --- 2. LEAVE CREDIT CARDS (NEW) --- */
 .card-credit {
     background: #fff;
     border: 1px solid #e0e0e0;
@@ -46,7 +45,6 @@
     box-shadow: 0 5px 15px rgba(0,0,0,0.05);
 }
 
-/* Color Accents for Leave Types */
 .credit-vacation { border-bottom: 4px solid #3498db; }
 .credit-sick { border-bottom: 4px solid #e67e22; }
 .credit-maternity { border-bottom: 4px solid #e84393; }
@@ -68,7 +66,6 @@
 .bg-maternity-light { background: rgba(232, 67, 147, 0.1); color: #e84393; }
 .bg-bereavement-light { background: rgba(155, 89, 182, 0.1); color: #9b59b6; }
 
-/* File Leave CTA Card */
 .card-file-leave {
     background: var(--clr-yellow);
     border: none;
@@ -81,10 +78,9 @@
     color: var(--clr-indigo);
 }
 .card-file-leave:hover {
-    background: #ffcd1f; /* slightly darker yellow */
+    background: #ffcd1f;
 }
 
-/* --- 3. FILTERS & TABLE --- */
 .form-label {
     font-size: 0.75rem;
     font-weight: 700;
@@ -117,7 +113,6 @@
 .status-rejected { background-color: rgba(231, 76, 60, 0.1); color: #c0392b; border-color: rgba(231, 76, 60, 0.2); }
 .status-revision { background-color: rgba(52, 152, 219, 0.1); color: #2980b9; border-color: rgba(52, 152, 219, 0.2); }
 
-/* --- 4. CALENDAR WIDGET --- */
 .calendar-widget {
     background: #fff;
     border-radius: 12px;

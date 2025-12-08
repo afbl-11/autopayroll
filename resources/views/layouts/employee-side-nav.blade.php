@@ -10,36 +10,42 @@
 
     <nav class="nav-menu">
         <ul class="nav-list">
+            
             <li class="nav-item">
-                <a href="#" class="nav-link active">
+                <a href="{{ url('/employee/dashboard') }}" 
+                   class="nav-link {{ request()->is('employee/dashboard*') ? 'active' : '' }}">
                     <i class="bi bi-grid-fill"></i>
                     <span class="link-text">Dashboard</span>
                 </a>
             </li>
             
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ url('/employee/payroll') }}" 
+                   class="nav-link {{ request()->is('employee/payroll*') ? 'active' : '' }}">
                     <i class="bi bi-receipt"></i>
                     <span class="link-text">Payslips</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ url('/employee/announcement') }}" 
+                   class="nav-link {{ request()->is('employee/announcement*') ? 'active' : '' }}">
                     <i class="bi bi-megaphone-fill"></i>
                     <span class="link-text">Announcements</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ url('/employee/credit-adjustment') }}" 
+                   class="nav-link {{ request()->is('employee/credit-adjustment*') ? 'active' : '' }}">
                     <i class="bi bi-sliders"></i>
                     <span class="link-text">Credit Adjustment</span>
                 </a>
             </li>
             
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ url('/employee/leave-module') }}" 
+                   class="nav-link {{ request()->is('employee/leave-module*') ? 'active' : '' }}">
                     <i class="bi bi-file-earmark-text-fill"></i>
                     <span class="link-text">Leave Filing</span>
                 </a>
@@ -77,14 +83,11 @@
         const toggleBtn = document.getElementById('sidebarToggle');
         const toggleIcon = document.getElementById('toggleIcon');
         
-        // Updated function to use Bootstrap Icon classes
         function updateIcon(isExpanded) {
             if (isExpanded) {
-                // If expanded, show 'Left' arrow to collapse
                 toggleIcon.classList.remove('bi-chevron-double-right');
                 toggleIcon.classList.add('bi-chevron-double-left');
             } else {
-                // If collapsed, show 'Right' arrow to expand
                 toggleIcon.classList.remove('bi-chevron-double-left');
                 toggleIcon.classList.add('bi-chevron-double-right');
             }
