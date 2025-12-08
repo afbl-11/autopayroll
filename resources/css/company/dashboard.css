@@ -36,3 +36,72 @@ nav a:hover {
     text-align: center;
     margin-top: 30px;
 }
+
+.company-select {
+    width: 100%;
+    max-width: 350px;
+    padding: 10px 14px;
+    font-size: 15px;
+    border: 1.6px solid #d0d0d0;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #333;
+    outline: none;
+
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    transition: 0.2s ease-in-out;
+    cursor: pointer;
+
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 20 20'%3E%3Cpath fill='%23666' d='M5.25 7.5l4.5 4.5 4.5-4.5H5.25z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.company-select:hover {
+    border-color: #999;
+}
+
+.company-select:focus {
+    border-color: #f6da3b; 
+    box-shadow: 0 0 0 3px rgba(246, 215, 59, 0.2);
+}
+
+.company-select option[disabled] {
+    color: #999;
+}
+
+.company-select option {
+    padding: 8px;
+}
+
+
+@media (max-width: 1400px) {
+    .company-select {
+        margin-left: 25px;
+    }
+}
+
+@media (max-width: 1150px) {
+    .company-select {
+        margin-left: 50px;
+    }
+}
+
+
+@media (max-width: 700px){
+    .company-select {
+        align-items: center;
+    }
+}
+
+@media (max-width: 600px){
+    .company-select {
+        width: 70%;
+        margin-left: 65px;
+    }
+}

@@ -69,11 +69,8 @@ a {
 }
 
 @media (max-width: 900px) {
-
     .company-table-row {
         width: 80%;
-        margin-left: 50px;
-
     }
     .company-table-row th {
         width: 95px;
