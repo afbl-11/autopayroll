@@ -44,7 +44,7 @@ aside:hover {
     transition: transform 0.2s ease;
 }
 
-.nav-wrapper ul li a:hover {
+.nav-wrapper ul li a:hover, .logout ul li a:hover {
     transform: scale(1.08);
 }
 
@@ -112,7 +112,12 @@ aside:hover .logout ul {
     padding: 10px 20px;
     color: #fff;
     cursor: pointer;
-    margin-left: 5px;
+    margin-left: 3px;
+    transition: transform 0.2s ease;
+}
+
+.logout-btn button:hover {
+    transform: scale(1.08);
 }
 
 .logout-btn button img {

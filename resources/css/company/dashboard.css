@@ -1,7 +1,7 @@
-.main-content   {
+.main-content {
     width: 100%;
     padding: 0 2% 5%;
-    margin-left: 50px;
+    margin-left: 100px;
 }
 
 nav {
@@ -12,6 +12,7 @@ nav {
     padding: 0 5% 0 5%;
     margin-bottom: 5%;
 }
+
 nav a {
     background: var(--clr-yellow);
     text-decoration: none;
@@ -25,19 +26,13 @@ nav a {
     box-shadow: 2px 5px 5.9px 0 rgba(136, 125, 125, 0.25);
     font-size: 12px;
 }
+
 nav a:hover {
     color: var(--clr-background);
     background: var(--clr-indigo);
 }
 
-#cards-container {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 4fr));
-    gap: 20px 10px;
-}
-
 .no-results {
     text-align: center;
+    margin-top: 30px;
 }
-
