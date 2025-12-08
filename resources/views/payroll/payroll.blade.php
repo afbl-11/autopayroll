@@ -13,6 +13,7 @@
 
             <button id="reloadPayroll" class="reload-btn">Reload Payroll</button>
             <button id="savePayroll" class="save-btn">Save Changes</button>
+            <button id="downloadPayroll" class="download-btn">Download Payroll</button>
         </nav>
 
         <div id="payroll-table" class="ht-wrapper"></div>

@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const companyDropdown = document.getElementById("companyFilter");
     const reloadBtn = document.getElementById("reloadPayroll");
     const saveBtn = document.getElementById("savePayroll");
+    const downloadBtn = document.getElementById("downloadPayroll"); // ⬅ ADDED
     const container = document.getElementById("payroll-table");
 
     let hot = null;
@@ -114,6 +115,39 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         const result = await save.json();
         alert(result.success ? "Payroll saved successfully!" : "Failed to save.");
+    });
+
+    /** -------------------------------
+     * DOWNLOAD PAYROLL (CSV)
+     --------------------------------*/
+    downloadBtn.addEventListener("click", () => {
+        if (!hot) return alert("No payroll data to download.");
+
+        const data = hot.getData();           // table values
+        const headers = hot.getColHeader();   // column names
+
+        const csvRows = [];
+
+        // Header row
+        csvRows.push(headers.join(","));
+
+        // Data rows
+        data.forEach(row => {
+            csvRows.push(row.map(v => `"${v ?? ''}"`).join(","));
+        });
+
+        const csvContent = csvRows.join("\n");
+
+        // Create file
+        const blob = new Blob([csvContent], { type: "text/csv" });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `payroll_${companyDropdown.value || 'data'}.csv`;
+        a.click();
+
+        URL.revokeObjectURL(url);
     });
 
     /** Init */
