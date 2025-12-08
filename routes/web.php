@@ -318,5 +318,9 @@ Route::get('/employee/announcement', function () {
 });
 
 Route::get('/employee/leave-module', function () {
-    return view('employee_web.leaveModule.dashboard');
+    return view('employee_web.leaveModule.leaveModule');
+});
+
+Route::get('/employee/credit-adjustment', function () {
+    return view('employee_web.creditAdjustmentModule.creditAdjustmentModule');
 });

@@ -1,4 +1,4 @@
-@vite(['resources/css/employee_web/payrollViewingModule/style.css', 'resources/css/theme.css', 'resources/css/includes/sidebar.css'])
+@vite(['resources/css/employee_web/payrollViewingModule/payrollViewingModule.css', 'resources/css/theme.css', 'resources/css/includes/sidebar.css'])
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
