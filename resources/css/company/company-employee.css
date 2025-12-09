@@ -5,8 +5,6 @@
 
 #employee-cards-container {
     width: 100%;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 4fr));
     gap: 20px 10px;
 }
 .no-results {
@@ -20,7 +18,7 @@
 .main-content nav{
     display: flex;
     justify-content: right;
-    width: 100%;
+    width: 97%;
     height: auto;
     padding: 0 0 0 5%;
     margin-bottom: 5%;
@@ -68,4 +66,34 @@
     border: 2px solid #2563eb; /* Tailwind blue-600 */
     background-color: #eff6ff; /* Tailwind blue-50 */
     box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2);
+}
+
+@media (max-width: 1200px) {
+    .main-content nav {
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 700px) {
+    .main-content nav {
+    display: flex !important;
+    flex-direction: column;
+    align-items: flex-end;      
+    justify-content: flex-start;
+    gap: 14px;                  
+    width: 97%;
+    padding: 0 0 0 5%;
+    margin-bottom: 7%;
+    }
+
+    .main-content nav a {
+    display: inline-block; 
+    margin: 0;              
+    padding: 7px 15px;
+    width: auto;
+    }
+
+    #button, .some-button-class, .other-floated-button {
+    float: none !important;
+    }
 }

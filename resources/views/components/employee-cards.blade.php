@@ -1,92 +1,131 @@
 @vite('resources/css/employees/employee_card.css')
 
 @if($clickable)
-    <a href="{{route('employee.dashboard.detail', ['id' => $id])}}" >
-        <div {{$attributes->merge(['class' => 'employee-card'])}}>
-            <div class="top-bar">
-                <x-state status="{{$status}}"></x-state>
-                ...
-                {{--                TODO: replace this--}}
-            </div>
+<a href="{{ route('employee.dashboard.detail', ['id' => $id]) }}">
+    <table class="employee-table-row">
 
-            <div class="profile">
-                <div class="profile-image">
-                    <img src="{{asset($image)}}" alt="profile image">
+        {{-- PROFILE (IMAGE + NAME + ID) --}}
+        <tr>
+            <th>Employee</th>
+            <td class="employee-info-cell">
+                <img src="{{ asset($image) }}" alt="Profile Image" class="employee-table-photo">
+                <div class="employee-info-text">
+                    <p class="employee-name">{{ $name }}</p>
+                    <small class="employee-id">#{{ $id }}</small>
                 </div>
-                <div class="profile-info">
-                    <p>{{$name}}</p>
-                    <strong>#{{$id}}</strong>
-                </div>
-            </div>
+            </td>
+        </tr>
 
-            <div class="description">
-                <div class="username">
-                    <p>{{"@" . $username}}</p>
-                </div>
-                <div class="type">
-                    <div class="position-wrapper">
-                        <p>{{$position}}</p>
-                    </div>
-                    <div class="type-wrapper">
-                        <img src="{{asset('assets/employeeProfile/Time.png')}}" alt="icon">
-                        <p>{{$type}}</p>
-                    </div>
-                </div>
-                <div class="email">
-                    <img src="{{asset('assets/employeeProfile/Contact.png')}}" alt="icon">
-                    <div class="email-wrapper">
-                        <p>{{$email}}</p>
-                    </div>
-                </div>
-                <div class="contact">
-                    <p>{{$phone}}</p>
-                </div>
-            </div>
+        {{-- USERNAME --}}
+        <tr>
+            <th>Username</th>
+            <td>{{ '@' . $username }}</td>
+        </tr>
 
-            <div class="employment_date">
-                <small>{{$date}}</small>
-            </div>
-        </div>
-    </a>
+        {{-- POSITION + TYPE --}}
+        <tr>
+            <th>Job Position</th>
+            <td>
+                <div class="employee-position-wrapper">
+                    <span>{{ $position }}</span>
+                </div>
+            </td>
+        </tr>
+
+                <tr>
+            <th>Employment Type</th>
+            <td>
+                <div class="employee-type-wrapper">
+                    <img src="{{ asset('assets/employeeProfile/Time.png') }}" alt="icon" class="table-icon">
+                    <span>{{ $type }}</span>
+                </div>
+            </td>
+        </tr>
+
+        {{-- EMAIL --}}
+        <tr>
+            <th>Email</th>
+            <td class="employee-email-cell">
+                <img src="{{ asset('assets/employeeProfile/Contact.png') }}" alt="icon" class="table-icon">
+                <span>{{ $email }}</span>
+            </td>
+        </tr>
+
+        {{-- CONTACT --}}
+        <tr>
+            <th>Phone</th>
+            <td>{{ $phone }}</td>
+        </tr>
+
+        {{-- EMPLOYMENT DATE --}}
+        <tr>
+            <th>Employment Date</th>
+            <td>{{ $date }}</td>
+        </tr>
+
+    </table>
+</a>
 @else
-        <div {{$attributes->merge(['class' => 'employee-card'])}}>
-            <div class="profile">
-                <div class="profile-image">
-                    <img src="{{asset($image)}}" alt="profile image">
-                </div>
-                <div class="profile-info">
-                    <p>{{$name}}</p>
-                    <strong>#{{$id}}</strong>
-                </div>
-            </div>
+<table class="employee-table-row">
 
-            <div class="description">
-                <div class="username">
-                    <p>{{"@" . $username}}</p>
+        {{-- PROFILE (IMAGE + NAME + ID) --}}
+        <tr>
+            <th>Employee</th>
+            <td class="employee-info-cell">
+                <img src="{{ asset($image) }}" alt="Profile Image" class="employee-table-photo">
+                <div class="employee-info-text">
+                    <p class="employee-name">{{ $name }}</p>
+                    <small class="employee-id">#{{ $id }}</small>
                 </div>
-                <div class="type">
-                    <p>{{$position}}</p>
-                    <div class="type-wrapper">
-                        <img src="{{asset('assets/employeeProfile/Time.png')}}" alt="icon">
-                        <p>{{$type}}</p>
-                    </div>
-                </div>
-                <div class="email">
-                    <img src="{{asset('assets/employeeProfile/Contact.png')}}" alt="icon">
-                    <div class="email-wrapper">
-                        <p>{{$email}}</p>
-                    </div>
-                </div>
-                <div class="contact">
-                    <p>{{$phone}}</p>
-                </div>
-            </div>
+            </td>
+        </tr>
 
-            <div class="employment_date">
-                <small>{{$date}}</small>
-            </div>
-        </div>
+        {{-- USERNAME --}}
+        <tr>
+            <th>Username</th>
+            <td>{{ '@' . $username }}</td>
+        </tr>
+
+        {{-- POSITION + TYPE --}}
+        <tr>
+            <th>Job Position</th>
+            <td>
+                <div class="employee-position-wrapper">
+                    <span>{{ $position }}</span>
+                </div>
+            </td>
+        </tr>
+
+                <tr>
+            <th>Employment Type</th>
+            <td>
+                <div class="employee-type-wrapper">
+                    <img src="{{ asset('assets/employeeProfile/Time.png') }}" alt="icon" class="table-icon">
+                    <span>{{ $type }}</span>
+                </div>
+            </td>
+        </tr>
+
+        {{-- EMAIL --}}
+        <tr>
+            <th>Email</th>
+            <td class="employee-email-cell">
+                <img src="{{ asset('assets/employeeProfile/Contact.png') }}" alt="icon" class="table-icon">
+                <span>{{ $email }}</span>
+            </td>
+        </tr>
+
+        {{-- CONTACT --}}
+        <tr>
+            <th>Phone</th>
+            <td>{{ $phone }}</td>
+        </tr>
+
+        {{-- EMPLOYMENT DATE --}}
+        <tr>
+            <th>Employment Date</th>
+            <td>{{ $date }}</td>
+        </tr>
+
+</table>
 @endif
-
-
-

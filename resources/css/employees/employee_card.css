@@ -1,135 +1,133 @@
-.employee-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    background: var(--clr-card-surface);
-    height: 355px;
-    width: 272px;
-    border-radius: 16px;
-    padding: 13px;
-    box-shadow: 2px 5px 6px 0 rgba(136, 125, 125, 0.25);
-}
-a {
-    text-decoration: none;
-    color: var(--clr-primary);
-}
-.employee-card:hover {
-    transform: scale(1.03);
-    transition: 0.3s ease-in-out;
-}
-.profile {
-    height: 70%;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    width: 100%;
-}
-.profile-image img {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 100%;
+.employee-table-row {
+    width: 93%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+    background: #fff;
+    margin-left: 50px;
 }
 
-.top-bar,
-.description,
-.type,
-.email,
-.contact,
-.employment_date,
-.profile,
-.type-wrapper,
-.email-wrapper{
-    display: flex;
-    width: 100%;
-    height: auto;
-}
-
-.top-bar{
-    justify-content: space-between;
-}
-
-
-.description {
-    flex-direction: column;
-    background: #ECEAE7;
-    border-radius: 8px;
-    padding: 5px 10px;
-    gap: 10px;
-    width: 100%;
-    height: auto;
-}
-.description div{
-
-}
-.description p {
-    line-height: 2;
-    font-size: 12px;
-}
-.profile-info   {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-}
-strong{
-    font-size: 9px;
-    letter-spacing: 1px;
+.employee-table-row th {
+    text-align: left;
+    width: 130px;
+    padding: 8px;
     font-weight: 600;
+    font-size: 13px;
+    background: #f4f4f4;
+    border-bottom: 1px solid #ddd;
 }
-.email {
-    gap: 10px;
-}
-.type{
-    display: flex;
-    width: 100%;
-    justify-content: start;
 
+.employee-table-row td {
+    padding: 8px;
+    font-size: 13px;
+    border-bottom: 1px solid #ddd;
 }
-.type-wrapper {
+
+.employee-table-photo {
+    width: 45px;
+    height: 45px;
+    border-radius: 100%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.employee-info-cell {
     display: flex;
-    justify-content: end;
-    width: 35%;
+    align-items: center;
+}
+
+.employee-info-text p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.employee-id {
+    font-size: 11px;
+    color: #666;
+}
+
+.employee-position-wrapper {
+    display: inline-block;
+    width: 60%;
+}
+
+.employee-type-wrapper {
+    display: inline-flex;
+    align-items: center;
     gap: 5px;
-    float: right;
+}
 
-}
-.position-wrapper {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 70%;
-}
-.email img,
-.type-wrapper img {
+.table-icon {
     width: 15px;
     height: 15px;
-    justify-content: center;
-    align-self: center;
 }
-.email-wrapper {
-    padding:    5px;
-    background: var(--clr-background);
-    border-radius: 8px;
-    text-align: center;
+
+.employee-email-cell {
+    display: flex;
     align-items: center;
-    width: auto;
-    height: 20px;
-}
-.email-wrapper p {
-    line-height: 0 !important;
-    letter-spacing: 0 !important;
-    margin-bottom: 0 !important;
+    gap: 10px;
 }
 
-.employee-card-wrapper input[type="checkbox"] {
-    display: none;
+a {
+    text-decoration: none;
+    color: inherit;
 }
 
-
-.employee-card.selected {
-    background-color: var(--clr-card-inner);
-    transition: all 0s;
+@media (max-width: 1400px) {
+    .employee-table-row {
+        width: 90%;
+        margin-left: 60px;
+    }
 }
 
+@media (max-width: 1150px) {
+    .employee-table-row {
+        width: 90%;
+        margin-left: 70px;
+    }
+}
+
+@media (max-width: 1100px) {
+    .employee-table-row {
+        width: 87%;
+        margin-left: 80px;
+    }
+}
+
+@media (max-width: 900px) {
+    .employee-table-row {
+        width: 80%;
+        margin-left: 100px;
+    }
+    .employee-table-row th {
+        width: 95px;
+        font-size: 12px;
+        padding: 6px;
+    }
+    .employee-table-row td {
+        font-size: 12px;
+        padding: 6px;
+    }
+    .employee-table-photo {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media (max-width: 700px) {
+    .employee-table-row {
+        width: 77%;
+    }
+    .employee-table-row th {
+        width: 90px;
+    }
+}
+
+@media (max-width: 600px) {
+    .employee-table-row {
+        width: 73%;
+
+    }
+    .employee-table-row th {
+        width: 88px;
+    }
+}

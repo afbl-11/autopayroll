@@ -2,19 +2,25 @@
 .content-wrapper {
     display: flex;
     flex-direction: column;
-    width: 95%;
+    width: 90%;
     height: auto;
     margin-top: 30px;
     background: var(--clr-card-surface);
     box-shadow: 2px 5px 5.9px 0 rgba(136, 125, 125, 0.25);
     border-radius: 16px;
     margin-bottom: 30px;
+    margin-left: 30px;
 }
 .links {
     border-radius: 16px 16px 0 0 ;
     padding: 15px;
     background: var(--clr-card-inner);
     width: 100%;
+}
+
+.links ul li a:hover {
+    color: rgb(121, 121, 121);
+    border-radius: 15px;
 }
 .links ul{
     display: flex;
@@ -27,6 +33,7 @@
 
     color: var(--clr-primary);
     text-decoration: none;
+    transition: color 0.3s ease-out;
 }
 .summary-content {
     display: flex;
@@ -46,3 +53,49 @@
     border-right: none!important;
 }
 
+@media (max-width: 1150px) {
+
+    .content-wrapper {
+        margin-left: 60px;
+        width: 85%;
+    }
+    .links ul {
+        gap: 25px;
+        flex-wrap: wrap;
+    }
+
+    .summary-content {
+        flex-direction: column;
+        padding: 15px;
+    }
+
+    .content-cards {
+        width: 100%;
+        padding-left: 0;
+        border-right: none;
+        border-bottom: 1px solid var(--clr-primary);
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+    }
+
+    .content-cards:last-of-type {
+        border-bottom: none; /* remove last border on mobile/tablet */
+    }
+}
+
+@media (max-width: 900px) {
+    .content-wrapper {
+        margin-left: 70px;
+        width: 75%;
+    }
+    .links {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 700px) {
+    .content-wrapper {
+        margin-left: 80px;
+        width: 65%;
+    }
+}
