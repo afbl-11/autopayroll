@@ -67,3 +67,78 @@ p {
     transition: all 0.2s ease;
     box-shadow: 2px 5px 5.9px 0 rgba(136, 133, 125, 0.25);
 }
+
+@media (max-width: 1250px) {
+    .card-wrapper {
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 1000px) {
+    .card-wrapper {
+        flex-direction: column;
+        gap: 15px;
+        width: 95%;
+        height: 175px;
+        margin-right: 10px;
+    }
+
+    .card-wrapper .profile {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--clr-primary);
+        padding-right: 0;
+        padding-bottom: 12px;
+        justify-content: flex-start;
+    }
+
+    .card-wrapper .input-wrapper {
+        width: 100%;
+        padding-left: 0;
+    }
+}
+
+@media (max-width: 700px) {
+    .card-wrapper {
+        height: 200px;
+    }
+}
+
+@media (max-width: 600px) {
+    .card-wrapper {
+        height: 260px;
+    }
+    .card-wrapper .profile {
+        flex-direction: column;
+        text-align: center;
+        gap: 8px;
+    }
+
+    .card-wrapper .input-wrapper {
+        text-align: center;
+        gap: 4px;
+    }
+
+    .card-wrapper {
+        padding: 12px;
+        border-radius: 10px;
+    }
+}
+
+@media (max-width: 556px) {
+    .card-wrapper {
+        height: 275px;
+    }
+}
+
+@media (max-width: 530px) {
+    .card-wrapper {
+        height: 300px;
+    }
+}
+
+@media (max-width: 510px) {
+    .card-wrapper {
+        height: 315px;
+    }
+}

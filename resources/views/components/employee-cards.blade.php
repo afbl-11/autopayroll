@@ -32,7 +32,7 @@
             </td>
         </tr>
 
-                <tr>
+        <tr>
             <th>Employment Type</th>
             <td>
                 <div class="employee-type-wrapper">
@@ -61,6 +61,12 @@
         <tr>
             <th>Employment Date</th>
             <td>{{ $date }}</td>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <td>
+                <x-state status="{{ $status }}"></x-state>
+            </td>
         </tr>
 
     </table>
@@ -125,6 +131,12 @@
         <tr>
             <th>Employment Date</th>
             <td>{{ $date }}</td>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <td>
+                <x-state status="{{ $status }}"></x-state>
+            </td>
         </tr>
 
 </table>

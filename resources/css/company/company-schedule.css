@@ -5,7 +5,6 @@
     width: 100%;
     height: 100vh;
     padding: 50px;
-
 }
 .content-wrapper {
     display: flex;
@@ -20,7 +19,6 @@
 }
 .schedule-wrapper{
     width: 30%;
-
 }
 
 .schedule-wrapper p {
@@ -70,7 +68,7 @@
 }
 
 
-@media (max-width: 1150px) {
+@media (max-width: 1250px) {
 
     .content-wrapper {
         height: auto;
@@ -83,11 +81,13 @@
     
     .schedule-wrapper {
         width: 90%;
+        margin-bottom: 20px;
     }
 
     .employee-card-wrapper {
         width: 90%;
         padding: 0;
+        margin-bottom: 15px;
     }
 
     .field-row {
