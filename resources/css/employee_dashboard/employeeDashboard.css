@@ -4,7 +4,7 @@
 }
 nav {
     display: flex;
-    width: 95%;
+    width: 90%;
     height: auto;
     justify-content: end;
     align-items: center;
@@ -14,8 +14,11 @@ nav {
 .nav-group {
     display: flex;
     align-items: center;
-    width: 80%;
+    width: 95%;
     gap: 10rem;
+    margin-left: 75px;
+    margin-bottom: 30px;
+    margin-top: 30px;
 }
 form {
     display: flex;
@@ -69,22 +72,55 @@ nav a:hover {
     background: var(--clr-indigo);
 }
 
-
-
-/*!*todo: ikadto ngat han employee cards class*!*/
-/*.card-wrapper {*/
-/*    width: 100%;*/
-/*    display: grid;*/
-/*    grid-template-columns: repeat(auto-fill, minmax(280px, 4fr));*/
-/*    gap: 20px 10px;*/
-/*}*/
-#employee-cards-container {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 4fr));
-    gap: 20px 10px;
-}
 .no-results {
     text-align: center;
+}
+
+@media (max-width: 1400px) {
+    .nav-group {
+        width: 92%;
+    }
+}
+
+@media (max-width: 1150px) {
+    .nav-group {
+        width: 88.5%;
+    }
+}
+
+@media (max-width: 1000px) {
+    .nav-group {
+        width: 85%;
+    }
+}
+
+@media (max-width: 900px) {
+    .nav-group {
+        width: 80%;
+    }
+}
+
+@media (max-width: 800px) {
+    .nav-group {
+        width: 79%;
+    }
+}
+
+@media (max-width: 750px) {
+    .nav-group {
+        width: 77%;
+    }
+}
+
+@media (max-width: 700px) {
+    .nav-group {
+        width: 75%;
+    }
+}
+
+@media (max-width: 600px) {
+    .nav-group {
+        width: 70%;
+    }
 }
 

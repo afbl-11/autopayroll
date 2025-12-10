@@ -24,3 +24,30 @@
 button {
     float: right;
 }
+.logo h1{
+    margin-bottom: 100px;
+}
+
+
+@media (max-width: 875px) {
+    .form-container {
+        width: 90%;
+        padding: 0 20px;
+    }
+
+    .field-row {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    form {
+        width: 75%;
+    }
+    
+    button {
+        width: 100%;
+        float: none;
+        padding: 12px;
+    }
+
+}

@@ -31,3 +31,25 @@ form {
 a {
     text-decoration: none;
 }
+
+@media (max-width: 1150px) {
+    form {
+        width: 60%;
+    }
+    .header {
+        margin-top: 15px;
+    }
+}
+
+@media (max-width: 800px) {
+    .main-content {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    form {
+        width: 70%;
+    }
+}
+
+

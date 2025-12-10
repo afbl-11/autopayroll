@@ -1,10 +1,10 @@
 .main-content {
-    width: 95%;
+    width: 90%;
     height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    /*background-color: black;*/
+    margin-left: 30px;
 }
 .request-list nav  {
     border-radius: 16px 16px 0 0 ;
@@ -109,4 +109,52 @@ form {
 #empty {
     text-align: center;
     margin-top: 150px;
+}
+
+@media (max-width: 1150px) {
+    .main-content {
+        width: 85%;
+        margin-left: 60px;
+    }
+    .leave-wrapper {
+        gap: 20px;
+    }
+    .leave-wrapper .message {
+        width: 60%;
+    }
+    .leave-handle-wrapper {
+        width: 40%;
+    }
+}
+
+@media (max-width: 900px) {
+    .main-content {
+        width: 75%;
+        margin-left: 70px;
+    }
+
+}
+
+@media (max-width: 800px) {
+    .leave-wrapper {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .leave-wrapper .message,
+    .leave-handle-wrapper {
+        width: 100%;
+        height: auto;
+    }
+
+    .leave-wrapper .message {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 700px) {
+    .main-content {
+        width: 65%;
+        margin-left: 80px;
+    }
 }

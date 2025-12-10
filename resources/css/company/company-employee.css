@@ -5,8 +5,6 @@
 
 #employee-cards-container {
     width: 100%;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 4fr));
     gap: 20px 10px;
 }
 .no-results {
@@ -20,7 +18,7 @@
 .main-content nav{
     display: flex;
     justify-content: right;
-    width: 100%;
+    width: 97%;
     height: auto;
     padding: 0 0 0 5%;
     margin-bottom: 5%;
@@ -68,4 +66,117 @@
     border: 2px solid #2563eb; /* Tailwind blue-600 */
     background-color: #eff6ff; /* Tailwind blue-50 */
     box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2);
+}
+
+@media (max-width: 1200px) {
+    .main-content nav {
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 700px) {
+    .main-content nav {
+    display: flex !important;
+    flex-direction: column;
+    align-items: flex-end;      
+    justify-content: flex-start;
+    gap: 14px;                  
+    width: 97%;
+    padding: 0 0 0 5%;
+    margin-bottom: 7%;
+    }
+
+    .main-content nav a {
+    display: inline-block; 
+    margin: 0;              
+    padding: 7px 15px;
+    width: auto;
+    }
+
+    #button, .some-button-class, .other-floated-button {
+    float: none !important;
+    }
+}
+
+.nav-group-1 {
+    display: flex;
+    align-items: center;
+    width: 95%;
+    gap: 10rem;
+    margin-left: 75px;
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+.nav-group-1 input,
+.nav-group-1 select {
+    width: auto;
+    height: 30px;
+    border: 1px solid var(--clr-primary);
+    border-radius: 8px;
+    background: none;
+    outline: none;
+    padding: 10px;
+    align-items: center;
+    align-self: center;
+    justify-content: center;
+}
+
+.nav-group-1 #search_bar {
+    width: 150% !important;
+    height: 30px;
+}
+.nav-group-1 select {
+    width: 10rem !important;
+    padding: 0 0 0 10px !important;
+}
+
+@media (max-width: 1400px) {
+    .nav-group-1 {
+        width: 92%;
+    }
+}
+
+@media (max-width: 1150px) {
+    .nav-group-1 {
+        width: 88.5%;
+    }
+}
+
+@media (max-width: 1000px) {
+    .nav-group-1 {
+        width: 85%;
+    }
+}
+
+@media (max-width: 900px) {
+    .nav-group-1 {
+        width: 80%;
+        margin-left: 100px;
+    }
+}
+
+@media (max-width: 800px) {
+    .nav-group-1 {
+        width: 79%;
+        margin-top: 60px;
+    }
+}
+
+@media (max-width: 750px) {
+    .nav-group-1 {
+        width: 77%;
+    }
+}
+
+@media (max-width: 700px) {
+    .nav-group-1 {
+        width: 75%;
+    }
+}
+
+@media (max-width: 600px) {
+    .nav-group-1 {
+        width: 70%;
+    }
 }

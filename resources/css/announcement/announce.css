@@ -46,3 +46,23 @@
 #emptyNotif {
     text-align: center;
 }
+
+@media (max-width: 1024px) {
+    .main-content nav {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .main-content nav a {
+        padding: 10px 14px;
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content nav {
+        margin-bottom: 20px;
+    }
+
+   
+}

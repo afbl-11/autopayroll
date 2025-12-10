@@ -1,0 +1,130 @@
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding-bottom: 40px;
+    margin-left: 20px;
+}
+
+nav {
+    width: 95%;
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    justify-content: flex-start;
+}
+
+.company-dropdown {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.reload-btn,
+.save-btn, .download-btn {
+    background-color: #FFD858;
+    color: #222;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 15px;
+    cursor: pointer;
+    box-shadow: 2px 4px 6px rgba(0,0,0,0.15);
+    transition: 0.25s ease;
+}
+
+.reload-btn:hover,
+.save-btn:hover, .download-btn:hover {
+    background-color: #4B5563;
+    color: #fff;
+}
+
+#payroll-table .handsontable td,
+#payroll-table .handsontable th {
+    box-sizing: border-box !important;
+}
+
+.ht-wrapper {
+    width: 95%;
+    margin-top: 1rem;
+    display: inline-block;
+}
+
+
+@media (max-width: 1450px) {
+    .main-content {
+        margin-left: 25px;
+        width: 90%;
+    }
+
+    .ht-wrapper {
+        overflow-x: auto;
+    }
+}
+
+@media (max-width: 1150px) {
+    .main-content {
+        margin-left: 30px;
+        width: 85%;
+    }
+}
+
+@media (max-width: 950px) {
+    .main-content {
+        margin-left: 50px;
+        width: 80%;
+    }
+
+    .reload-btn,
+    .save-btn {
+        padding: 8px 10px;
+        font-size: 0.9rem;
+    }
+
+    .company-dropdown {
+        width: 200px;
+    }
+
+    .ht-wrapper {
+        margin-top: 1rem;
+    }
+}
+
+@media (max-width: 700px) {
+    .main-content {
+        margin-left: 70px;  
+        width: 70%;
+        padding: 0 10px;
+        margin-bottom: 30px;
+    }
+
+    nav {
+        width: 100%;
+        flex-direction: column; 
+        align-items: stretch;
+        gap: 0.75rem;
+    }
+
+    .company-dropdown {
+        width: 100%;
+        font-size: 0.9rem;
+    }
+
+    .reload-btn,
+    .save-btn {
+        width: 100%;
+        padding: 10px;
+        font-size: 1rem;
+    }
+
+    .ht-wrapper {
+        width: 100%;
+        overflow-x: auto;
+    }
+}
+
+@media (max-width: 600px) {
+     .main-content {
+        width: 65%;
+    }
+}
