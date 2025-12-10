@@ -19,6 +19,13 @@
         </div>
 
         <div id="employee-cards-container">
+            <div class="employee-header">
+            <div class="eh-col eh-employee">Employee</div>
+            <div class="eh-col eh-username">Username</div>
+            <div class="eh-col eh-position">Position</div>
+            <div class="eh-col eh-type">Type</div>
+            <div class="eh-col eh-status">Status</div>
+            </div>
             @foreach($company->employees as $employee)
                 @php
                     $attendance = $employee->attendanceLogs->first();

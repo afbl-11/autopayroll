@@ -2,142 +2,72 @@
 
 @if($clickable)
 <a href="{{ route('employee.dashboard.detail', ['id' => $id]) }}">
-    <table class="employee-table-row">
+<div class="employee-row">
 
-        {{-- PROFILE (IMAGE + NAME + ID) --}}
-        <tr>
-            <th>Employee</th>
-            <td class="employee-info-cell">
-                <img src="{{ asset($image) }}" alt="Profile Image" class="employee-table-photo">
-                <div class="employee-info-text">
-                    <p class="employee-name">{{ $name }}</p>
-                    <small class="employee-id">#{{ $id }}</small>
-                </div>
-            </td>
-        </tr>
+    {{-- EMPLOYEE BASIC INFO --}}
+    <div class="er-col er-employee">
+        <img src="{{ asset($image) }}" alt="Employee Photo" class="employee-photo">
+        <div class="employee-text">
+            <p class="employee-name">{{ $name }}</p>
+            <small class="employee-id">#{{ $id }}</small>
+        </div>
+    </div>
 
-        {{-- USERNAME --}}
-        <tr>
-            <th>Username</th>
-            <td>{{ '@' . $username }}</td>
-        </tr>
+    {{-- USERNAME --}}
+    <div class="er-col er-username">
+        {{ '@' . $username }}
+    </div>
 
-        {{-- POSITION + TYPE --}}
-        <tr>
-            <th>Job Position</th>
-            <td>
-                <div class="employee-position-wrapper">
-                    <span>{{ $position }}</span>
-                </div>
-            </td>
-        </tr>
+    {{-- POSITION --}}
+    <div class="er-col er-position">
+        {{ $position }}
+    </div>
 
-        <tr>
-            <th>Employment Type</th>
-            <td>
-                <div class="employee-type-wrapper">
-                    <img src="{{ asset('assets/employeeProfile/Time.png') }}" alt="icon" class="table-icon">
-                    <span>{{ $type }}</span>
-                </div>
-            </td>
-        </tr>
+    {{-- EMPLOYMENT TYPE --}}
+    <div class="er-col er-type">
+        <img src="{{ asset('assets/employeeProfile/Time.png') }}" class="employee-icon">
+        <span>{{ $type }}</span>
+    </div>
 
-        {{-- EMAIL --}}
-        <tr>
-            <th>Email</th>
-            <td class="employee-email-cell">
-                <img src="{{ asset('assets/employeeProfile/Contact.png') }}" alt="icon" class="table-icon">
-                <span>{{ $email }}</span>
-            </td>
-        </tr>
+    {{-- STATUS --}}
+    <div class="er-col er-status">
+        <x-state status="{{ $status }}"></x-state>
+    </div>
 
-        {{-- CONTACT --}}
-        <tr>
-            <th>Phone</th>
-            <td>{{ $phone }}</td>
-        </tr>
-
-        {{-- EMPLOYMENT DATE --}}
-        <tr>
-            <th>Employment Date</th>
-            <td>{{ $date }}</td>
-        </tr>
-        <tr>
-            <th>Status</th>
-            <td>
-                <x-state status="{{ $status }}"></x-state>
-            </td>
-        </tr>
-
-    </table>
+</div>
 </a>
 @else
-<table class="employee-table-row">
+<div class="employee-row">
 
-        {{-- PROFILE (IMAGE + NAME + ID) --}}
-        <tr>
-            <th>Employee</th>
-            <td class="employee-info-cell">
-                <img src="{{ asset($image) }}" alt="Profile Image" class="employee-table-photo">
-                <div class="employee-info-text">
-                    <p class="employee-name">{{ $name }}</p>
-                    <small class="employee-id">#{{ $id }}</small>
-                </div>
-            </td>
-        </tr>
+    {{-- EMPLOYEE BASIC INFO --}}
+    <div class="er-col er-employee">
+        <img src="{{ asset($image) }}" alt="Employee Photo" class="employee-photo">
+        <div class="employee-text">
+            <p class="employee-name">{{ $name }}</p>
+            <small class="employee-id">#{{ $id }}</small>
+        </div>
+    </div>
 
-        {{-- USERNAME --}}
-        <tr>
-            <th>Username</th>
-            <td>{{ '@' . $username }}</td>
-        </tr>
+    {{-- USERNAME --}}
+    <div class="er-col er-username">
+        {{ '@' . $username }}
+    </div>
 
-        {{-- POSITION + TYPE --}}
-        <tr>
-            <th>Job Position</th>
-            <td>
-                <div class="employee-position-wrapper">
-                    <span>{{ $position }}</span>
-                </div>
-            </td>
-        </tr>
+    {{-- POSITION --}}
+    <div class="er-col er-position">
+        {{ $position }}
+    </div>
 
-                <tr>
-            <th>Employment Type</th>
-            <td>
-                <div class="employee-type-wrapper">
-                    <img src="{{ asset('assets/employeeProfile/Time.png') }}" alt="icon" class="table-icon">
-                    <span>{{ $type }}</span>
-                </div>
-            </td>
-        </tr>
+    {{-- EMPLOYMENT TYPE --}}
+    <div class="er-col er-type">
+        <img src="{{ asset('assets/employeeProfile/Time.png') }}" class="employee-icon">
+        <span>{{ $type }}</span>
+    </div>
 
-        {{-- EMAIL --}}
-        <tr>
-            <th>Email</th>
-            <td class="employee-email-cell">
-                <img src="{{ asset('assets/employeeProfile/Contact.png') }}" alt="icon" class="table-icon">
-                <span>{{ $email }}</span>
-            </td>
-        </tr>
+    {{-- STATUS --}}
+    <div class="er-col er-status">
+        <x-state status="{{ $status }}"></x-state>
+    </div>
 
-        {{-- CONTACT --}}
-        <tr>
-            <th>Phone</th>
-            <td>{{ $phone }}</td>
-        </tr>
-
-        {{-- EMPLOYMENT DATE --}}
-        <tr>
-            <th>Employment Date</th>
-            <td>{{ $date }}</td>
-        </tr>
-        <tr>
-            <th>Status</th>
-            <td>
-                <x-state status="{{ $status }}"></x-state>
-            </td>
-        </tr>
-
-</table>
+</div>
 @endif

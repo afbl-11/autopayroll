@@ -22,6 +22,12 @@
         </select>
 
         <div id="companyList">
+            <div class="company-header">
+            <div class="h-col h-id">ID</div>
+            <div class="h-col h-company">Company</div>
+            <div class="h-col h-address">Address</div>
+            <div class="h-col h-employees">Employees</div>
+            </div>
             @foreach($companies as $company)
                 <div class="company-item"
                      data-name="{{ strtolower($company->company_name) }}"

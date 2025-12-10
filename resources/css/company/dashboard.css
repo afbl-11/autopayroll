@@ -102,6 +102,141 @@ nav a:hover {
 @media (max-width: 600px){
     .company-select {
         width: 70%;
-        margin-left: 65px;
+        margin-left: 50px;
+    }
+}
+
+
+.company-header {
+    display: grid;
+    grid-template-columns: 100px 1.2fr 1.4fr 0.7fr;
+    padding: 10px 18px;
+    background: #f3f6ff;
+    border-radius: 10px;
+    border: 1px solid #d9dff7;
+    margin-bottom: 10px;
+    width: 95%;
+}
+.h-col {
+    font-size: 13px;
+    font-weight: 700;
+    color: #555;
+    text-transform: uppercase;
+    align-items: center;
+}
+.h-id {
+    margin-left: 25px;
+}
+
+.h-company {
+    margin-left: 150px;
+}
+.h-address {
+    margin-left: 200px;
+}
+.h-employees {
+    margin-left: 55px;
+}
+
+@media (max-width: 1400px) {
+    .h-address {
+        margin-left: 175px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .company-header {
+        grid-template-columns: 80px 1.5fr 1fr 0.5fr;
+    }
+
+    .h-address {
+    margin-left: 75px;
+    }
+
+    .h-id {
+    margin-left: 20px;
+    }
+
+    .h-company {
+    margin-left: 140px;
+    }
+
+
+    .h-col {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 1000px) {
+    .company-header {
+        width: 93%;
+        margin-left: 10px;
+    }
+
+    .h-id {
+    margin-left: 15px;
+    }
+
+    .h-company {
+    margin-left: 125px;
+    }
+}
+
+@media (max-width: 900px) {
+    .company-header {
+         grid-template-columns: 0.8fr 2fr 1fr;
+         width: 85%;
+         margin-left: 35px;
+    }
+    .h-col.h-address {
+        display: none; 
+    }
+
+    .h-id {
+        margin-left: 25px;
+    }
+
+    .h-company {
+        margin-left: 125px;
+    }
+}
+
+@media (max-width: 750px) {
+    .h-company {
+    margin-left: 100px;
+    }
+}
+
+@media (max-width: 700px) {
+    .company-header {
+        width: 80%;
+        grid-template-columns: 0.6fr 1.8fr 0.8fr;
+        margin-left: 40px;
+    }
+}
+
+@media (max-width: 550px) {
+    .company-header {
+         width: 70%;
+        margin-left: 50px;
+        grid-template-columns: 0.1fr 0.5fr;
+    }
+    .h-id {
+        display: none;
+    }
+    .h-company {
+        margin-left: 50px;
+    }
+    .h-employees {
+        margin-left: 45px;
+    }
+}
+
+@media (max-width: 480px) {
+    .h-company{
+        margin-left: 15px;
+    }
+    .h-employees {
+        margin-left: 50px;
     }
 }

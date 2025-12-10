@@ -124,3 +124,82 @@ nav a:hover {
     }
 }
 
+
+.employee-header {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr 0.7fr;
+    padding: 10px 18px;
+    background: #f3f6ff;
+    border-radius: 10px;
+    border: 1px solid #d9dff7;
+    margin-bottom: 10px;
+    width: 95%;
+    margin-left: 45px;
+}
+
+.eh-col {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #555;
+}
+
+.eh-employee {
+    margin-left: 50px;
+}
+
+.eh-type {
+    margin-left: 25px;
+}
+
+.eh-status {
+    margin-left: 10px;
+}
+
+@media (max-width: 1200px) {
+    .employee-header {
+        grid-template-columns: 1.3fr 1fr 1fr 0.8fr 0.5fr;
+        margin-left: 55px;
+        width: 92%;
+    }
+}
+
+@media (max-width: 900px) {
+    .employee-header {
+        grid-template-columns: 1.4fr 1fr 1fr;
+        width: 85%;
+        margin-left: 85px;
+    }
+
+    .eh-type,
+    .eh-status {
+        display: none;
+    }
+}
+
+@media (max-width: 700px) {
+    .employee-header {
+        width: 80%;
+        grid-template-columns: 1.3fr 1fr;
+        margin-left: 95px;
+    }
+
+    .eh-position {
+        display: none;
+    }
+}
+
+@media (max-width: 550px) {
+    .employee-header {
+        grid-template-columns: 1fr;
+        width: 70%;
+    }
+
+    .eh-employee {
+        margin-left: 0px;
+    }
+
+    .eh-username {
+        display: none;
+    }
+}
