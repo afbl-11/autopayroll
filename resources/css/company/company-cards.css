@@ -118,32 +118,41 @@
 
 @media (max-width: 550px) {
      .company-row {
-        grid-template-columns: 0.1fr 0.5fr;
+        grid-template-columns: 1fr;
         width: 70%;
-        margin-left: 50px;
+        margin-left: 45px;
     }
     .col{
         font-size: 11px;
     }
     
     .company-text p {
-    font-size: 11px;
+    font-size: 12px;
     }
 
     .company-industry {
-    font-size: 9px;
-    
+    font-size: 10px;
     }
     .col-id {
         display: none;
     }
-
+    .col-employees {
+        display: none;
+    }
+    .col-company{
+        margin-left: 5px;
+    }
+    
 }
 
 @media (max-width: 480px) {
-
     .col-company{
         margin-left: -1px;
     }
+}
 
+@media (max-width: 400px) {
+    .company-row {
+        margin-left: 40px;
+    }
 }

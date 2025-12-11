@@ -37,6 +37,12 @@ form {
     background: none;
     outline: none;
     padding: 10px;
+    transition: 0.2s ease-in-out;
+}
+
+.nav-group input:focus {
+    border-color: #f6da3b;
+    box-shadow: 0 0 0 3px rgba(246,215,59,0.2);
 }
 
 .nav-group #search_bar {
@@ -72,30 +78,42 @@ nav a:hover {
     text-align: center;
 }
 
-@media (max-width: 1400px) {
-    .nav-group {
-        margin-left: 65px;
+@media (max-width: 1450px) {
+   .nav-group {
+        margin-left: 15px;
         width: 90%;
+    } 
+}
+
+@media (max-width: 1200px) {
+    .nav-group {
+        margin-left: 45px;
     }
 }
 @media (max-width: 1000px) {
     .nav-group {
         gap: 2rem;
-        width: 85%;
+        width: 89%;
     }
 }
 
 @media (max-width: 900px) {
     .nav-group {
         width: 80%;
-        margin-left: 30px;
+        margin-left: 40px;
         gap: 1.5rem;
+    }
+}
+
+@media (max-width: 850px) {
+    .nav-group {
+        margin-left: 50px;
     }
 }
 
 @media (max-width: 800px) {
     .nav-group {
-        width: 75%;
+        width: 78%;
     }
 }
 
@@ -124,6 +142,7 @@ nav a:hover {
     .nav-group {
         width: 100%;
         padding: 0 15px;
+        margin-left: 185px;
     }
 }
 

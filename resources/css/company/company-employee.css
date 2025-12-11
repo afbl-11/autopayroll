@@ -54,16 +54,30 @@
     margin: 30px 0 30px 75px;
 }
 
+.nav-group-1 input {
+    margin-left: -30px;
+}
+
+.nav-group-1 select {
+    margin-left: -15px;
+}
+
 .nav-group-1 input,
 .nav-group-1 select {
     height: 38px; 
-    border: 1px solid #b5b5b5;
+    border: 1px solid #000000;
     border-radius: 10px;
-    background: #fff;
+    background: transparent;
     outline: none;
     padding: 0 14px;
     font-size: 14px;
     color: #444;
+    transition: 0.2s ease-in-out;
+}
+
+.nav-group-1 input:focus {
+    border-color: #f6da3b;
+    box-shadow: 0 0 0 3px rgba(246,215,59,0.2);
 }
 
 .nav-group-1 #search_bar {
@@ -156,17 +170,30 @@
     box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2);
 }
 
+@media (max-width: 1450px) {
+    .nav-group-1 input {
+        margin-left: 0px;
+    }
+
+    .nav-group-1 select {
+        margin-left: 0px;
+    }
+}
+
 @media (max-width: 1400px) {
-    .nav-group-1 { width: 92%; }
+    .nav-group-1 { width: 92%; margin-left: 45px;}
 }
 
 @media (max-width: 1200px) {
     .main-content nav { margin-top: 10px; }
-    .nav-group-1 { width: 90%; }
+    .nav-group-1 { width: 90%; margin-left: 55px;}
     .employee-header {
         grid-template-columns: 1.3fr 1fr 1fr 0.8fr 0.5fr;
         margin-left: 55px;
         width: 92%;
+    }
+    .no-results {
+        margin-left: 50px;
     }
 }
 
@@ -180,7 +207,7 @@
 @media (max-width: 900px) {
     .nav-group-1 {
         width: 80%;
-        margin-left: 90px;
+        margin-left: 85px;
         gap: 1.5rem;
     }
 
@@ -203,6 +230,9 @@
 
     .button-filled {
         padding: 10px 25px 10px 25px !important;
+    }
+    .no-results {
+        margin-left: 70px;
     }
 }
 
@@ -231,7 +261,7 @@
     }
 
     .eh-position { display: none; }
-    
+
     .button-filled {
         margin-right: 10px !important;
     }
@@ -245,4 +275,14 @@
 
     .eh-employee { margin-left: 0; }
     .eh-username { display: none; }
+
+    .no-results {
+        margin-left: 55px;
+    }
+}
+
+@media (max-width: 500px) {
+    .no-results {
+        margin-left: 80px;
+    }
 }
