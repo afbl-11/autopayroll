@@ -16,7 +16,7 @@
                     value="{{ route('company.dashboard.detail', ['id' => $company->company_id]) }}"
                     data-name="{{ strtolower($company->company_name) }}"
                     data-industry="{{ strtolower($company->industry) }}">
-                        {{ $company->company_name }} — {{ $company->industry }}
+                        {{ $company->company_name }}
                 </option>
             @endforeach
         </select>
@@ -70,7 +70,7 @@
             }
         });
     })();
-
+ 
     selectBox.selectedIndex = 0;
 
     selectBox.addEventListener("change", function () {
