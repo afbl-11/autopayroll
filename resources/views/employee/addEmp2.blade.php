@@ -5,7 +5,7 @@
 
 
     ])
-<x-app :title="$title" :showProgression="true">
+<x-app :title="$title" :showProgression="false">
     <section class="main-content">
             <div class="form-wrapper">
                 <form action="{{route('store.employee.register.2')}}" method="post">

@@ -40,3 +40,57 @@
 .field-row {
     display: flex !important;
 }
+
+
+@media (max-width: 1150px) {
+    .main-content {
+        height: auto;
+        padding-top: 30px;
+    }
+
+    .information-card {
+        width: 80%;
+        margin-left: 50px;
+        padding: 5%;
+    }
+
+    .input-wrapper {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .field-row {
+        flex-direction: column !important;
+        gap: 20px;
+    }
+
+    .form-input {
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 850px) {
+    
+    .information-card {
+        width: 75%;
+        margin-left: 70px;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+    
+    .information-card {
+        width: 65%;
+    }
+
+}
+
+@media (max-width: 550px) {
+    
+    .information-card {
+        width: 60%;
+    }
+
+}

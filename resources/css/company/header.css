@@ -22,17 +22,27 @@
 .header nav ul li a{
     text-decoration: none;
     color: var(--clr-primary);
+    transition: ease-in-out 0.2s;
 }
+
+.header nav ul li a:hover {
+    color: rgb(150, 150, 150);
+}
+
 .header nav ul{
     width: 80%;
     justify-content: space-around;
     /*gap: 30px;*/
 }
+.header {
+    margin-top: 20px;
+}
 .company-information{
     width: 400px;
     height: 100px;
     align-items: center;
-    margin-bottom:  10px;
+    margin-bottom: 35px;
+    margin-left: 25px;
     gap: 3rem;
     padding-right: 20px;
     border-right: 1px solid var(--clr-primary);
@@ -52,4 +62,89 @@
     justify-items: center;
     align-self: center;
     display: flex;
+}
+
+@media (max-width: 1400px) {
+    .company-information {
+       margin-left: 50px;
+    }
+}
+
+@media (max-width: 1050px) {
+    .header {
+        padding: 20px; 
+    }
+
+    .company-information {
+        width: 100%;
+        border-right: none;
+        padding-bottom: 15px;
+        justify-content: center;
+        margin-left: 0px;
+    }
+
+    .header nav {
+        justify-content: center;
+    }
+
+    .header nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 35px;
+        width: 100%;
+        margin-left: 60px;
+    }
+
+    .company-information .company-logo img{
+        margin-left: 50px;
+        margin-right: -30px;
+    }
+}
+
+@media (max-width: 850px) {
+
+    .company-information .company-logo img{
+        margin-left: 80px;
+    }
+
+    .header nav {   
+        width: 80%;
+        margin-left: 75px;
+    }
+
+}
+
+@media (max-width: 750px) {
+    .header nav {   
+        width: 75%;
+        margin-left: 85px;
+    }
+}
+
+@media (max-width: 700px) {
+    .header nav {   
+        width: 72%;
+    }
+    .company-information {
+        margin-left: 15px;
+        margin-top: 5px;
+        margin-bottom: 25px;
+    }
+}
+
+@media (max-width: 650px) {
+    .header nav {   
+        margin-left: 75px;
+    }
+}
+
+@media (max-width: 550px) {
+    .company-information {
+        margin-bottom: 35px;
+        margin-left: 10px;
+    }
+    .header nav {   
+        width: 70%;
+        margin-left: 65px;
+    }
 }

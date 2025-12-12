@@ -1,181 +1,173 @@
 nav {
-    height: 142px;
+    height: 120px;
     display: flex;
     align-items: center;
     width: 100%;
     justify-content: space-between;
+    padding: 0 20px;
 }
+
 nav h4 {
-    margin-bottom: 28px;
+    margin-bottom: 20px;
 }
+
 .main {
+    width: 90%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    width: 95%;
-    /*background: black;*/
-
+    margin-bottom: 40px;
 }
+
 .summary-wrapper {
     width: 100%;
-    height: 243px;
+    height: auto;
     background: var(--clr-card-surface);
-    border-radius: 8px;
-    box-shadow: 2px 5px 5.9px 0 rgba(136, 125, 125, 0.25);
+    border-radius: 6px;
+    box-shadow: 2px 5px 6px rgba(136,125,125,0.25);
+    padding-bottom: 20px;
 }
+
 .header {
     background: var(--clr-card-inner);
-    border-radius: 8px 8px 0 0;
-    padding: 12px 0 12px 20px;
+    border-radius: 6px 6px 0 0;
+    padding: 15px 20px;
+    width: 100%;
 }
 
 .user-menu a {
-display: flex;
-    margin: 0 22px 0 0;
+    display: flex;
+    margin-right: 22px;
 }
 
+/* Summary data row */
 .data-wrapper {
+    width: 100%;
     display: flex;
-    width: 100%;
-    margin: 30px 0 0 0;
     justify-content: space-evenly;
-    align-items: center;
+    margin-top: 20px;
 }
-.table-item{
+
+.table-item {
     width: 100%;
-    height: 120px;
+    height: 110px;
     border-left: 1px solid var(--clr-secondary);
-    padding-left: 15px ;
+    padding-left: 15px;
     text-align: left;
 }
-.table-item:first-of-type{
-    border:none;
+
+.table-item:first-of-type {
+    border: none;
 }
-.table-item > h6 {
+
+.table-item h6 {
     color: var(--clr-secondary);
 }
+
 .data {
-    height: 92px;
+    height: 90px;
     text-align: center;
     padding-top: 30px;
 }
 
-.content {
-
-}
-
+/* Section Layout (Attendance + Manpower) */
 .section {
     margin-top: 30px;
-    display: flex;
     width: 100%;
-    height: auto;
+    display: flex;
     gap: 30px;
 }
+
+/* Attendance Overview */
 .attendance-overview {
-    border-radius: 8px;
-    background: var(--clr-card-surface);
-    display: flex;
-    flex-direction: column;
     width: 35%;
     height: 350px;
+    background: var(--clr-card-surface);
+    border-radius: 6px;
+    box-shadow: 2px 5px 6px rgba(136,125,125,0.25);
     padding: 20px;
-    box-shadow: 2px 5px 5.9px 0 rgba(136, 125, 125, 0.25);
-}
-.attendance-list {
-    overflow: scroll;
-    width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 20px;
 }
 
 .attendance-data h6 {
     color: var(--clr-secondary);
     margin-bottom: 20px;
 }
-.attendance-data {
-    margin-top: 20px;
-    border-bottom: 1px solid var(--clr-muted);
-}
-.value {
-    margin-left: 20px;
+
+.attendance-list {
+    margin-top: 15px;
+    overflow-y: auto;
+    height: 250px;
+    padding-right: 10px;
 }
 
+/* Manpower */
 .manpower-distribution {
-    border-radius: 8px;
-    background: var(--clr-card-surface);
     width: 65%;
     height: 350px;
+    background: var(--clr-card-surface);
+    border-radius: 6px;
+    box-shadow: 2px 5px 6px rgba(136,125,125,0.25);
     padding: 20px;
     overflow: hidden;
-    box-shadow: 2px 5px 5.9px 0 rgba(136, 125, 125, 0.25);
 }
+
 .table-headers {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    border-bottom: 2px solid var(--clr-muted)   ;
-    padding-bottom: 5px;
+    padding-left: 20px;
+    padding-bottom: 8px;
+    margin-top: 15px;
+    border-bottom: 2px solid var(--clr-muted);
+}
+
+.company-cards-wrapper {
     margin-top: 20px;
-    padding-left: 30px;
+    max-height: 280px;
+    overflow-y: auto;
+    padding: 5px;
 }
 
 .company-cards {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    padding: 10px 0;
+    padding: 10px;
     border-bottom: 1px solid var(--clr-muted);
-    padding-left: 10px;
 }
 
 .company-cards:hover {
     background: #f1f1f1;
-    transition: 0.3s ease-in-out;
+    transition: .3s ease;
 }
 
 .company-cards .card-data {
     padding: 5px 10px;
 }
-.company-cards-wrapper {
-    margin-top: 20px;
-    max-height: 400px;
-    overflow-y: auto;
-    border-radius: 8px;
-    padding: 5px;
 
-}
-
-.company-cards-wrapper::-webkit-scrollbar {
-    width: 6px;
-}
-
-.company-cards-wrapper::-webkit-scrollbar-thumb {
-    background-color: rgba(0,0,0,0.2);
-    border-radius: 3px;
-}
+/* Leave Requests */
 .leave-requests {
-    box-shadow: 2px 5px 5.9px 0 rgba(136, 125, 125, 0.25);
-    padding: 12px;
-    background: var(--clr-card-surface);
-    margin-top: 30px;
-    height: 319px;
-    border-radius: 8px;
-    margin-bottom: 30px;
     width: 50%;
+    height: 319px;
+    background: var(--clr-card-surface);
+    border-radius: 6px;
+    box-shadow: 2px 5px 6px rgba(136,125,125,0.25);
+    padding: 12px;
+    margin-top: 30px;
 }
 
 .requests-wrapper {
+    width: 100%;
+    height: 250px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: start;
-    height: 250px;
-    width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    margin-top: 10px;
-    /*overflow: scroll;*/
+    overflow-y: auto;
+    padding: 10px;
 }
+
 .requests {
     width: 100%;
     display: flex;
@@ -184,12 +176,12 @@ display: flex;
 
 .leave-card {
     width: 100% !important;
+    display: flex;
+    align-items: center;
 }
-
 
 .leave-message {
     width: 60% !important;
-
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -201,19 +193,173 @@ display: flex;
     text-overflow: ellipsis;
     padding-left: 10px;
 }
-.leave-card .leave-type {
-    width: 20% !important;
-    justify-content: start !important;
-}
 
+.leave-card .leave-type,
 .leave-card .leave-date,
 .leave-card .status {
-    width: 10% !important;
-    justify-content: start !important;
-    align-items: center;
+    justify-content: flex-start !important;
 }
 
-.leave-date {
-   float: right;
 
+@media (max-width: 1500px) {
+    .section {
+        gap: 20px;
+    }
+    .summary-wrapper, .section, .requests {
+        margin-left: 50px;
+    }
+}
+
+@media (max-width: 1200px) {
+    #empty {
+        font-size: 13.5px;
+    }
+    .summary-wrapper, .section, .requests {
+        width: 97%;
+        margin-left: 40px;
+    }
+}
+
+@media (max-width: 1100px) {
+    .data h4 {
+        font-size: 20px;
+    }
+    .table-item h6 {
+        font-size: 15px;
+    }
+    .company-cards, .table-headers p {
+        font-size: 13.5px;
+    }
+}
+
+@media (max-width: 1050px) {
+    .requests {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .leave-requests {
+        width: 100%;
+    }
+
+    .leave-message {
+        width: 100% !important;
+    }
+    #empty {
+        font-size: 14.5px;
+    }
+}
+
+@media (max-width: 1000px) {
+    .attendance-overview,
+    .manpower-distribution {
+        width: 50%;
+        height: auto;
+    }
+    .table-headers,
+    .company-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .summary-wrapper, .section, .requests {
+        width: 96%;
+    }
+    .data h4 {
+        font-size: 19px;
+    }
+    .table-item h6 {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 900px) {
+    .data h4 {
+        font-size: 19px;
+    }
+    .table-item h6 {
+        font-size: 13.5px;
+    }
+    nav {
+        height: auto;
+        flex-wrap: wrap;
+        padding: 10px 20px;
+    }
+    .summary-wrapper, .section, .requests {
+        width: 95%;
+        margin-left: 60px;
+    }
+    .data h4 {
+        font-size: 17px;
+        text-align: center;
+        margin-right: 15px;
+    }
+    .table-item h6 {
+        font-size: 12px;
+        text-align: center;
+        margin-right: 15px;
+    }
+}
+
+@media (max-width: 800px) {
+    .section {
+        flex-direction: column;
+    }
+    .attendance-overview,
+    .manpower-distribution {
+        width: 100%;
+        height: auto;
+    }
+    .summary-wrapper, .section, .requests {
+        width: 90%;
+    }
+    #empty {
+        font-size: 13.5px;
+    }
+}
+
+@media (max-width: 700px) {
+    .data-wrapper {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .table-item {
+        border: none;
+        text-align: center;
+    }
+
+    .summary-wrapper, .section, .requests {
+        width: 85%;
+        margin-left: 65px;
+    }
+    .data h4 {
+        font-size: 24px;
+    }
+    .table-item h6 {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 650px) {
+    .summary-wrapper, .section, .requests {
+        width: 80%;
+        margin-left: 70px;
+    }
+}
+
+@media (max-width: 550px) {
+    .main {
+        width: 80%;
+    }
+    .data h4 {
+        font-size: 22px;
+    }
+    .table-item h6 {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    #empty {
+        font-size: 13px;
+    }
 }

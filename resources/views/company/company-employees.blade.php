@@ -7,11 +7,49 @@
             <x-button-link :source="['company.employee.assign', ['id' => $company->company_id]]" :noDefault="true">Assign Employee</x-button-link>
         </nav>
 
+   <div class="nav-group-1">
+
+        <input
+            type="text"
+            id="employeeSearch"
+            placeholder="Search Employee..."
+            class="nav-items"
+        >
+        <select id="filterPosition" class="nav-items-2">
+            <option value="">All Roles</option>
+            @foreach($company->employees->pluck('job_position')
+                ->filter()
+                ->map(fn($pos) => strtolower($pos))
+                ->unique()
+                ->sort()
+                as $position)
+                <option value="{{ $position }}">{{ ucfirst($position) }}</option>
+            @endforeach
+        </select>
+
+    </div>
+
         <div id="employee-cards-container">
+            <div class="employee-header">
+            <div class="eh-col eh-employee">Employee</div>
+            <div class="eh-col eh-username">Username</div>
+            <div class="eh-col eh-position">Role</div>
+            <div class="eh-col eh-type">Type</div>
+            <div class="eh-col eh-status">Status</div>
+            </div>
             @foreach($company->employees as $employee)
                 @php
                     $attendance = $employee->attendanceLogs->first();
                 @endphp
+
+                <div
+                    class="employee-item"
+                    data-name="{{ strtolower(($employee->first_name ?? '') . ' ' . ($employee->last_name ?? '')) }}"
+                    data-email="{{ strtolower($employee->email ?? '') }}"
+                    data-id="{{ strtolower($employee->employee_id ?? '') }}"
+                    data-position="{{ strtolower($employee->job_position ?? '') }}"
+                    data-status="{{ strtolower($attendance?->status ?? '') }}"
+                >               
 
                 <x-employee-cards
                     :name="$employee->first_name . ' ' . $employee->last_name"
@@ -25,10 +63,57 @@
                     :email="$employee->email"
                     :status="$attendance?->status"
                 ></x-employee-cards>
+
+            </div>
             @endforeach
         </div>
         @if($company->employees->isEmpty())
             <p class="no-results">No employees found.</p>
         @endif
     </section>
+
+    <script>
+        const searchInput    = document.getElementById("employeeSearch");
+        const filterPosition = document.getElementById("filterPosition");
+        const employeeItems  = document.querySelectorAll(".employee-item");
+
+        function applyFilters() {
+            const searchValue   = searchInput.value.toLowerCase();
+            const positionValue = filterPosition.value.toLowerCase();
+
+            employeeItems.forEach(item => {
+                const name     = item.dataset.name;
+                const email    = item.dataset.email;
+                const id       = item.dataset.id;
+                const position = item.dataset.position;
+
+                const matchesSearch =
+                    name.includes(searchValue) ||
+                    email.includes(searchValue) ||
+                    id.includes(searchValue);
+
+                const matchesPosition =
+                    positionValue === "" || position === positionValue;
+
+                item.style.display =
+                    matchesSearch && matchesPosition
+                        ? "block"
+                        : "none";
+            });
+        }
+
+        searchInput.addEventListener("keyup", applyFilters);
+        filterPosition.addEventListener("change", applyFilters);
+
+        window.addEventListener("pageshow", function (event) {
+            if (
+                event.persisted ||
+                performance.getEntriesByType("navigation")[0].type === "back_forward"
+            ) {
+                searchInput.value = "";
+                filterPosition.value = "";
+                employeeItems.forEach(item => item.style.display = "block");
+            }
+        });
+    </script>
 </x-app>

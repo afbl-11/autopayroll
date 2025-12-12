@@ -1,91 +1,158 @@
-.company-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    background: var(--clr-card-surface);
-    height: 355px;
-    width: 272px;
-    border-radius: 16px;
-    padding: 13px;
-    box-shadow: 2px 5px 6px 0 rgba(136, 125, 125, 0.25);
-}
-a {
+.company-row-link {
     text-decoration: none;
-    color: var(--clr-primary);
+    color: inherit;
 }
-.company-card:hover {
-    transform: scale(1.03);
-    transition: 0.3s ease-in-out;
-}
-.profile {
-    height: 70%;
-    flex-direction: column;
+
+.company-row {
+    display: grid;
+    grid-template-columns: 100px 1.2fr 1.4fr 0.7fr;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
-    width: 100%;
+    background: #fff;
+    padding: 12px 18px;
+    border-radius: 10px;
+    border: 1px solid #eaeaea;
+    margin-bottom: 12px;
+    transition: 0.2s ease;
+    width: 95%;
 }
-.profile-image img {
-    width: 100px;
-    height: 100px;
+
+.company-row:hover {
+    background: #f8f9ff;
+    border-color: #d0d7ff;
+    transform: translateY(-1px);
+}
+
+.col {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+}
+
+
+.company-logo {
+    width: 42px;
+    height: 42px;
+    border-radius: 6px;
     object-fit: cover;
-    border-radius: 100%;
+    margin-right: 12px;
 }
 
-.top-bar,
-.description,
-.profile,
-.assigned-employee,
-.address,
-.company-id{
+.col-company {
     display: flex;
-    width: 100%;
-    height: auto;
+    align-items: center;
+    margin-left: 30px;
 }
 
-.top-bar{
-    justify-content: space-between;
+.col-employees {
+    margin-left: 50px;
 }
 
-
-.description {
-    flex-direction: column;
-    background: #ECEAE7;
-    border-radius: 8px;
-    padding: 5px 10px;
-    gap: 10px;
-    width: 100%;
-    height: auto;
-}
-.description div{
-
-}
-.description p {
-    line-height: 2;
-    font-size: 12px;
-}
-.profile-info   {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-}
-strong{
-    font-size: 9px;
-    letter-spacing: 1px;
-    font-weight: 600;
-}
-
-p {
+.company-text p {
     margin: 0;
-}
-.address p {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-
-}
-.address {
-    max-width: 100%;
+    font-weight: 600;
+    font-size: 14px;
 }
 
+.company-industry {
+    font-size: 12px;
+    color: #777;
+}
+
+@media (max-width: 1200px) {
+    .company-row {
+        grid-template-columns: 80px 1.3fr 1.2fr 0.5fr;
+        padding: 10px 14px;
+    }
+
+    .company-logo {
+        width: 35px;
+        height: 35px;
+    }
+
+    .col {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 1000px) {
+    .company-row {
+        grid-template-columns: 60px 1.2fr 1fr 0.3fr;
+        padding: 10px 14px;
+        width: 93%;
+        margin-left: 10px;
+    }
+
+    .company-logo {
+        width: 25px;
+        height: 25px;
+    }
+
+    .col {
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 900px) {
+    .company-row {
+        grid-template-columns: 0.8fr 2fr 1fr;
+        width: 85%;
+        margin-left: 35px;
+    }
+
+    .col{
+        font-size: 14px;
+    }
+
+    .col-address {
+        display: none;
+    }
+}
+
+@media (max-width: 700px) {
+    .company-row {
+        width: 80%;
+        grid-template-columns: 0.6fr 1.8fr 0.8fr;
+        margin-left: 40px;
+    }
+}
+
+@media (max-width: 550px) {
+     .company-row {
+        grid-template-columns: 1fr;
+        width: 70%;
+        margin-left: 45px;
+    }
+    .col{
+        font-size: 11px;
+    }
+    
+    .company-text p {
+    font-size: 12px;
+    }
+
+    .company-industry {
+    font-size: 10px;
+    }
+    .col-id {
+        display: none;
+    }
+    .col-employees {
+        display: none;
+    }
+    .col-company{
+        margin-left: 5px;
+    }
+    
+}
+
+@media (max-width: 480px) {
+    .col-company{
+        margin-left: -1px;
+    }
+}
+
+@media (max-width: 400px) {
+    .company-row {
+        margin-left: 40px;
+    }
+}

@@ -28,3 +28,41 @@ section .field-row:last-of-type {
 section h5 {
     margin-bottom: 20px;
 }
+
+
+@media (max-width: 1150px) {
+    .form-wrapper {
+        width: 75%;
+        margin-left: 55px;
+    }
+}
+
+@media (max-width: 900px) {
+    .field-row {
+        flex-direction: column !important;
+        width: 100%;
+        gap: 15px;
+    }
+
+    .form-wrapper {
+        width: 65%;
+        margin-left: 70px;
+    }
+
+    section .field-row:last-of-type {
+        width: 100%;
+    }
+
+    .button-filled {
+        width: 100%;
+        float: none;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 700px) {
+    .form-wrapper {
+        width: 60%; 
+    }
+}
+

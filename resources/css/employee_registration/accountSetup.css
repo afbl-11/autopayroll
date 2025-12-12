@@ -27,3 +27,44 @@ form {
     display: flex !important;
     gap: 5rem !important;
 }
+
+@media (max-width: 1200px) {
+    form {
+        width: 60%;
+        
+    }
+
+    .field-row {
+        gap: 2rem;
+    }
+
+    .form-wrapper {
+        margin-left: 50px;
+    }
+}
+
+/* Small screens (phones) */
+@media (max-width: 800px) {
+    .form-wrapper {
+        width: 100%;
+        margin-left: 70px;
+    }
+
+    .field-row {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .button-filled {
+        float: none;
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 600px) {
+     .form-wrapper {
+        width: 90%;
+        margin-left: 80px;
+    }
+}

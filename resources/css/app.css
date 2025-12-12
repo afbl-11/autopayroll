@@ -15,6 +15,9 @@ header {
     grid-template-columns: 1fr auto;
     align-items: center;
     justify-content: center;
+    margin-left: 50px;
+    margin-top: 25px;
+    margin-bottom: 30px;
 }
 
 .user-profile{
@@ -22,4 +25,75 @@ header {
     justify-content: center;
     align-items: center;
     gap: 30px;
+    margin-right: 20px;
+}
+
+@media (max-width: 1400px) {
+    header {
+        width: 97%;
+    }
+    .user-profile {
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 1100px) {
+    header {
+        width: 95%;
+    }
+}
+
+@media (max-width: 900px) {
+    header {
+        width: 93%;
+    }
+}
+
+@media (max-width: 800px) {
+    header {
+        width: 90%;
+        margin-left: 65px;
+    }
+
+    header h3 {
+        font-size: 25px;
+    }
+
+    .user-profile h6 {
+        font-size: 13px;
+        margin-right: -12px;
+        margin-left: 32px;
+    }
+}
+
+@media (max-width: 570px) {
+    .user-profile h6 {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 550px) {
+    header {
+        width: 82%;
+        margin-left: 70px;
+    }
+    .user-profile h6 {
+        margin-left: 45px;
+        margin-right: -40px;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        margin-left: 75px;
+    }
+    .user-profile h6 {
+        font-size: 10px;
+        margin-left: 25px;
+        margin-right: -23px;
+    }
+    .user-profile img {
+        width: 20px;
+        height: 20px;
+    }
 }

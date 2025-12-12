@@ -8,7 +8,7 @@
 }
 
 .form-wrapper {
-    margin-top: 20px;
+    margin-top: -25px;
     width: 80%;
 }
 
@@ -27,3 +27,46 @@ form {
 section h5 {
     margin-bottom: 20px;
 }
+
+
+@media (max-width: 1150px) {
+    .form-wrapper{
+        margin-top: 5px;
+    }
+
+    .main-content {
+        padding: 20px;
+    }
+
+    .form-wrapper {
+        margin-left: 50px;
+        width: 75%;
+    }
+
+    .field-row {
+        gap: 2rem !important;
+    }
+}
+
+@media (max-width: 800px) {
+
+    .form-wrapper {
+        margin-left: 75px;
+        width: 65%;
+        margin-bottom: 30px;
+    }
+
+    .field-row {
+        flex-direction: column !important;
+        gap: 1.5rem !important;
+        width: 100%;
+    }
+
+    .button-filled {
+        float: none;
+        width: 100%;
+        text-align: center;
+    }
+    
+}
+

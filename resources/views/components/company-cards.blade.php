@@ -1,32 +1,27 @@
 @vite('resources/css/company/company-cards.css')
 
-<a href="{{route('company.dashboard.detail',['id'=> $id])}}">
-    <div {{$attributes->class('company-card')}}>
-        <div class="top-bar">
-{{--            ...--}}
+<a href="{{ route('company.dashboard.detail', ['id'=> $id]) }}" class="company-row-link">
+    <div class="company-row">
+
+        <div class="col col-id">
+            #{{ $id }}
         </div>
 
-        <div class="profile">
-            <div class="profile-image">
-                <img src="{{asset($logo)}}" alt="profile image">
-            </div>
-            <div class="profile-info">
-                <p>{{$name}}</p>
-                <small>{{$industry}}</small>
+        <div class="col col-company">
+            <img src="{{ asset($logo) }}" class="company-logo">
+            <div class="company-text">
+                <p class="company-name">{{ $name }}</p>
+                <span class="company-industry">{{ $industry }}</span>
             </div>
         </div>
 
-        <div class="description">
-            <div class="company-id">
-                <p>{{'#'. $id}}</p>
-            </div>
-            <div class="assigned-employee">
-                <p>{{$count . ' ' . 'assigned employee'}}</p>
-            </div>
-
-            <div class="address">
-                <p>{{$address}}</p>
-            </div>
+        <div class="col col-address">
+            {{ $address }}
         </div>
+
+        <div class="col col-employees">
+            {{ $count }} employees
+        </div>
+
     </div>
 </a>

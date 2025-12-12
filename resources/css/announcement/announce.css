@@ -46,3 +46,37 @@
 #emptyNotif {
     text-align: center;
 }
+
+@media (max-width: 1200px) {
+    #emptyNotif {
+        margin-left: 45px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .main-content nav {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .main-content nav a {
+        padding: 10px 14px;
+        font-size: 11px;
+    }
+
+    #emptyNotif {
+        margin-left: 55px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content nav {
+        margin-bottom: 20px;
+    }
+
+    #emptyNotif {
+        margin-left: 75px;
+    }
+
+   
+}

@@ -40,6 +40,4 @@
 .custom-checkbox:active,
 .custom-checkbox.active:active {
     transform: scale(0.97);
-}{
-    transform: scale(0.97);
 }

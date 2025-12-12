@@ -1,135 +1,129 @@
-.employee-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    background: var(--clr-card-surface);
-    height: 355px;
-    width: 272px;
-    border-radius: 16px;
-    padding: 13px;
-    box-shadow: 2px 5px 6px 0 rgba(136, 125, 125, 0.25);
-}
+/* ────────────────────────────────
+   EMPLOYEE ROW / CARD ONLY
+──────────────────────────────────*/
 a {
     text-decoration: none;
-    color: var(--clr-primary);
 }
-.employee-card:hover {
-    transform: scale(1.03);
-    transition: 0.3s ease-in-out;
+.employee-row-link {
+    text-decoration: none;
+    color: inherit;
 }
-.profile {
-    height: 70%;
-    flex-direction: column;
+
+.employee-row {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr 0.7fr;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
-    width: 100%;
+    background: #fff;
+    padding: 12px 18px;
+    border-radius: 10px;
+    border: 1px solid #eaeaea;
+    margin-bottom: 12px;
+    width: 95%;
+    transition: 0.2s ease;
+    margin-left: 45px;
 }
-.profile-image img {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
+
+.employee-row:hover {
+    background: #f8f9ff;
+    border-color: #d0d7ff;
+    transform: translateY(-1px);
+}
+
+.er-col {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+}
+
+/* EMPLOYEE PHOTO + NAME */
+.employee-photo {
+    width: 42px;
+    height: 42px;
     border-radius: 100%;
+    object-fit: cover;
+    margin-right: 12px;
 }
 
-.top-bar,
-.description,
-.type,
-.email,
-.contact,
-.employment_date,
-.profile,
-.type-wrapper,
-.email-wrapper{
+.er-employee {
     display: flex;
-    width: 100%;
-    height: auto;
-}
-
-.top-bar{
-    justify-content: space-between;
-}
-
-
-.description {
-    flex-direction: column;
-    background: #ECEAE7;
-    border-radius: 8px;
-    padding: 5px 10px;
-    gap: 10px;
-    width: 100%;
-    height: auto;
-}
-.description div{
-
-}
-.description p {
-    line-height: 2;
-    font-size: 12px;
-}
-.profile-info   {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-}
-strong{
-    font-size: 9px;
-    letter-spacing: 1px;
-    font-weight: 600;
-}
-.email {
-    gap: 10px;
-}
-.type{
-    display: flex;
-    width: 100%;
-    justify-content: start;
-
-}
-.type-wrapper {
-    display: flex;
-    justify-content: end;
-    width: 35%;
-    gap: 5px;
-    float: right;
-
-}
-.position-wrapper {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 70%;
-}
-.email img,
-.type-wrapper img {
-    width: 15px;
-    height: 15px;
-    justify-content: center;
-    align-self: center;
-}
-.email-wrapper {
-    padding:    5px;
-    background: var(--clr-background);
-    border-radius: 8px;
-    text-align: center;
     align-items: center;
-    width: auto;
-    height: 20px;
-}
-.email-wrapper p {
-    line-height: 0 !important;
-    letter-spacing: 0 !important;
-    margin-bottom: 0 !important;
 }
 
-.employee-card-wrapper input[type="checkbox"] {
-    display: none;
+.employee-text p {
+    margin: 0;
+    font-weight: 600;
+    font-size: 14px;
 }
 
-
-.employee-card.selected {
-    background-color: var(--clr-card-inner);
-    transition: all 0s;
+.employee-id {
+    font-size: 11px;
+    color: #666;
 }
 
+.employee-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 6px;
+}
+
+/* RESPONSIVE BREAKPOINTS */
+@media (max-width: 1200px) {
+    .employee-row {
+        grid-template-columns: 1.3fr 1fr 1fr 0.8fr 0.5fr;
+        margin-left: 55px;
+        width: 92%;
+    }
+
+    .employee-photo {
+        width: 35px;
+        height: 35px;
+    }
+
+    .er-col {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 900px) {
+    .employee-row {
+        grid-template-columns: 1.4fr 1fr 1fr;
+        width: 85%;
+        margin-left: 85px;
+    }
+
+    .er-type,
+    .er-status {
+        display: none;
+    }
+}
+
+@media (max-width: 700px) {
+    .employee-row {
+        width: 80%;
+        grid-template-columns: 1.3fr 1fr;
+        margin-left: 95px;
+    }
+
+    .er-position {
+        display: none;
+    }
+}
+
+@media (max-width: 550px) {
+    .employee-row {
+        grid-template-columns: 1fr;
+        width: 70%;
+    }
+
+    .er-username {
+        display: none;
+    }
+
+    .employee-text p {
+        font-size: 12px;
+    }
+
+    .employee-id {
+        font-size: 10px;
+    }
+}
