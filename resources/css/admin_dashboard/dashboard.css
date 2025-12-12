@@ -214,6 +214,10 @@ nav h4 {
     #empty {
         font-size: 13.5px;
     }
+    .summary-wrapper, .section, .requests {
+        width: 97%;
+        margin-left: 40px;
+    }
 }
 
 @media (max-width: 1100px) {
@@ -255,6 +259,15 @@ nav h4 {
     .table-headers,
     .company-cards {
         grid-template-columns: repeat(2, 1fr);
+    }
+    .summary-wrapper, .section, .requests {
+        width: 96%;
+    }
+    .data h4 {
+        font-size: 19px;
+    }
+    .table-item h6 {
+        font-size: 14px;
     }
 }
 
