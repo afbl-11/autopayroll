@@ -64,6 +64,7 @@
                             :email="$employee->email"
                             :clickable="false"
                         />
+                        <div class="selection-indicator">✓</div>
                     </label>
                 </div>
                 @endforeach
