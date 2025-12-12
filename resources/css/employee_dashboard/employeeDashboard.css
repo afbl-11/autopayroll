@@ -142,8 +142,14 @@ nav a:hover {
     .nav-group {
         width: 100%;
         padding: 0 15px;
-        margin-left: 185px;
+        margin-left: 180px;
     }
+}
+
+@media (max-width: 480px) {
+    .nav-group {
+        margin-left: 175px;
+    }    
 }
 
 .nav-items-2 {
