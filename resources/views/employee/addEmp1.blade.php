@@ -1,6 +1,6 @@
 @vite(['resources/css/theme.css', 'resources/css/employee_registration/basicInformation.css'])
 
-<x-app title="{{ $title }}" :showProgression="true">
+<x-app title="{{ $title }}" :showProgression="false">
     <section class="main-content">
         <div class="form-wrapper">
             <form action="{{ route('store.employee.register.1') }}" method="post">

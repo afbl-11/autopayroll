@@ -29,3 +29,62 @@ img {
     width: 60%;
 }
 
+@media (max-width: 1400px) {
+    .status-overview-card {
+        flex-direction: row;
+        align-items: center;
+        gap: 15px;
+    }
+    .name p {
+        font-size: 13.5px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .status-overview-card {
+        gap: 10px;
+    }
+    .profile {
+        width: auto;
+    }
+    .name {
+        width: auto;
+        flex: 1;
+    }
+    .name p {
+        font-size: 12px;
+    }
+    .status-overview-card img {
+        max-width: 45px;
+        max-height: 45px;
+    }
+}
+
+@media (max-width: 1000px) {
+    .name p {
+        font-size: 13.25px;
+    }
+}
+
+@media (max-width: 800px) {
+    .name p {
+        font-size: 13.75px;
+    }
+}
+
+@media (max-width: 600px) {
+    .name p {
+        font-size: 13px;
+    }
+    .status-overview-card img {
+        max-width: 30px;
+        max-height: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .status-overview-card img {
+        max-width: 25px;
+        max-height: 25px;
+    }
+}

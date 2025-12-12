@@ -1,6 +1,6 @@
 @vite(['resources/css/employee_registration/accountSetup.css', 'resources/js/empOnboarding/addEmp.js'])
 
-<x-app :title="$title" :showProgression="true">
+<x-app :title="$title" :showProgression="false">
     <section class="main-content">
         <div class="form-wrapper">
             <form class="form" action="{{route('store.employee.register.4')}}" method="post">
