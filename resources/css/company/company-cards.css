@@ -1,112 +1,158 @@
-.company-table-row {
-    width: 93.2%;
-    border-collapse: collapse;
-    margin-bottom: 15px;
-    background: #fff;
-}
-
-.company-table-row th {
-    text-align: left;
-    width: 130px;
-    padding: 8px;
-    font-weight: 600;
-    font-size: 13px;
-    background: #f4f4f4;
-    border-bottom: 1px solid #ddd;
-}
-
-.company-table-row td {
-    padding: 8px;
-    font-size: 13px;
-    border-bottom: 1px solid #ddd;
-}
-
-.table-logo {
-    width: 45px;
-    height: 45px;
-    border-radius: 6px;
-    object-fit: cover;
-    margin-right: 10px;
-}
-
-.company-info-cell {
-    display: flex;
-    align-items: center;
-}
-
-.company-info-text p {
-    margin: 0;
-    font-size: 14px;
-}
-
-a {
+.company-row-link {
     text-decoration: none;
     color: inherit;
 }
 
-@media (max-width: 1400px) {
-    .company-table-row {
-        width: 89%;
-        margin-left: 25px;
+.company-row {
+    display: grid;
+    grid-template-columns: 100px 1.2fr 1.4fr 0.7fr;
+    align-items: center;
+    background: #fff;
+    padding: 12px 18px;
+    border-radius: 10px;
+    border: 1px solid #eaeaea;
+    margin-bottom: 12px;
+    transition: 0.2s ease;
+    width: 95%;
+}
 
-    }
+.company-row:hover {
+    background: #f8f9ff;
+    border-color: #d0d7ff;
+    transform: translateY(-1px);
+}
+
+.col {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
 }
 
 
-@media (max-width: 1150px) {
-    .company-table-row {
-        width: 85%;
-        margin-left: 50px;
+.company-logo {
+    width: 42px;
+    height: 42px;
+    border-radius: 6px;
+    object-fit: cover;
+    margin-right: 12px;
+}
 
+.col-company {
+    display: flex;
+    align-items: center;
+    margin-left: 30px;
+}
+
+.col-employees {
+    margin-left: 50px;
+}
+
+.company-text p {
+    margin: 0;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.company-industry {
+    font-size: 12px;
+    color: #777;
+}
+
+@media (max-width: 1200px) {
+    .company-row {
+        grid-template-columns: 80px 1.3fr 1.2fr 0.5fr;
+        padding: 10px 14px;
+    }
+
+    .company-logo {
+        width: 35px;
+        height: 35px;
+    }
+
+    .col {
+        font-size: 12px;
     }
 }
 
-@media (max-width: 1000px){
-    .company-table-row {
-        width: 82%;
-        
+@media (max-width: 1000px) {
+    .company-row {
+        grid-template-columns: 60px 1.2fr 1fr 0.3fr;
+        padding: 10px 14px;
+        width: 93%;
+        margin-left: 10px;
+    }
+
+    .company-logo {
+        width: 25px;
+        height: 25px;
+    }
+
+    .col {
+        font-size: 11px;
     }
 }
 
 @media (max-width: 900px) {
-    .company-table-row {
+    .company-row {
+        grid-template-columns: 0.8fr 2fr 1fr;
+        width: 85%;
+        margin-left: 35px;
+    }
+
+    .col{
+        font-size: 14px;
+    }
+
+    .col-address {
+        display: none;
+    }
+}
+
+@media (max-width: 700px) {
+    .company-row {
         width: 80%;
-    }
-    .company-table-row th {
-        width: 95px;
-        font-size: 12px;
-        padding: 6px;
-    }
-
-    .company-table-row td {
-        font-size: 12px;
-        padding: 6px;
-    }
-
-    .table-logo {
-        width: 40px;
-        height: 40px;
+        grid-template-columns: 0.6fr 1.8fr 0.8fr;
+        margin-left: 40px;
     }
 }
 
-@media (max-width: 700px){
-    .company-table-row {
-        width: 75%;
-
-    }
-    .company-table-row th {
-        width: 90px;
-    }
-}
-
-@media (max-width: 600px){
-    .company-table-row {
+@media (max-width: 550px) {
+     .company-row {
+        grid-template-columns: 1fr;
         width: 70%;
-        margin-left: 65px;
-
+        margin-left: 45px;
     }
-    .company-table-row th {
-        width: 88px;
+    .col{
+        font-size: 11px;
+    }
+    
+    .company-text p {
+    font-size: 12px;
+    }
+
+    .company-industry {
+    font-size: 10px;
+    }
+    .col-id {
+        display: none;
+    }
+    .col-employees {
+        display: none;
+    }
+    .col-company{
+        margin-left: 5px;
+    }
+    
+}
+
+@media (max-width: 480px) {
+    .col-company{
+        margin-left: -1px;
     }
 }
 
+@media (max-width: 400px) {
+    .company-row {
+        margin-left: 40px;
+    }
+}

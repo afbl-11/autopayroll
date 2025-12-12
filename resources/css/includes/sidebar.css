@@ -11,7 +11,7 @@ aside {
     padding: 20px 0;
     transition: width 0.3s ease;
     overflow: hidden;
-    z-index: 1000;
+    z-index: 10000;
 }
 
 aside:hover {

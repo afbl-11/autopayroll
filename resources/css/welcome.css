@@ -350,6 +350,7 @@ footer .logo {
 
     .cards-wrapper {
         grid-template-columns: 1fr;
+        margin-left: 40px;
     }
 
     .content-wrapper {
@@ -373,5 +374,82 @@ footer .logo {
 
     footer .logo {
         font-size: 75px;
+    }
+}
+
+@media (max-width: 600px) {
+     .logo-wrapper h1 {
+        margin-left: -30px;
+    }
+    
+    .container nav {
+        flex-direction: column;
+    }
+
+    .container nav .buttons {
+        gap: 10px;
+        flex-direction: column;
+    }
+
+    .container nav .buttons form .button-filled {
+        width: 90%;
+    }
+
+    .introduction-wrapper {
+        flex-direction: column-reverse;
+        text-align: center;
+        padding: 20px;
+        margin-bottom: 400px;
+    }
+
+    .left-content-wrapper {
+        width: 100%;
+        align-items: center;
+        margin-top: 850px;
+    }
+    .right-content-wrapper img {
+        width: 75%;
+        height: 350px;
+        margin-top: 1250px;
+    }
+
+    .cards-wrapper {
+        grid-template-columns: 0.9fr;
+        margin-left: 55px;
+    }
+    .info-cards-header {
+        text-align: center;
+    }
+    .message-wrapper h3, .info-cards-header h3, .info-message h3, .banner-header h3 {
+        font-size: 28px;
+    }
+
+    .banner-header {
+        width: 75%;
+    }
+
+    .content-wrapper {
+        flex-direction: column;
+        padding: 20px;
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .content-wrapper img {
+        width: 75%;
+    }
+
+    .banner .button-filled {
+        width: 75% !important;
+    }
+
+    footer .logo {
+        font-size: 50px;
+    }
+}
+
+@media (max-width: 500px) {
+    .cards-wrapper {
+        margin-left: 45px;
     }
 }

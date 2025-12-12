@@ -1,4 +1,4 @@
-@vite(['resources/css/admin_registration/admin-step2.css', 'resources/js/api/address-picker.js', 'resources/js/address-retrieve.js'])
+@vite(['resources/css/admin_registration/change-location.css', 'resources/js/api/address-picker.js', 'resources/js/address-retrieve.js'])
 
 <x-app :title="$title">
     <div class="container">
