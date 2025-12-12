@@ -300,3 +300,27 @@ Route::get('/admin/changes-password', [AdminController::class, 'showChangePasswo
 Route::get('/admin/change-location', [AdminController::class, 'showChangeLocation'])
     ->middleware('auth:admin')
     ->name('change.location.view');
+
+
+
+//Employee Web Stuff
+
+Route::get('/employee/dashboard', function () {
+    return view('employee_web.dashboard');
+});
+
+Route::get('/employee/payroll', function () {
+    return view('employee_web.PayrollViewingModule.payrollScreen');
+});
+
+Route::get('/employee/announcement', function () {
+    return view('employee_web.announcementModule.announcementScreen');
+});
+
+Route::get('/employee/leave-module', function () {
+    return view('employee_web.leaveModule.leaveModule');
+});
+
+Route::get('/employee/credit-adjustment', function () {
+    return view('employee_web.creditAdjustmentModule.creditAdjustmentModule');
+});
