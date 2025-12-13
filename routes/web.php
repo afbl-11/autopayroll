@@ -48,6 +48,7 @@ Route::get('/register/success', function () {
 })->name('register.success');
 
 Route::post('/login/admin', [LoginController::class, 'authenticate'])->name('login.admin');
+
 Route::get('/dashboard', [DashboardController::class, 'showDashboard'])
     ->middleware(['auth:admin'])
     ->name('dashboard');
@@ -154,7 +155,7 @@ Route::post('/email/verification-notification', function (Request $request) {
 
 
 //employee dashboard
-Route::get('/employee/dashboard', [EmployeeDashboardController::class, 'showDashboard'])
+Route::get('/admin/employee/dashboard', [EmployeeDashboardController::class, 'showDashboard'])
     ->middleware('auth:admin')
     ->name('employee.dashboard');
 
