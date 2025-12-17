@@ -19,12 +19,12 @@ document.addEventListener("DOMContentLoaded", async () => {
             const res = await fetch("/api/companies");
             const companies = await res.json();
 
-            companies.forEach(c => {
-                const opt = document.createElement("option");
-                opt.value = c.id;
-                opt.textContent = c.company_name || c.name;
-                companyDropdown.appendChild(opt);
-            });
+        companies.forEach(c => {
+            const opt = document.createElement("option");
+            opt.value = c.company_id; 
+            opt.textContent = c.company_name || c.name;
+            companyDropdown.appendChild(opt);
+        });
 
         } catch (err) {
             console.error("Error loading companies:", err);
@@ -40,7 +40,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             return;
         }
 
-        const response = await fetch(`/api/payroll?company_id=${companyId}`);
+        const response = await fetch(`/api/payroll/company/${companyId}`);
+
         const payrollData = await response.json();
 
         if (hot) hot.destroy();

@@ -95,4 +95,10 @@ class CompanyDashboardController extends Controller
         return redirect()->route('company.dashboard.detail', ['id' => $id]);
     }
 
+    public function manualAttendance()
+    {
+        $companies = Company::all();
+
+        return view('company.manual-attendance', compact('companies'));
+    }
 }

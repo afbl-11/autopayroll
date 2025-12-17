@@ -1,0 +1,255 @@
+/* =========================
+   LAYOUT
+========================= */
+.main-content {
+    width: 90%;
+    margin: auto;
+    margin-bottom: 35px;
+}
+
+/* =========================
+   PAGE TITLE
+========================= */
+.page-title {
+    font-size: 28px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+/* =========================
+   LEGEND
+========================= */
+.attendance-legend {
+    background: #fff;
+    border-radius: 10px;
+    padding: 15px 20px;
+    margin-bottom: 25px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 20px;
+    font-size: 14px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.attendance-legend strong {
+    width: 100%;
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+
+/* =========================
+   CONTROLS
+========================= */
+.attendance-controls {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.attendance-controls select,
+.attendance-controls button {
+    padding: 10px 14px;
+    font-size: 14px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    min-width: 160px;
+}
+
+.attendance-controls button {
+    background: #3477db;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.attendance-controls button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+/* =========================
+   TABLE WRAPPER
+========================= */
+.table-wrapper {
+    background: #fff;
+    border-radius: 12px;
+    overflow-x: auto;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+/* =========================
+   TABLE
+========================= */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+thead {
+    background: #FFD858;
+}
+
+th {
+    font-weight: 600;
+}
+
+th, td {
+    padding: 14px 10px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+    vertical-align: middle;
+}
+
+/* =========================
+   STATUS BUTTONS
+========================= */
+.status-cell {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.status-btn {
+    padding: 6px 10px;
+    font-size: 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background: #f5f5f5;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.status-btn:hover {
+    background: #eaeaea;
+}
+
+.status-btn.active {
+    background: #3477db;
+    color: #fff;
+    border-color: #3477db;
+}
+
+/* =========================
+   TIME INPUTS
+========================= */
+input[type="time"] {
+    padding: 7px 9px;
+    font-size: 13px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+}
+
+input[type="time"]:disabled {
+    background: #f4f4f4;
+    cursor: not-allowed;
+}
+
+/* =========================
+   EMPTY STATE
+========================= */
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    font-size: 15px;
+    color: #888;
+}
+
+@media screen and (max-width: 1200px) {
+    .main-content{
+        margin-left: 80px;
+        width: 87%;
+    }
+}
+
+@media screen and (max-width: 900px) {
+.main-content{
+        width: 82%;
+        margin-left: 90px;
+    }
+}
+
+@media screen and (max-width: 850px) {
+.main-content{
+        width: 80%;
+        margin-left: 95px;
+    }
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media screen and (max-width: 750px) {
+    .main-content {
+        width: 77%;
+        margin-left: 100px;
+    }
+    .page-title {
+        font-size: 24px;
+    }
+
+    .attendance-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .attendance-controls select,
+    .attendance-controls button {
+        width: 100%;
+    }
+
+    th, td {
+        padding: 10px 8px;
+    }
+
+    .status-cell {
+        gap: 5px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .main-content {
+        width: 75%;
+        margin-left: 100px;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .main-content {
+        width: 70%;
+        margin-left: 105px;
+    }
+}
+
+
+@media screen and (max-width: 480px) {
+    .main-content {
+        margin-left: 97px;
+    }
+    .page-title {
+        font-size: 20px;
+    }
+
+    table {
+        font-size: 13px;
+    }
+
+    .status-btn {
+        font-size: 11px;
+        padding: 5px 8px;
+    }
+}
+
+/* MODE INDICATORS */
+.mode-view .status-btn { opacity: 0.4; cursor: not-allowed; }
+.mode-edit .status-btn { background: #f59e0b; color: #fff; }
+.mode-create .status-btn { background: #22c55e; color: #fff; }
+
+.mode-label {
+    font-size: 13px;
+    font-weight: 600;
+    margin-left: 10px;
+}
