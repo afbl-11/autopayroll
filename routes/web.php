@@ -304,3 +304,6 @@ Route::get('/admin/change-location', [AdminController::class, 'showChangeLocatio
 Route::get('/attendance/manual',
     [CompanyDashboardController::class, 'manualAttendance']
 )->name('attendance.manual');
+
+Route::put('/admin/profile/update', [AdminController::class, 'updateProfile'])
+    ->name('admin.profile.update');

@@ -8,6 +8,7 @@ use App\Models\Admin;
 use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -91,6 +92,37 @@ class AdminController extends Controller
         $admin->save();
 
         return redirect()->route('admin.settings')->with(['success' => 'Location changed successfully.']);
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $admin = auth('admin')->user();
+
+        $request->validate([
+            'first_name'    => 'required|string|max:255',
+            'middle_name'   => 'nullable|string|max:255',
+            'last_name'     => 'required|string|max:255',
+            'suffix'        => 'nullable|string|max:50',
+            'company_name'  => 'nullable|string|max:255',
+            'profile_photo' => 'nullable|image|max:2048',
+        ]);
+
+        if ($request->hasFile('profile_photo')) {
+            $path = $request->file('profile_photo')
+                            ->store('profile-photos', 'public');
+
+            $admin->profile_photo = $path;
+        }
+
+        $admin->update($request->only([
+            'first_name',
+            'middle_name',
+            'last_name',
+            'suffix',
+            'company_name',
+        ]));
+
+        return back()->with('success', 'Profile updated');
     }
 
 }
