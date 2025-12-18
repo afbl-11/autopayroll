@@ -110,6 +110,7 @@ a {
     font-weight: 600;
     cursor: pointer;
     margin-top: 35px;
+    box-shadow: 2px 5px 5px 0 rgba(136, 125, 125, 0.25);
 }
 
 .delete-btn:hover {
@@ -303,15 +304,17 @@ a {
 .upload-btn {
     background: var(--clr-primary);
     color: var(--clr-background);
-    padding: 8px 14px;
+    padding: 8px 14px; 
     border-radius: 8px;
     font-weight: 600;
     cursor: pointer;
-    transition: 0.2s ease;
+    box-shadow: 2px 5px 5px 0 rgba(136, 125, 125, 0.25);
 }
 
 .upload-btn:hover {
     opacity: 0.85;
+    background: #FFD858;
+    color: var(--clr-primary);
 }
 
 .profile-settings form {
@@ -355,10 +358,14 @@ a {
     font-weight: 600;
     cursor: pointer;
     border: none;
+    box-shadow: 2px 5px 5px 0 rgba(136, 125, 125, 0.25);
+    margin-bottom: 13px;
 }
 
 .btn-save:hover {
     opacity: 0.9;
+    background: #FFD858;
+    color: var(--clr-primary);    
 }
 
 @media (max-width: 700px) {
