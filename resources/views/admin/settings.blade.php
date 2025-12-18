@@ -8,6 +8,12 @@
 
                 <h3 class="settings-title">Profile Information</h3>
 
+                @if(session('success'))
+                    <div id="success-alert" class="custom-alert">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
                 <form action="{{ route('admin.profile.update') }}"
                       method="POST"
                       enctype="multipart/form-data">
@@ -178,6 +184,12 @@
 
                 reader.readAsDataURL(file);
             });
+            const successAlert = document.getElementById('success-alert');
+            if (successAlert) {
+                setTimeout(() => {
+                    successAlert.remove();
+                }, 3500);
+            }
         });
     </script>
 </x-app>
