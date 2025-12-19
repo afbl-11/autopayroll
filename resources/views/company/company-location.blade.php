@@ -8,7 +8,7 @@
 <x-app  :noHeader="true" :navigation="true" :company="$company">
 
     <section class="main-content" style="margin-top:50px">
-        <form action="{{route('company.change.client.address', ['id' => $id])}}" method="post">
+        <form id="addressForm" action="{{route('company.change.client.address', ['id' => $id])}}" method="post">
             @csrf
             <div class="field-row">
                 <x-form-input
@@ -46,5 +46,33 @@
         </form>
         <div id="map"></div>
     </section>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const form = document.getElementById("addressForm");
+        function showCustomAlert(message) {
+            const alert = document.createElement("div");
+            alert.className = "custom-alert";
+            alert.textContent = message;
+            document.body.appendChild(alert);
+            setTimeout(() => alert.remove(), 3500);
+        }
+        form.addEventListener("submit", function(e) {
+            e.preventDefault();
+            showCustomAlert("Company address changed.");
+            form.submit();
+        });
+        const map = L.map('map').setView([14.5995, 120.9842], 13); 
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+        let marker;
+        map.on('click', function(e) {
+            const { lat, lng } = e.latlng;
+            if(marker) map.removeLayer(marker);
+            marker = L.marker([lat, lng]).addTo(map);
+            document.getElementById('latitude').value = lat;
+            document.getElementById('longitude').value = lng;
+        });
+    });
+    </script>
 </x-app>
-
