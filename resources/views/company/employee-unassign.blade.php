@@ -131,8 +131,8 @@
                 showCustomAlert("Please select at least one employee to unassign.");
             } else {
                 const message = checkedEmployees.length === 1
-                    ? `${checkedEmployees.length} employee successfully unassigned.`
-                    : `${checkedEmployees.length} employees successfully unassigned.`;
+                    ? `${checkedEmployees.length} employee is unassigned.`
+                    : `${checkedEmployees.length} employees are unassigned.`;
                 showCustomAlert(message);
             }
         });

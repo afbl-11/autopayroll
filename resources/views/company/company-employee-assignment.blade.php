@@ -131,8 +131,8 @@
                 showCustomAlert("Please select at least one employee to assign.");
             } else {
                 const message = checkedEmployees.length === 1
-                    ? `${checkedEmployees.length} employee successfully assigned.`
-                    : `${checkedEmployees.length} employees successfully assigned.`;
+                    ? `${checkedEmployees.length} employee is assigned.`
+                    : `${checkedEmployees.length} employees are assigned.`;
                 showCustomAlert(message);
             }
         });
