@@ -45,6 +45,8 @@
                             id="tin"
                             name="tin_number"
                             :value="old('tin_number', $company->tin_number)"
+                            minlength="9"
+                            maxlength="12"
                             readonly
                         />
                         @error('tin_number')

@@ -112,13 +112,15 @@ class CompanyDashboardController extends Controller
                     'required',
                     'string',
                     'max:20',
+                    'digits_between:9,12',
                     Rule::unique('companies', 'tin_number')
                         ->ignore($id, 'company_id'),
                 ],
                 'industry' => 'required|string|max:255',
             ],
             [
-                'tin_number.unique' => 'This TIN is already registered to another company.',
+                'tin_number.unique' => 'This tin number has already been registered to another company.',
+                'tin_number.digits_between' => 'The tin number field must be between 9 and 12 digits.',
             ]
         );
 
