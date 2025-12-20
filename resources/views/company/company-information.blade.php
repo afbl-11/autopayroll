@@ -22,7 +22,6 @@
                 </div>
             </div>
 
-            {{-- FORM --}}
             <form id="companyForm"
                   method="POST"
                   action="{{ route('company.info.update', $company->getKey()) }}">

@@ -14,6 +14,7 @@
     display: flex;
     gap: 50px;
 }
+
 .information-card {
     display: flex;
     flex-direction: column;
@@ -38,22 +39,33 @@
 .tin-field-wrapper {
     display: inline-block;
     width: 47.75% !important;
-    vertical-align: top; /* optional, aligns with other input-wrapper children */
+    vertical-align: top;
 }
 
 .tin-field-wrapper .form-input {
-    width: 100% !important; /* makes input fill the wrapper */
+    width: 100% !important;
 }
-
 
 .field-row {
     display: flex !important;
 }
 
+#employee-count {
+    margin-bottom: 25px;
+}
+
+.input-wrapper.editable:first-of-type {
+    margin-top: 15px;
+}
+
+h6:nth-of-type(1) {
+    margin-bottom: -20px;
+}
+
 @media (max-width: 1400px) {
     .tin-field-wrapper {
     width: 47% !important;
-}
+    }
 }
 
 @media (max-width: 1150px) {
@@ -71,6 +83,10 @@
     .input-wrapper {
         flex-direction: column;
         gap: 20px;
+    }
+
+    #longitude{
+        margin-bottom: -60px;
     }
 
     .field-row {
