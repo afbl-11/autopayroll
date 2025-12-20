@@ -74,7 +74,7 @@
                 </div>
             </form>
 
-            <h6>Address</h6>
+            <h6 class="title-address">Address</h6>
             <div class="input-wrapper">
                 <x-form-input
                     class="form-input"

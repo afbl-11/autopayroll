@@ -55,10 +55,10 @@
 }
 
 .input-wrapper.editable:first-of-type {
-    margin-top: 15px;
+    margin-top: 10px;
 }
 
-h6:nth-of-type(1) {
+.title-address {
     margin-bottom: -20px;
 }
 
