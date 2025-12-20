@@ -307,3 +307,8 @@ Route::get('/attendance/manual',
 
 Route::put('/admin/profile/update', [AdminController::class, 'updateProfile'])
     ->name('admin.profile.update');
+
+Route::put(
+    '/company/detail/{id}/update',
+    [CompanyDashboardController::class, 'updateInfo']
+)->name('company.info.update');

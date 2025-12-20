@@ -17,6 +17,7 @@ use App\Services\ScheduleService;
 use App\Services\UpdateCompanyAddress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class CompanyDashboardController extends Controller
 {
@@ -100,5 +101,38 @@ class CompanyDashboardController extends Controller
         $companies = Company::all();
 
         return view('company.manual-attendance', compact('companies'));
+    }
+
+    public function updateInfo(Request $request, $id)
+    {
+        $request->validate(
+            [
+                'owner' => 'required|string|max:255',
+                'tin_number' => [
+                    'required',
+                    'string',
+                    'max:20',
+                    Rule::unique('companies', 'tin_number')
+                        ->ignore($id, 'company_id'),
+                ],
+                'industry' => 'required|string|max:255',
+            ],
+            [
+                'tin_number.unique' => 'This TIN is already registered to another company.',
+            ]
+        );
+
+        $company = Company::where('company_id', $id)->firstOrFail();
+
+        [$firstName, $lastName] = explode(' ', $request->owner, 2);
+
+        $company->update([
+            'first_name' => $firstName,
+            'last_name'  => $lastName ?? '',
+            'tin_number' => $request->tin_number,
+            'industry'   => $request->industry,
+        ]);
+
+        return back()->with('success', 'Company information updated successfully.');
     }
 }
