@@ -112,6 +112,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const editBtn = document.getElementById('editBtn');
     const saveBtn = document.getElementById('saveBtn');
     const form    = document.getElementById('companyForm');
+    const tinField = document.getElementById('tin');
+    if (tinField) {
+        tinField.addEventListener('input', function () {
+            this.value = this.value.replace(/\D/g, '');
+        });
+    }
     const hasErrors = @json($errors->has('tin_number'));
     if (!editBtn || !saveBtn || !form) return;
 
