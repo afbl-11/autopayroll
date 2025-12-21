@@ -45,8 +45,6 @@
                             id="tin"
                             name="tin_number"
                             :value="old('tin_number', $company->tin_number)"
-                            minlength="9"
-                            maxlength="12"
                             readonly
                         />
                         @error('tin_number')
@@ -117,7 +115,17 @@ document.addEventListener('DOMContentLoaded', function () {
     const tinField = document.getElementById('tin');
     if (tinField) {
         tinField.addEventListener('input', function () {
-            this.value = this.value.replace(/\D/g, '');
+           let value = this.value.replace(/\D/g, '');
+
+            value = value.substring(0, 12);
+                if (value.length > 9) {
+                    value = value.replace(/(\d{3})(\d{3})(\d{3})(\d+)/, '$1-$2-$3-$4');
+                } else if (value.length > 6) {
+                    value = value.replace(/(\d{3})(\d{3})(\d+)/, '$1-$2-$3');
+                } else if (value.length > 3) {
+                    value = value.replace(/(\d{3})(\d+)/, '$1-$2');
+                }
+            this.value = value;
         });
     }
     const hasErrors = @json($errors->has('tin_number'));

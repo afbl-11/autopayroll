@@ -112,7 +112,13 @@ class CompanyDashboardController extends Controller
                     'required',
                     'string',
                     'max:20',
-                    'digits_between:9,12',
+                    'regex:/^[\d-]{11,15}$/',
+                        function ($value, $fail) {
+                            $digits = str_replace('-', '', $value);
+                            if (strlen($digits) < 9 || strlen($digits) > 12) {
+                                $fail('The tin number field must be between 9 and 12 digits.');
+                            }
+                        },
                     Rule::unique('companies', 'tin_number')
                         ->ignore($id, 'company_id'),
                 ],

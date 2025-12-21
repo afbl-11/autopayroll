@@ -63,7 +63,7 @@
                         :date="$employee->contract_start ?? ''"
                         :phone="$employee->phone_number ?? ''"
                         :type="$employee->employment_type ?? ''"
-                        :position="$employee->job_position ?? ''"
+                        :position="ucwords($employee->job_position ?? '')"
                         :email="$employee->email ?? ''"
                         :status="$attendance?->status"
                     ></x-employee-cards>

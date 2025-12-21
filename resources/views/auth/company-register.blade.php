@@ -27,4 +27,27 @@
             </form>
         </div>
     </section>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const tinField = document.getElementById('tin_number');
+
+        if (!tinField) return;
+
+        tinField.addEventListener('input', function () {
+            let value = this.value.replace(/\D/g, '');
+
+            value = value.substring(0, 12);
+
+            if (value.length > 9) {
+                value = value.replace(/(\d{3})(\d{3})(\d{3})(\d+)/, '$1-$2-$3-$4');
+            } else if (value.length > 6) {
+                value = value.replace(/(\d{3})(\d{3})(\d+)/, '$1-$2-$3');
+            } else if (value.length > 3) {
+                value = value.replace(/(\d{3})(\d+)/, '$1-$2');
+            }
+
+            this.value = value;
+        });
+    });
+    </script>
 </x-app>
