@@ -45,6 +45,11 @@ return [
             'driver' => 'token',
             'provider' => 'employees',
         ],
+
+        'employee_web' => [
+            'driver' => 'session',
+            'provider' => 'employees',
+        ]
     ],
 
 
@@ -75,6 +80,8 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Employee::class,
         ],
+
+
     ],
 
     /*

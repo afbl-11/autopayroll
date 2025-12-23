@@ -19,6 +19,8 @@ Simply include this file in your Blade templates:
 No need to repeat these common styles in other CSS files.
 ===========================================*/
 
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+
 *,
 *::before,
 *::after {

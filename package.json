@@ -15,6 +15,7 @@
         "vite": "^7.0.4"
     },
     "dependencies": {
+        "bootstrap-icons": "^1.13.1",
         "glob": "^11.0.3",
         "handsontable": "^16.1.1"
     }

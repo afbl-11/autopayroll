@@ -6,11 +6,24 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginService
 {
-    public function AttemptLogin(array $credentials):bool {
+    /**
+     * Attempts login for admin or employee_web
+     *
+     * @param array $credentials ['email' => ..., 'password' => ...]
+     * @return string|false Returns 'admin', 'employee', or false
+     */
+    public function attemptLogin(array $credentials): string|false
+    {
         if (Auth::guard('admin')->attempt($credentials)) {
             request()->session()->regenerate();
-            return true;
+            return 'admin';
         }
+
+        if (Auth::guard('employee_web')->attempt($credentials)) {
+            request()->session()->regenerate();
+            return 'employee';
+        }
+
         return false;
     }
 }
