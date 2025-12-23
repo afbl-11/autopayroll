@@ -312,3 +312,15 @@ Route::put(
     '/company/detail/{id}/update',
     [CompanyDashboardController::class, 'updateInfo']
 )->name('company.info.update');
+
+Route::middleware(['auth:admin'])->group(function () {
+
+    Route::get('/company/{company}/employees', [AttendanceController::class, 'employees']);
+    Route::get('/company/{company}/attendance-dates', [AttendanceController::class, 'attendanceDates']);
+    Route::get('/company/{company}/attendance/{date}', [AttendanceController::class, 'attendanceByDate']);
+
+    Route::post('/attendance/create-date', [AttendanceController::class, 'createDate']);
+    Route::post('/attendance/delete-date', [AttendanceController::class, 'deleteDate']);
+    Route::post('/attendance/manual/bulk-save', [AttendanceController::class, 'bulkSave']);
+
+});
