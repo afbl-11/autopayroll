@@ -170,6 +170,10 @@
     box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2);
 }
 
+#selectedCount {
+        margin-top: 5px;
+    }
+
 @media (max-width: 1450px) {
     .nav-group-1 input {
         margin-left: 0px;
@@ -260,6 +264,11 @@
         margin-left: 95px;
     }
 
+    #selectedCount {
+        margin-right: 12px;
+        margin-top: 10px;
+    }
+
     .eh-position { display: none; }
 
     .button-filled {
@@ -339,6 +348,203 @@
 
 .employee-card-wrapper:hover .employee-card {
     transform: scale(1.015);
+}
+
+@media (max-width: 7000px) {
+    .selection-indicator {
+        right: 320px;
+    }
+
+}
+
+@media (max-width: 6800px) {
+    .selection-indicator {
+        right: 310px;
+    }
+
+}
+
+@media (max-width: 6600px) {
+    .selection-indicator {
+        right: 300px;
+    }
+
+}
+
+@media (max-width: 6400px) {
+    .selection-indicator {
+        right: 290px;
+    }
+
+}
+
+@media (max-width: 6200px) {
+    .selection-indicator {
+        right: 280px;
+    }
+
+}
+
+@media (max-width: 6000px) {
+    .selection-indicator {
+        right: 270px;
+    }
+
+}
+
+@media (max-width: 5800px) {
+    .selection-indicator {
+        right: 260px;
+    }
+
+}
+
+@media (max-width: 5600px) {
+    .selection-indicator {
+        right: 250px;
+    }
+
+}
+
+@media (max-width: 5400px) {
+    .selection-indicator {
+        right: 240px;
+    }
+
+}
+
+@media (max-width: 5200px) {
+    .selection-indicator {
+        right: 230px;
+    }
+
+}
+
+@media (max-width: 5000px) {
+    .selection-indicator {
+        right: 220px;
+    }
+
+}
+
+
+@media (max-width: 4800px) {
+    .selection-indicator {
+        right: 210px;
+    }
+
+}
+
+@media (max-width: 4600px) {
+    .selection-indicator {
+        right: 200px;
+    }
+
+}
+
+@media (max-width: 4400px) {
+    .selection-indicator {
+        right: 190px;
+    }
+
+}
+
+@media (max-width: 4200px) {
+    .selection-indicator {
+        right: 180px;
+    }
+
+}
+
+@media (max-width: 4000px) {
+    .selection-indicator {
+        right: 170px;
+    }
+
+}
+
+@media (max-width: 3800px) {
+    .selection-indicator {
+        right: 160px;
+    }
+
+}
+
+@media (max-width: 3600px) {
+    .selection-indicator {
+        right: 150px;
+    }
+
+}
+
+@media (max-width: 3400px) {
+    .selection-indicator {
+        right: 140px;
+    }
+
+}
+
+@media (max-width: 3200px) {
+    .selection-indicator {
+        right: 130px;
+    }
+
+}
+
+@media (max-width: 3000px) {
+    .selection-indicator {
+        right: 120px;
+    }
+
+}
+
+@media (max-width: 2800px) {
+    .selection-indicator {
+        right: 110px;
+    }
+
+}
+
+@media (max-width: 2600px) {
+    .selection-indicator {
+        right: 100px;
+    }
+
+}
+
+@media (max-width: 2400px) {
+    .selection-indicator {
+        right: 90px;
+    }
+
+}
+
+@media (max-width: 2200px) {
+    .selection-indicator {
+        right: 80px;
+    }
+
+}
+
+@media (max-width: 2000px) {
+    .selection-indicator {
+        right: 70px;
+    }
+
+}
+
+@media (max-width: 1800px) {
+    .selection-indicator {
+        right: 60px;
+    }
+
+}
+
+@media (max-width: 1600px) {
+    .selection-indicator {
+        right: 50px;
+    }
+
 }
 
 @media (max-width: 1450px) {
@@ -529,4 +735,27 @@
     .selection-indicator {
         right: 22px;
     }
+}
+
+.custom-alert {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #FFD858;
+    color: black;
+    padding: 14px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    z-index: 9999;
+    animation: slideIn 0.4s ease, fadeOut 0.4s ease 3s forwards;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(30px); opacity: 0; }
+    to   { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fadeOut {
+    to { opacity: 0; transform: translateX(30px); }
 }

@@ -54,6 +54,12 @@
                         <span>Payroll</span>
                     </a>
                 </li>
+                 <li>
+                    <a href="{{ route('attendance.manual') }}">
+                        <img src="{{ asset('assets/navigations/attendance.png') }}">
+                        <span>Attendance</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

@@ -127,32 +127,82 @@
         </div>
     </section>
 </x-app>
-
 <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const dateInput = document.getElementById('birthdate');
+    const ageInput = document.getElementById('age');
 
-    document.addEventListener('DOMContentLoaded', () => {
-        const dateInput = document.getElementById('birthdate');
-        const ageInput = document.getElementById('age');
+    dateInput.addEventListener('change', () => {
+        const birthdateValue = dateInput.value;
+        if (!birthdateValue) return;
 
-        dateInput.addEventListener('change', () => {
-            const birthdateValue = dateInput.value;
-            if(!birthdateValue) return;
+        const today = new Date();
+        const birthDate = new Date(birthdateValue);
 
-            const today = new Date();
-            const birthDate = new Date(birthdateValue);
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+        const dayDiff = today.getDate() - birthDate.getDate();
 
+        if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+            age--;
+        }
 
-            let age = today.getFullYear() - birthDate.getFullYear();
-
-            const monthDiff = today.getMonth() - birthDate.getMonth();
-            const dayDiff = today.getDate() - birthDate.getDate();
-
-            if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
-                age--;
-            }
-
-            ageInput.value = age >= 0 ? age : 0;
-        });
+        ageInput.value = age >= 0 ? age : 0;
     });
-</script>
 
+    const formatField = (fieldId, patternFunc) => {
+        const field = document.getElementById(fieldId);
+        if (!field) return;
+
+        field.addEventListener('input', () => {
+            let value = field.value.replace(/\D/g, ''); // digits only
+            field.value = patternFunc(value);
+        });
+    };
+
+    formatField('sss_number', value => {
+        if (value.length > 2 && value.length <= 9) {
+            value = value.replace(/(\d{2})(\d+)/, '$1-$2');
+        } else if (value.length > 9) {
+            value = value.replace(/(\d{2})(\d{7})(\d+)/, '$1-$2-$3');
+        }
+        return value;
+    });
+
+    formatField('phil_health_number', value => {
+        if (value.length > 2 && value.length <= 11) {
+            value = value.replace(/(\d{2})(\d+)/, '$1-$2');
+        } else if (value.length > 11) {
+            value = value.replace(/(\d{2})(\d{9})(\d+)/, '$1-$2-$3');
+        }
+        return value;
+    });
+
+    formatField('pag_ibig_number', value => {
+        if (value.length > 4 && value.length <= 8) {
+            value = value.replace(/(\d{4})(\d+)/, '$1-$2');
+        } else if (value.length > 8) {
+            value = value.replace(/(\d{4})(\d{4})(\d+)/, '$1-$2-$3');
+        }
+        return value;
+    });
+
+    formatField('tin_number', value => {
+        if (value.length > 3 && value.length <= 6) {
+            value = value.replace(/(\d{3})(\d+)/, '$1-$2');
+        } else if (value.length > 6 && value.length <= 9) {
+            value = value.replace(/(\d{3})(\d{3})(\d+)/, '$1-$2-$3');
+        } else if (value.length > 9) {
+            value = value.replace(/(\d{3})(\d{3})(\d{3})(\d+)/, '$1-$2-$3-$4');
+        }
+        return value;
+    });
+
+    const bankField = document.getElementById('bank_account_number');
+    if (bankField) {
+        bankField.addEventListener('input', () => {
+            bankField.value = bankField.value.replace(/\D/g, '');
+        });
+    }
+});
+</script>

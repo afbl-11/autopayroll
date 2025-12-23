@@ -17,6 +17,7 @@ use App\Services\ScheduleService;
 use App\Services\UpdateCompanyAddress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class CompanyDashboardController extends Controller
 {
@@ -95,4 +96,51 @@ class CompanyDashboardController extends Controller
         return redirect()->route('company.dashboard.detail', ['id' => $id]);
     }
 
+    public function manualAttendance()
+    {
+        $companies = Company::all();
+
+        return view('company.manual-attendance', compact('companies'));
+    }
+
+    public function updateInfo(Request $request, $id)
+    {
+        $request->validate(
+            [
+                'owner' => 'required|string|max:255',
+                'tin_number' => [
+                    'required',
+                    'string',
+                    'max:20',
+                    'regex:/^[\d-]{11,15}$/',
+                        function ($value, $fail) {
+                            $digits = str_replace('-', '', $value);
+                            if (strlen($digits) < 9 || strlen($digits) > 12) {
+                                $fail('The tin number field must be between 9 and 12 digits.');
+                            }
+                        },
+                    Rule::unique('companies', 'tin_number')
+                        ->ignore($id, 'company_id'),
+                ],
+                'industry' => 'required|string|max:255',
+            ],
+            [
+                'tin_number.unique' => 'This tin number has already been registered to another company.',
+                'tin_number.digits_between' => 'The tin number field must be between 9 and 12 digits.',
+            ]
+        );
+
+        $company = Company::where('company_id', $id)->firstOrFail();
+
+        [$firstName, $lastName] = explode(' ', $request->owner, 2);
+
+        $company->update([
+            'first_name' => $firstName,
+            'last_name'  => $lastName ?? '',
+            'tin_number' => $request->tin_number,
+            'industry'   => $request->industry,
+        ]);
+
+        return back()->with('success', 'Company information updated successfully.');
+    }
 }

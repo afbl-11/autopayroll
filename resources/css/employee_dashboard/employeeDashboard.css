@@ -76,6 +76,7 @@ nav a:hover {
 
 .no-results {
     text-align: center;
+    margin-top: 30px;
 }
 
 @media (max-width: 1450px) {
@@ -89,11 +90,18 @@ nav a:hover {
     .nav-group {
         margin-left: 45px;
     }
+    .no-results {
+        margin-left: 35px;
+    }
 }
+
 @media (max-width: 1000px) {
     .nav-group {
         gap: 2rem;
         width: 89%;
+    }
+    .no-results {
+        margin-left: 45px;
     }
 }
 
@@ -102,6 +110,9 @@ nav a:hover {
         width: 80%;
         margin-left: 40px;
         gap: 1.5rem;
+    }
+    .no-results {
+        margin-left: 50px;
     }
 }
 
@@ -114,6 +125,9 @@ nav a:hover {
 @media (max-width: 800px) {
     .nav-group {
         width: 78%;
+    }
+    .no-results {
+        margin-left: 60px;
     }
 }
 
@@ -142,8 +156,14 @@ nav a:hover {
     .nav-group {
         width: 100%;
         padding: 0 15px;
-        margin-left: 185px;
+        margin-left: 180px;
     }
+}
+
+@media (max-width: 480px) {
+    .nav-group {
+        margin-left: 175px;
+    }    
 }
 
 .nav-items-2 {

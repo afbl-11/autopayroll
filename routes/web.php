@@ -302,6 +302,17 @@ Route::get('/admin/change-location', [AdminController::class, 'showChangeLocatio
     ->middleware('auth:admin')
     ->name('change.location.view');
 
+Route::get('/attendance/manual',
+    [CompanyDashboardController::class, 'manualAttendance']
+)->name('attendance.manual');
+
+Route::put('/admin/profile/update', [AdminController::class, 'updateProfile'])
+    ->name('admin.profile.update');
+
+Route::put(
+    '/company/detail/{id}/update',
+    [CompanyDashboardController::class, 'updateInfo']
+)->name('company.info.update');
 
 
 //Employee Web Stuff

@@ -64,7 +64,7 @@
                         <input type="text" name="house_number" id="house-number">
                     </div>
                 </div>
-                <button type="submit" class="button-filled">Create Account</button>
+                <button type="submit" class="button-filled">Change Location</button>
 
             </form>
         </div>
