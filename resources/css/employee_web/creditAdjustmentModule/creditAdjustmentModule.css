@@ -1,0 +1,89 @@
+:root {
+    --sidebar-width-collapsed: 80px;
+    --sidebar-width-expanded: 260px;
+}
+
+.main-content {
+    margin-left: var(--sidebar-width-collapsed);
+    width: calc(100% - var(--sidebar-width-collapsed));
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--clr-background);
+    padding: 2.5rem 4rem;
+    transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.main-content.main-content-expanded {
+    margin-left: var(--sidebar-width-expanded);
+    width: calc(100% - var(--sidebar-width-expanded));
+}
+
+@media (max-width: 992px) {
+    .main-content, 
+    .main-content.main-content-expanded {
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding: 1.5rem;
+    }
+}
+
+.card-stat {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    border-bottom-width: 5px;
+    border-bottom-style: solid;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+    height: 100%;
+}
+
+.card-stat:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.08) !important;
+}
+
+.border-bottom-orange { border-bottom-color: #fd7e14; }
+.border-bottom-blue { border-bottom-color: #0d6efd; }
+.border-bottom-green { border-bottom-color: #198754; }
+
+.form-control:focus, 
+.form-select:focus {
+    border-color: var(--clr-primary, #0d6efd);
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.status-approved {
+    background-color: #d1e7dd;
+    color: #0f5132;
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 0.85em;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.status-pending {
+    background-color: #fff3cd;
+    color: #664d03;
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 0.85em;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.status-rejected {
+    background-color: #f8d7da;
+    color: #842029;
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 0.85em;
+    font-weight: 600;
+    display: inline-block;
+}

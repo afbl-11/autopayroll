@@ -16,13 +16,18 @@ class LoginController extends Controller
 
     public function authenticate(LoginRequest $request,LoginService $loginService): RedirectResponse {
 
-        if($loginService->AttemptLogin($request->only(['email', 'password']))) {
+        $userType = $loginService->attemptLogin($request->only(['email', 'password']));
+
+        if ($userType === 'admin') {
             return redirect()->intended('/dashboard');
+        }
+
+        if ($userType === 'employee') {
+            return redirect()->intended('/employee/dashboard');
         }
 
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
         ])->onlyInput('email');
-
     }
 }

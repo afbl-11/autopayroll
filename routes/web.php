@@ -48,6 +48,7 @@ Route::get('/register/success', function () {
 })->name('register.success');
 
 Route::post('/login/admin', [LoginController::class, 'authenticate'])->name('login.admin');
+
 Route::get('/dashboard', [DashboardController::class, 'showDashboard'])
     ->middleware(['auth:admin'])
     ->name('dashboard');
@@ -154,7 +155,7 @@ Route::post('/email/verification-notification', function (Request $request) {
 
 
 //employee dashboard
-Route::get('/employee/dashboard', [EmployeeDashboardController::class, 'showDashboard'])
+Route::get('/admin/employee/dashboard', [EmployeeDashboardController::class, 'showDashboard'])
     ->middleware('auth:admin')
     ->name('employee.dashboard');
 
@@ -323,4 +324,27 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::post('/attendance/delete-date', [AttendanceController::class, 'deleteDate']);
     Route::post('/attendance/manual/bulk-save', [AttendanceController::class, 'bulkSave']);
 
+});
+
+
+//Employee Web Stuff
+
+Route::get('/employee/employee-dashboard', function () {
+    return view('employee_web.dashboard');
+});
+
+Route::get('/employee/payroll', function () {
+    return view('employee_web.PayrollViewingModule.payrollScreen');
+});
+
+Route::get('/employee/announcement', function () {
+    return view('employee_web.announcementModule.announcementScreen');
+});
+
+Route::get('/employee/leave-module', function () {
+    return view('employee_web.leaveModule.leaveModule');
+});
+
+Route::get('/employee/credit-adjustment', function () {
+    return view('employee_web.creditAdjustmentModule.creditAdjustmentModule');
 });

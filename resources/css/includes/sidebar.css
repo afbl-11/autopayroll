@@ -1,165 +1,200 @@
-aside {
+
+:root {
+    --sidebar-width-collapsed: 80px;
+    --sidebar-width-expanded: 260px;
+    --sidebar-bg: var(--clr-indigo);
+}
+
+
+.sidebar-container {
+    width: var(--sidebar-width-collapsed);
+    height: 100vh;
+    background-color: var(--sidebar-bg);
+    color: #fff;
     display: flex;
     flex-direction: column;
-    align-items: center;
     position: fixed;
     top: 0;
     left: 0;
-    height: 100vh;
-    width: 95px;               
-    background: var(--clr-indigo);
-    padding: 20px 0;
-    transition: width 0.3s ease;
+    padding: 20px 0; /* Remove side padding to center icons perfectly */
+    z-index: 1000;
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
-    z-index: 10000;
+    box-shadow: 4px 0 10px rgba(0,0,0,0.1);
 }
 
-aside:hover {
-    width: 220px;              
+
+.sidebar-container.expanded {
+    width: var(--sidebar-width-expanded);
+    padding: 20px 15px; /* Add padding back when expanded for aesthetics */
 }
 
-.nav-wrapper > ul,
-.nav-wrapper > ul li {
-    list-style: none;
+
+.sidebar-header {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 25px;
+    justify-content: center; /* Center logo by default */
+    height: 50px;
+    margin-bottom: 30px;
+    white-space: nowrap;
+    width: 100%;
 }
+
+.sidebar-container.expanded .sidebar-header {
+    justify-content: flex-start;
+    padding-left: 10px;
+    gap: 15px;
+}
+
+.brand-name {
+    font-family: 'Helvetica medium', sans-serif;
+    font-size: 1.2rem;
+    font-weight: bold;
+    opacity: 0;
+    display: none;
+    transition: opacity 0.3s;
+}
+
+.sidebar-container.expanded .brand-name {
+    opacity: 1;
+    display: block;
+}
+
 
 .nav-menu {
+    flex-grow: 1;
     width: 100%;
-    height: 80%;
-    margin-top: 40px;
 }
 
-.nav-wrapper ul li a, .logout ul li a, .logout span {
+.nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center; /* Force center alignment for collapsed state */
+}
+
+.sidebar-container.expanded .nav-list {
+    align-items: stretch; /* Stretch to fill width when expanded */
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center icon */
+    height: 50px;
+    width: 50px; /* Square button look when collapsed */
+    color: #a0a0a0;
+    text-decoration: none;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    margin: 0 auto; /* Center in parent */
+}
+
+
+.sidebar-container.expanded .nav-link {
+    width: 100%; /* Full width */
+    height: auto;
+    padding: 12px 15px;
+    justify-content: flex-start; /* Align left */
+    gap: 15px;
+}
+
+.nav-link i {
+    font-size: 1.3rem;
+    min-width: 24px;
+    text-align: center;
+}
+
+.link-text {
+    display: none;
+    font-size: 0.95rem;
+    white-space: nowrap;
+}
+
+.sidebar-container.expanded .link-text {
+    display: inline-block;
+}
+
+
+.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.nav-link.active {
+    background-color: var(--clr-yellow);
+    color: var(--clr-indigo);
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(255, 216, 88, 0.2);
+}
+
+.sidebar-footer {
+    margin-top: auto;
+    padding-top: 20px;
+    padding-bottom: 20px; 
+    border-top: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    width: 100%;
+}
+
+.sidebar-container.expanded .sidebar-footer {
+    justify-content: space-between; 
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.toggle-btn {
+    background: none;
+    border: none;
+    color: var(--clr-muted);
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    transition: color 0.3s;
+}
+
+.toggle-btn:hover {
+    color: var(--clr-yellow);
+    background-color: rgba(255,255,255,0.05);
+}
+
+.logout-form {
+    display: none; 
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.sidebar-container.expanded .logout-form {
+    display: block;
+    opacity: 1;
+}
+
+.logout-btn {
+    background: none;
+    border: none;
+    color: #ff6b6b;
+    font-family: 'Helvetica Regular', sans-serif;
+    font-size: 0.95rem;
+    cursor: pointer;
     display: flex;
     align-items: center;
     gap: 12px;
-    text-decoration: none;
-    color: #fff;
-    width: 100%;
-    padding: 8px 20px;
-    transition: transform 0.2s ease;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: background 0.2s;
+    white-space: nowrap;
 }
 
-.nav-wrapper ul li a:hover, .logout ul li a:hover {
-    transform: scale(1.08);
-}
-
-.nav-wrapper ul li a img {
-    width: 22px;
-    height: 22px;
-}
-
-.nav-wrapper ul li a span, .logout span {
-    display: none;
-    font-size: 15px;
-}
-
-aside:hover .nav-wrapper ul li a span, aside:hover .logout span {
-    display: inline;
-}
-
-aside:hover .nav-wrapper > ul,
-aside:hover .nav-wrapper > ul li {
-    align-items: flex-start !important;
-}
-
-aside:hover .nav-wrapper ul li a {
-    justify-content: center !important;
-    padding-left: 50px; 
-}
-
-.logout {
-    height: 20%;
-    width: 100%;
-    border-top: 1px solid var(--clr-muted);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 20px;
-    padding-top: 20px;
-}
-
-.logout img {
-    width: 22px;
-    height: 22px;
-}
-
-aside:hover .logout {
-    align-items: flex-start;
-}
-
-aside:hover .logout ul {
-    padding-left: 30px;
-}
-
-.logout ul span{
-    margin-left: -18px;
-}
-
-.logout-btn button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;               
-    background: none;
-    border: none;
-    width: 100%;
-    padding: 10px 20px;
-    color: #fff;
-    cursor: pointer;
-    margin-left: 3px;
-    transition: transform 0.2s ease;
-}
-
-.logout-btn button:hover {
-    transform: scale(1.08);
-}
-
-.logout-btn button img {
-    width: 22px;
-    height: 22px;
-}
-
-.logout-btn button span {
-    font-size: 15px;
-    margin-left: -15px; 
-}
-
-aside:hover .logout-btn button {
-    justify-content: flex-start;
-    padding-left: 50px; 
-    text-align: left;
-}
-
-.logo-container {
-    height: 60px;    
-    width: 100%;
-    margin-left: -30px;
-    justify-content: center;
-    align-items: center;
-}
-
-.logo {
-    color: white;
-    font-size: 25px;
-    transition: opacity .2s ease;
-}
-
-.logo.expanded {
-    opacity: 0;
-    margin-top: -75px;
-    margin-left: -25px;
-}
-
-aside:hover .logo.minimized {
-    opacity: 0;
-}
-
-aside:hover .logo.expanded {
-    opacity: 1;
+.logout-btn:hover {
+    background-color: rgba(255, 107, 107, 0.1);
+    color: #ff8787;
 }

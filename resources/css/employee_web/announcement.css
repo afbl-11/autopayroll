@@ -1,0 +1,105 @@
+:root {
+    --sidebar-width-collapsed: 80px;
+    --sidebar-width-expanded: 260px;
+}
+
+.main-content {
+    margin-left: var(--sidebar-width-collapsed);
+    width: calc(100% - var(--sidebar-width-collapsed));
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--clr-background);
+    padding: 2.5rem 4rem;
+    transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.main-content.main-content-expanded {
+    margin-left: var(--sidebar-width-expanded);
+    width: calc(100% - var(--sidebar-width-expanded));
+}
+
+@media (max-width: 768px) {
+    .main-content, 
+    .main-content.main-content-expanded {
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding: 1.5rem;
+    }
+}
+
+.announcement-card {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.02);
+    transition: all 0.2s ease-in-out;
+}
+
+.announcement-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+    border-color: var(--clr-yellow);
+}
+
+.announcement-icon-wrapper {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    color: var(--clr-primary);
+    font-size: 1.4rem;
+}
+
+.filter-tabs {
+    border-bottom: 2px solid #f0f0f0;
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 40px;
+}
+
+.filter-tabs .nav-item {
+    margin-bottom: -2px;
+}
+
+.filter-tabs .nav-link {
+    color: var(--clr-muted);
+    font-weight: 600;
+    padding: 12px 10px; /* Top/Bottom Left/Right */
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    position: relative;
+    font-size: 1rem;
+    transition: color 0.2s ease;
+}
+
+.filter-tabs .nav-link:hover {
+    color: var(--clr-primary);
+}
+
+.filter-tabs .nav-link.active {
+    color: var(--clr-primary);
+    background-color: transparent;
+}
+
+.filter-tabs .nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: var(--clr-yellow);
+    border-radius: 2px 2px 0 0;
+}
+
+.icon-admin { color: var(--clr-primary); }
+.icon-payroll { color: #2ecc71; }
+.icon-memo { color: var(--clr-yellow); }
+.icon-holiday { color: #e74c3c; }

@@ -1,0 +1,189 @@
+:root {
+    --sidebar-width-collapsed: 80px;
+    --sidebar-width-expanded: 260px;
+}
+
+.main-content {
+    margin-left: var(--sidebar-width-collapsed);
+    width: calc(100% - var(--sidebar-width-collapsed));
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--clr-background);
+    padding: 2.5rem 4rem;
+    transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.main-content.main-content-expanded {
+    margin-left: var(--sidebar-width-expanded);
+    width: calc(100% - var(--sidebar-width-expanded));
+}
+
+@media (max-width: 992px) {
+    .main-content, 
+    .main-content.main-content-expanded {
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding: 1.5rem;
+    }
+}
+
+.card-credit {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 20px;
+    height: 100%;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+.card-credit:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.credit-vacation { border-bottom: 4px solid #3498db; }
+.credit-sick { border-bottom: 4px solid #e67e22; }
+.credit-maternity { border-bottom: 4px solid #e84393; }
+.credit-bereavement { border-bottom: 4px solid #9b59b6; }
+
+.credit-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.bg-vacation-light { background: rgba(52, 152, 219, 0.1); color: #3498db; }
+.bg-sick-light { background: rgba(230, 126, 34, 0.1); color: #e67e22; }
+.bg-maternity-light { background: rgba(232, 67, 147, 0.1); color: #e84393; }
+.bg-bereavement-light { background: rgba(155, 89, 182, 0.1); color: #9b59b6; }
+
+.card-file-leave {
+    background: var(--clr-yellow);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--clr-indigo);
+}
+.card-file-leave:hover {
+    background: #ffcd1f;
+}
+
+.form-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--clr-secondary);
+}
+
+.form-control, .form-select {
+    border-radius: 8px;
+    padding: 10px 12px;
+    border-color: #dee2e6;
+    font-size: 0.9rem;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--clr-yellow);
+    box-shadow: 0 0 0 0.25rem rgba(255, 216, 88, 0.15);
+}
+
+.badge-status {
+    padding: 6px 12px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 0.75rem;
+    border: 1px solid transparent;
+}
+
+.status-approved { background-color: rgba(46, 204, 113, 0.1); color: #27ae60; border-color: rgba(46, 204, 113, 0.2); }
+.status-pending { background-color: rgba(241, 196, 15, 0.1); color: #f39c12; border-color: rgba(241, 196, 15, 0.2); }
+.status-rejected { background-color: rgba(231, 76, 60, 0.1); color: #c0392b; border-color: rgba(231, 76, 60, 0.2); }
+.status-revision { background-color: rgba(52, 152, 219, 0.1); color: #2980b9; border-color: rgba(52, 152, 219, 0.2); }
+
+.calendar-widget {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    overflow: hidden;
+}
+
+.calendar-header {
+    background-color: var(--clr-primary);
+    color: #fff;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background: #f8f9fa;
+    border-bottom: 1px solid #eee;
+}
+
+.day-name {
+    padding: 10px 0;
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: var(--clr-secondary);
+    text-transform: uppercase;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    padding: 10px;
+    gap: 5px;
+}
+
+.calendar-date {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: var(--clr-primary);
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s;
+}
+
+.calendar-date:hover { background-color: #f0f0f0; }
+.calendar-date.other-month { color: #ccc; }
+.calendar-date.today { background-color: var(--clr-indigo); color: #fff; font-weight: bold; }
+
+.date-has-event::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+}
+.event-approved::after { background-color: #2ecc71; }
+.event-pending::after { background-color: #f1c40f; }
+
+.legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+}
