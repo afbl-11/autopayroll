@@ -327,6 +327,41 @@ Route::middleware(['auth:admin'])->group(function () {
 });
 
 
+use App\Http\Controllers\EmployeeEditController;
+
+Route::prefix('employee/{employee}')->group(function () {
+
+    Route::get('info', [EmployeeEditController::class, 'show'])
+        ->name('employee.info');
+
+    Route::get('edit/personal', [EmployeeEditController::class, 'editPersonal'])
+        ->name('employee.edit.personal');
+    Route::put('edit/personal', [EmployeeEditController::class, 'updatePersonal'])
+        ->name('employee.update.personal');
+
+    Route::get('edit/address', [EmployeeEditController::class, 'editAddress'])
+        ->name('employee.edit.address');
+    Route::put('edit/address', [EmployeeEditController::class, 'updateAddress'])
+        ->name('employee.update.address');
+
+    Route::get('edit/job', [EmployeeEditController::class, 'editJob'])
+        ->name('employee.edit.job');
+    Route::put('edit/job', [EmployeeEditController::class, 'updateJob'])
+        ->name('employee.update.job');
+
+    Route::get('edit/account', [EmployeeEditController::class, 'editAccount'])
+        ->name('employee.edit.account');
+    Route::put('edit/account', [EmployeeEditController::class, 'updateAccount'])
+        ->name('employee.update.account');
+
+    Route::get('edit/government', [EmployeeEditController::class, 'editGovernment'])
+        ->name('employee.edit.government');
+    Route::put('edit/government', [EmployeeEditController::class, 'updateGovernment'])
+        ->name('employee.update.government');
+
+});
+
+
 //Employee Web Stuff
 
 Route::get('/employee/employee-dashboard', function () {
