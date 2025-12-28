@@ -28,6 +28,7 @@ class ClientRegistrationRequest extends FormRequest
                     Rule::unique('companies', 'tin_number')->ignore($this->route('company')),
                 ],
             'industry'     => 'required|string|max:255',
+            'company_logo' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ];
     }
     public function messages()

@@ -37,7 +37,7 @@
                         :id="$company->company_id"
                         :industry="$company->industry"
                         :address="$company->address"
-                        :logo="'assets/company-pic.jpg'"
+                        :logo="$company->company_logo"
                         :name="$company->company_name"
                         :count="$company->employees_count"
                     ></x-company-cards>

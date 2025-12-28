@@ -4,6 +4,15 @@
         'navigation' => false, 'company' => '',
         'navigationType' => 'company',
         'type' => '', 'employee' => ''])
+        
+@php
+    use Illuminate\Support\Facades\Storage;
+
+    $companyLogoPath = !empty($company?->company_logo)
+        ? Storage::url($company->company_logo)
+        : asset('assets/company-pic.jpg');
+@endphp
+
 <x-root>
     @include('layouts.side-nav')
     <main>
@@ -15,7 +24,7 @@
                 'type' => $navigationType,
                 'name' => $navigationType === 'company'? $company->company_name : $employee->first_name . ' ' . $employee->last_name,
                 'id' =>  $navigationType === 'company' ? $company->company_id : $employee->employee_id,
-                'companyLogo' => 'assets/company-pic.jpg',
+                'companyLogo' => $companyLogoPath,
                 'employeeProfile' => 'assets/default_profile.png',
 //                 $company->logo ?? $employee->avatar ?? 'assets/default.jpg',
                 'tin' => $company->tin_number ?? null,

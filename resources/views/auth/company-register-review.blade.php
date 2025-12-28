@@ -6,6 +6,16 @@
             @csrf
             <h6>Company Information</h6>
 
+            @if(!empty($data['company_logo']))
+                <div class="company-logo-preview">
+                    <img
+                        src="{{ asset('storage/' . $data['company_logo']) }}"
+                        alt="Company Logo"
+                    >
+                </div>
+                 <p id="titular-logo">Company Logo</p>
+            @endif
+
             <div class="field-row">
                 <x-form-input
                     name="company_name"
