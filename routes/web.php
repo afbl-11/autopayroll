@@ -309,10 +309,11 @@ Route::get('/attendance/manual',
 Route::put('/admin/profile/update', [AdminController::class, 'updateProfile'])
     ->name('admin.profile.update');
 
-Route::put(
-    '/company/detail/{id}/update',
-    [CompanyDashboardController::class, 'updateInfo']
-)->name('company.info.update');
+Route::get('/company/{id}/edit', [CompanyDashboardController::class, 'edit'])
+    ->name('company.edit');
+
+Route::put('/company/{id}', [CompanyDashboardController::class, 'update'])
+    ->name('company.update');
 
 Route::middleware(['auth:admin'])->group(function () {
 
