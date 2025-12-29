@@ -267,13 +267,6 @@ Route::post('/adjustments/alter/OB', [CreditAdjustmentController::class, 'alterC
     ->middleware('auth:admin')
     ->name('alter.clock.in.out');
 
-
-//password management
-Route::get('/forgot_password', function () {
-    return view('auth.authVerify');
-})->name('forgot.password');
-
-
 Route::get('/new-payroll', function () {
     return view('payroll.payroll');
 })->name('new.payroll');
@@ -314,6 +307,12 @@ Route::get('/company/{id}/edit', [CompanyDashboardController::class, 'edit'])
 
 Route::put('/company/{id}', [CompanyDashboardController::class, 'update'])
     ->name('company.update');
+
+Route::get('/forgot-password', [AdminController::class, 'showForgotPassword'])
+    ->name('forgot.password');
+
+Route::post('/forgot-password', [AdminController::class, 'resetForgotPassword'])
+    ->name('forgot.password.update');
 
 Route::middleware(['auth:admin'])->group(function () {
 

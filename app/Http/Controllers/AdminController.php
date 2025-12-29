@@ -8,7 +8,9 @@ use App\Models\Admin;
 use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Storage; 
+use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
@@ -125,4 +127,64 @@ class AdminController extends Controller
         return back()->with('success', 'Profile updated');
     }
 
+    public function showForgotPassword()
+    {
+        return view('auth.auth-forgot-password')
+            ->with(['title' => 'Reset Password']);
+    }
+
+    public function resetForgotPassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|exists:admins,email',
+            'old_password' => 'required|string',
+
+            'password' => [
+                'required',
+                Password::min(8)
+                    ->mixedCase()
+                    ->numbers()
+                    ->symbols(),
+            ],
+
+            'password_confirmation' => 'required',
+        ]);
+
+        $validator->after(function ($validator) use ($request) {
+            if ($request->password !== $request->password_confirmation) {
+                $validator->errors()->add(
+                    'password_confirmation',
+                    'Password does not match.'
+                );
+            }
+        });
+
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $admin = Admin::where('email', $request->email)->firstOrFail();
+
+        if (!Hash::check($request->old_password, $admin->password)) {
+            return back()
+                ->withErrors(['old_password' => 'Current password is incorrect.'])
+                ->withInput();
+        }
+
+        if (Hash::check($request->password, $admin->password)) {
+            return back()
+                ->withErrors(['password' => 'New password must be different from the old password.'])
+                ->withInput();
+        }
+
+        $admin->password = Hash::make($request->password);
+        $admin->save();
+
+        return redirect()
+            ->route('login')
+            ->with('success', 'Password updated.');
+    }
 }
