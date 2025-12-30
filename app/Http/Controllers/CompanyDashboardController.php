@@ -131,6 +131,20 @@ class CompanyDashboardController extends Controller
 
         $company = Company::where('company_id', $id)->firstOrFail();
 
+        $companyName = ucwords(strtolower($request->input('company_name')));
+        $industry = ucwords(strtolower($request->input('industry')));
+
+        $exists = Company::where('company_name', $companyName)
+            ->where('industry', $industry)
+            ->where('company_id', '!=', $id)
+            ->exists();
+
+        if ($exists) {
+            return back()->withErrors([
+                'company_name' => 'A company with the same name and industry already exists.',
+            ])->withInput();
+        }
+
         if ($request->hasFile('company_logo')) {
             if ($company->company_logo) {
                 Storage::disk('public')->delete($company->company_logo);

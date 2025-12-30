@@ -31,8 +31,10 @@
                     </div>
                 </div>
                 <div class="field-row">
-                    <x-form-input name="company_name" id="company_name" label="Company Name" :value="$company->company_name"></x-form-input>
-
+                   <x-form-input name="company_name" id="company_name" label="Company Name" :value="$company->company_name"></x-form-input>
+                      @error('first_name')
+                          <p class="error-message">{{ $message }}</p>
+                      @enderror
                 </div>
                 <div class="field-row">
                    <x-form-input name="first_name" id="first_name" label="Owner First Name" :value="$company->first_name"></x-form-input>
@@ -116,6 +118,12 @@
     .upload-btn:hover {
         background: #FFD858;
         color: #020617;
+    }
+
+    .error-message {
+        color: #BA2A2A;
+        font-size: 0.875rem;
+        letter-spacing: 1.33px;
     }
 </style>
 </x-app>
