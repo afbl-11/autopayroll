@@ -11,7 +11,7 @@
                 <div class="field-row">
                     <div class="logo-upload-wrapper">
                         <div class="logo-preview">
-                            <img id="logoPreview" src="{{ asset('images/default-avatar.png') }}" alt="Company Logo">
+                            <img id="logoPreview" src="{{ asset('assets/default_establishment_picture.png') }}" alt="Company Logo">
                         </div>
 
                         <label for="company_logo" class="upload-btn">
@@ -89,7 +89,7 @@
         height: 110px;
         object-fit: cover;
         border-radius: 50%;
-        border: 2px solid #e5e7eb;
+        border: 2px solid var(--clr-muted);
         background: #fff;
     }
 

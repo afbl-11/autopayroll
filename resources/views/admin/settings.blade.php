@@ -24,7 +24,7 @@
                         <img
                             src="{{ auth('admin')->user()->profile_photo
                                     ? asset('storage/' . auth('admin')->user()->profile_photo)
-                                    : asset('images/default-avatar.png') }}"
+                                    : asset('assets/no_profile_picture.jpg') }}"
                             alt="Profile Picture"
                             class="avatar-preview"
                             id="avatarPreview"

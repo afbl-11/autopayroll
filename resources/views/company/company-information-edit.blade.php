@@ -2,7 +2,7 @@
 @php
     $logoPath = !empty($company->company_logo) && file_exists(public_path('storage/' . $company->company_logo))
         ? asset('storage/' . $company->company_logo)
-        : asset('images/default-avatar.png');
+        : asset('assets/default_establishment_picture.png');
 @endphp
 
 <x-app :title="$title">
@@ -93,7 +93,7 @@
         height: 110px;
         object-fit: cover;
         border-radius: 50%;
-        border: 2px solid #e5e7eb;
+        border: 2px solid var(--clr-muted);
         background: #fff;
     }
 
