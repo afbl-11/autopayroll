@@ -69,6 +69,29 @@ class EmployeeEditController extends Controller
             'marital_status' => 'nullable|string',
         ]);
 
+        $firstName = ucwords(strtolower($request->first_name));
+        $middleName = $request->middle_name ? ucwords(strtolower($request->middle_name)) : null;
+        $lastName = ucwords(strtolower($request->last_name));
+        $suffix = $request->suffix ? ucwords(strtolower($request->suffix)) : null;
+
+        $duplicateQuery = Employee::where('first_name', $firstName)
+            ->where('last_name', $lastName)
+            ->where('employee_id', '!=', $employee->employee_id);
+
+        if ($middleName) {
+            $duplicateQuery->where('middle_name', $middleName);
+        }
+
+        if ($suffix) {
+            $duplicateQuery->where('suffix', $suffix);
+        }
+
+        if ($duplicateQuery->exists()) {
+            return redirect()->back()
+                ->withInput()
+                ->withErrors(['first_name' => 'An employee with the same full name already exists.']);
+        }
+
          $employee->update(
             collect($validated)
                 ->except('suffix')

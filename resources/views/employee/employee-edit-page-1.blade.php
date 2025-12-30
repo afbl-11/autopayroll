@@ -10,8 +10,16 @@
                 <h5>Personal Information</h5>
 
                 <div class="field-row">
-                    <x-form-input name="first_name" label="First Name" :value="$employee->first_name" />
-                    <x-form-input name="middle_name" label="Middle Name" :value="$employee->middle_name" />
+                    <div class="field-wrapper">
+                        <x-form-input name="first_name" label="First Name" :value="$employee->first_name" />
+                        @error('first_name')
+                            <p class="error-message">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="field-wrapper">
+                        <x-form-input name="middle_name" label="Middle Name" :value="$employee->middle_name" />
+                    </div>
                 </div>
 
                 <div class="field-row">
@@ -81,3 +89,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 </script>
+<style>
+.error-message {
+    color: #BA2A2A;
+    font-size: 0.875rem;
+    letter-spacing: 1.33px;
+}
+.field-wrapper {
+    width: 100%;
+}
+</style>
