@@ -5,6 +5,7 @@ namespace App\Http\Requests\employeeRegistrationRequest;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use App\Models\Employee;
+use App\Models\Admin;
 
 class BasicInformationRequest extends FormRequest
 {
@@ -78,6 +79,28 @@ class BasicInformationRequest extends FormRequest
 
             if ($employeeQuery->exists()) {
                 $validator->errors()->add('first_name', 'An employee with the same full name already exists.');
+            }
+
+            $adminQuery = Admin::where('first_name', $firstName)
+            ->where('last_name', $lastName);
+
+            if ($middleName) {
+                $adminQuery->where('middle_name', $middleName);
+            } else {
+                $adminQuery->whereNull('middle_name');
+            }
+
+            if ($suffix) {
+                $adminQuery->where('suffix', $suffix);
+            } else {
+                $adminQuery->whereNull('suffix');
+            }
+
+            if ($adminQuery->exists()) {
+                $validator->errors()->add(
+                    'first_name',
+                    'This is your name.'
+                );
             }
         });
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Admin;
 
 class EmployeeEditController extends Controller
 {
@@ -90,6 +91,29 @@ class EmployeeEditController extends Controller
             return redirect()->back()
                 ->withInput()
                 ->withErrors(['first_name' => 'An employee with the same full name already exists.']);
+        }
+
+        $adminQuery = Admin::where('first_name', $firstName)
+            ->where('last_name', $lastName);
+
+        if ($middleName) {
+            $adminQuery->where('middle_name', $middleName);
+        } else {
+            $adminQuery->whereNull('middle_name');
+        }
+
+        if ($suffix) {
+            $adminQuery->where('suffix', $suffix);
+        } else {
+            $adminQuery->whereNull('suffix');
+        }
+
+        if ($adminQuery->exists()) {
+            return redirect()->back()
+                ->withInput()
+                ->withErrors([
+                    'first_name' => 'This is your name.'
+                ]);
         }
 
          $employee->update(
