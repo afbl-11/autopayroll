@@ -314,6 +314,12 @@ Route::get('/forgot-password', [AdminController::class, 'showForgotPassword'])
 Route::post('/forgot-password', [AdminController::class, 'resetForgotPassword'])
     ->name('forgot.password.update');
 
+Route::delete('/company/{id}', [CompanyDashboardController::class, 'destroy'])
+    ->name('company.destroy');
+
+Route::delete('/employee/{id}', [EmployeeDashboardController::class, 'destroy'])
+    ->name('employee.destroy');
+
 Route::middleware(['auth:admin'])->group(function () {
 
     Route::get('/company/{company}/employees', [AttendanceController::class, 'employees']);

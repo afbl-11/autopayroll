@@ -86,6 +86,33 @@
                 />
             </div>
         </div>
+        <div class="delete-company-wrapper">
+            @if($company->employees->count() > 0)
+                <button
+                    class="btn-delete disabled"
+                    disabled
+                    title="Unassign all employees before deleting this company">
+                    Delete Company
+                </button>
+            @else
+                <form action="{{ route('company.destroy', $company->company_id) }}"
+                    method="POST"
+                    onsubmit="return confirm('Are you sure you want to delete this company? This action cannot be undone.')">
+                    @csrf
+                    @method('DELETE')
+
+                    <button type="submit" class="btn-delete">
+                        Delete Company
+                    </button>
+                </form>
+            @endif
+
+            @if($errors->has('delete'))
+                <p class="delete-error">
+                    {{ $errors->first('delete') }}
+                </p>
+            @endif
+        </div>
     </section>
 </x-app>
 @if(session('success'))
@@ -102,3 +129,43 @@
     });
 </script>
 @endif
+<style>
+    .btn-delete {
+        background: var(--clr-red);
+        color: var(--clr-background);
+        padding: 10px 15px;
+        border-radius: 8px;
+        font-weight: 400;
+        cursor: pointer;
+        margin-top: 35px;
+        box-shadow: 2px 5px 5px 0 rgba(136, 125, 125, 0.25);
+        letter-spacing: 1.33px;
+        margin-bottom: 50px;
+        border: none;
+    }
+    .btn-delete:hover {
+        background: var(--clr-yellow);
+        color: var(--clr-primary);
+    }
+    .btn-delete.disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
+    @media (max-width: 1150px){
+        .btn-delete {
+            margin-left: 50px;
+        }
+    }
+
+    @media (max-width: 650px){
+        .btn-delete {
+            margin-left: 75px;
+        }
+    }
+
+    @media (max-width: 500px){
+        .btn-delete {
+            margin-left: 70px;
+        }
+    }
+</style>

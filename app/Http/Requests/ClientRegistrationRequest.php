@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use App\Models\Company;
+use App\Models\Admin;
 
 class ClientRegistrationRequest extends FormRequest
 {
@@ -47,6 +48,13 @@ class ClientRegistrationRequest extends FormRequest
 
             if ($companyQuery->exists()) {
                 $validator->errors()->add('company_name', 'A company with the same name and industry already exists.');
+            }
+            
+            if (Admin::where('company_name', $companyName)->exists()) {
+                $validator->errors()->add(
+                    'company_name',
+                    'This is your company name.'
+                );
             }
         });
     }

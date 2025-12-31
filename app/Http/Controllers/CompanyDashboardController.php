@@ -19,6 +19,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Admin;
 
 
 class CompanyDashboardController extends Controller
@@ -134,14 +135,18 @@ class CompanyDashboardController extends Controller
         $companyName = ucwords(strtolower($request->input('company_name')));
         $industry = ucwords(strtolower($request->input('industry')));
 
-        $exists = Company::where('company_name', $companyName)
+        $companyExists = Company::where('company_name', $companyName)
             ->where('industry', $industry)
             ->where('company_id', '!=', $id)
             ->exists();
 
-        if ($exists) {
+        $adminExists = Admin::where('company_name', $companyName)->exists();
+
+        if ($companyExists || $adminExists) {
             return back()->withErrors([
-                'company_name' => 'A company with the same name and industry already exists.',
+                'company_name' => $adminExists
+                    ? 'This is your company name.'
+                    : 'A company with the same name and industry already exists.',
             ])->withInput();
         }
 
@@ -159,8 +164,35 @@ class CompanyDashboardController extends Controller
 
         $company->update($validated);
 
+         if ($company->wasChanged()) {
+            return redirect()
+                ->route('company.dashboard.detail', $id)
+                ->with('success', 'Company information updated.');
+        }
+
+        return redirect()->route('company.dashboard.detail', $id);
+    }
+
+    public function destroy($id)
+    {
+        $company = Company::withCount('employees')
+            ->where('company_id', $id)
+            ->firstOrFail();
+
+        if ($company->employees_count > 0) {
+            return back()->with('error', 
+                'Cannot delete this company while employees are still assigned.'
+            );
+        }
+
+        if ($company->company_logo) {
+            Storage::disk('public')->delete($company->company_logo);
+        }
+
+        $company->delete();
+
         return redirect()
-            ->route('company.dashboard.detail', $id)
-            ->with('success', 'Company information updated.');
+            ->route('company.dashboard')
+            ->with('success', 'Company deleted successfully.');
     }
 }
