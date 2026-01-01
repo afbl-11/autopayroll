@@ -34,18 +34,12 @@
                 </div>
                             
                 <div class="field-row">
-                    <x-form-input
-                        label="Daily Rate"
-                        name="rate"
-                        id="rate"
-                        type="text"
-                    /> 
                     <x-form-input type="date" name="contract_start" id="contract_start" label="Starting Date"></x-form-input>
                     <x-form-input type="date" name="contract_end" id="contract_end" label="Termination Date"></x-form-input>
                 </div>
     
                 <div class="field-row">
-                    <x-form-input name="job_position" id="job_position" label="Position"></x-form-input>
+                    <x-form-input name="job_position" id="job_position" :value="$employee->job_position" label="Position"></x-form-input>
                     <x-form-input type="file" name="uploaded_document" id="uploaded_document" label="Upload Documents" accept=".pdf,.jpg,.png,.docx"></x-form-input>
                 </div>
 

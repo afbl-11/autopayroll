@@ -60,11 +60,11 @@ class EmployeeEditController extends Controller
     public function updatePersonal(Request $request, Employee $employee)
     {
         $validated = $request->validate([
-            'first_name'     => 'nullable|string',
+            'first_name'     => 'sometimes|required|string',
             'middle_name'    => 'nullable|string',
-            'last_name'      => 'nullable|string',
+            'last_name'      => 'sometimes|required|string',
             'suffix'         => 'nullable|string',
-            'birthdate'      => 'nullable|date',
+            'birthdate'      => 'sometimes|required|date',
             'gender'         => 'nullable|string',
             'blood_type'     => 'nullable|string',
             'marital_status' => 'nullable|string',
@@ -226,9 +226,8 @@ class EmployeeEditController extends Controller
     public function updateJob(Request $request, Employee $employee)
     {
         $validated = $request->validate([
-            'job_position'      => 'nullable|string|max:255',
+            'job_position'      => 'sometimes|required|string|max:255',
             'employment_type'   => 'nullable|string|in:full-time,part-time,contractual',
-            'rate'              => 'nullable|numeric',
             'contract_start'    => 'nullable|date',
             'contract_end'      => 'nullable|date|after_or_equal:contract_start',
             'uploaded_document' => 'nullable|file|mimes:pdf,jpg,png,docx|max:2048',
@@ -239,6 +238,19 @@ class EmployeeEditController extends Controller
             $filename = time() . '_' . $file->getClientOriginalName();
             $file->storeAs('public/documents', $filename); 
             $validated['uploaded_document'] = $filename;
+        }
+
+        if (isset($validated['job_position'])) {
+            $newJob = ucwords(strtolower(trim($validated['job_position'])));
+            $currentJob = ucwords(strtolower(trim($employee->job_position)));
+
+            if ($newJob === $currentJob) {
+                return redirect()->back()
+                    ->withInput()
+                    ->withErrors(['job_position' => 'The job position is the same as the current one.']);
+            }
+
+            $validated['job_position'] = $newJob;
         }
 
         $employee->update(array_filter($validated, fn ($v) => !is_null($v)));
@@ -262,10 +274,10 @@ class EmployeeEditController extends Controller
     public function updateAccount(Request $request, Employee $employee)
     {
         $request->validate([
-            'email' => 'nullable|email|unique:employees,email,' 
+            'email' => 'sometimes|required|email|unique:employees,email,' 
                         . $employee->employee_id . ',employee_id',
 
-            'phone_number' => 'nullable|string|max:15|unique:employees,phone_number,' 
+            'phone_number' => 'sometimes|required|string|max:15|unique:employees,phone_number,' 
                         . $employee->employee_id . ',employee_id',
         ]);
 

@@ -69,6 +69,6 @@ class EmployeeRegistrationController extends Controller
     public function createEmployee() {
         $this->employeeRegistration->createEmployee();
 
-        return redirect()->route('dashboard')->with('success', 'Successfully Registered Employee');
+        return redirect()->route('dashboard')->with('success', 'Successfully Registered Employee.');
     }
 }

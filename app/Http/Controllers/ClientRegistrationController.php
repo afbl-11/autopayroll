@@ -47,7 +47,7 @@ class ClientRegistrationController extends Controller
     public function register() {
         $this->clientService->createClient();
 
-        return redirect()->route('dashboard');
+        return redirect()->route('dashboard')->with('success', 'Successfully Registered Company.');
     }
     public function showForm() {
         return view('auth.company-register')->with(['title' => 'Client Registration']);
