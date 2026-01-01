@@ -210,7 +210,7 @@ button {
     }
 
     .side-content {
-        margin-left: 85px;
+        margin-left: 80px;
         width: 85%;
     }
 
@@ -241,7 +241,6 @@ button {
 
 @media (max-width: 600px) {
     .side-content {
-        margin-left: 95px;
         width: 77%;
     }    
 }
@@ -254,7 +253,14 @@ button {
 
 @media (max-width: 520px) {
     .side-content {
-        margin-left: 120px;
+        margin-left: 105px;
+        width: 70%;
+    }    
+}
+
+@media (max-width: 480px) {
+    .side-content {
+        margin-left: 100px;
         width: 65%;
     }    
 }
