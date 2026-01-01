@@ -100,6 +100,12 @@
     }
 }
 
+@media (max-width: 400px){
+    .content-wrapper {
+        width: 65%;
+    }    
+}
+
 .btn-edit {
     padding: 6px 20px;
     border-radius: 6px;
