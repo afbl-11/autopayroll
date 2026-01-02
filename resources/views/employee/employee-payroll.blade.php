@@ -6,7 +6,7 @@
             <x-button-link :source="['employee.dashboard.payroll', ['id' => $employee->employee_id  ,'type' => 'daily']]" :noDefault="true">Daily Log</x-button-link>
             <x-button-link :source="['employee.dashboard.payroll', ['id' => $employee->employee_id, 'type' => 'semi']]" :noDefault="true">Semi Monthly</x-button-link>
 
-            <button id="downloadPDF" class="btn-download">Download PDF</button> 
+          {{--  <button id="downloadPDF" class="btn-download">Download PDF</button>  --}}
         </nav>
             <table class="custom-table">
                 <x-payroll-table

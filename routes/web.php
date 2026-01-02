@@ -267,13 +267,6 @@ Route::post('/adjustments/alter/OB', [CreditAdjustmentController::class, 'alterC
     ->middleware('auth:admin')
     ->name('alter.clock.in.out');
 
-
-//password management
-Route::get('/forgot_password', function () {
-    return view('auth.authVerify');
-})->name('forgot.password');
-
-
 Route::get('/new-payroll', function () {
     return view('payroll.payroll');
 })->name('new.payroll');
@@ -309,10 +302,70 @@ Route::get('/attendance/manual',
 Route::put('/admin/profile/update', [AdminController::class, 'updateProfile'])
     ->name('admin.profile.update');
 
-Route::put(
-    '/company/detail/{id}/update',
-    [CompanyDashboardController::class, 'updateInfo']
-)->name('company.info.update');
+Route::get('/company/{id}/edit', [CompanyDashboardController::class, 'edit'])
+    ->name('company.edit');
+
+Route::put('/company/{id}', [CompanyDashboardController::class, 'update'])
+    ->name('company.update');
+
+Route::get('/forgot-password', [AdminController::class, 'showForgotPassword'])
+    ->name('forgot.password');
+
+Route::post('/forgot-password', [AdminController::class, 'resetForgotPassword'])
+    ->name('forgot.password.update');
+
+Route::delete('/company/{id}', [CompanyDashboardController::class, 'destroy'])
+    ->name('company.destroy');
+
+Route::delete('/employee/{id}', [EmployeeDashboardController::class, 'destroy'])
+    ->name('employee.destroy');
+
+Route::middleware(['auth:admin'])->group(function () {
+
+    Route::get('/company/{company}/employees', [AttendanceController::class, 'employees']);
+    Route::get('/company/{company}/attendance-dates', [AttendanceController::class, 'attendanceDates']);
+    Route::get('/company/{company}/attendance/{date}', [AttendanceController::class, 'attendanceByDate']);
+
+    Route::post('/attendance/create-date', [AttendanceController::class, 'createDate']);
+    Route::post('/attendance/delete-date', [AttendanceController::class, 'deleteDate']);
+    Route::post('/attendance/manual/bulk-save', [AttendanceController::class, 'bulkSave']);
+
+});
+
+
+use App\Http\Controllers\EmployeeEditController;
+
+Route::prefix('employee/{employee}')->group(function () {
+
+    Route::get('info', [EmployeeEditController::class, 'show'])
+        ->name('employee.info');
+
+    Route::get('edit/personal', [EmployeeEditController::class, 'editPersonal'])
+        ->name('employee.edit.personal');
+    Route::put('edit/personal', [EmployeeEditController::class, 'updatePersonal'])
+        ->name('employee.update.personal');
+
+    Route::get('edit/address', [EmployeeEditController::class, 'editAddress'])
+        ->name('employee.edit.address');
+    Route::put('edit/address', [EmployeeEditController::class, 'updateAddress'])
+        ->name('employee.update.address');
+
+    Route::get('edit/job', [EmployeeEditController::class, 'editJob'])
+        ->name('employee.edit.job');
+    Route::put('edit/job', [EmployeeEditController::class, 'updateJob'])
+        ->name('employee.update.job');
+
+    Route::get('edit/account', [EmployeeEditController::class, 'editAccount'])
+        ->name('employee.edit.account');
+    Route::put('edit/account', [EmployeeEditController::class, 'updateAccount'])
+        ->name('employee.update.account');
+
+    Route::get('edit/government', [EmployeeEditController::class, 'editGovernment'])
+        ->name('employee.edit.government');
+    Route::put('edit/government', [EmployeeEditController::class, 'updateGovernment'])
+        ->name('employee.update.government');
+
+});
 
 
 //Employee Web Stuff

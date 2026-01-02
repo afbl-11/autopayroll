@@ -7,7 +7,7 @@
         // Add cache-busting
         $imgSrc = asset('storage/' . $adminUser->profile_photo) . '?t=' . now()->timestamp;
     } else {
-        $imgSrc = asset('images/default-avatar.png');
+        $imgSrc = asset('assets/default_profile.png');
     }
 @endphp
 

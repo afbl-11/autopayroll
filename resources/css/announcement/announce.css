@@ -80,3 +80,9 @@
 
    
 }
+
+@media (max-width: 400px){
+    .main-content nav {
+        width: 97%;
+    }
+}

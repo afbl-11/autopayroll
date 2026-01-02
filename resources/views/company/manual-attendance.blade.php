@@ -8,7 +8,7 @@
 {{-- LEGEND --}}
 <div class="attendance-legend">
     <strong>Legend:</strong>
-    <span><b>8</b> – Present (8 Hours)</span>
+    <span><b>P</b> – Present (8 hours)</span>
     <span><b>O</b> – Overtime</span>
     <span><b>LT</b> – Late / Undertime</span>
     <span><b>A</b> – Absent</span>
@@ -125,7 +125,7 @@ companySelect.addEventListener("change", async () => {
 
     try {
         // Load employees
-        const empRes = await fetch(`/api/company/${companySelect.value}/employees`);
+        const empRes = await fetch(`/company/${companySelect.value}/employees`);
         if (!empRes.ok) throw new Error("Failed to fetch employees");
         
         const empData = await empRes.json();
@@ -135,7 +135,7 @@ companySelect.addEventListener("change", async () => {
         renderGrid();
 
         // Load attendance dates
-        const dateRes = await fetch(`/api/company/${companySelect.value}/attendance-dates`);
+        const dateRes = await fetch(`/company/${companySelect.value}/attendance-dates`);
         if (!dateRes.ok) throw new Error("Failed to fetch dates");
         
         const dateData = await dateRes.json();
@@ -189,7 +189,7 @@ dateSelect.addEventListener("change", async () => {
     try {
         // Load attendance for selected date if not already cached
         if (!attendanceByDate[selectedDate]) {
-            const response = await fetch(`/api/company/${companySelect.value}/attendance/${selectedDate}`);
+            const response = await fetch(`/company/${companySelect.value}/attendance/${selectedDate}`);
             if (!response.ok) throw new Error("Failed to fetch attendance");
             
             const data = await response.json();
@@ -203,7 +203,7 @@ dateSelect.addEventListener("change", async () => {
         employees.forEach(emp => {
             if (!attendance[emp.employee_id]) {
                 attendance[emp.employee_id] = {
-                    status: "8",
+                    status: "P",
                     time_in: "",
                     time_out: ""
                 };
@@ -247,7 +247,7 @@ createDateBtn.addEventListener("click", async () => {
     }
 
     try {
-        const response = await fetch("/api/attendance/create-date", {
+        const response = await fetch("/attendance/create-date", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -270,7 +270,7 @@ createDateBtn.addEventListener("click", async () => {
         attendance = {};
         employees.forEach(emp => {
             attendance[emp.employee_id] = {
-                status: "8",
+                status: "P",
                 time_in: "",
                 time_out: ""
             };
@@ -313,7 +313,7 @@ deleteBtn.addEventListener("click", async () => {
     }
 
     try {
-        const response = await fetch("/api/attendance/delete-date", {
+        const response = await fetch("/attendance/delete-date", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -375,14 +375,14 @@ function renderGrid() {
             <td>${emp.employee_id}</td>
             <td>${emp.employee_name}</td>
             <td>
-                ${["8","O","LT","A","DO","R","S","L","CO","CDO"]
+                ${["P","O","LT","A","DO","R","S","L","CO","CDO"]
                     .map(s => `<button class="status-btn" data-status="${s}">${s}</button>`).join("")}
             </td>
             <td><input type="time" class="time-in" disabled></td>
             <td><input type="time" class="time-out" disabled></td>
         `;
         
-        tableBody.appendChild(row);
+        tableBody.appendChild(row); 
     });
 
     // Initialize status buttons
@@ -400,7 +400,7 @@ function renderAttendanceGrid() {
         
         if (!data) {
             // Set default if no data
-            row.querySelector('[data-status="8"]').classList.add("active");
+            row.querySelector('[data-status="P"]').classList.add("active");
             row.querySelector(".time-in").value = "";
             row.querySelector(".time-out").value = "";
             return;
@@ -469,7 +469,7 @@ tableBody.addEventListener("input", e => {
     const id = row.dataset.id;
 
     if (!attendance[id]) {
-        attendance[id] = { status: "8", time_in: "", time_out: "" };
+        attendance[id] = { status: "P", time_in: "", time_out: "" };
     }
 
     if (input.classList.contains("time-in")) {
@@ -500,7 +500,7 @@ saveBtn.addEventListener("click", async () => {
     }
 
     try {
-        const response = await fetch("/api/attendance/manual/bulk-save", {
+        const response = await fetch("/attendance/manual/bulk-save", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -569,7 +569,7 @@ function resetAttendanceGrid() {
     document.querySelectorAll("tr[data-id]").forEach(row => {
         // Reset status to default
         row.querySelectorAll(".status-btn").forEach(btn => {
-            btn.classList.toggle("active", btn.dataset.status === "8");
+            btn.classList.toggle("active", btn.dataset.status === "P");
         });
 
         // Reset and disable time inputs
@@ -585,7 +585,7 @@ function resetAttendanceGrid() {
 
 function activateStatusButtons() {
     document.querySelectorAll("tr[data-id]").forEach(row => {
-        const defaultBtn = row.querySelector('[data-status="8"]');
+        const defaultBtn = row.querySelector('[data-status="P"]');
         if (defaultBtn) {
             defaultBtn.classList.add("active");
         }
@@ -625,7 +625,7 @@ function updateTimeInputsState() {
     document.querySelectorAll("tr[data-id]").forEach(row => {
         const id = row.dataset.id;
         const data = attendance[id];
-        const status = data ? data.status : "8";
+        const status = data ? data.status : "P";
         
         updateTimeInputState(row, status);
     });

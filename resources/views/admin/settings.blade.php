@@ -14,6 +14,12 @@
                     </div>
                 @endif
 
+                @if(session('info'))
+                    <div id="success-alert" class="custom-alert">
+                        {{ session('info') }}
+                    </div>
+                @endif
+
                 <form action="{{ route('admin.profile.update') }}"
                       method="POST"
                       enctype="multipart/form-data">
@@ -24,7 +30,7 @@
                         <img
                             src="{{ auth('admin')->user()->profile_photo
                                     ? asset('storage/' . auth('admin')->user()->profile_photo)
-                                    : asset('images/default-avatar.png') }}"
+                                    : asset('assets/no_profile_picture.jpg') }}"
                             alt="Profile Picture"
                             class="avatar-preview"
                             id="avatarPreview"
@@ -48,6 +54,9 @@
                                    name="first_name"
                                    value="{{ old('first_name', auth('admin')->user()->first_name) }}"
                                    required>
+                            @error('first_name')
+                                <p class="error-message">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div class="form-group">
@@ -85,6 +94,9 @@
                             <input type="text"
                                    name="company_name"
                                    value="{{ old('company_name', auth('admin')->user()->company_name ?? '') }}">
+                            @error('company_name')
+                                <p class="error-message">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
 
@@ -193,3 +205,10 @@
         });
     </script>
 </x-app>
+<style>
+.error-message {
+    color: #BA2A2A;
+    font-size: 0.875rem;
+    letter-spacing: 1.33px;
+}
+</style>

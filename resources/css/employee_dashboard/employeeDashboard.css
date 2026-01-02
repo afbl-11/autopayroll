@@ -264,3 +264,10 @@ nav a:hover {
     .eh-employee { margin-left: 0; }
     .eh-username { display: none; }
 }
+
+@media (max-width: 480px) {
+    .main-content {
+        margin-left:-15px;
+        width: 95%;
+    }
+}

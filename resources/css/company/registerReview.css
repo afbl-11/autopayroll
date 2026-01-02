@@ -83,4 +83,24 @@ h6 {
 
 }
 
+.company-logo-preview {
+    margin: 16px 0 24px;
+    display: flex;
+    justify-content: center;
+}
 
+#titular-logo {
+    text-align: center;
+    margin-top: -15px;
+    margin-bottom: 35px;
+    color: #4B5563 !important;
+}
+
+.company-logo-preview img {
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #e5e7eb;
+    background: #fff;
+}

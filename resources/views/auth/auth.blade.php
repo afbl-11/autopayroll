@@ -14,7 +14,7 @@
                 <div class="field-row">
                     <x-form-input type="password" name="password" id="password" label="Password" class="toggleEye" required togglePassword="true"></x-form-input>
 
-                    <a href="{{route('forgot.password')}}"><small>Forgot Password</small></a>
+                    <a href="{{ route('forgot.password') }}"><small>Forgot Password</small></a>
                 </div>
 
                 <x-button-submit>Sign in</x-button-submit>
@@ -45,5 +45,18 @@
             });
         });
     });
-
 </script>
+@if(session('success'))
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        function showCustomAlert(message) {
+            const alert = document.createElement("div");
+            alert.className = "custom-alert";
+            alert.textContent = message;
+            document.body.appendChild(alert);
+            setTimeout(() => alert.remove(), 3500);
+        }
+        showCustomAlert(@json(session('success')));
+    });
+</script>
+@endif

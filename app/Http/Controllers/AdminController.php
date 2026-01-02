@@ -8,7 +8,11 @@ use App\Models\Admin;
 use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Storage; 
+use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\Validator;
+use App\Models\Employee;
+use App\Models\Company;
 
 class AdminController extends Controller
 {
@@ -99,30 +103,130 @@ class AdminController extends Controller
         $admin = auth('admin')->user();
 
         $request->validate([
-            'first_name'    => 'required|string|max:255',
+            'first_name'    => 'sometimes|required|string|max:255',
             'middle_name'   => 'nullable|string|max:255',
-            'last_name'     => 'required|string|max:255',
+            'last_name'     => 'sometimes|required|string|max:255',
             'suffix'        => 'nullable|string|max:50',
-            'company_name'  => 'nullable|string|max:255',
+            'company_name'  => 'sometimes|required|string|max:255',
             'profile_photo' => 'nullable|image|max:2048',
         ]);
 
-        if ($request->hasFile('profile_photo')) {
-            $path = $request->file('profile_photo')
-                            ->store('profile-photos', 'public');
+        $firstName  = ucwords(strtolower($request->first_name));
+        $middleName = $request->middle_name ? ucwords(strtolower($request->middle_name)) : null;
+        $lastName   = ucwords(strtolower($request->last_name));
+        $suffix     = $request->suffix ? ucwords(strtolower($request->suffix)) : null;
 
-            $admin->profile_photo = $path;
+        $employeeQuery = Employee::where('first_name', $firstName)
+            ->where('last_name', $lastName)
+            ->where('middle_name', $middleName)
+            ->where('suffix', $suffix);
+
+        if ($employeeQuery->exists()) {
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'first_name' => 'This name is already registered as an employee.'
+                ]);
         }
 
-        $admin->update($request->only([
-            'first_name',
-            'middle_name',
-            'last_name',
-            'suffix',
-            'company_name',
-        ]));
+        if ($request->company_name) {
+            $companyName = ucwords(strtolower($request->company_name));
 
-        return back()->with('success', 'Profile updated');
+            if (
+                Company::where('company_name', $companyName)
+                    ->where('company_id', '!=', $admin->company_id)
+                    ->exists()
+            ) {
+                return back()
+                    ->withInput()
+                    ->withErrors([
+                        'company_name' => 'This company name already exists.'
+                    ]);
+            }
+        }
+
+        $data = [
+            'first_name'   => $firstName,
+            'middle_name'  => $middleName,
+            'last_name'    => $lastName,
+            'suffix'       => $suffix,
+            'company_name' => $request->company_name
+                ? ucwords(strtolower($request->company_name))
+                : null,
+        ];
+
+        if ($request->hasFile('profile_photo')) {
+            $data['profile_photo'] = $request->file('profile_photo')
+                ->store('profile-photos', 'public');
+        }
+
+        $admin->update($data);
+
+        if ($admin->wasChanged()) {
+            return back()->with('success', 'Profile updated.');
+        }
+
+        return back()->with('info', 'No changes were made.');
     }
 
+    public function showForgotPassword()
+    {
+        return view('auth.auth-forgot-password')
+            ->with(['title' => 'Reset Password']);
+    }
+
+    public function resetForgotPassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|exists:admins,email',
+            'old_password' => 'required|string',
+
+            'password' => [
+                'required',
+                Password::min(8)
+                    ->mixedCase()
+                    ->numbers()
+                    ->symbols(),
+            ],
+
+            'password_confirmation' => 'required',
+        ]);
+
+        $validator->after(function ($validator) use ($request) {
+            if ($request->password !== $request->password_confirmation) {
+                $validator->errors()->add(
+                    'password_confirmation',
+                    'Password does not match.'
+                );
+            }
+        });
+
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $admin = Admin::where('email', $request->email)->firstOrFail();
+
+        if (!Hash::check($request->old_password, $admin->password)) {
+            return back()
+                ->withErrors(['old_password' => 'Current password is incorrect.'])
+                ->withInput();
+        }
+
+        if (Hash::check($request->password, $admin->password)) {
+            return back()
+                ->withErrors(['password' => 'New password must be different from the old password.'])
+                ->withInput();
+        }
+
+        $admin->password = Hash::make($request->password);
+        $admin->save();
+
+        return redirect()
+            ->route('login')
+            ->with('success', 'Password updated.');
+    }
 }

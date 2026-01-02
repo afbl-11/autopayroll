@@ -15,7 +15,16 @@ class ClientRegistrationController extends Controller
 
     {}
     public function storeBasicInformation(ClientRegistrationRequest $request) {
-        $this->clientService->storeBasicInfo($request->validated());
+        $data = $request->validated();
+
+        if ($request->hasFile('company_logo')) {
+            $data['company_logo'] = $request->file('company_logo')
+                ->store('company_logos', 'public');
+        } else {
+            $data['company_logo'] = null;
+        }
+
+        $this->clientService->storeBasicInfo($data);
 
         return redirect()->route('show.register.client.map');
     }
@@ -38,7 +47,7 @@ class ClientRegistrationController extends Controller
     public function register() {
         $this->clientService->createClient();
 
-        return redirect()->route('dashboard');
+        return redirect()->route('dashboard')->with('success', 'Successfully Registered Company.');
     }
     public function showForm() {
         return view('auth.company-register')->with(['title' => 'Client Registration']);

@@ -2,33 +2,20 @@
 
 <x-app :noHeader="true" :navigation="true" :company="$company">
     <section class="main-content">
+        <nav>
+            <a href="{{ route('company.edit', $company->company_id) }}"
+            class="btn-edit">
+                Edit Profile
+            </a>
+        </nav>
         <div class="information-card">
 
             {{-- HEADER --}}
             <div class="card-header">
                 <h6>Company Information</h6>
-
-                <div class="action-buttons">
-                    <button type="button" id="editBtn" class="btn-edit">
-                        Edit
-                    </button>
-
-                    <button type="submit"
-                            form="companyForm"
-                            id="saveBtn"
-                            class="btn-save hidden">
-                        Save
-                    </button>
-                </div>
             </div>
 
-            <form id="companyForm"
-                  method="POST"
-                  action="{{ route('company.info.update', $company->getKey()) }}">
-                @csrf
-                @method('PUT')
-
-                <div class="input-wrapper editable">
+                <div class="input-wrapper">
                     <x-form-input
                         class="form-input"
                         label="Company Owner"
@@ -38,22 +25,17 @@
                         readonly
                     />
 
-                    <div class="tin-field-wrapper">
-                        <x-form-input
-                            class="form-input {{ $errors->has('tin_number') ? 'tin-error' : '' }}"
-                            label="TIN"
-                            id="tin"
-                            name="tin_number"
-                            :value="old('tin_number', $company->tin_number)"
-                            readonly
-                        />
-                        @error('tin_number')
-                            <span class="form-error">{{ $message }}</span>
-                        @enderror
-                    </div>
+                    <x-form-input
+                        class="form-input"
+                        label="TIN"
+                        id="tin"
+                        name="tin_number"
+                        :value="old('tin_number', $company->tin_number)"
+                        readonly
+                    />
                 </div>
 
-                <div class="input-wrapper editable">
+                <div class="input-wrapper">
                     <x-form-input
                         class="form-input"
                         label="Type of Industry"
@@ -72,7 +54,6 @@
                         data-no-edit
                     />
                 </div>
-            </form>
 
             <h6 class="title-address">Address</h6>
             <div class="input-wrapper">
@@ -105,76 +86,35 @@
                 />
             </div>
         </div>
+        <div class="delete-company-wrapper">
+            @if($company->employees->count() > 0)
+                <button
+                    class="btn-delete disabled"
+                    disabled
+                    title="Unassign all employees before deleting this company">
+                    Delete Company
+                </button>
+            @else
+                <form action="{{ route('company.destroy', $company->company_id) }}"
+                    method="POST"
+                    onsubmit="return confirm('Are you sure you want to delete this company? This action cannot be undone.')">
+                    @csrf
+                    @method('DELETE')
+
+                    <button type="submit" class="btn-delete">
+                        Delete Company
+                    </button>
+                </form>
+            @endif
+
+            @if($errors->has('delete'))
+                <p class="delete-error">
+                    {{ $errors->first('delete') }}
+                </p>
+            @endif
+        </div>
     </section>
 </x-app>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const editBtn = document.getElementById('editBtn');
-    const saveBtn = document.getElementById('saveBtn');
-    const form    = document.getElementById('companyForm');
-    const tinField = document.getElementById('tin');
-    if (tinField) {
-        tinField.addEventListener('input', function () {
-           let value = this.value.replace(/\D/g, '');
-
-            value = value.substring(0, 12);
-                if (value.length > 9) {
-                    value = value.replace(/(\d{3})(\d{3})(\d{3})(\d+)/, '$1-$2-$3-$4');
-                } else if (value.length > 6) {
-                    value = value.replace(/(\d{3})(\d{3})(\d+)/, '$1-$2-$3');
-                } else if (value.length > 3) {
-                    value = value.replace(/(\d{3})(\d+)/, '$1-$2');
-                }
-            this.value = value;
-        });
-    }
-    const hasErrors = @json($errors->has('tin_number'));
-    if (!editBtn || !saveBtn || !form) return;
-
-    const editableIds = ['owner', 'tin', 'industry'];
-
-    function showCustomAlert(message) {
-        const alert = document.createElement("div");
-        alert.className = "custom-alert";
-        alert.textContent = message;
-        document.body.appendChild(alert);
-        setTimeout(() => alert.remove(), 3500);
-    }
-    document.querySelectorAll('input, textarea, select').forEach(el => {
-        el.style.pointerEvents = 'none';
-        el.setAttribute('readonly', true);
-    });
-
-    function enableEditMode(reason = "edit") {
-        editableIds.forEach(id => {
-            const field = document.getElementById(id);
-            if (!field) return;
-
-            field.removeAttribute('readonly');
-            field.style.pointerEvents = 'auto';
-            field.classList.add('editing');
-        });
-        editBtn.classList.add('hidden');
-        saveBtn.classList.remove('hidden');
-        if (reason === "manual") {
-            showCustomAlert("Edit mode enabled. You can now update company information.");
-        }
-    }
-
-    editBtn.addEventListener('click', () => enableEditMode("manual"));
-    if (hasErrors) {
-        enableEditMode("error");
-        const tinField = document.getElementById('tin');
-        if (tinField) tinField.focus();
-        showCustomAlert("You are still in Edit mode.");
-    }
-
-    form.addEventListener('submit', function () {
-        showCustomAlert("Saving company information...");
-    });
-});
-
-</script>
 @if(session('success'))
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -189,3 +129,43 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 </script>
 @endif
+<style>
+    .btn-delete {
+        background: var(--clr-red);
+        color: var(--clr-background);
+        padding: 10px 15px;
+        border-radius: 8px;
+        font-weight: 400;
+        cursor: pointer;
+        margin-top: 35px;
+        box-shadow: 2px 5px 5px 0 rgba(136, 125, 125, 0.25);
+        letter-spacing: 1.33px;
+        margin-bottom: 50px;
+        border: none;
+    }
+    .btn-delete:hover {
+        background: var(--clr-yellow);
+        color: var(--clr-primary);
+    }
+    .btn-delete.disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
+    @media (max-width: 1150px){
+        .btn-delete {
+            margin-left: 50px;
+        }
+    }
+
+    @media (max-width: 650px){
+        .btn-delete {
+            margin-left: 75px;
+        }
+    }
+
+    @media (max-width: 500px){
+        .btn-delete {
+            margin-left: 70px;
+        }
+    }
+</style>

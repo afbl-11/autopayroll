@@ -18,6 +18,9 @@ use App\Services\UpdateCompanyAddress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
+use App\Models\Admin;
+
 
 class CompanyDashboardController extends Controller
 {
@@ -103,44 +106,93 @@ class CompanyDashboardController extends Controller
         return view('company.manual-attendance', compact('companies'));
     }
 
-    public function updateInfo(Request $request, $id)
+    public function edit($id)
     {
-        $request->validate(
-            [
-                'owner' => 'required|string|max:255',
-                'tin_number' => [
-                    'required',
-                    'string',
-                    'max:20',
-                    'regex:/^[\d-]{11,15}$/',
-                        function ($value, $fail) {
-                            $digits = str_replace('-', '', $value);
-                            if (strlen($digits) < 9 || strlen($digits) > 12) {
-                                $fail('The tin number field must be between 9 and 12 digits.');
-                            }
-                        },
-                    Rule::unique('companies', 'tin_number')
-                        ->ignore($id, 'company_id'),
-                ],
-                'industry' => 'required|string|max:255',
+        $company = Company::where('company_id', $id)->firstOrFail();
+
+        return view('company.company-information-edit', compact('company'))
+            ->with('title', 'Edit Company');
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'company_name' => 'nullable|string|max:255',
+            'first_name'   => 'nullable|string|max:255',
+            'last_name'    => 'nullable|string|max:255',
+            'industry'     => 'nullable|string|max:255',
+            'tin_number'   => [
+                'nullable',
+                'regex:/^[\d-]{11,15}$/',
+                Rule::unique('companies', 'tin_number')
+                    ->ignore($id, 'company_id'),
             ],
-            [
-                'tin_number.unique' => 'This tin number has already been registered to another company.',
-                'tin_number.digits_between' => 'The tin number field must be between 9 and 12 digits.',
-            ]
-        );
+            'company_logo' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+        ]);
 
         $company = Company::where('company_id', $id)->firstOrFail();
 
-        [$firstName, $lastName] = explode(' ', $request->owner, 2);
+        $companyName = ucwords(strtolower($request->input('company_name')));
+        $industry = ucwords(strtolower($request->input('industry')));
 
-        $company->update([
-            'first_name' => $firstName,
-            'last_name'  => $lastName ?? '',
-            'tin_number' => $request->tin_number,
-            'industry'   => $request->industry,
-        ]);
+        $companyExists = Company::where('company_name', $companyName)
+            ->where('industry', $industry)
+            ->where('company_id', '!=', $id)
+            ->exists();
 
-        return back()->with('success', 'Company information updated successfully.');
+        $adminExists = Admin::where('company_name', $companyName)->exists();
+
+        if ($companyExists || $adminExists) {
+            return back()->withErrors([
+                'company_name' => $adminExists
+                    ? 'This is your company name.'
+                    : 'A company with the same name and industry already exists.',
+            ])->withInput();
+        }
+
+        if ($request->hasFile('company_logo')) {
+            if ($company->company_logo) {
+                Storage::disk('public')->delete($company->company_logo);
+            }
+
+            $validated['company_logo'] = $request
+                ->file('company_logo')
+                ->store('company-logos', 'public');
+        }
+
+        $validated = array_filter($validated, fn ($value) => !is_null($value));
+
+        $company->update($validated);
+
+         if ($company->wasChanged()) {
+            return redirect()
+                ->route('company.dashboard.detail', $id)
+                ->with('success', 'Company information updated.');
+        }
+
+        return redirect()->route('company.dashboard.detail', $id);
+    }
+
+    public function destroy($id)
+    {
+        $company = Company::withCount('employees')
+            ->where('company_id', $id)
+            ->firstOrFail();
+
+        if ($company->employees_count > 0) {
+            return back()->with('error', 
+                'Cannot delete this company while employees are still assigned.'
+            );
+        }
+
+        if ($company->company_logo) {
+            Storage::disk('public')->delete($company->company_logo);
+        }
+
+        $company->delete();
+
+        return redirect()
+            ->route('company.dashboard')
+            ->with('success', 'Company deleted successfully.');
     }
 }

@@ -243,6 +243,12 @@ input[type="time"]:disabled {
     }
 }
 
+@media (max-width: 400px) {
+    .main-content {
+        width: 65%;
+    }
+}
+
 /* MODE INDICATORS */
 .mode-view .status-btn { opacity: 0.4; cursor: not-allowed; }
 .mode-edit .status-btn { background: #f59e0b; color: #fff; }

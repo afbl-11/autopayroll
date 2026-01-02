@@ -1,21 +1,25 @@
-
 @vite(['resources/css/employee_registration/address.css', 'resources/js/api/address-picker.js'])
+@php
+    $logoPath = !empty($company->company_logo) && file_exists(public_path('storage/' . $company->company_logo))
+        ? asset('storage/' . $company->company_logo)
+        : asset('assets/default_establishment_picture.png');
+@endphp
+
 <x-app :title="$title">
-
     <section class="main-content">
-
         <div class="form-wrapper">
-            <form action="{{route('store.register.client')}}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('company.update', $company->company_id) }}" method="post" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
                 <h5>Company Information</h5>
                 <div class="field-row">
                     <div class="logo-upload-wrapper">
                         <div class="logo-preview">
-                            <img id="logoPreview" src="{{ asset('assets/default_establishment_picture.png') }}" alt="Company Logo">
+                            <img id="logoPreview" src="{{ $logoPath }}" alt="Company Logo">
                         </div>
 
                         <label for="company_logo" class="upload-btn">
-                            Add Logo
+                            Change Logo
                             <input
                                 type="file"
                                 name="company_logo"
@@ -27,19 +31,21 @@
                     </div>
                 </div>
                 <div class="field-row">
-                    <x-form-input name="company_name" id="company_name" label="Company Name"></x-form-input>
-
+                   <x-form-input name="company_name" id="company_name" label="Company Name" :value="$company->company_name"></x-form-input>
+                      @error('first_name')
+                          <p class="error-message">{{ $message }}</p>
+                      @enderror
                 </div>
                 <div class="field-row">
-                   <x-form-input name="first_name" id="first_name" label="Owner First Name"></x-form-input>
-                   <x-form-input name="last_name" id="last_name" label="Owner Last Name"></x-form-input>
+                   <x-form-input name="first_name" id="first_name" label="Owner First Name" :value="$company->first_name"></x-form-input>
+                   <x-form-input name="last_name" id="last_name" label="Owner Last Name" :value="$company->last_name"></x-form-input>
                 </div>
                 {{--                tin and industry--}}
                 <div class="field-row">
-                    <x-form-input name="tin_number" id="tin_number" label="TIN" placeholder="9-12 digits"></x-form-input>
-                    <x-form-input name="industry" id="industry" label="Industry" placeholder="e.g. Finance"></x-form-input>
+                    <x-form-input name="tin_number" id="tin_number" label="TIN" placeholder="9-12 digits" :value="$company->tin_number"></x-form-input>
+                    <x-form-input name="industry" id="industry" label="Industry" placeholder="e.g. Finance" :value="$company->industry"></x-form-input>
                 </div>
-               <x-button-submit>Add Client</x-button-submit>
+               <x-button-submit>Save</x-button-submit>
             </form>
         </div>
     </section>
@@ -112,6 +118,12 @@
     .upload-btn:hover {
         background: #FFD858;
         color: #020617;
+    }
+
+    .error-message {
+        color: #BA2A2A;
+        font-size: 0.875rem;
+        letter-spacing: 1.33px;
     }
 </style>
 </x-app>

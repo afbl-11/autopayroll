@@ -10,7 +10,7 @@ use App\Repositories\EmployeeRepository;
 use App\Services\AttendanceService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Storage;
 
 class EmployeeDashboardController extends Controller
 {
@@ -68,5 +68,42 @@ class EmployeeDashboardController extends Controller
     public function showDocuments($id) {
         $employee = Employee::findOrFail($id);
         return view('employee.employee-documents',compact('employee'))->with('title','Employee Documents');
+    }
+    public function destroy($id)
+    {
+        $employee = Employee::findOrFail($id);
+
+        if (!is_null($employee->company_id)) {
+            return back()->with(
+                'error',
+                'Cannot delete this employee while assigned to a company.'
+            );
+        }
+
+        if ($employee->profile_photo) {
+            Storage::disk('public')->delete($employee->profile_photo);
+        }
+
+        if ($employee->uploaded_documents) {
+
+            if (is_array($employee->uploaded_documents)) {
+                foreach ($employee->uploaded_documents as $file) {
+                    Storage::disk('public')->delete($file);
+                }
+            }
+
+            if (is_string($employee->uploaded_documents)) {
+                $files = array_filter(explode(',', $employee->uploaded_documents));
+                foreach ($files as $file) {
+                    Storage::disk('public')->delete($file);
+                }
+            }
+        }
+
+        $employee->delete();
+
+        return redirect()
+            ->route('employee.dashboard')
+            ->with('success', 'Employee deleted successfully.');
     }
 }

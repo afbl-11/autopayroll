@@ -3,7 +3,13 @@
 <x-app :navigation="true" navigationType="employee" :employee="$employee" :noHeader="true">
         <div class="content-wrapper">
             <section class="main-content">
+                @if (session('success'))
+                    <div class="custom-alert">
+                        {{ session('success') }}
+                    </div>
+                @endif
                 <div class="card-wrapper">
+                    <a href="{{ route('employee.edit.personal', $employee) }}" class="btn-edit">Edit</a>
                     <h6>Personal Information</h6>
 {{--                    name and gender--}}
                     <div class="field-row">
@@ -61,6 +67,7 @@
                     </div>
                 </div>
                 <div class="card-wrapper">
+                    <a href="{{ route('employee.edit.address', $employee) }}" class="btn-edit">Edit</a>
                     <h6>Address Information</h6>
 {{--                    nav and button--}}
                     <div class="field-row">
@@ -80,12 +87,56 @@
                         />
                     </div>
                 </div>
+                <div class="card-wrapper">
+                    <a href="{{ route('employee.edit.government', $employee) }}" class="btn-edit">Edit</a>
+                    <h6>Government & Bank Information</h6>
+
+                    <div class="field-row">
+                        <x-form-input
+                            label="Bank Account Number"
+                            id="bank_account_number"
+                            name="bank_account_number"
+                            :value="$employee->bank_account_number"
+                        />
+                        <x-form-input
+                            label="SSS Number"
+                            id="sss_number"
+                            name="sss_number"
+                            :value="$employee->sss_number"
+                        />
+                    </div>
+
+                    <div class="field-row">
+                        <x-form-input
+                            label="PhilHealth Number"
+                            id="philhealth_number"
+                            name="philhealth_number"
+                            :value="$employee->phil_health_number"
+                        />
+                        <x-form-input
+                            label="Pag-IBIG Number"
+                            id="pag_ibig_number"
+                            name="pag_ibig_number"
+                            :value="$employee->pag_ibig_number"
+                        />
+                    </div>
+
+                    <div class="field-row">
+                        <x-form-input
+                            label="TIN Number"
+                            id="tin_number"
+                            name="tin_number"
+                            :value="$employee->tin_number"
+                        />
+                    </div>
+                </div>
             </section>
 
             <section class="side-content">
                 <div class="card-wrapper">
+                    <a href="{{ route('employee.edit.account', $employee) }}" class="btn-edit">Edit</a>
                     <h6>Contact Information</h6>
-                    <div class="field-row">
+                    <div class="field-row"> 
                         <x-form-input
                             label="Phone Number"
                             id="phone_num"
@@ -101,6 +152,7 @@
                     </div>
                 </div>
                 <div class="card-wrapper">
+                    <a href="{{ route('employee.edit.job', $employee) }}" class="btn-edit">Edit</a>
                     <h6>Employment Overview</h6>
                     <div class="field-row">
                         <x-form-input
@@ -129,7 +181,73 @@
                 <div class="notes">
 {{--                    optional--}}
                 </div>
-            </section>
+            </section>   
         </div>
+        <div class="delete-employee-wrapper">
+            @if(!is_null($employee->company_id))
+                <button
+                    class="btn-delete disabled"
+                    disabled
+                    title="Unassign employee from company before deleting">
+                    Delete Employee
+                </button>
+            @else
+                <form action="{{ route('employee.destroy', $employee->employee_id) }}"
+                    method="POST"
+                    onsubmit="return confirm('Are you sure you want to delete this employee? This action cannot be undone.')">
+                    @csrf
+                    @method('DELETE')
 
+                    <button type="submit" class="btn-delete">
+                        Delete Employee
+                    </button>
+                </form>
+            @endif
+</div>
 </x-app>
+<script>
+    setTimeout(() => {
+        const alert = document.querySelector('.custom-alert');
+        if (alert) alert.remove();
+    }, 3500);
+</script>
+<style>
+    .btn-delete {
+        background: var(--clr-red);
+        color: var(--clr-background);
+        padding: 10px 15px;
+        border-radius: 8px;
+        font-weight: 400;
+        cursor: pointer;
+        margin-top: 20px;
+        box-shadow: 2px 5px 5px 0 rgba(136, 125, 125, 0.25);
+        letter-spacing: 1.33px;
+        margin-bottom: 50px;
+        border: none;
+    }
+    .btn-delete:hover {
+        background: var(--clr-yellow);
+        color: var(--clr-primary);
+    }
+    .btn-delete.disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
+    @media (max-width: 1150px){
+        .btn-delete {
+            margin-left: 50px;
+        }
+    }
+
+    @media (max-width: 650px){
+        .btn-delete {
+            margin-left: 75px;
+        }
+    }
+
+    @media (max-width: 500px){
+        .btn-delete {
+            margin-left: 70px;
+        }
+    }
+</style>

@@ -37,7 +37,7 @@
                         :id="$company->company_id"
                         :industry="$company->industry"
                         :address="$company->address"
-                        :logo="'assets/company-pic.jpg'"
+                        :logo="$company->company_logo"
                         :name="$company->company_name"
                         :count="$company->employees_count"
                     ></x-company-cards>
@@ -87,4 +87,42 @@
             }
         });
     </script>
+    @if(session('success'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function showCustomAlert(message) {
+                const alert = document.createElement("div");
+                alert.className = "custom-alert";
+                alert.textContent = message;
+                document.body.appendChild(alert);
+                setTimeout(() => alert.remove(), 3500);
+            }
+            showCustomAlert(@json(session('success')));
+        });
+    </script>
+    @endif
 </x-app>
+<style>
+    .custom-alert {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #FFD858;
+        color: black;
+        padding: 14px 20px;
+        border-radius: 8px;
+        font-size: 14px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        z-index: 9999;
+        animation: slideIn 0.4s ease, fadeOut 0.4s ease 3s forwards;
+    }
+
+    @keyframes slideIn {
+        from { transform: translateX(30px); opacity: 0; }
+        to   { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes fadeOut {
+        to { opacity: 0; transform: translateX(30px); }
+    }
+</style>

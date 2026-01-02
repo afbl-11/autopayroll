@@ -4,6 +4,8 @@ namespace App\Http\Requests\employeeRegistrationRequest;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use App\Models\Employee;
+use App\Models\Admin;
 
 class BasicInformationRequest extends FormRequest
 {
@@ -51,10 +53,62 @@ class BasicInformationRequest extends FormRequest
             ],
         ];
     }
+    
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $firstName = ucwords(strtolower($this->first_name));
+            $middleName = $this->middle_name ? ucwords(strtolower($this->middle_name)) : null;
+            $lastName = ucwords(strtolower($this->last_name));
+            $suffix = $this->suffix ? ucwords(strtolower($this->suffix)) : null;
+
+            $employeeQuery = Employee::where('first_name', $firstName)
+                ->where('last_name', $lastName);
+
+            if ($middleName) {
+                $employeeQuery->where('middle_name', $middleName);
+            } else {
+                $employeeQuery->whereNull('middle_name');
+            }
+
+            if ($suffix) {
+                $employeeQuery->where('suffix', $suffix);
+            } else {
+                $employeeQuery->whereNull('suffix');
+            }
+
+            if ($employeeQuery->exists()) {
+                $validator->errors()->add('first_name', 'An employee with the same full name already exists.');
+            }
+
+            $adminQuery = Admin::where('first_name', $firstName)
+            ->where('last_name', $lastName);
+
+            if ($middleName) {
+                $adminQuery->where('middle_name', $middleName);
+            } else {
+                $adminQuery->whereNull('middle_name');
+            }
+
+            if ($suffix) {
+                $adminQuery->where('suffix', $suffix);
+            } else {
+                $adminQuery->whereNull('suffix');
+            }
+
+            if ($adminQuery->exists()) {
+                $validator->errors()->add(
+                    'first_name',
+                    'This is your name.'
+                );
+            }
+        });
+    }
 
     public function messages()
     {
         return [
+            'first_name.duplicate' => 'An employee with the same full name already exists.',
             'sss_number.regex' => 'The sss number field must be 10 digits.',
             'phil_health_number.regex' => 'The phil health number field must be 12 digits.',
             'pag_ibig_number.regex' => 'The pag ibig number field must be 12 digits.',

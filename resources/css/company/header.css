@@ -148,3 +148,10 @@
         margin-left: 65px;
     }
 }
+
+@media (max-width: 400px) {
+    .header nav {   
+        width: 75%;
+        margin-left: 50px;
+    }
+}
