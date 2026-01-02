@@ -6,6 +6,7 @@ use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Admin;
+use App\Models\Company;
 
 class EmployeeEditController extends Controller
 {
@@ -311,6 +312,14 @@ class EmployeeEditController extends Controller
             'pag_ibig_number'     => 'required|string|max:20|unique:employees,pag_ibig_number,' . $employee->employee_id . ',employee_id',
             'tin_number'          => 'required|string|max:20|unique:employees,tin_number,' . $employee->employee_id . ',employee_id',
         ]);
+
+        if (Company::where('tin_number', $request->tin_number)->exists()) {
+            return redirect()->back()
+                ->withInput()
+                ->withErrors([
+                    'tin_number' => 'This TIN number is already assigned to a company.'
+                ]);
+        }
 
         $employee->update([
             'bank_account_number' => $request->bank_account_number,
