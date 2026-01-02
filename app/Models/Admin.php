@@ -23,6 +23,7 @@ class Admin extends Authenticatable implements MustVerifyEmail
         'middle_name',
         'last_name',
         'suffix',
+        'profile_photo',
         'email',
         'password',
         'company_name',
