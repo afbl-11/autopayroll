@@ -6,6 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use App\Models\Employee;
 use App\Models\Admin;
+use App\Models\Company;
 
 class BasicInformationRequest extends FormRequest
 {
@@ -100,6 +101,13 @@ class BasicInformationRequest extends FormRequest
                 $validator->errors()->add(
                     'first_name',
                     'This is your name.'
+                );
+            }
+
+            if (Company::where('tin_number', $this->tin_number)->exists()) {
+                $validator->errors()->add(
+                    'tin_number',
+                    'This TIN number is already assigned to a company.'
                 );
             }
         });

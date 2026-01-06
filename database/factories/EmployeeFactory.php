@@ -89,11 +89,11 @@ class EmployeeFactory extends Factory
 
             // ID Address
             'id_country' => $idAddress['country'],
-            'id_region' => $idAddress['region'],
-            'id_province' => $idAddress['province'],
+            'id_region_name' => $idAddress['region'],
+            'id_province_name' => $idAddress['province'],
             'id_zip' => $idAddress['zip'],
-            'id_city' => $idAddress['city'],
-            'id_barangay' => $idAddress['barangay'],
+            'id_city_name' => $idAddress['city'],
+            'id_barangay_name' => $idAddress['barangay'],
             'id_street' => $idAddress['street'],
             'id_house_number' => $idAddress['house_number'],
 

@@ -130,6 +130,17 @@ class CompanyDashboardController extends Controller
             'company_logo' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
+        if (
+            isset($validated['tin_number']) &&
+            Employee::where('tin_number', $validated['tin_number'])->exists()
+        ) {
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'tin_number' => 'This TIN number is already assigned to an employee.'
+                ]);
+        }
+
         $company = Company::where('company_id', $id)->firstOrFail();
 
         $companyName = ucwords(strtolower($request->input('company_name')));

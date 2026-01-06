@@ -5,32 +5,57 @@
     padding: 10px;
     background: var(--clr-card-surface);
     border-bottom: 1px solid rgba(156, 163, 175, 0.5);
-
+    align-items: center;
+    gap: 10px;
 }
 
 .leave-card:hover {
-    background-color: #f1f1f1;;
+    background-color: #f1f1f1;
     cursor: pointer;
 }
 
-.leave-card .leave-type  {
+.leave-card .leave-type {
     font-weight: 600;
+    flex: 0 0 110px; 
+    text-align: left;
 }
-.leave-card .leave-type ,
+
+.leave-card .leave-message {
+    flex: 1; 
+    color: var(--clr-secondary);
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .leave-card .leave-date,
 .leave-card .status {
+    flex: 0 0 100px; 
     display: flex;
-    width: 10%;
-    align-items: center;
     justify-content: center;
-    text-align: center;
+    white-space: nowrap;
 }
-.leave-card .leave-message {
-    color: var(--clr-secondary);
-    align-items: center;
-    text-align: start;
-    display: flex;
-    width: 70%;
-    padding-left: 10px;
-    overflow: clip;
+
+@media (max-width: 600px) {
+    .leave-card {
+        flex-wrap: wrap;
+        height: auto;
+    }
+
+    .leave-card .leave-type,
+    .leave-card .leave-date,
+    .leave-card .status {
+        flex: 0 0 auto;
+        width: auto;
+        font-size: 13px;
+    }
+
+    .leave-card .leave-message {
+        width: 100%;
+        order: 2;
+        padding-left: 0;
+        font-size: 13px;
+    }
 }

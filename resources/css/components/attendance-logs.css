@@ -2,12 +2,13 @@
     display: flex;
     background-color: var(--clr-card-surface);
     box-shadow: 2px 5px 5.9px 0 rgba(136, 125, 125, 0.25);
-    width: 95%;
-    height: 100px;
+    width: 90%;
+    height: 110px;
     border-radius: 16px;
     padding: 20px;
     justify-content: center;
     align-items: center;
+    margin-left: 30px;
 }
 
 .data-wrapper {
@@ -89,4 +90,102 @@
 
 .timeline-labels span {
     white-space: nowrap;
+}
+
+
+@media (max-width: 1250px) {
+
+    .logs-wrapper {
+        width: 90%;
+        height: auto;
+        padding: 16px;
+        margin-left: 35px;
+        margin-bottom: 15px;
+    }
+
+    .data-wrapper {
+        padding: 12px;
+    }
+
+    .stats {
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 1150px) {
+    .logs-wrapper {
+        width: 85%;
+        margin-left: 55px;
+    }
+}
+
+@media (max-width: 900px) {
+    .logs-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+        height: auto;
+        padding: 16px;
+        gap: 14px;
+        width: 75%;
+        margin-left: 70px;
+    }
+
+    .data-wrapper {
+        width: 100% !important;
+        border-right: none;
+        border-bottom: 1px solid var(--clr-primary);
+        padding: 12px 0;
+        text-align: center;
+    }
+
+    .data-wrapper:last-of-type {
+        border-bottom: none;
+        justify-content: center;
+    }
+
+    .stats {
+        justify-content: center;
+        gap: 16px;
+    }
+
+    #work-hours {
+        align-items: center;
+    }
+
+    .timeline-wrapper {
+        margin-top: 12px;
+    }
+
+    .timeline-labels {
+        font-size: 0.7rem;
+    }
+}
+
+@media (max-width: 700px) {
+    .logs-wrapper {
+        width: 65%;
+        margin-left: 80px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .logs-wrapper {
+        padding: 12px;
+    }
+
+    .stats {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .timeline {
+        height: 10px;
+    }
+
+    .timeline-labels {
+        font-size: 0.65rem;
+    }
 }

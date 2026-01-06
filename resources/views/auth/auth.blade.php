@@ -1,4 +1,5 @@
 @vite(['resources/css/auth/auth.css', 'resources/js/app.js', "resources/css/theme.css"])
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <x-root>
     <nav><x-logo-expanded/></nav>
     <section class="main-content">
@@ -15,6 +16,13 @@
                     <x-form-input type="password" name="password" id="password" label="Password" class="toggleEye" required togglePassword="true"></x-form-input>
 
                     <a href="{{ route('forgot.password') }}"><small>Forgot Password</small></a>
+                </div>
+
+                    {{-- CAPTCHA --}}
+                <div class="field-row captcha-row">
+                    <div class="g-recaptcha"
+                        data-sitekey="{{ config('services.recaptcha.site_key') }}">
+                    </div>
                 </div>
 
                 <x-button-submit>Sign in</x-button-submit>
@@ -60,3 +68,15 @@
     });
 </script>
 @endif
+<style>
+    .captcha-row {
+        display: flex;
+        justify-content: center;
+        margin: 15px 0;
+    }
+
+    .error {
+        color: #dc2626;
+        font-size: 0.75rem;
+    }
+</style>
