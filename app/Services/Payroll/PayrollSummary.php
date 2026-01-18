@@ -9,12 +9,13 @@ use App\Models\Payroll;
 class PayrollSummary
 {
     public function showDaily($id) {
-        $employee = DailyPayrollLog::where('employee_id', $id)
-        ->orderBy('created_at', 'asc')
-        ->get();
+        $employee = DailyPayrollLog::withoutGlobalScope(\App\Models\Scopes\AdminScope::class)
+            ->where('employee_id', $id)
+            ->orderBy('payroll_date', 'desc')
+            ->get();
 
-        if(!$employee) {
-            return 'Employee doesn\'t have a payroll log';
+        if(!$employee || $employee->isEmpty()) {
+            return collect(); // Return empty collection instead of string
         }
         return $employee;
     }

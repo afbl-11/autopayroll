@@ -12,6 +12,9 @@ class EmployeeEditController extends Controller
 {
     public function show(Employee $employee)
     {
+        // Load current rate and salary history
+        $employee->load(['currentRate', 'salaryHistory']);
+        
         $fullName = trim(
             $employee->first_name . ' ' .
             ($employee->middle_name ? $employee->middle_name . ' ' : '') .
@@ -44,12 +47,15 @@ class EmployeeEditController extends Controller
              .$employee->id_street . ', '
              .$employee->id_house_number;
 
+        $salaryHistory = $employee->salaryHistory;
+
         return view('employee.employee-information', compact(
             'employee',
             'fullName',
             'age',
             'res_address',
-            'id_address'
+            'id_address',
+            'salaryHistory'
         ));
     }
 
@@ -117,31 +123,30 @@ class EmployeeEditController extends Controller
                 ]);
         }
 
-         $employee->update(
-            collect($validated)
-                ->except('suffix')
-                ->filter(fn ($v) => !is_null($v))
-                ->toArray()
-        );
+        $updateData = [
+            'first_name' => $firstName,
+            'middle_name' => $middleName,
+            'last_name' => $lastName,
+            'birthdate' => $request->birthdate,
+            'gender' => $request->gender,
+            'blood_type' => $request->blood_type,
+            'marital_status' => $request->marital_status,
+        ];
+
+        $employee->update($updateData);
 
         if ($request->has('suffix')) {
             if ($request->suffix === 'None' || $request->suffix === '') {
                 $employee->suffix = null;
             } else {
-                $employee->suffix = $request->suffix;
+                $employee->suffix = $suffix;
             }
             $employee->save();
         }
 
-            if ($employee->wasChanged()) {
-                $employee->save();
-
-                return redirect()
-                    ->route('employee.info', $employee)
-                    ->with('success', 'Personal information updated.');
-            }
-
-        return redirect()->route('employee.info', $employee);
+        return redirect()
+            ->route('employee.info', $employee)
+            ->with('success', 'Personal information updated successfully.');
     }
 
     public function editAddress(Employee $employee)
@@ -338,5 +343,63 @@ class EmployeeEditController extends Controller
             }
 
         return redirect()->route('employee.info', $employee);
+    }
+
+    public function updateRate(Request $request, $id)
+    {
+        $request->validate([
+            'rate' => 'required|numeric|min:0',
+            'effective_from' => 'required|date',
+        ]);
+
+        $employee = Employee::findOrFail($id);
+
+        // End the current rate if it exists
+        if ($employee->currentRate) {
+            $currentRate = $employee->currentRate;
+            $effectiveFrom = \Carbon\Carbon::parse($request->effective_from);
+            
+            // Only end the current rate if the new effective date is after the current effective_from
+            if ($effectiveFrom->greaterThan($currentRate->effective_from)) {
+                $currentRate->update([
+                    'effective_to' => $effectiveFrom->subDay()->format('Y-m-d')
+                ]);
+            }
+        }
+
+        // Create new rate entry
+        \App\Models\EmployeeRate::create([
+            'employee_id' => $employee->employee_id,
+            'admin_id' => auth('admin')->id(),
+            'rate' => $request->rate,
+            'effective_from' => $request->effective_from,
+            'effective_to' => null,
+        ]);
+
+        return redirect()
+            ->route('employee.info', $employee->employee_id)
+            ->with('success', 'Daily salary rate updated successfully.');
+    }
+
+    public function editRate(Request $request, $employeeId, $rateId)
+    {
+        $request->validate([
+            'rate' => 'required|numeric|min:0',
+            'effective_from' => 'required|date',
+            'effective_to' => 'nullable|date|after_or_equal:effective_from',
+        ]);
+
+        $rate = \App\Models\EmployeeRate::findOrFail($rateId);
+        
+        // Update the rate
+        $rate->update([
+            'rate' => $request->rate,
+            'effective_from' => $request->effective_from,
+            'effective_to' => $request->effective_to,
+        ]);
+
+        return redirect()
+            ->route('employee.info', $employeeId)
+            ->with('success', 'Salary rate updated successfully.');
     }
 }

@@ -124,29 +124,44 @@ document.addEventListener("DOMContentLoaded", async () => {
     const sameCheckbox = document.getElementById("same_address");
     sameCheckbox.addEventListener("change", async () => {
         if (!sameCheckbox.checked) {
-            ["id_region","id_province","id_city","id_barangay","id_region_name","id_province_name","id_city_name","id_barangay_name","id_zip","id_street","id_house_number"].forEach(id => {
+            ["id_country","id_region","id_province","id_city","id_barangay","id_region_name","id_province_name","id_city_name","id_barangay_name","id_zip","id_street","id_house_number"].forEach(id => {
                 const el = document.getElementById(id);
-                if(el) el.value = "";
+                if(el) {
+                    if (el.tagName === 'SELECT') {
+                        el.selectedIndex = 0;
+                    } else {
+                        el.value = "";
+                    }
+                }
             });
             return;
+        }
+
+        // Copy country
+        const countryEl = document.getElementById("country");
+        const idCountryEl = document.getElementById("id_country");
+        if (countryEl && idCountryEl) {
+            idCountryEl.value = countryEl.value;
+            // Trigger change event in case there are listeners
+            idCountryEl.dispatchEvent(new Event("change"));
         }
 
         // Copy region
         id_region.value = region.value;
         id_region.dispatchEvent(new Event("change"));
-        await new Promise(r => setTimeout(r, 50)); // wait for provinces/cities to populate
+        await new Promise(r => setTimeout(r, 100)); // wait for provinces/cities to populate
 
         // Copy province
         if (region.value !== NCR_CODE) {
             id_province.value = province.value;
             id_province.dispatchEvent(new Event("change"));
-            await new Promise(r => setTimeout(r, 50));
+            await new Promise(r => setTimeout(r, 100));
         }
 
         // Copy city
         id_city.value = city.value;
         id_city.dispatchEvent(new Event("change"));
-        await new Promise(r => setTimeout(r, 50));
+        await new Promise(r => setTimeout(r, 100));
 
         // Copy barangay
         id_barangay.value = barangay.value;

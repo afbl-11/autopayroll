@@ -57,7 +57,27 @@ class EmployeeRegistrationController extends Controller
     }
 
     public function storeDesignation(AssignmentRequest $request){
-        $this->employeeRegistration->storeDesignation($request->validated());
+        $data = $request->validated();
+        
+        // Remove uploaded_documents from data to avoid serialization error
+        unset($data['uploaded_documents']);
+        
+        // Handle file uploads - store temporarily
+        if ($request->hasFile('uploaded_documents')) {
+            $tempFiles = [];
+            foreach ($request->file('uploaded_documents') as $file) {
+                // Generate unique filename while preserving original name
+                $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                $extension = $file->getClientOriginalExtension();
+                $filename = $originalName . '_' . time() . '_' . uniqid() . '.' . $extension;
+                
+                $tempPath = $file->storeAs('temp/employee_uploads', $filename, 'public');
+                $tempFiles[] = $tempPath;
+            }
+            $data['temp_uploaded_documents'] = $tempFiles;
+        }
+        
+        $this->employeeRegistration->storeDesignation($data);
         return redirect()->route('employee.register.4');
     }
 

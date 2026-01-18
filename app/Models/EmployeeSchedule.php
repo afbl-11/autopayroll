@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Scopes\AdminScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class EmployeeSchedule extends Model
 {
@@ -12,7 +13,7 @@ class EmployeeSchedule extends Model
 
     protected $table = 'employee_schedules';
     protected $primaryKey = 'employee_schedules_id';
-    public $incrementing = true;
+    public $incrementing = false;
     protected $keyType = 'string';
 
 
@@ -20,7 +21,9 @@ class EmployeeSchedule extends Model
         'employee_schedules_id',
         'admin_id',
         'employee_id',
+        'company_id',
         'shift_id',
+        'shift_name',
         'working_days',
         'start_time',
         'end_time',
@@ -46,6 +49,12 @@ class EmployeeSchedule extends Model
         static::addGlobalScope(new AdminScope);
 
         static::creating(function ($model) {
+            // Auto-generate UUID for primary key
+            if (empty($model->employee_schedules_id)) {
+                $model->employee_schedules_id = (string) Str::uuid();
+            }
+            
+            // Auto-assign admin_id
             if($admin = auth('admin')->user()){
                 $model->admin_id = $admin->admin_id;
             }

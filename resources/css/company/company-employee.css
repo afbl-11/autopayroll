@@ -138,7 +138,7 @@
     border-radius: 10px;
     border: 1px solid #d9dff7;
     margin-bottom: 10px;
-    width: 95%;
+    width: calc(95% - 90px);
     margin-left: 45px;
 }
 
@@ -147,6 +147,7 @@
     font-weight: 700;
     text-transform: uppercase;
     color: #555;
+    padding-left: 0;
 }
 
 .eh-employee { margin-left: 50px; }
@@ -769,4 +770,261 @@
 
 @keyframes fadeOut {
     to { opacity: 0; transform: translateX(30px); }
+}
+/* Part-Time Employees Section */
+.available-part-time-section {
+    margin-top: 40px;
+    width: 100%;
+}
+
+.available-part-time-section h3 {
+    color: #374151;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-left: 45px;
+}
+
+#part-time-cards-container {
+    margin-left: 45px;
+}
+
+.part-time-employee-header {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr 0.7fr;
+    padding: 10px 18px;
+    background: #f3f6ff;
+    border-radius: 10px;
+    border: 1px solid #d9dff7;
+    margin-bottom: 10px;
+    width: calc(95% - 90px);
+    margin-left: 0;
+}
+
+.part-time-row {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr 0.7fr;
+    padding: 15px 18px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    transition: all 0.2s;
+    align-items: center;
+    width: calc(95% - 90px);
+    margin-left: 0;
+}
+
+.part-time-row:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border-color: #d1d5db;
+    background: #fafafa;
+}
+
+.pt-col {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #374151;
+}
+
+.pt-employee {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: 50px;
+}
+
+.pt-profile-pic {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e5e7eb;
+}
+
+.pt-employee-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.pt-name {
+    margin: 0;
+    font-weight: 600;
+    font-size: 14px;
+    color: #1f2937;
+}
+
+.pt-id {
+    margin: 0;
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.pt-username {
+    color: #4b5563;
+    font-weight: 500;
+}
+
+.pt-position {
+    color: #374151;
+    text-transform: capitalize;
+}
+
+.pt-days {
+    margin-left: 25px;
+}
+
+.days-badge {
+    color: #059669;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.pt-action {
+    margin-left: 10px;
+}
+
+.hire-part-time-btn {
+    background: #f59e0b;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.hire-part-time-btn:hover {
+    background: #d97706;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(217, 119, 6, 0.3);
+}
+
+/* Part-Time Hiring Modal */
+#partTimeModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content h3 {
+    margin: 0 0 20px 0;
+    color: #374151;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.modal-content p {
+    margin: 0 0 10px 0;
+    color: #6b7280;
+}
+
+.modal-content p:last-of-type {
+    margin-bottom: 20px;
+}
+
+#modalEmployeeName {
+    color: #374151;
+    font-weight: 600;
+}
+
+#daySelectionContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.day-option {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: white;
+}
+
+.day-option:hover {
+    border-color: #cbd5e1;
+    background: #f9fafb;
+}
+
+.day-option.selected {
+    border-color: #10b981;
+    background: #f0fdf4;
+}
+
+.day-option input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 12px;
+    cursor: pointer;
+    accent-color: #10b981;
+}
+
+.day-option label {
+    cursor: pointer;
+    flex: 1;
+    font-weight: 500;
+    color: #374151;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+#cancelHireBtn {
+    background: #e5e7eb;
+    color: #374151;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+#cancelHireBtn:hover {
+    background: #d1d5db;
+}
+
+#confirmHireBtn {
+    background: #10b981;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+#confirmHireBtn:hover {
+    background: #059669;
 }

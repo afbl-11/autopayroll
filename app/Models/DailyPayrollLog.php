@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Scopes\AdminScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class DailyPayrollLog extends Model
 {
@@ -12,7 +13,7 @@ class DailyPayrollLog extends Model
 
     protected $table = 'daily_payroll_logs';
     protected $primaryKey = 'daily_payroll_id';
-    public $incrementing = true;
+    public $incrementing = false;
     protected $keyType = 'string';
 
 
@@ -35,6 +36,19 @@ class DailyPayrollLog extends Model
         'is_adjusted',
     ];
 
+    protected static function booted() {
+        static::addGlobalScope(new AdminScope);
+
+        static::creating(function ($model) {
+            if (empty($model->daily_payroll_id)) {
+                $model->daily_payroll_id = (string) Str::uuid();
+            }
+            if($admin = auth('admin')->user()){
+                $model->admin_id = $admin->admin_id;
+            }
+        });
+    }
+
     // Relationships
 
     public function employee()
@@ -50,14 +64,5 @@ class DailyPayrollLog extends Model
     public function attendanceLog()
     {
         return $this->belongsTo(AttendanceLogs::class, 'log_id', 'log_id');
-    }
-    protected static function booted() {
-        static::addGlobalScope(new AdminScope);
-
-        static::creating(function ($model) {
-            if($admin = auth('admin')->user()){
-                $model->admin_id = $admin->admin_id;
-            }
-        });
     }
 }

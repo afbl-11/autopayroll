@@ -18,11 +18,15 @@
                     <a href="{{ route('forgot.password') }}"><small>Forgot Password</small></a>
                 </div>
 
-                    {{-- CAPTCHA --}}
+                {{-- reCAPTCHA v2 Checkbox --}}
                 <div class="field-row captcha-row">
                     <div class="g-recaptcha"
-                        data-sitekey="{{ config('services.recaptcha.site_key') }}">
+                        data-sitekey="{{ config('services.recaptcha.site_key') }}"
+                        data-theme="light">
                     </div>
+                    @error('g-recaptcha-response')
+                        <div class="error">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <x-button-submit>Sign in</x-button-submit>
@@ -71,12 +75,17 @@
 <style>
     .captcha-row {
         display: flex;
-        justify-content: center;
-        margin: 15px 0;
+        flex-direction: column;
+        align-items: center;
+        margin: 20px 0;
+        gap: 8px;
     }
 
     .error {
         color: #dc2626;
-        font-size: 0.75rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        text-align: center;
+        margin-top: 8px;
     }
 </style>

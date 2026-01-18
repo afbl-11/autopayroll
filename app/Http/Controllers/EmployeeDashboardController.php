@@ -34,6 +34,16 @@ class EmployeeDashboardController extends Controller
 
     public function showInfo($id) {
         $employee = Employee::findOrFail($id);
+        // Clear any cached relationships to ensure fresh data
+        $employee->unsetRelation('currentRate');
+        $employee->load('currentRate');
+        
+        // Load all rates for salary history
+        $salaryHistory = \App\Models\EmployeeRate::where('employee_id', $id)
+            ->orderBy('effective_from', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->get();
+        
         $fullName = $employee->first_name . ' ' .$employee->middle_name . ' '. $employee->last_name . ' ' . $employee->suffix;
         $res_address =
             $employee->house_number . ', '
@@ -55,7 +65,7 @@ class EmployeeDashboardController extends Controller
 
         $age = $employee->birthdate->age;
 
-        return view('employee.employee-information', compact('employee','fullName','res_address', 'id_address', 'age'))->with('title','Employee Information');
+        return view('employee.employee-information', compact('employee','fullName','res_address', 'id_address', 'age', 'salaryHistory'))->with('title','Employee Information');
     }
 
     public function showContract($id) {

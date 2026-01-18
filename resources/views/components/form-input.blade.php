@@ -8,6 +8,9 @@
     'noDefault' => false,
     'readOnly' => false,
     'togglePassword' => false,
+    'maxlength' => null,
+    'multiple' => false,
+    'accept' => null,
 ])
 
 <div @if(!$noDefault){{ $attributes->class('field-input') }} @endif>
@@ -27,6 +30,15 @@
             @endif
             @if($togglePassword)
                 data-toggle-password="true"
+            @endif
+            @if($maxlength)
+                maxlength="{{ $maxlength }}"
+            @endif
+            @if($multiple)
+                multiple
+            @endif
+            @if($accept)
+                accept="{{ $accept }}"
             @endif
         >
 

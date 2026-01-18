@@ -24,6 +24,21 @@ form{
     /*gap: 5rem !important;*/
 }
 
+/* Allow company field to be hidden when needed */
+#company-field[style*="display: none"] {
+    display: none !important;
+}
+
+/* Allow contract end wrapper to be hidden/shown when needed */
+#contract-end-wrapper[style*="display: none"] {
+    display: none !important;
+}
+
+#contract-end-wrapper[style*="display: block"] {
+    display: block !important;
+    flex: 1;
+}
+
 .button-link {
     margin-top: auto !important;
 }
@@ -60,6 +75,60 @@ form{
     margin-bottom: 30px;
     width: 47%;
 }
+
+/* Days Available Styles */
+.days-available-field {
+    flex-direction: column !important;
+    width: 100% !important;
+}
+
+.days-available-field[style*="display: none"] {
+    display: none !important;
+}
+
+.days-container {
+    width: 100%;
+}
+
+.days-container label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #374151;
+    font-size: 0.95rem;
+}
+
+.days-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.day-btn {
+    padding: 12px 24px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    background: white;
+    color: #374151;
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.day-btn:hover {
+    border-color: var(--clr-primary);
+    background: #f9fafb;
+}
+
+.day-btn.active {
+    background: var(--clr-yellow);
+    border-color: var(--clr-primary);
+    color: var(--clr-primary);
+    font-weight: 600;
+}
+
 .field-row a {
     margin-top: 30px;
     background: var(--clr-yellow);

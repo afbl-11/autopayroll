@@ -69,6 +69,10 @@ class Employee extends Authenticatable
         'phil_health_number',
         'pag_ibig_number',
         'tin_number',
+        
+        // Documents
+        'uploaded_documents',
+        'days_available',
     ];
 
     protected $hidden = [
@@ -79,11 +83,17 @@ class Employee extends Authenticatable
         'contract_start' => 'date',
         'contract_end' => 'date',
         'birthdate' => 'date',
+        'days_available' => 'array',
     ];
 
     public function company()
     {
         return $this->belongsTo(Company::class, 'company_id', 'company_id');
+    }
+
+    public function partTimeAssignments()
+    {
+        return $this->hasMany(PartTimeAssignment::class, 'employee_id', 'employee_id');
     }
 
     public function employeeSchedule()
@@ -117,8 +127,17 @@ class Employee extends Authenticatable
                 $query->where('effective_to', '>=', now())
                     ->orWhereNull('effective_to');
             })
-            ->latest('effective_from');
+            ->latest('effective_from')
+            ->latest('created_at');
     }
+
+    public function salaryHistory()
+    {
+        return $this->hasMany(EmployeeRate::class, 'employee_id', 'employee_id')
+            ->orderBy('effective_from', 'desc')
+            ->orderBy('created_at', 'desc');
+    }
+
     public function creditAdjustments()
     {
         return $this->hasMany(CreditAdjustment::class, 'employee_id', 'employee_id');
