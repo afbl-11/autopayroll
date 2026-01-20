@@ -18,12 +18,36 @@ class PayrollFactory extends Factory
     public function definition()
     {
         static $employeeIds = null;
+        static $usedCombinations = [];
 
         if ($employeeIds === null) {
             $employeeIds = Employee::pluck('employee_id')->toArray();
         }
 
-        $payroll_period = PayrollPeriod::inRandomOrder()->first();
+        // Get a random employee and payroll period ensuring uniqueness
+        $period = PayrollPeriod::inRandomOrder()->first();
+        
+        // Find an unused employee for this period
+        $availableEmployees = array_diff($employeeIds, $usedCombinations[$period->payroll_period_id] ?? []);
+        
+        if (empty($availableEmployees)) {
+            // If all employees are used for this period, get a new period or reset
+            $period = PayrollPeriod::whereNotIn('payroll_period_id', array_keys($usedCombinations))->inRandomOrder()->first();
+            if (!$period) {
+                // All periods exhausted, reset combinations
+                $usedCombinations = [];
+                $period = PayrollPeriod::inRandomOrder()->first();
+            }
+            $availableEmployees = $employeeIds;
+        }
+        
+        $employeeId = $this->faker->randomElement($availableEmployees);
+        
+        // Mark this combination as used
+        if (!isset($usedCombinations[$period->payroll_period_id])) {
+            $usedCombinations[$period->payroll_period_id] = [];
+        }
+        $usedCombinations[$period->payroll_period_id][] = $employeeId;
 
         $periodStart = $this->faker->dateTimeBetween('-2 months', 'now');
         $periodEnd = (clone $periodStart)->modify('+14 days');
@@ -49,12 +73,12 @@ class PayrollFactory extends Factory
         $statuses = ['released', 'processing'];
 
         $payDateStart = $periodStart > $payDateEnd ? $payDateEnd : $periodStart;
-        $period = PayrollPeriod::inRandomOrder()->first();
         $admin = Admin::inRandomOrder()->first();
+        
         return [
             'payroll_id' => Str::uuid(),
             'admin_id' => $admin->admin_id,
-            'employee_id' =>$this->faker->randomElement($employeeIds),
+            'employee_id' => $employeeId,
             'payroll_period_id' => $period->payroll_period_id,
             'rate' => $rate,
             'gross_salary' => $grossSalary,

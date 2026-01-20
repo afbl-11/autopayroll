@@ -66,18 +66,37 @@ class EmployeeRegistrationService
               'rate' => $data['rate'],
             ];
 
-            if (request()->hasFile('uploaded_documents')) {
+            // Move files from temp to final location
+            if (isset($data['temp_uploaded_documents']) && is_array($data['temp_uploaded_documents'])) {
                 $uploadedFiles = [];
-
-                foreach (request()->file('uploaded_documents') as $file) {
-                    $path = $file->store("employee_documents/{$data['employee_id']}", 'public');
-                    $uploadedFiles[] = $path;
+                $storage = \Illuminate\Support\Facades\Storage::disk('public');
+                
+                foreach ($data['temp_uploaded_documents'] as $tempPath) {
+                    if ($storage->exists($tempPath)) {
+                        $fileName = basename($tempPath);
+                        $finalPath = "employee_documents/{$data['employee_id']}/{$fileName}";
+                        
+                        // Move file from temp to final location
+                        $storage->move($tempPath, $finalPath);
+                        $uploadedFiles[] = $finalPath;
+                    }
                 }
 
                 $data['uploaded_documents'] = json_encode($uploadedFiles);
+                unset($data['temp_uploaded_documents']);
             }
 
 
+            // Clean up temporary files if registration is cancelled
+            $storage = \Illuminate\Support\Facades\Storage::disk('public');
+            if (isset($data['temp_uploaded_documents'])) {
+                foreach ($data['temp_uploaded_documents'] as $tempPath) {
+                    if ($storage->exists($tempPath)) {
+                        $storage->delete($tempPath);
+                    }
+                }
+            }
+            
             session()->forget('register.basicInformation');
             session()->forget('register.address');
             session()->forget('register.designation');
@@ -113,11 +132,29 @@ class EmployeeRegistrationService
 
     public function concatenateResAddress() {
         $address = session('register.address');
-        return  $address['province_name'] . ', ' . $address['city_name'] . ', ' . $address['barangay_name'] . ', ' . $address['street'] . ', ' . $address['house_number'];
+        
+        if (!$address) {
+            return 'Address not available';
+        }
+        
+        return  ($address['province_name'] ?? '') . ', ' . 
+                ($address['city_name'] ?? '') . ', ' . 
+                ($address['barangay_name'] ?? '') . ', ' . 
+                ($address['street'] ?? '') . ', ' . 
+                ($address['house_number'] ?? '');
     }
 
     public function concatenateIdResAddress() {
         $address = session('register.address');
-        return  $address['id_province_name'] . ', ' . $address['id_city_name'] . ', ' . $address['id_barangay_name'] . ', ' . $address['id_street'] . ', ' . $address['id_house_number'];
+        
+        if (!$address) {
+            return 'ID Address not available';
+        }
+        
+        return  ($address['id_province_name'] ?? '') . ', ' . 
+                ($address['id_city_name'] ?? '') . ', ' . 
+                ($address['id_barangay_name'] ?? '') . ', ' . 
+                ($address['id_street'] ?? '') . ', ' . 
+                ($address['id_house_number'] ?? '');
     }
 }

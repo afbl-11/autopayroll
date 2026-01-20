@@ -5,14 +5,25 @@ namespace App\Models;
 use App\Models\Scopes\AdminScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class AttendanceLogs extends Model
 {
     use HasFactory;
     protected $primaryKey = 'log_id';
-    public $incrementing = true;
+    public $incrementing = false;
     protected $keyType = 'string';
 
+    protected static function boot()
+    {
+        parent::boot();
+        
+        static::creating(function ($model) {
+            if (empty($model->log_id)) {
+                $model->log_id = (string) Str::uuid();
+            }
+        });
+    }
 
     protected $fillable = [
         'log_id',
@@ -22,12 +33,16 @@ class AttendanceLogs extends Model
         'log_date',
         'is_adjusted',
         'status',
+        'time_in',
+        'time_out',
         'clock_in_time',
         'clock_out_time',
         'clock_in_latitude',
         'clock_in_longitude',
         'clock_out_latitude',
         'clock_out_longitude',
+        'selfie_path',
+        'is_manual',
     ];
 
     protected $casts = [

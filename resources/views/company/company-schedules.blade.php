@@ -17,6 +17,14 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const checkboxes = document.querySelectorAll('.custom-checkbox');
+            const employeeCards = document.querySelectorAll('.card-wrapper');
+            const selectedEmployeeId = document.getElementById('selected_employee_id');
+            const selectedEmployeeInfo = document.getElementById('selected-employee-info');
+            const employeeNameDisplay = document.getElementById('employee-name');
+            const employeeTypeDisplay = document.getElementById('employee-type');
+            const startTimeInput = document.getElementById('start_time');
+            const endTimeInput = document.getElementById('end_time');
+            const scheduleForm = document.getElementById('scheduleForm');
 
             checkboxes.forEach(label => {
                 label.addEventListener('click', e => {
@@ -29,32 +37,114 @@
                 });
             });
 
-            const cards = document.querySelectorAll('.card-wrapper');
-            const employeeIdInput = document.querySelector('#employee_id');
-            const startTimeInput = document.querySelector('#custom_start');
-            const endTimeInput = document.querySelector('#custom_end');
-
-            cards.forEach(card => {
-                card.addEventListener('click', () => {
-                    const employeeId = card.dataset.id;
-                    const start = card.dataset.start || '';
-                    const end = card.dataset.end || '';
-
-                    // populate hidden field
-                    employeeIdInput.value = employeeId;
-
-                    startTimeInput.value = start ? start.slice(0,5) : '';
-                    endTimeInput.value = end ? end.slice(0,5) : '';
-                    // populate time fields
-                    startTimeInput.value = start;
-                    endTimeInput.value = end;
-
-                    // highlight selected card
-                    cards.forEach(c => c.classList.remove('active'));
-                    card.classList.add('active');
-
-                    console.log(`Selected Employee ID: ${employeeId}`);
+            // Handle employee card click
+            employeeCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // Remove active class from all cards
+                    employeeCards.forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked card
+                    this.classList.add('active');
+                    
+                    // Get employee data
+                    const employeeId = this.dataset.id;
+                    const employeeName = this.dataset.name;
+                    const employeeType = this.dataset.type;
+                    const startTime = this.dataset.start || '';
+                    const endTime = this.dataset.end || '';
+                    const workingDays = JSON.parse(this.dataset.days || '[]');
+                    const availableDays = JSON.parse(this.dataset.availableDays || '[]');
+                    
+                    // Set hidden input
+                    selectedEmployeeId.value = employeeId;
+                    
+                    // Display selected employee info
+                    selectedEmployeeInfo.style.display = 'block';
+                    employeeNameDisplay.textContent = employeeName;
+                    
+                    // Format employment type display
+                    let typeLabel = '';
+                    if (employeeType === 'part-time') {
+                        typeLabel = 'Part-Time Employee (Fixed Days)';
+                    } else if (employeeType === 'contractual') {
+                        typeLabel = 'Contractual Employee';
+                    } else if (employeeType === 'full-time') {
+                        typeLabel = 'Full-Time Employee';
+                    } else {
+                        typeLabel = employeeType;
+                    }
+                    employeeTypeDisplay.textContent = typeLabel;
+                    
+                    // Populate schedule form with employee's current schedule
+                    startTimeInput.value = startTime;
+                    endTimeInput.value = endTime;
+                    
+                    // For part-time employees, use days_available and check them
+                    if (employeeType === 'part-time' && availableDays.length > 0) {
+                        // Map full day names to short names
+                        const dayMap = {
+                            'Monday': 'Mon',
+                            'Tuesday': 'Tues',
+                            'Wednesday': 'Wed',
+                            'Thursday': 'Thurs',
+                            'Friday': 'Fri',
+                            'Saturday': 'Sat',
+                            'Sunday': 'Sun'
+                        };
+                        
+                        // Convert available days to short format
+                        const availableDaysShort = availableDays.map(day => dayMap[day] || day);
+                        
+                        // Check all available days but keep checkboxes editable
+                        checkboxes.forEach(label => {
+                            const input = label.querySelector('input[type="checkbox"]');
+                            if (input) {
+                                const isAvailable = availableDaysShort.includes(input.value);
+                                
+                                if (isAvailable) {
+                                    // Available day - check it
+                                    input.checked = true;
+                                    label.classList.add('active');
+                                } else {
+                                    // Not available - uncheck
+                                    input.checked = false;
+                                    label.classList.remove('active');
+                                }
+                                
+                                // Make all checkboxes editable for part-time
+                                label.style.opacity = '1';
+                                label.style.cursor = 'pointer';
+                                label.style.pointerEvents = 'auto';
+                            }
+                        });
+                    } else {
+                        // For full-time and contractual, enable all checkboxes and check working days
+                        checkboxes.forEach(label => {
+                            const input = label.querySelector('input[type="checkbox"]');
+                            if (input) {
+                                label.style.opacity = '1';
+                                label.style.cursor = 'pointer';
+                                label.style.pointerEvents = 'auto';
+                                
+                                if (workingDays.includes(input.value)) {
+                                    input.checked = true;
+                                    label.classList.add('active');
+                                } else {
+                                    input.checked = false;
+                                    label.classList.remove('active');
+                                }
+                            }
+                        });
+                    }
                 });
+            });
+
+            // Form validation
+            scheduleForm.addEventListener('submit', function(e) {
+                if (!selectedEmployeeId.value) {
+                    e.preventDefault();
+                    alert('Please select an employee first!');
+                }
             });
         });
     </script>
@@ -65,16 +155,23 @@
     <section class="main-content">
         <div class="content-wrapper">
             <div class="schedule-wrapper">
-                <form action="{{ route('company.create.schedule') }}" method="post">
+                <form action="{{ route('company.create.schedule', ['id' => $company->company_id]) }}" method="post" id="scheduleForm">
                     @csrf
-                    <input type="hidden" name="employee_id" id="employee_id">
+                    <input type="hidden" name="employee_id" id="selected_employee_id" required>
 
                     <h6>Schedules</h6>
+                    
+                    <div id="selected-employee-info" style="background: #f3f4f6; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; display: none;">
+                        <p style="margin: 0; font-weight: 600; color: #374151;">Selected Employee:</p>
+                        <p id="employee-name" style="margin: 0.25rem 0; color: #059669;"></p>
+                        <p id="employee-type" style="margin: 0; font-size: 0.875rem; color: #6b7280;"></p>
+                    </div>
+                    
                     <div class="checkbox-group">
                         @foreach($daysOfWeek as $days => $daysLabel)
                             <x-form-checkbox
                                 :label="$daysLabel"
-                                name="working_days[]"
+                                name="working_days"
                                 :id="$days"
                                 :value="$days"
                             />
@@ -83,44 +180,58 @@
 
                     <p>Set working hours</p>
                     <div class="field-row">
-                        <x-form-input type="time" id="start_time" name="start_time" label="Start Time" />
-                        <x-form-input type="time" id="end_time" name="end_time" label="End Time " />
+                        <x-form-input 
+                            type="time" 
+                            id="start_time" 
+                            name="start_time" 
+                            label="Start Time"
+                        />
+                        <x-form-input 
+                            type="time" 
+                            id="end_time" 
+                            name="end_time" 
+                            label="End Time"
+                        />
                     </div>
 
                     <div class="button-wrapper">
-                        <x-button-submit>Save</x-button-submit>
+                        <x-button-submit>Save Schedule</x-button-submit>
                     </div>
 
             </form>
             </div>
                 <div class="employee-card-wrapper">
                     @foreach($company->employees as $employee)
+                        @php
+                            $schedule = $employee->employeeSchedule->first();
+                            $employmentType = ucfirst($employee->employment_type ?? 'N/A');
+                            $workingDays = $schedule ? $schedule->working_days : [];
+                            $startTime = $schedule && $schedule->start_time ? substr($schedule->start_time, 0, 5) : '';
+                            $endTime = $schedule && $schedule->end_time ? substr($schedule->end_time, 0, 5) : '';
+                            
+                            // For part-time employees hired this week, use company-specific assigned days
+                            // Otherwise use their full days_available
+                            if ($employee->employment_type === 'part-time' && isset($employee->days_available_for_company)) {
+                                $daysAvailable = $employee->days_available_for_company;
+                            } else {
+                                $daysAvailable = $employee->days_available ?? [];
+                            }
+                        @endphp
                         <div class="card-content-wrapper">
-                            @if($employee->employeeSchedule->isNotEmpty())
-                                @foreach($employee->employeeSchedule as $schedule)
-                                    <x-schedule-cards
-                                        :image="'assets/default_profile.png'"
-                                        :name="$employee->first_name . ' ' . $employee->last_name"
-                                        :id="$employee->employee_id"
-                                        :start="$schedule->start_time"
-                                        :end="$schedule->end_time"
-                                        :scheduleDays="$schedule->working_days"
-                                        :description="'Current shift'"
-                                        :labels="$schedule->shift_name"
-                                    />
-                                @endforeach
-                            @else
-                                <x-schedule-cards
-                                    :image="'assets/default_profile.png'"
-                                    :name="$employee->first_name . ' ' . $employee->last_name"
-                                    :id="$employee->employee_id"
-                                    :start="''"
-                                    :end="''"
-                                    :scheduleDays="json_encode([])" {{-- empty array --}}
-                                    :description="'No schedule assigned'"
-                                    :labels="'Unassigned'"
-                                />
-                            @endif
+                            <x-schedule-cards
+                                :image="'assets/default_profile.png'"
+                                :name="$employee->first_name . ' ' . $employee->last_name"
+                                :id="$employee->employee_id"
+                                :start="$startTime"
+                                :end="$endTime"
+                                :scheduleDays="json_encode($workingDays)"
+                                :description="$schedule ? 'Current shift' : 'No schedule assigned'"
+                                :labels="$employmentType"
+                                :data-type="$employee->employment_type"
+                                :data-name="$employee->first_name . ' ' . $employee->last_name"
+                                :data-days="json_encode($workingDays)"
+                                :data-available-days="json_encode($daysAvailable)"
+                            />
                         </div>
                     @endforeach
                 </div>

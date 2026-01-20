@@ -1,0 +1,236 @@
+.payroll-list-container {
+    padding: 0.5rem 2rem;
+    background: #f9fafb;
+    min-height: calc(100vh - 80px);
+    width: 100%;
+}
+
+.header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    padding: 1.5rem 2.5rem;
+    border-bottom: 2px solid var(--clr-secondary);
+    background: white;
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.page-title {
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--clr-primary);
+    margin: 0;
+}
+
+.filter-controls {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.filter-group label {
+    font-weight: 500;
+    color: var(--clr-primary);
+    font-size: 14px;
+}
+
+.filter-select {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    background: white;
+    cursor: pointer;
+    min-width: 120px;
+    transition: all 0.3s ease;
+}
+
+.filter-select:hover {
+    border-color: var(--clr-secondary);
+}
+
+.filter-select:focus {
+    outline: none;
+    border-color: var(--clr-secondary);
+    box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.1);
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background: white;
+    padding: 2rem 2.5rem;
+}
+
+.payroll-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+.payroll-table thead {
+    background: var(--clr-primary);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.payroll-table thead th {
+    padding: 1.25rem 1.5rem;
+    text-align: left;
+    font-weight: 600;
+    color: white;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.payroll-table tbody tr {
+    border-bottom: 1px solid #e5e7eb;
+    transition: background-color 0.2s ease;
+}
+
+.payroll-table tbody tr:hover {
+    background-color: #f9fafb;
+}
+
+.payroll-table tbody td {
+    padding: 1.25rem 1.5rem;
+    font-size: 15px;
+    color: #374151;
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.35rem 0.75rem;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.badge-full-time {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.badge-part-time {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.badge-contractual {
+    background: #ddd6fe;
+    color: #5b21b6;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 0.35rem 0.75rem;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status-active {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.status-no-data {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.text-muted {
+    color: #9ca3af;
+    font-style: italic;
+}
+
+.text-center {
+    text-align: center;
+    padding: 3rem 2rem !important;
+    color: #6b7280;
+    font-size: 15px;
+}
+
+.btn-print {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: #fbbf24;
+    color: var(--clr-primary);
+    border: none;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn-print:hover {
+    background: #fbbf24;
+}
+
+.btn-print i {
+    font-size: 14px;
+}
+
+.btn-disabled {
+    background: #e5e7eb;
+    color: #9ca3af;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.btn-disabled:hover {
+    background: #e5e7eb;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .payroll-list-container {
+        padding: 1rem 1.5rem;
+    }
+
+    .header-section {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 1rem 1.5rem;
+    }
+
+    .filter-controls {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-group {
+        width: 100%;
+    }
+
+    .filter-select {
+        width: 100%;
+    }
+
+    .table-wrapper {
+        overflow-x: scroll;
+    }
+
+    .payroll-table {
+        min-width: 800px;
+    }
+}

@@ -11,12 +11,12 @@
                 </div>
 
                 <div class="field-row">
-                    <x-form-input type="text" name="email" id="email" label="Email" placeholder="Optional" :value="$email" :disabled="true"></x-form-input>
+                    <x-form-input type="text" name="email" id="email" label="Email" placeholder="Optional" :value="$email" readonly></x-form-input>
                 </div>
 
 {{--                password--}}
                 <div class="field-row">
-                    <x-form-input  type="text" name="password" id="password" label="Password" value="DefaultPassword123!" :disabled="true"></x-form-input>
+                    <x-form-input  type="text" name="password" id="password" label="Password" value="DefaultPassword123!" readonly></x-form-input>
                 </div>
 
                 <x-button-submit>Continue</x-button-submit>

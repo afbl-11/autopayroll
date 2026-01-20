@@ -1,0 +1,317 @@
+/* Modern Payroll Table Styling */
+
+:root {
+    --primary-color: #4f46e5;
+    --secondary-color: #7c3aed;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --danger-color: #ef4444;
+    --dark-bg: #1f2937;
+    --light-bg: #f9fafb;
+    --border-color: #e5e7eb;
+    --text-primary: #111827;
+    --text-secondary: #6b7280;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* Main Content */
+.main-content {
+    padding: 2rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+}
+
+.main-content nav {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+/* Payroll Container */
+.payroll-container {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: var(--shadow-lg);
+    margin-bottom: 2rem;
+}
+
+.payroll-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.payroll-title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.payroll-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    opacity: 0.9;
+    margin-bottom: 0.5rem;
+}
+
+.stat-value {
+    font-size: 1.875rem;
+    font-weight: 700;
+}
+
+/* Month Group */
+.month-group {
+    margin-bottom: 3rem;
+}
+
+.month-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 12px 12px 0 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow-md);
+}
+
+.month-summary {
+    display: flex;
+    gap: 2rem;
+    font-size: 0.875rem;
+}
+
+.month-summary span {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Custom Table */
+.custom-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: white;
+    border-radius: 0 0 12px 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+}
+
+.custom-table thead {
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+}
+
+.custom-table thead th {
+    color: white;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: none;
+}
+
+.custom-table tbody tr {
+    border-bottom: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.custom-table tbody tr:hover {
+    background: linear-gradient(90deg, rgba(79, 70, 229, 0.05) 0%, rgba(124, 58, 237, 0.05) 100%);
+    transform: scale(1.01);
+    box-shadow: var(--shadow-sm);
+}
+
+.custom-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.custom-table tbody td {
+    padding: 1rem;
+    color: var(--text-primary);
+    font-size: 0.9375rem;
+    border: none;
+}
+
+.custom-table tbody td:first-child {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+/* Empty State */
+.custom-table tbody tr td[colspan] {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+/* Currency Styling */
+.currency {
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+}
+
+.currency.positive {
+    color: var(--success-color);
+}
+
+.currency.negative {
+    color: var(--danger-color);
+}
+
+.currency.zero {
+    color: var(--text-secondary);
+}
+
+/* Badge Styling */
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.badge-success {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.badge-warning {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.badge-danger {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.badge-info {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+/* Work Hours Indicator */
+.work-hours {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.work-hours-bar {
+    height: 6px;
+    background: #e5e7eb;
+    border-radius: 3px;
+    width: 60px;
+    overflow: hidden;
+}
+
+.work-hours-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--success-color), var(--primary-color));
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .custom-table {
+        font-size: 0.875rem;
+    }
+    
+    .custom-table thead th,
+    .custom-table tbody td {
+        padding: 0.75rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        padding: 1rem;
+    }
+    
+    .payroll-container {
+        padding: 1rem;
+    }
+    
+    .month-header {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: flex-start;
+    }
+    
+    .month-summary {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .custom-table {
+        display: block;
+        overflow-x: auto;
+    }
+    
+    .payroll-stats {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Loading Animation */
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.loading {
+    animation: shimmer 2s infinite;
+    background: linear-gradient(to right, #f0f0f0 8%, #f8f8f8 18%, #f0f0f0 33%);
+    background-size: 1000px 100%;
+}
+
+/* Print Styles */
+@media print {
+    .main-content {
+        background: white;
+    }
+    
+    .main-content nav {
+        display: none;
+    }
+    
+    .custom-table tbody tr:hover {
+        transform: none;
+        box-shadow: none;
+    }
+}

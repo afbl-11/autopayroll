@@ -40,7 +40,8 @@
     
                 <div class="field-row">
                     <x-form-input name="job_position" id="job_position" :value="$employee->job_position" label="Position"></x-form-input>
-                    <x-form-input type="file" name="uploaded_document" id="uploaded_document" label="Upload Documents" accept=".pdf,.jpg,.png,.docx"></x-form-input>
+                    <x-form-input type="file" name="uploaded_document" id="uploaded_document" label="Upload Documents" accept=".pdf,.jpg,.jpeg,.png"></x-form-input>
+                    <small style="color: #666; margin-top: 5px; display: block;">Allowed formats: PDF, JPG, PNG (Max 5MB)</small>
                 </div>
 
                 <x-button-submit>Save</x-button-submit>

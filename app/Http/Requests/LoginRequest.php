@@ -28,11 +28,19 @@ class LoginRequest extends FormRequest
         ];
     }
 
-    // Added CAPTCHA here
+    // reCAPTCHA v2 Checkbox validation
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {
             $captcha = $this->input('g-recaptcha-response');
+
+            if (empty($captcha)) {
+                $validator->errors()->add(
+                    'g-recaptcha-response',
+                    'Please complete the reCAPTCHA verification.'
+                );
+                return;
+            }
 
             $response = Http::asForm()->post(
                 'https://www.google.com/recaptcha/api/siteverify',
@@ -43,10 +51,10 @@ class LoginRequest extends FormRequest
                 ]
             );
 
-            if (! $response->json('success')) {
+            if (!$response->json('success')) {
                 $validator->errors()->add(
                     'g-recaptcha-response',
-                    'CAPTCHA verification failed.'
+                    'reCAPTCHA verification failed. Please try again.'
                 );
             }
         });

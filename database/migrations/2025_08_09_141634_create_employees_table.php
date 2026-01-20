@@ -37,12 +37,13 @@ return new class extends Migration
             $table->string('password');
             $table->string('job_position');
             $table->date('contract_start');
-            $table->date('contract_end');
+            $table->date('contract_end')->nullable();
 
             $table->enum('employment_type',['full-time', 'part-time', 'contractual']);
+            $table->json('days_available')->nullable(); // For part-time employees
             $table->date('birthdate');
             $table->enum('gender', ['male','female']);
-            $table->enum('marital_status',['single','married','widowed']);
+            $table->enum('marital_status',['single','married','widowed','separated']);
             $table->enum('blood_type', ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'])->nullable();
 
 //            current address

@@ -88,12 +88,14 @@
                                       id="bank_account_number"
                                       required
                                       placeholder="10-16 digits"
+                                      maxlength="16"
                         />
 
                         <x-form-input label="Social Security Number"
                                       name="sss_number"
                                       id="sss_number"
                                       placeholder="10 digits"
+                                      maxlength="12"
                                       required />
                     </div>
 
@@ -103,12 +105,14 @@
                                       name="phil_health_number"
                                       id="phil_health_number"
                                       placeholder="12 digits"
+                                      maxlength="14"
                                        required />
 
                         <x-form-input label="Pag-IBIG Number"
                                       name="pag_ibig_number"
                                       id="pag_ibig_number"
                                       placeholder="12 digits"
+                                      maxlength="14"
                                        required />
                     </div>
 
@@ -118,6 +122,7 @@
                                       name="tin_number"
                                       id="tin_number"
                                       placeholder="9-12 digits"
+                                      maxlength="15"
                                       required />
                     </div>
                 </section>

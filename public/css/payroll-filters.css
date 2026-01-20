@@ -1,0 +1,76 @@
+/* Payroll Filter Controls */
+.filter-controls {
+    width: 95%;
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    align-items: center;
+}
+
+.filter-controls label {
+    color: var(--clr-primary);
+    font-family: 'Helvetica Regular', sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.filter-controls select {
+    padding: 7px 15px;
+    border-radius: 8px;
+    border: 1px solid var(--clr-card-inner);
+    background: var(--clr-background);
+    color: var(--clr-primary);
+    font-family: 'Helvetica Regular', sans-serif;
+    font-size: 12px;
+    outline: none;
+    cursor: pointer;
+}
+
+.filter-controls select:focus {
+    border-color: var(--clr-yellow);
+}
+
+/* Scrollable Table Container */
+.table-wrapper {
+    width: 95%;
+    max-height: 600px;
+    overflow-x: auto;
+    overflow-y: auto;
+    margin-top: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.table-wrapper::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.table-wrapper::-webkit-scrollbar-track {
+    background: var(--clr-background);
+    border-radius: 5px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+    background: var(--clr-card-inner);
+    border-radius: 5px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb:hover {
+    background: var(--clr-yellow);
+}
+
+/* Sticky table header */
+.table-wrapper .custom-table {
+    margin-top: 0;
+    width: 100%;
+    min-width: 900px;
+}
+
+.table-wrapper .custom-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+

@@ -144,6 +144,12 @@
         const seenIndicator = document.getElementById('seenIndicator');
         const removeBtn = document.getElementById('removeFile');
 
+        // Only set up file upload preview if elements exist
+        if (!browseButton || !uploadInput || !filePreview || !previewContent) {
+            console.log('File upload preview elements not found on this page, skipping...');
+            return;
+        }
+
         const hiddenFileInput = document.createElement('input');
         hiddenFileInput.type = 'file';
         hiddenFileInput.accept = ".pdf,.doc,.docx,.png,.jpg,.jpeg";

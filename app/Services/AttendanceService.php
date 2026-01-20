@@ -21,7 +21,7 @@ class AttendanceService
         [$payroll_start, $payroll_end] = $this->hasPeriod();
 
         return AttendanceLogs::where('employee_id', $id)
-            ->whereBetween('created_at', [$payroll_start, $payroll_end])
+            ->whereBetween('log_date', [$payroll_start, $payroll_end])
             ->count();
     }
 
@@ -53,8 +53,8 @@ class AttendanceService
             }
         }
         $presentDays = AttendanceLogs::where('employee_id', $id)
-            ->whereBetween('created_at', [$payroll_start, $payroll_end])
-            ->selectRaw('COUNT(DISTINCT DATE(created_at)) as present_days')
+            ->whereBetween('log_date', [$payroll_start, $payroll_end])
+            ->selectRaw('COUNT(DISTINCT log_date) as present_days')
             ->value('present_days') ?? 0;
 
         if ($presentDays === 0) {
@@ -77,8 +77,8 @@ class AttendanceService
 
 //        gets the latest/current day log record
         $log = AttendanceLogs::where('employee_id', $id)
-            ->whereDate('created_at', today())
-            ->latest('created_at')
+            ->whereDate('log_date', today())
+            ->latest('log_date')
             ->first();
 
         if (!$log || !$log->clock_out_time) {
@@ -98,7 +98,7 @@ class AttendanceService
         [$payroll_start, $payroll_end] = $this->hasPeriod();
 
         $logs = AttendanceLogs::where('employee_id', $id)
-            ->whereBetween('created_at', [$payroll_start, $payroll_end])
+            ->whereBetween('log_date', [$payroll_start, $payroll_end])
             ->whereNotNull('clock_out_time')
             ->get();
 
@@ -162,7 +162,7 @@ class AttendanceService
         [$payroll_start, $payroll_end] = $this->hasPeriod();
 
         return AttendanceLogs::where('employee_id', $id)
-            ->whereBetween('created_at', [$payroll_start, $payroll_end])
+            ->whereBetween('log_date', [$payroll_start, $payroll_end])
             ->whereNotNull('clock_in_time')
             ->whereTime('clock_in_time', '>', $schedule->start_time)
             ->count();
@@ -178,7 +178,7 @@ class AttendanceService
         $today = now()->toDateString();
 
         return AttendanceLogs::where('employee_id', $id)
-            ->whereDate('created_at', $today)
+            ->whereDate('log_date', $today)
             ->whereNotNull('clock_in_time')
             ->exists();
     }
@@ -191,7 +191,7 @@ class AttendanceService
         $today = now()->toDateString();
 
         return AttendanceLogs::where('employee_id', $id)
-            ->whereDate('created_at', $today)
+            ->whereDate('log_date', $today)
             ->whereNotNull('clock_in_time')
             ->whereNull('clock_out_time')
             ->exists();
@@ -207,7 +207,7 @@ class AttendanceService
         [$payroll_start, $payroll_end] = $this->hasPeriod();
 
         return AttendanceLogs::where('employee_id', $id)
-            ->whereBetween('created_at', [$payroll_start, $payroll_end])
+            ->whereBetween('log_date', [$payroll_start, $payroll_end])
             ->whereNotNull('clock_in_time')
             ->whereNull('clock_out_time')
             ->count();
@@ -217,10 +217,41 @@ class AttendanceService
 //
 //    }
     public function getAttendance($id)  {
+        [$payroll_start, $payroll_end] = $this->hasPeriod();
+        
         $logs = AttendanceLogs::where('employee_id', $id)
-            ->whereNotNull('clock_in_time')
+            ->whereBetween('log_date', [$payroll_start, $payroll_end])
+            ->orderBy('log_date', 'desc')
             ->get()
             ->map(function ($log) {
+                // Handle manual attendance
+                if ($log->is_manual) {
+                    $date = Carbon::parse($log->log_date);
+                    $dayOfWeek = $date->format('l');
+                    
+                    // Calculate duration if time_in and time_out exist
+                    $duration = 0;
+                    if ($log->time_in && $log->time_out) {
+                        $timeIn = Carbon::parse($log->time_in);
+                        $timeOut = Carbon::parse($log->time_out);
+                        $minutes = $timeIn->diffInMinutes($timeOut);
+                        $duration = floor($minutes * 100 / 60) / 100;
+                    }
+                    
+                    return [
+                        'date' => $date->toDateString(),
+                        'day' => $dayOfWeek,
+                        'clock_in_time' => $log->time_in ?? 'N/A',
+                        'clock_out_time' => $log->time_out ?? 'N/A',
+                        'duration' => $duration,
+                        'status' => $log->status,
+                    ];
+                }
+                
+                // Handle automated attendance
+                if (!$log->clock_in_time) {
+                    return null; // Skip logs without clock in time
+                }
 
                 // Parse clock in/out as Carbon instances
                 $clockIn = Carbon::parse($log->clock_in_time);
@@ -239,8 +270,10 @@ class AttendanceService
                     'clock_in_time' => $clockIn->toTimeString(),
                     'clock_out_time' => $clockOut?->toTimeString(),
                     'duration' => $hours,
+                    'status' => $log->status,
                 ];
-            });
+            })
+            ->filter(); // Remove null values
 
         $lateInMinutes = $this->computeLate($id);
 

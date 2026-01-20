@@ -96,6 +96,10 @@ Route::get('company/employees/{id}', [CompanyDashboardController::class, 'showEm
     ->middleware(['auth:admin'])
     ->name('company.dashboard.employees');
 
+Route::post('company/hire-parttime/{id}', [CompanyDashboardController::class, 'hirePartTimeEmployee'])
+    ->middleware(['auth:admin'])
+    ->name('company.hire.parttime');
+
 Route::get('company/schedules/{id}', [CompanyDashboardController::class, 'showSchedules'])
     ->middleware(['auth:admin'])
     ->name('company.dashboard.schedules');
@@ -123,7 +127,7 @@ Route::post('/company/{company}/employee/unassign', [CompanyDashboardController:
     ->middleware(['auth:admin'])
     ->name('company.employee.unassign.save');
 
-Route::post('/company/schedule/create', [CompanyDashboardController::class, 'createSchedule'])
+Route::post('/company/schedule/create/{id}', [CompanyDashboardController::class, 'createSchedule'])
     ->middleware('auth:admin')
     ->name('company.create.schedule');
 
@@ -199,6 +203,18 @@ Route::get('dashboard/employee/payroll/{id}', [EmployeePayrollController::class,
     ->middleware('auth:admin')
     ->name('employee.dashboard.payroll');
 
+Route::get('dashboard/employee/payslip/{id}', [EmployeePayrollController::class, 'showPayslip'])
+    ->middleware('auth:admin')
+    ->name('employee.dashboard.payslip');
+
+Route::get('dashboard/employee/payslip/{id}/print', [EmployeePayrollController::class, 'printPayslipPDF'])
+    ->middleware('auth:admin')
+    ->name('employee.dashboard.payslip.print');
+
+Route::get('dashboard/employee/payslip/{id}/semi-monthly', [EmployeePayrollController::class, 'showSemiMonthlyPayslip'])
+    ->middleware('auth:admin')
+    ->name('employee.dashboard.payslip.semi');
+
 Route::get('/announcements', [AnnouncementsController::class, 'getAnnouncements'])
     ->middleware('auth:admin')
     ->name('announcements');
@@ -267,10 +283,12 @@ Route::post('/adjustments/alter/OB', [CreditAdjustmentController::class, 'alterC
     ->middleware('auth:admin')
     ->name('alter.clock.in.out');
 
-Route::get('/new-payroll', function () {
-    return view('payroll.payroll');
-})->name('new.payroll');
-
+Route::get('/new-payroll', [PayrollController::class, 'showPayrollList'])
+    ->middleware('auth:admin')
+    ->name('new.payroll');
+Route::get('salary/list', [PayrollController::class, 'showSalaryList'])
+    ->middleware('auth:admin')
+    ->name('salary.list');
 Route::get('/admin/settings', [AdminController::class, 'showSettings'])
     ->middleware('auth:admin')
     ->name('admin.settings');
@@ -299,6 +317,11 @@ Route::get('/attendance/manual',
     [CompanyDashboardController::class, 'manualAttendance']
 )->name('attendance.manual');
 
+// Manual Input Attendance Routes (accessible to anyone with company code)
+Route::post('/attendance/manual/verify-code', [AttendanceController::class, 'verifyCompanyCode']);
+Route::get('/attendance/manual/employees/{companyId}', [AttendanceController::class, 'getCompanyEmployees']);
+Route::post('/attendance/manual/save', [AttendanceController::class, 'saveManualAttendance']);
+
 Route::put('/admin/profile/update', [AdminController::class, 'updateProfile'])
     ->name('admin.profile.update');
 
@@ -320,11 +343,14 @@ Route::delete('/company/{id}', [CompanyDashboardController::class, 'destroy'])
 Route::delete('/employee/{id}', [EmployeeDashboardController::class, 'destroy'])
     ->name('employee.destroy');
 
-Route::middleware(['auth:admin'])->group(function () {
+// Attendance routes (accessible without admin auth for manual attendance page)
+Route::get('/company/{company}/employees', [AttendanceController::class, 'employees']);
+Route::get('/company/{company}/part-time-employees', [AttendanceController::class, 'partTimeEmployees']);
+Route::get('/all-part-time-employees', [AttendanceController::class, 'allPartTimeEmployees']);
+Route::get('/company/{company}/attendance-dates', [AttendanceController::class, 'attendanceDates']);
+Route::get('/company/{company}/attendance/{date}', [AttendanceController::class, 'attendanceByDate']);
 
-    Route::get('/company/{company}/employees', [AttendanceController::class, 'employees']);
-    Route::get('/company/{company}/attendance-dates', [AttendanceController::class, 'attendanceDates']);
-    Route::get('/company/{company}/attendance/{date}', [AttendanceController::class, 'attendanceByDate']);
+Route::middleware(['auth:admin'])->group(function () {
 
     Route::post('/attendance/create-date', [AttendanceController::class, 'createDate']);
     Route::post('/attendance/delete-date', [AttendanceController::class, 'deleteDate']);
@@ -359,6 +385,12 @@ Route::prefix('employee/{employee}')->group(function () {
         ->name('employee.edit.account');
     Route::put('edit/account', [EmployeeEditController::class, 'updateAccount'])
         ->name('employee.update.account');
+
+    Route::put('rate/update', [EmployeeEditController::class, 'updateRate'])
+        ->name('employee.rate.update');
+
+    Route::put('rate/{rateId}/edit', [EmployeeEditController::class, 'editRate'])
+        ->name('employee.rate.edit');
 
     Route::get('edit/government', [EmployeeEditController::class, 'editGovernment'])
         ->name('employee.edit.government');
