@@ -39,6 +39,14 @@
                 </div>
 
                 @foreach($employees as $employee)
+                @php
+                    $employeeName = $employee->first_name . ' ' . $employee->last_name;
+                    // Add (PT) label and hired days for part-time employees
+                    if ($employee->employment_type === 'part-time' && isset($employee->hired_days)) {
+                        $daysString = implode(', ', $employee->hired_days);
+                        $employeeName .= ' (PT: ' . $daysString . ')';
+                    }
+                @endphp
                 <div
                     class="employee-item"
                     data-name="{{ strtolower(($employee->first_name ?? '') . ' ' . ($employee->last_name ?? '')) }}"
@@ -55,7 +63,7 @@
                             class="hidden peer employee-checkbox"
                         >
                         <x-employee-cards
-                            :name="$employee->first_name . ' ' . $employee->last_name"
+                            :name="$employeeName"
                             :id="$employee->employee_id"
                             :username="$employee->username"
                             :image="'assets/default_profile.png'"

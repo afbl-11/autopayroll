@@ -86,7 +86,9 @@ class MonthlyPayslipService
         $totalDeductions = $totalStatutoryDeductions + $withholdingTax + $totalLateDeductions;
 
         // Calculate net pay
-        $netPay = $grossTaxableSalary + $totalHolidayPay - $totalDeductions;
+        // Net Pay = Gross Taxable Salary + Holiday Pay - Total Deductions
+        // Note: Holiday pay is non-taxable, so it's added after tax calculations
+        $netPay = $grossTaxableSalary - $totalDeductions + $totalHolidayPay;
 
         return [
             'employee' => $employee,

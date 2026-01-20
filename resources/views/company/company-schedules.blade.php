@@ -65,7 +65,12 @@
                     // Format employment type display
                     let typeLabel = '';
                     if (employeeType === 'part-time') {
-                        typeLabel = 'Part-Time Employee (Fixed Days)';
+                        if (availableDays.length > 0) {
+                            const dayNames = availableDays.join(', ');
+                            typeLabel = `Part-Time Employee (Hired Days: ${dayNames})`;
+                        } else {
+                            typeLabel = 'Part-Time Employee (Fixed Days)';
+                        }
                     } else if (employeeType === 'contractual') {
                         typeLabel = 'Contractual Employee';
                     } else if (employeeType === 'full-time') {
@@ -79,8 +84,8 @@
                     startTimeInput.value = startTime;
                     endTimeInput.value = endTime;
                     
-                    // For part-time employees, use days_available and check them
-                    if (employeeType === 'part-time' && availableDays.length > 0) {
+                    // For part-time employees, show only hired days (READ-ONLY)
+                    if (employeeType === 'part-time') {
                         // Map full day names to short names
                         const dayMap = {
                             'Monday': 'Mon',
@@ -92,29 +97,34 @@
                             'Sunday': 'Sun'
                         };
                         
-                        // Convert available days to short format
-                        const availableDaysShort = availableDays.map(day => dayMap[day] || day);
+                        // Convert available days to short format (these are the HIRED days for this company)
+                        const hiredDaysShort = Array.isArray(availableDays) 
+                            ? availableDays.map(day => dayMap[day] || day)
+                            : [];
                         
-                        // Check all available days but keep checkboxes editable
+                        // For part-time: Show only hired days (checked and read-only), disable all others
                         checkboxes.forEach(label => {
                             const input = label.querySelector('input[type="checkbox"]');
                             if (input) {
-                                const isAvailable = availableDaysShort.includes(input.value);
+                                const isHiredDay = hiredDaysShort.includes(input.value);
                                 
-                                if (isAvailable) {
-                                    // Available day - check it
+                                if (isHiredDay) {
+                                    // This day is hired by this company - check and make read-only
                                     input.checked = true;
                                     label.classList.add('active');
+                                    label.style.opacity = '1';
+                                    label.style.cursor = 'not-allowed';
+                                    label.style.pointerEvents = 'none';
+                                    input.disabled = true;
                                 } else {
-                                    // Not available - uncheck
+                                    // Not hired by this company - uncheck and disable
                                     input.checked = false;
                                     label.classList.remove('active');
+                                    label.style.opacity = '0.3';
+                                    label.style.cursor = 'not-allowed';
+                                    label.style.pointerEvents = 'none';
+                                    input.disabled = true;
                                 }
-                                
-                                // Make all checkboxes editable for part-time
-                                label.style.opacity = '1';
-                                label.style.cursor = 'pointer';
-                                label.style.pointerEvents = 'auto';
                             }
                         });
                     } else {
@@ -139,11 +149,24 @@
                 });
             });
 
-            // Form validation
+            // Form validation and submission handling
             scheduleForm.addEventListener('submit', function(e) {
                 if (!selectedEmployeeId.value) {
                     e.preventDefault();
                     alert('Please select an employee first!');
+                    return;
+                }
+                
+                // For part-time employees, ensure only checked (hired) days are submitted
+                const selectedCard = document.querySelector('.card-wrapper.active');
+                if (selectedCard && selectedCard.dataset.type === 'part-time') {
+                    // Remove disabled attribute from checked inputs so they submit
+                    checkboxes.forEach(label => {
+                        const input = label.querySelector('input[type="checkbox"]');
+                        if (input && input.checked) {
+                            input.disabled = false;
+                        }
+                    });
                 }
             });
         });
@@ -213,6 +236,8 @@
                             // Otherwise use their full days_available
                             if ($employee->employment_type === 'part-time' && isset($employee->days_available_for_company)) {
                                 $daysAvailable = $employee->days_available_for_company;
+                                // Create label showing hired days
+                                $employmentType = 'Part-Time (Hired: ' . implode(', ', $daysAvailable) . ')';
                             } else {
                                 $daysAvailable = $employee->days_available ?? [];
                             }

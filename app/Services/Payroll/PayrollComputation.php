@@ -34,12 +34,36 @@ class PayrollComputation
 /*
  * ndHours = night differential hours
  * ndPay = night differential pay
+ * Calculates night differential for hours worked between 10 PM (22:00) and 6 AM (06:00)
+ * Returns the 10% premium pay for those hours (not the full wage)
  * */
     public function computeNightDifferential($hourlyRate, $clock_in, $clock_out, $night_diff_start, $night_diff_end,$ndRate) {
-
-        $ndHours = $clock_in->max($night_diff_start)
-            ->diffInHours($clock_out->min($night_diff_end));
-
+        $ndHours = 0;
+        
+        // Make copies to avoid modifying original Carbon objects
+        $clockIn = $clock_in->copy();
+        $clockOut = $clock_out->copy();
+        
+        // Normalize night_diff_end to next day if needed (22:00 today to 06:00 tomorrow)
+        if ($night_diff_end->lessThanOrEqualTo($night_diff_start)) {
+            $night_diff_end = $night_diff_end->copy()->addDay();
+        }
+        
+        // Handle case where shift spans across midnight
+        if ($clockOut->lessThan($clockIn)) {
+            $clockOut = $clockOut->copy()->addDay();
+        }
+        
+        // Calculate overlap between work hours and night differential period
+        $overlapStart = max($clockIn->timestamp, $night_diff_start->timestamp);
+        $overlapEnd = min($clockOut->timestamp, $night_diff_end->timestamp);
+        
+        // If there's an overlap, calculate hours
+        if ($overlapEnd > $overlapStart) {
+            $ndHours = ($overlapEnd - $overlapStart) / 3600; // Convert seconds to hours
+        }
+        
+        // Return night differential premium: hourly rate * night hours * 10% premium rate
         return $hourlyRate * $ndHours * $ndRate;
     }
 
@@ -66,11 +90,13 @@ class PayrollComputation
 
         $startTime = Carbon::parse($schedule->start_time);
         $endTime = Carbon::parse($schedule->end_time);
+        
+        // Handle night shifts: if end time is before start time, it means shift crosses midnight
+        if ($endTime->lessThanOrEqualTo($startTime)) {
+            $endTime->addDay();
+        }
+        
         $overtimeRate = 1.25;
-
-        $night_diff_start = Carbon::parse('22:00');
-        $night_diff_end = Carbon::parse('06:00')->addDay();
-        $nightDiffRate = 1.10;
 
         $attendance = AttendanceLogs::where('employee_id', $employee_id)
             ->whereNotNull('clock_in_time')
@@ -80,27 +106,52 @@ class PayrollComputation
 
         $clock_in = Carbon::parse($attendance->clock_in_time);
         $clock_out = Carbon::parse($attendance->clock_out_time);
+        
+        // Handle night shift clock times: if clock_out is before clock_in, add a day
+        if ($clock_out->lessThan($clock_in)) {
+            $clock_out->addDay();
+        }
+        
+        // Set up night differential period based on clock_in date
+        $night_diff_start = $clock_in->copy()->setTimeFromTimeString('22:00:00');
+        $night_diff_end = $clock_in->copy()->addDay()->setTimeFromTimeString('06:00:00');
+        $nightDiffRate = 0.10; // 10% premium for night hours
+        
         $workHours = $clock_in->diffInHours($clock_out);
 
-        $late_time = $startTime->diffInMinutes($clock_in);
-
-        if($clock_in > $schedule->start_time) {
-           $clock_in = Carbon::parse($schedule->start_time);
-           $workHours = $clock_in->diffInHours($clock_out);
+        // Calculate late time by comparing actual clock_in with scheduled start_time
+        $scheduledStart = $clock_in->copy()->setTimeFromTimeString($schedule->start_time);
+        $late_time = 0;
+        
+        // For payroll calculation, use actual clock in/out times
+        $clock_in_for_pay = $clock_in->copy();
+        $clock_out_for_pay = $clock_out->copy();
+        
+        // Check if employee was late
+        if($clock_in > $scheduledStart) {
+           $late_time = $clock_in->diffInMinutes($scheduledStart);
+           // For late employees, calculate pay from scheduled time
+           $clock_in_for_pay = $scheduledStart->copy();
+           
+           // Recalculate work hours
+           $workHours = $clock_in_for_pay->diffInHours($clock_out_for_pay);
         }
 
-        if ($clock_out > $endTime) {
-            $overtime_hours = $clock_out->diffInHours($endTime, false);
+        // Calculate overtime against scheduled end time
+        $scheduledEnd = $clock_in->copy()->setTimeFromTimeString($schedule->end_time);
+        if ($scheduledEnd->lessThanOrEqualTo($scheduledStart)) {
+            $scheduledEnd->addDay();
+        }
+        
+        if ($clock_out_for_pay > $scheduledEnd) {
+            $overtime_hours = $clock_out_for_pay->diffInHours($scheduledEnd, false);
             $overtimePay = $this->computeOvertime($hourlyRate,$overtimeRate, $overtime_hours);
         } else {
             $overtimePay = 0;
         }
 
-        if ($clock_out > $night_diff_start) {
-            $nightDiffPay =  $this->computeNightDifferential($hourlyRate, $clock_in,$clock_out,$night_diff_start,$night_diff_end, $nightDiffRate);
-        } else {
-            $nightDiffPay = 0;
-        }
+        // Always calculate night differential using actual work times
+        $nightDiffPay = $this->computeNightDifferential($hourlyRate, $clock_in_for_pay, $clock_out_for_pay, $night_diff_start, $night_diff_end, $nightDiffRate);
 
         $late_deductions = $this->computeLateDeduction($hourlyRate, $regularHours, $late_time);
 

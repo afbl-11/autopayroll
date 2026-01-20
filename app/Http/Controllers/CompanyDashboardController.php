@@ -48,29 +48,39 @@ class CompanyDashboardController extends Controller
       return view('company.company-information', compact('company'))->with('title', $company->company_name . ' ' . 'Dashboard');
     }
     public function showEmployees($id) {
-        // Get current week start
-        $weekStart = Carbon::now()->startOfWeek();
-        
         // Get company with permanently assigned employees
         $company = Company::with('employees')->find($id);
         
-        // Get part-time employees hired for this company 
+        // Get part-time employees hired for this company (any active assignment)
+        // Include those with company_id set to this company OR those with null company_id but have assignments
         $partTimeHiredEmployees = Employee::where('employment_type', 'part-time')
-            ->whereNull('company_id')
-            ->whereHas('partTimeAssignments', function($query) use ($id, $weekStart) {
-                $query->where('company_id', $id)
-                      ->where('week_start', $weekStart);
+            ->where(function($query) use ($id) {
+                $query->whereNull('company_id')
+                      ->orWhere('company_id', $id);
             })
-            ->with(['partTimeAssignments' => function($query) use ($id, $weekStart) {
-                $query->where('company_id', $id)
-                      ->where('week_start', $weekStart);
+            ->whereHas('partTimeAssignments', function($query) use ($id) {
+                $query->where('company_id', $id);
+            })
+            ->with(['partTimeAssignments' => function($query) use ($id) {
+                $query->where('company_id', $id);
             }])
             ->get()
             ->map(function($employee) {
-                // Add the assigned days from the assignment
-                $assignment = $employee->partTimeAssignments->first();
-                $employee->assigned_days_for_company = $assignment ? $assignment->assigned_days : [];
+                // Collect all assigned days from all assignments for this company
+                $allAssignedDays = [];
+                foreach ($employee->partTimeAssignments as $assignment) {
+                    $days = $assignment->assigned_days;
+                    if (!is_array($days)) {
+                        $days = json_decode($days, true) ?? [];
+                    }
+                    $allAssignedDays = array_merge($allAssignedDays, $days);
+                }
+                $employee->assigned_days_for_company = array_unique($allAssignedDays);
                 return $employee;
+            })
+            ->filter(function($employee) use ($company) {
+                // Filter out employees that are already in the permanent employees list
+                return !$company->employees->contains('employee_id', $employee->employee_id);
             });
         
         // Merge part-time hired employees with regular employees
@@ -80,7 +90,7 @@ class CompanyDashboardController extends Controller
         $availablePartTimeEmployees = Employee::where('employment_type', 'part-time')
             ->whereNull('company_id')
             ->get()
-            ->map(function ($employee) use ($weekStart) {
+            ->map(function ($employee) {
                 // Get employee's available days (automatically cast to array)
                 $availableDays = $employee->days_available;
                 
@@ -89,9 +99,8 @@ class CompanyDashboardController extends Controller
                     $availableDays = json_decode($availableDays, true) ?? [];
                 }
                 
-                // Get all assignments for this week (from any company)
+                // Get all active assignments (from any company, any week)
                 $assignments = PartTimeAssignment::where('employee_id', $employee->employee_id)
-                    ->where('week_start', $weekStart)
                     ->get();
                 
                 // Collect all assigned days across all companies
@@ -123,31 +132,29 @@ class CompanyDashboardController extends Controller
         return view('company.company-employees', compact('company', 'availablePartTimeEmployees'));
     }
     public function showSchedules($id) {
-        // Get current week start
-        $weekStart = Carbon::now()->startOfWeek();
-        
         // Load company with permanently assigned employees
         $company = Company::with([
-            'employees.employeeSchedule' => function($query) {
-                $query->whereNull('end_date');
+            'employees.employeeSchedule' => function($query) use ($id) {
+                $query->where('company_id', $id)
+                      ->whereNull('end_date');
             },
             'companySchedule'
         ])->find($id);
         
-        // Get part-time employees hired for this company this week
+        // Get part-time employees hired for this company (any active assignment)
         $partTimeHiredEmployees = Employee::where('employment_type', 'part-time')
             ->whereNull('company_id')
-            ->whereHas('partTimeAssignments', function($query) use ($id, $weekStart) {
-                $query->where('company_id', $id)
-                      ->where('week_start', $weekStart);
+            ->whereHas('partTimeAssignments', function($query) use ($id) {
+                $query->where('company_id', $id);
             })
             ->with([
-                'employeeSchedule' => function($query) {
-                    $query->whereNull('end_date');
-                },
-                'partTimeAssignments' => function($query) use ($id, $weekStart) {
+                'employeeSchedule' => function($query) use ($id) {
                     $query->where('company_id', $id)
-                          ->where('week_start', $weekStart);
+                          ->whereNull('end_date');
+                },
+                'partTimeAssignments' => function($query) use ($id) {
+                    $query->where('company_id', $id)
+                          ->latest('week_start');
                 }
             ])
             ->get()
@@ -175,7 +182,33 @@ class CompanyDashboardController extends Controller
 
     public function showEmployeeUnassign($id) {
         $company = Company::with('employees')->find($id);
-        $employees = Employee::where('company_id', $id)->get();
+        
+        // Get permanently assigned employees
+        $permanentEmployees = Employee::where('company_id', $id)->get();
+        
+        // Get part-time employees hired (any active assignment)
+        $partTimeHiredEmployees = Employee::where('employment_type', 'part-time')
+            ->whereNull('company_id')
+            ->whereHas('partTimeAssignments', function($query) use ($id) {
+                $query->where('company_id', $id);
+            })
+            ->with(['partTimeAssignments' => function($query) use ($id) {
+                $query->where('company_id', $id)
+                      ->latest('week_start');
+            }])
+            ->get()
+            ->map(function($employee) {
+                $assignment = $employee->partTimeAssignments->first();
+                if ($assignment) {
+                    $employee->hired_days = $assignment->assigned_days;
+                    $employee->is_part_time_hired = true;
+                }
+                return $employee;
+            });
+        
+        // Merge both collections
+        $employees = $permanentEmployees->merge($partTimeHiredEmployees);
+        
         return view('company.employee-unassign', compact('company', 'employees'));
     }
 
@@ -187,7 +220,8 @@ class CompanyDashboardController extends Controller
 
     public function unassignEmployees(Request $request, $companyId) {
         $this->employeeAssign->unassign($request, $companyId);
-        return back();
+        return redirect()->route('company.dashboard.employees', ['id' => $companyId])
+            ->with('success', 'Employee(s) unassigned successfully.');
     }
 
     public function createSchedule(CreateScheduleRequest $request, $id) {
@@ -203,13 +237,41 @@ class CompanyDashboardController extends Controller
         
         // Verify employee is accessible to this company
         $isRegularEmployee = $employee->company_id == $id;
-        $isPartTimeHired = $employee->employment_type === 'part-time' && 
-                          PartTimeAssignment::where('employee_id', $employee->employee_id)
-                                          ->where('company_id', $id)
-                                          ->exists();
+        $weekStart = Carbon::now()->startOfWeek();
+        $partTimeAssignment = PartTimeAssignment::where('employee_id', $employee->employee_id)
+                                  ->where('company_id', $id)
+                                  ->where('week_start', $weekStart)
+                                  ->first();
+        $isPartTimeHired = $employee->employment_type === 'part-time' && $partTimeAssignment;
         
         if (!$isRegularEmployee && !$isPartTimeHired) {
             return back()->with('error', 'Employee not assigned to this company.');
+        }
+        
+        // For part-time employees, validate that working days match hired days
+        if ($employee->employment_type === 'part-time' && $partTimeAssignment) {
+            $hiredDays = $partTimeAssignment->assigned_days;
+            $submittedDays = $validated['working_days'];
+            
+            // Convert full day names to short format for comparison
+            $dayMap = [
+                'Monday' => 'Mon',
+                'Tuesday' => 'Tues',
+                'Wednesday' => 'Wed',
+                'Thursday' => 'Thurs',
+                'Friday' => 'Fri',
+                'Saturday' => 'Sat',
+                'Sunday' => 'Sun'
+            ];
+            $hiredDaysShort = array_map(function($day) use ($dayMap) {
+                return $dayMap[$day] ?? $day;
+            }, $hiredDays);
+            
+            // Check if submitted days are within hired days
+            $invalidDays = array_diff($submittedDays, $hiredDaysShort);
+            if (!empty($invalidDays)) {
+                return back()->with('error', 'Cannot schedule part-time employee on days not hired: ' . implode(', ', $invalidDays));
+            }
         }
         
         // End previous schedules for this employee at this company
@@ -440,9 +502,12 @@ class CompanyDashboardController extends Controller
             
             $newTotalAssignedDays = array_unique(array_merge($allAssignedDays, $selectedDays));
             
+            // Part-time employees should NEVER have company_id set, even if all days are hired
+            // They remain as part-time across multiple companies
+            $employee->update(['company_id' => null]);
+            
             if (count($newTotalAssignedDays) >= count($totalAvailableDays)) {
-                $employee->update(['company_id' => $companyId]);
-                $message = 'Part-time employee hired for all available days and added to company employees.';
+                $message = 'Part-time employee hired for all available days. Employee will appear in all companies that hired them.';
             } else {
                 $message = 'Part-time employee hired successfully for ' . implode(', ', $selectedDays) . '. Still available for other days.';
             }
