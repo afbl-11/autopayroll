@@ -26,7 +26,7 @@
                     @endfor
                 </select>
 
-                <select id="periodFilter" class="filter-dropdown">
+                <select id="periodFilter" class="filter-dropdown" onchange="togglePeriod()">
                     <option value="1-15">1st-15th</option>
                     <option value="16-30">16th-30th</option>
                 </select>
@@ -34,46 +34,93 @@
         </nav>
 
         <div class="payroll-table-wrapper">
-        <table class="payroll-table">
-            <thead>
-                <tr>
-                    <th>Employee Name</th>
-                    <th>Company</th>
-                    <th>Daily Rate</th>
-                    <th>Days Worked</th>
-                    <th>Gross Pay</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($employees as $employee)
-                <tr>
-                    <td>{{ $employee->first_name }} {{ $employee->last_name }}</td>
-                    <td>
-                        @if($employee->employment_type === 'part-time')
-                            Part-time
-                        @else
-                            {{ $employee->company->company_name ?? 'N/A' }}
-                        @endif
-                    </td>
-                    <td>₱{{ number_format($employee->currentRate->rate ?? 0, 2) }}</td>
-                    <td>{{ $employee->days_worked }}</td>
-                    <td>₱{{ number_format($employee->gross_pay, 2) }}</td>
-                    <td>
-                        <a href="#" 
-                           onclick="printPayslip('{{ $employee->employee_id }}', '{{ $year }}', '{{ $month }}'); return false;" 
-                           class="btn-print">
-                            <i class="fas fa-print"></i> Print Payslip
-                        </a>
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="6" class="text-center">No payroll data found for the selected period</td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
+        <div id="period-1-15">
+            <h3 class="period-title">1st - 15th Period</h3>
+            <table class="payroll-table">
+                <thead>
+                    <tr>
+                        <th>Employee Name</th>
+                        <th>Company</th>
+                        <th>Daily Rate</th>
+                        <th>Days Worked</th>
+                        <th>Gross Pay</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($employees as $employee)
+                    <tr>
+                        <td>{{ $employee->first_name }} {{ $employee->last_name }}</td>
+                        <td>
+                            @if($employee->employment_type === 'part-time')
+                                Part-time
+                            @else
+                                {{ $employee->company->company_name ?? 'N/A' }}
+                            @endif
+                        </td>
+                        <td>₱{{ number_format($employee->currentRate->rate ?? 0, 2) }}</td>
+                        <td>{{ $employee->days_worked_1to15 }}</td>
+                        <td>₱{{ number_format($employee->gross_pay_1to15, 2) }}</td>
+                        <td>
+                            <a href="#" 
+                               onclick="printPayslip('{{ $employee->employee_id }}', '{{ $year }}', '{{ $month }}', '1-15'); return false;" 
+                               class="btn-print">
+                                <i class="fas fa-print"></i> Print Payslip
+                            </a>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="6" class="text-center">No payroll data found for the selected period</td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+
+        <div id="period-16-30" style="display: none;">
+            <h3 class="period-title">16th - 31st Period</h3>
+            <table class="payroll-table">
+                <thead>
+                    <tr>
+                        <th>Employee Name</th>
+                        <th>Company</th>
+                        <th>Daily Rate</th>
+                        <th>Days Worked</th>
+                        <th>Gross Pay</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($employees as $employee)
+                    <tr>
+                        <td>{{ $employee->first_name }} {{ $employee->last_name }}</td>
+                        <td>
+                            @if($employee->employment_type === 'part-time')
+                                Part-time
+                            @else
+                                {{ $employee->company->company_name ?? 'N/A' }}
+                            @endif
+                        </td>
+                        <td>₱{{ number_format($employee->currentRate->rate ?? 0, 2) }}</td>
+                        <td>{{ $employee->days_worked_16to31 }}</td>
+                        <td>₱{{ number_format($employee->gross_pay_16to31, 2) }}</td>
+                        <td>
+                            <a href="#" 
+                               onclick="printPayslip('{{ $employee->employee_id }}', '{{ $year }}', '{{ $month }}', '16-30'); return false;" 
+                               class="btn-print">
+                                <i class="fas fa-print"></i> Print Payslip
+                            </a>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="6" class="text-center">No payroll data found for the selected period</td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
         </div>
     </div>
 </x-app>
@@ -125,6 +172,20 @@
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
+    padding: 1.5rem;
+}
+
+.period-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--clr-primary);
+    margin: 1.5rem 0 1rem 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--clr-primary);
+}
+
+.period-title:first-of-type {
+    margin-top: 0;
 }
 
 .payroll-table {
@@ -240,8 +301,21 @@ function filterPayroll() {
     window.location.href = url;
 }
 
-function printPayslip(employeeId, year, month) {
+function togglePeriod() {
     const period = document.getElementById('periodFilter').value;
+    const period1to15 = document.getElementById('period-1-15');
+    const period16to30 = document.getElementById('period-16-30');
+    
+    if (period === '1-15') {
+        period1to15.style.display = 'block';
+        period16to30.style.display = 'none';
+    } else {
+        period1to15.style.display = 'none';
+        period16to30.style.display = 'block';
+    }
+}
+
+function printPayslip(employeeId, year, month, period) {
     const url = `{{ url('dashboard/employee/payslip') }}/${employeeId}/print?year=${year}&month=${month}&period=${period}`;
     window.open(url, '_blank');
 }

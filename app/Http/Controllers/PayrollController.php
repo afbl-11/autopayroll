@@ -44,16 +44,31 @@ class PayrollController extends Controller
 
         $employees = $employeesQuery->get()
             ->map(function ($employee) use ($year, $month) {
-                // Get payroll summary for the employee for the selected month
-                $payrollData = DailyPayrollLog::withoutGlobalScope(\App\Models\Scopes\AdminScope::class)
+                // Get payroll summary for 1-15 period
+                $payrollData1to15 = DailyPayrollLog::withoutGlobalScope(\App\Models\Scopes\AdminScope::class)
                     ->where('employee_id', $employee->employee_id)
                     ->whereYear('payroll_date', $year)
                     ->whereMonth('payroll_date', $month)
-                    ->selectRaw('COUNT(*) as days_worked, SUM(gross_salary) as gross_pay')
+                    ->whereDay('payroll_date', '<=', 15)
+                    ->selectRaw('COUNT(*) as days_worked, 
+                                SUM(gross_salary + overtime + night_differential) as gross_pay')
                     ->first();
 
-                $employee->days_worked = $payrollData->days_worked ?? 0;
-                $employee->gross_pay = $payrollData->gross_pay ?? 0;
+                // Get payroll summary for 16-31 period
+                $payrollData16to31 = DailyPayrollLog::withoutGlobalScope(\App\Models\Scopes\AdminScope::class)
+                    ->where('employee_id', $employee->employee_id)
+                    ->whereYear('payroll_date', $year)
+                    ->whereMonth('payroll_date', $month)
+                    ->whereDay('payroll_date', '>', 15)
+                    ->selectRaw('COUNT(*) as days_worked, 
+                                SUM(gross_salary + overtime + night_differential) as gross_pay')
+                    ->first();
+
+                $employee->days_worked_1to15 = $payrollData1to15->days_worked ?? 0;
+                $employee->gross_pay_1to15 = $payrollData1to15->gross_pay ?? 0;
+                $employee->days_worked_16to31 = $payrollData16to31->days_worked ?? 0;
+                $employee->gross_pay_16to31 = $payrollData16to31->gross_pay ?? 0;
+                
                 return $employee;
             });
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\AttendanceReport;
 use App\Services\Payroll\AttendancePayrollService;
 use App\Models\AttendanceLogs;
+use App\Models\DailyPayrollLog;
 use App\Models\Employee;
 use App\Models\Company;
 use App\Models\EmployeeSchedule;
@@ -256,11 +257,49 @@ class AttendanceController extends Controller
             'date'       => 'required|date',
         ]);
 
-        AttendanceLogs::where('company_id', $request->company_id)
-            ->where('log_date', $request->date)
-            ->delete();
+        try {
+            DB::beginTransaction();
 
-        return response()->json(['message' => 'Date deleted successfully']);
+            // FIRST: Get employee IDs from attendance logs BEFORE deleting
+            // This ensures we only delete payroll for employees who had attendance at THIS company on THIS date
+            $employeeIds = AttendanceLogs::where('company_id', $request->company_id)
+                ->where('log_date', $request->date)
+                ->pluck('employee_id')
+                ->unique()
+                ->toArray();
+
+            // Delete attendance logs for this date and company
+            $deletedAttendance = AttendanceLogs::where('company_id', $request->company_id)
+                ->where('log_date', $request->date)
+                ->delete();
+
+            // Delete daily payroll logs ONLY for employees who had attendance at this company on this date
+            // This prevents deleting payroll from other companies for part-time employees
+            $deletedPayroll = 0;
+            if (!empty($employeeIds)) {
+                $deletedPayroll = DailyPayrollLog::withoutGlobalScope(\App\Models\Scopes\AdminScope::class)
+                    ->whereIn('employee_id', $employeeIds)
+                    ->where('payroll_date', $request->date)
+                    ->delete();
+            }
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Date deleted successfully',
+                'deleted_attendance' => $deletedAttendance,
+                'deleted_payroll' => $deletedPayroll
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            \Log::error('Delete date error: ' . $e->getMessage());
+            \Log::error('Stack trace: ' . $e->getTraceAsString());
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to delete date: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     // Manual Input Attendance Methods
