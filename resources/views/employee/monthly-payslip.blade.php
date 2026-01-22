@@ -204,7 +204,7 @@
                     <th class="amount">AMOUNT</th>
                 </tr>
                 <tr>
-                    <td colspan="2">Basic Monthly Salary ({{ $payslipData['work_summary']['total_days'] }} days × ₱{{ number_format($payslipData['rates']['daily'], 2) }})</td>
+                    <td colspan="2">Basic Semi-Monthly Salary ({{ $payslipData['work_summary']['total_days'] }} days × ₱{{ number_format($payslipData['rates']['daily'], 2) }})</td>
                     <td class="amount">₱{{ number_format($payslipData['earnings']['basic_salary'], 2) }}</td>
                 </tr>
                 <tr>
@@ -284,7 +284,7 @@
                 </tr>
                 <tr>
                     <td colspan="2">GROSS PAY</td>
-                    <td class="amount">₱{{ number_format($payslipData['earnings']['gross_taxable_salary'] + $payslipData['earnings']['holiday_pay'], 2) }}</td>
+                    <td class="amount">₱{{ number_format($payslipData['earnings']['gross_taxable_salary'], 2) }}</td>
                 </tr>
                 <tr>
                     <td colspan="2">GROSS DEDUCTIONS</td>

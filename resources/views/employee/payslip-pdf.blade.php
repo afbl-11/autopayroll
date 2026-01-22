@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monthly Payslip - {{ date('F Y', strtotime("$year-$month-01")) }}</title>
+    <title>Semi-Monthly Payslip - {{ date('F Y', strtotime("$year-$month-01")) }}</title>
     <style>
         * {
             margin: 0;
