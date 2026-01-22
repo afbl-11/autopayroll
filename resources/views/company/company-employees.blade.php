@@ -118,8 +118,8 @@
                     <div class="eh-col eh-employee">Employee</div>
                     <div class="eh-col eh-username">Username</div>
                     <div class="eh-col eh-position">Role</div>
-                    <div class="eh-col eh-type">Available Days</div>
-                    <div class="eh-col eh-status">Action</div>
+                    <div class="eh-col eh-types">Available Days</div>
+                    <div class="eh-col eh-status-action">Action</div>
                 </div>
                 
                 @foreach($availablePartTimeEmployees as $employee)
@@ -136,7 +136,7 @@
                                 <p class="pt-id">#{{ $employee->employee_id }}</p>
                             </div>
                         </div>
-                        <div class="pt-col pt-username">{{ $employee->username }}</div>
+                        <div class="pt-col pt-username">{{ '@' . $employee->username }}</div>
                         <div class="pt-col pt-position">{{ $employee->job_position }}</div>
                         <div class="pt-col pt-days">
                             <span class="days-badge">{{ $daysString }}</span>

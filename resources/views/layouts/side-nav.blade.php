@@ -56,7 +56,7 @@
             <li class="nav-item-4">
                 <a href="{{ route('salary.list') }}"
                    class="nav-link {{ request()->routeIs('salary.*') ? 'active' : '' }}">
-                    <img src="{{ asset('assets/navigations/payroll.png') }}" alt="Salary">
+                    <img src="{{ asset('assets/navigations/salary.png') }}" alt="Salary">
                     <span class="link-text">Salary</span>
                 </a>
             </li>

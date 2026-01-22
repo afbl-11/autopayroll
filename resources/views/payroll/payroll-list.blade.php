@@ -1,7 +1,7 @@
-<x-app>
+<x-app title="Payroll Management">
     <div class="main-content">
         <nav class="payroll-nav">
-            <h1 class="page-title">Payroll Management</h1>
+            <h1 class="page-title"></h1>
             
             <div class="filter-controls">
                 <select id="companyFilter" class="filter-dropdown" onchange="filterPayroll()">
@@ -281,10 +281,47 @@
         margin-left: 50px;
         width: 80%;
     }
+}
 
-    .payroll-nav {
+@media (max-width: 800px){
+    #companyFilter {
+        width: 150px;
+    }
+}
+
+@media (max-width: 700px) {
+    .main-content {
+        margin-left: 65px;
+    }
+
+    #monthFilter, #periodFilter {
+        width: 100px;
+    }
+}
+
+@media (max-width: 680px){
+    .filter-controls {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: flex-end;
+    }
+}
+
+@media (max-width: 600px) {
+    .main-content {
+        margin-left: 70px;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-content {
+        width: 75%;
+    }
+}
+
+@media (max-width: 420px) {
+    .main-content {
+        width: 70%;
+        margin-left: 72px;
     }
 }
 </style>
