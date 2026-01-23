@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Scopes\AdminScope;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -53,11 +54,12 @@ class EmployeeSchedule extends Model
             if (empty($model->employee_schedules_id)) {
                 $model->employee_schedules_id = (string) Str::uuid();
             }
-            
+
             // Auto-assign admin_id
             if($admin = auth('admin')->user()){
                 $model->admin_id = $admin->admin_id;
             }
         });
     }
+
 }

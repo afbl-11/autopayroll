@@ -402,9 +402,8 @@ Route::prefix('employee/{employee}')->group(function () {
 
 //Employee Web Stuff
 
-Route::get('/employee/employee-dashboard', function () {
-    return view('employee_web.dashboard');
-});
+Route::get('/employee/employee-dashboard', [\App\Http\Controllers\EmployeeWeb\EmployeeDashboard::class, 'index'])
+    ->name('web.employee.dashboard');
 
 Route::get('/employee/payroll', function () {
     return view('employee_web.PayrollViewingModule.payrollScreen');
