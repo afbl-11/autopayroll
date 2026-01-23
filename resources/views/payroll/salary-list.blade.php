@@ -207,6 +207,7 @@
             }
         });
     </script>
+    
     <style>
         @media (max-width: 1500px) {
             .main-content {
@@ -242,9 +243,9 @@
             }
         }
 
-        @media (max-width: 700px) {
+        @media (max-width: 800px) {
             .main-content {
-                width: 90%; 
+                width: 87%; 
                 margin-left: 60px;
             }
         }
@@ -258,8 +259,20 @@
 
         @media (max-width: 480px) {
             .main-content {
-                width: 85%; 
+                width: 80%; 
                 margin-left: 72px;
+            }
+  
+            .salary-search-input, .filter-dropdown {
+                min-width: 30px;
+            }
+
+            .filter-dropdown {
+                font-size: 13px;
+            }
+
+            .salary-search-input {
+                font-size: 12.5px;
             }
         }
     </style>

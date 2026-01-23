@@ -34,6 +34,7 @@
         </nav>
 
         <div class="payroll-table-wrapper">
+        <div class="payroll">
         <div id="period-1-15">
             <h3 class="period-title">1st - 15th Period</h3>
             <table class="payroll-table">
@@ -120,6 +121,7 @@
                     @endforelse
                 </tbody>
             </table>
+        </div>
         </div>
         </div>
     </div>
@@ -264,8 +266,16 @@
         width: 90%;
     }
 
-    .payroll-table-wrapper {
+    .payroll {
         overflow-x: auto;
+    }
+
+    .payroll-table, .period-title {
+        min-width: 900px;
+    }
+    
+    .payroll-table {
+        margin-bottom: 10px;
     }
 }
 
