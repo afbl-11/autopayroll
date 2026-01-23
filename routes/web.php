@@ -417,6 +417,8 @@ Route::get('/employee/leave-module', function () {
     return view('employee_web.leaveModule.leaveModule');
 });
 
-Route::get('/employee/credit-adjustment', function () {
-    return view('employee_web.creditAdjustmentModule.creditAdjustmentModule');
-});
+Route::get('/employee/credit-adjustment',[\App\Http\Controllers\EmployeeWeb\CreditAdjustmentController::class,'index'])
+->name('employee_web.adjustment');
+
+Route::post('/employee/request/adjustment/', [\App\Http\Controllers\EmployeeWeb\CreditAdjustmentController::class, 'sendAdjustmentRequest'])
+    ->name('employee_web.adjustment.request');
