@@ -43,6 +43,7 @@
             <div class="field-row days-available-field" id="days-available-field" style="display: none;">
                 <div class="days-container">
                     <label>Days Available</label>
+                    <p class="note">Note: Changes made in the existing data here will only update the employee's available days and will not impact their assigned days.</p>
                     <div class="days-buttons">
                         <button type="button" class="day-btn" data-day="Monday">Mon</button>
                         <button type="button" class="day-btn" data-day="Tuesday">Tue</button>
@@ -251,3 +252,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
+<style>
+    .note {
+        font-size: 11.75px; 
+        margin-top: -7px;
+        color: #4B5563;
+        margin-bottom: 20px;
+        letter-spacing: 1.33px;
+        width: 65%;
+    }
+</style>
