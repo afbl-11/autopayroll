@@ -11,7 +11,7 @@
     gap: 1rem;
     margin-top: 1rem;
 }
-.main-content nav a, .btn-download{
+.main-content nav a, .btn-download, .btn-link{
     background: var(--clr-yellow);
     text-decoration: none;
     padding: 7px 15px 7px 15px;
@@ -26,7 +26,7 @@
     float: left;
 }
 
-.main-content nav a:hover, .btn-download:hover {
+.main-content nav a:hover, .btn-download:hover, .btn-link:hover {
     color: var(--clr-background);
     background: var(--clr-indigo);
 }
@@ -111,7 +111,7 @@
         width: 85%;
         margin-left: 60px;
     }
-    .custom-table {
+    .table-wrapper {
         width: 100%;
         display: block;
         overflow-x: auto;
@@ -131,10 +131,11 @@
     .main-content {
         width: 80%;
         margin-left: 70px;
+        margin-bottom: 35px;
     }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 700px) {
     .main-content {
         width: 75%;
         margin-left: 80px;
@@ -150,7 +151,7 @@
         width: 85%;
         margin-left: 25px;
     }
-    .main-content nav a, .btn-download {
+    .main-content nav a, .btn-download, .btn-link {
         width: 90%;
         text-align: center;
         padding: 10px;

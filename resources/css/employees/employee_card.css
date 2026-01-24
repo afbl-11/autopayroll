@@ -18,7 +18,7 @@ a {
     border-radius: 10px;
     border: 1px solid #eaeaea;
     margin-bottom: 12px;
-    width: calc(95% - 90px);
+    width: 95%;
     transition: 0.2s ease;
     margin-left: 45px;
 }

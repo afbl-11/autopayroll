@@ -1,10 +1,10 @@
-<x-app>
+<x-app title="Salary Management">
     <link rel="stylesheet" href="{{ asset('css/salary-list.css') }}">
     
     <div class="main-content">
         <div class="salary-list-container">
             <div class="salary-header">
-                <h1 class="salary-page-title">Salary Management</h1>
+                <h1 class="salary-page-title"></h1>
                 
                 <div class="salary-filter-controls">
                     <input type="text" 
@@ -207,4 +207,73 @@
             }
         });
     </script>
+    
+    <style>
+        @media (max-width: 1500px) {
+            .main-content {
+                margin-left: 25px;
+                width: 95%;
+            }
+        }
+            
+        @media (max-width: 1200px) {
+            .main-content {
+                width: 94%;
+                margin-left: 45px;
+            }
+
+            button {
+                justify-content: center;
+            }
+
+            .salary-table {
+                font-size: 13px;
+            }
+
+            .btn-action {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .main-content {
+                width: 92%; 
+                margin-left: 50px;
+            }
+        }
+
+        @media (max-width: 800px) {
+            .main-content {
+                width: 87%; 
+                margin-left: 60px;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .main-content {
+                width: 85%; 
+                margin-left: 70px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-content {
+                width: 80%; 
+                margin-left: 72px;
+            }
+  
+            .salary-search-input, .filter-dropdown {
+                min-width: 30px;
+            }
+
+            .filter-dropdown {
+                font-size: 13px;
+            }
+
+            .salary-search-input {
+                font-size: 12.5px;
+            }
+        }
+    </style>
 </x-app>

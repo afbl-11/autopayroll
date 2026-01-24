@@ -1,9 +1,9 @@
 @vite(['resources/css/company/manual-attendance.css'])
 
-<x-app>
+<x-app title="Manual Attendance">
 <div class="main-content">
 
-<h2 class="page-title">Manual Attendance</h2>
+<h2 class="page-title"></h2>
 
 {{-- LEGEND --}}
 <div class="attendance-legend">

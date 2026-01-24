@@ -135,6 +135,68 @@
     background: var(--clr-indigo);
     color: var(--clr-yellow);
 }
+
+@media (max-width: 700px) {
+    .filter-controls {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-top: 30px;
+    }
+}
+
+@media (max-width: 650px) {
+    .employee-info {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .filter-controls {
+        margin-top: 15px;
+    }
+}
+
+@media (max-width: 550px) {
+    .payslip-header h1 {
+        font-size: 18px;
+    }
+
+    .payslip-table th,
+    .payslip-table td {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    .net-pay-section .amount {
+        font-size: 24px;
+    }
+
+    .employee-info .info-label,
+    .employee-info .info-value {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 400px) {
+    .payslip-header h1 {
+        font-size: 14px;
+    }
+
+    .payslip-table th,
+    .payslip-table td {
+        font-size: 10px;
+        padding: 6px;
+    }
+
+    .net-pay-section .amount {
+        font-size: 16px;
+    }
+
+    .employee-info .info-label,
+    .employee-info .info-value {
+        font-size: 10px;
+    }
+}
 </style>
 
 <x-app :navigation="true" navigationType="employee" :employee="$employee" :noHeader="true">
@@ -204,7 +266,7 @@
                     <th class="amount">AMOUNT</th>
                 </tr>
                 <tr>
-                    <td colspan="2">Basic Monthly Salary ({{ $payslipData['work_summary']['total_days'] }} days × ₱{{ number_format($payslipData['rates']['daily'], 2) }})</td>
+                    <td colspan="2">Basic Semi-Monthly Salary ({{ $payslipData['work_summary']['total_days'] }} days × ₱{{ number_format($payslipData['rates']['daily'], 2) }})</td>
                     <td class="amount">₱{{ number_format($payslipData['earnings']['basic_salary'], 2) }}</td>
                 </tr>
                 <tr>
@@ -284,7 +346,7 @@
                 </tr>
                 <tr>
                     <td colspan="2">GROSS PAY</td>
-                    <td class="amount">₱{{ number_format($payslipData['earnings']['gross_taxable_salary'] + $payslipData['earnings']['holiday_pay'], 2) }}</td>
+                    <td class="amount">₱{{ number_format($payslipData['earnings']['gross_taxable_salary'], 2) }}</td>
                 </tr>
                 <tr>
                     <td colspan="2">GROSS DEDUCTIONS</td>

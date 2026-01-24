@@ -6,7 +6,7 @@
         <nav>
             <x-button-link :source="['employee.dashboard.payroll', ['id' => $employee->employee_id  ,'type' => 'daily']]" :noDefault="true">Daily Log</x-button-link>
             <x-button-link :source="['employee.dashboard.payroll', ['id' => $employee->employee_id, 'type' => 'semi']]" :noDefault="true">Semi Monthly</x-button-link>
-            <button onclick="openPayslipWithPeriod()" class="btn-link" style="background: var(--clr-yellow); color: var(--clr-primary); padding: 8px 16px; border: none; border-radius: 8px; cursor: pointer; font-size: 13px; font-family: 'Helvetica Regular', sans-serif;">Generate Payslip</button>
+            <button onclick="openPayslipWithPeriod()" class="btn-link">Generate Payslip</button>
 
           {{--  <button id="downloadPDF" class="btn-download">Download PDF</button>  --}}
         </nav>
@@ -196,4 +196,16 @@
             }
         });
     </script>
+    <style>
+        .filter-controls {
+            margin-top: 35px;
+        }
+        
+        @media (max-width: 580px) {
+            .filter-controls {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
 </x-app>
