@@ -11,6 +11,7 @@ use App\Http\Controllers\CreditAdjustmentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeDashboardController;
 use App\Http\Controllers\EmployeePayrollController;
+use App\Http\Controllers\EmployeeWeb\LeaveDashboardController;
 use App\Http\Controllers\LeaveRequestController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\LoginController;
@@ -413,9 +414,17 @@ Route::get('/employee/announcement', function () {
     return view('employee_web.announcementModule.announcementScreen');
 });
 
-Route::get('/employee/leave-module', function () {
-    return view('employee_web.leaveModule.leaveModule');
-});
+Route::get('/employee/leave-module',[LeaveDashboardController::class,'index'])
+->name('employee_web.leaveDashboard');
+
+Route::get('/employee/leave', [LeaveDashboardController::class, 'index'])
+    ->name('employee_web.leave');
+
+Route::get('/employee/leave/filter', [LeaveDashboardController::class, 'index'])
+    ->name('employee_web.filter.leave');
+
+Route::post('/employee/request/leave', [LeaveDashboardController::class, 'sendLeaveRequest'])
+    ->name('employee_web.request.leave');
 
 Route::get('/employee/credit-adjustment',[\App\Http\Controllers\EmployeeWeb\CreditAdjustmentController::class,'index'])
 ->name('employee_web.adjustment');
