@@ -13,6 +13,7 @@ class LeaveCredits extends Model
 
     protected $fillable = [
         'leave_credit_id',
+        'leave_credit_type_id',
         'employee_id',
         'admin_id',
         'used_days',
@@ -28,5 +29,10 @@ class LeaveCredits extends Model
 
     public function employee() {
         return $this->belongsTo('App\Models\Employee', 'employee_id', 'employee_id');
+    }
+
+    public function leaveCreditType()
+    {
+        return $this->belongsTo(LeaveCreditType::class, 'leave_credit_type_id', 'leave_credit_type_id');
     }
 }
