@@ -128,9 +128,9 @@ class EmployeeEditController extends Controller
             'middle_name' => $middleName,
             'last_name' => $lastName,
             'birthdate' => $request->birthdate,
-            'gender' => $request->gender,
-            'blood_type' => $request->blood_type,
-            'marital_status' => $request->marital_status,
+            'gender' => $request->gender ?? $employee->gender,
+            'blood_type' => $request->blood_type ?? $employee->blood_type,
+            'marital_status' => $request->marital_status ?? $employee->marital_status,
         ];
 
         $employee->update($updateData);
@@ -226,38 +226,47 @@ class EmployeeEditController extends Controller
 
     public function editJob(Employee $employee)
     {
-        return view('employee.employee-edit-page-3', compact('employee'));
+        $companies = Company::orderBy('company_name')->pluck('company_name', 'company_id');
+
+        return view('employee.employee-edit-page-3', compact('employee', 'companies'));
     }
 
     public function updateJob(Request $request, Employee $employee)
     {
         $validated = $request->validate([
             'job_position'      => 'sometimes|required|string|max:255',
-            'employment_type'   => 'nullable|string|in:full-time,part-time,contractual',
-            'contract_start'    => 'nullable|date',
+            'employment_type'   => 'required|string|in:full-time,part-time,contractual',
+            'company_id'        => 'nullable|exists:companies,company_id',
+            'days_available'    => 'nullable|string',
+            'contract_start'    => 'required|date',
             'contract_end'      => 'nullable|date|after_or_equal:contract_start',
-            'uploaded_document' => 'nullable|file|mimes:pdf,jpg,png,docx|max:2048',
+            'uploaded_documents.*' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
         ]);
 
-        if ($request->hasFile('uploaded_document')) {
-            $file = $request->file('uploaded_document');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $file->storeAs('public/documents', $filename); 
-            $validated['uploaded_document'] = $filename;
-        }
+        if ($request->hasFile('uploaded_documents')) {
+            $uploadedFiles = [];
 
-        if (isset($validated['job_position'])) {
-            $newJob = ucwords(strtolower(trim($validated['job_position'])));
-            $currentJob = ucwords(strtolower(trim($employee->job_position)));
-
-            if ($newJob === $currentJob) {
-                return redirect()->back()
-                    ->withInput()
-                    ->withErrors(['job_position' => 'The job position is the same as the current one.']);
+            foreach ($request->file('uploaded_documents') as $file) {
+                $filename = time() . '_' . uniqid() . '_' . $file->getClientOriginalName();
+                $path = $file->storeAs('employee_documents', $filename, 'public');
+                $uploadedFiles[] = $path;
             }
 
-            $validated['job_position'] = $newJob;
+            $validated['uploaded_documents'] = json_encode($uploadedFiles);
         }
+
+        //if (isset($validated['job_position'])) {
+            //$newJob = ucwords(strtolower(trim($validated['job_position'])));
+            //$currentJob = ucwords(strtolower(trim($employee->job_position)));
+
+            //if ($newJob === $currentJob) {
+                //return redirect()->back()
+                    //->withInput()
+                    //->withErrors(['job_position' => 'The job position is the same as the current one.']);
+            //}
+
+            //$validated['job_position'] = $newJob;
+        //}
 
         $employee->update(array_filter($validated, fn ($v) => !is_null($v)));
 
