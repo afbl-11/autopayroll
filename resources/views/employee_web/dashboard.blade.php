@@ -20,7 +20,7 @@
                     <div class="card card-theme h-100 shadow-sm">
                         <div class="card-body text-center py-4">
                             <h6 class="text-muted text-uppercase small ls-1 mb-2">Regular</h6>
-                            <h2 class="mb-0 fw-bold display-6">{{$attendanceSummary['hoursWorked']}}</h2>
+                            <h2 class="mb-0 fw-bold display-6">{{$attendanceSummary['hoursWorked'] ?? 0}}</h2>
                             <small class="text-muted">hours</small>
                         </div>
                     </div>
@@ -29,7 +29,7 @@
                     <div class="card card-theme h-100 shadow-sm">
                         <div class="card-body text-center py-4">
                             <h6 class="text-muted text-uppercase small ls-1 mb-2">Overtime</h6>
-                            <h2 class="mb-0 fw-bold display-6">{{$attendanceSummary['overtime']}}</h2>
+                            <h2 class="mb-0 fw-bold display-6">{{$attendanceSummary['overtime'] ?? 0}}</h2>
                             <small class="text-muted">hours</small>
                         </div>
                     </div>
@@ -38,7 +38,7 @@
                     <div class="card card-theme h-100 shadow-sm">
                         <div class="card-body text-center py-4">
                             <h6 class="text-muted text-uppercase small ls-1 mb-2">Late</h6>
-                            <h2 class="mb-0 fw-bold text-danger display-6">{{$attendanceSummary['late']}}</h2>
+                            <h2 class="mb-0 fw-bold text-danger display-6">{{$attendanceSummary['late'] ?? 0}}</h2>
                             <small class="text-muted">mins</small>
                         </div>
                     </div>
