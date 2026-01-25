@@ -5,25 +5,47 @@ namespace App\Services;
 use App\Models\Announcement;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class AnnouncementService
 {
-    public function postAnnouncement(array $data): Announcement {
-
-        $admin = auth::guard('admin')->user();
-
+    /**
+     * Post a new announcement.
+     *
+     * @param array $data
+     * @return Announcement
+     */
+    public function postAnnouncement(array $data): Announcement
+    {
+        $admin = Auth::guard('admin')->user();
         $fullName = $admin->first_name . ' ' . $admin->last_name;
+
+        $attachments = null;
+
+        if (!empty($data['attachment']) && $data['attachment'] instanceof \Illuminate\Http\UploadedFile) {
+            // Store the file in storage/app/public/announcement_attachments
+            $path = $data['attachment']->store('announcement_attachments', 'public');
+
+            // Save as JSON array (so multiple attachments can be supported later)
+            $attachments = json_encode([$path]);
+        }
+
         return Announcement::create([
-            'announcement_id' => Str::uuid(),
-            'admin_id' => auth::guard('admin')->id(),
+            'announcement_id' => \Illuminate\Support\Str::uuid(),
+            'announcement_type_id' => $data['announcement_type_id'] ?? \Illuminate\Support\Str::uuid(),
+            'admin_id' => \Illuminate\Support\Facades\Auth::guard('admin')->id(),
+            'subject' => $data['subject'],
+            'type' => $data['type'],
             'title' => $data['title'],
             'message' => $data['message'],
-            'start_date' => Carbon::now(),
-            'end_date' => Carbon::now()->addDay(10),
+            'attachments' => $attachments,
+            'start_date' => $data['start_date'] ?? now(),
+            'end_date' => $data['end_date'] ?? now()->addDays(10),
             'is_active' => 1,
-            'created_by' => $fullName,
-      ]);
+            'created_by' => $data['created_by'] ?? (Auth::guard('admin')->user()->first_name . ' ' . Auth::guard('admin')->user()->last_name),
+        ]);
+
     }
 }
