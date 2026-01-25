@@ -152,7 +152,11 @@
                     </div>
                 </div>
                 <div class="card-wrapper">
-                    <a href="{{ route('employee.edit.job', $employee->employee_id) }}" class="btn-edit">Edit</a>
+                    @if($employee->employment_type === 'part-time' && $employee->partTimeAssignments->contains(fn($a) => !empty($a->assigned_days)))
+                        <span class="btn-edit disabled" title="Cannot edit a part-time employee's employment information if they are assigned to a company.">Edit</span>
+                    @else
+                        <a href="{{ route('employee.edit.job', $employee->employee_id) }}" class="btn-edit">Edit</a>
+                    @endif
                     <h6>Employment Overview</h6>
                     <div class="field-row">
                         <x-form-input
@@ -354,7 +358,17 @@
                 <button
                     class="btn-delete disabled"
                     disabled
-                    title="Unassign employee from company before deleting">
+                    title="Unassign employee from company before deleting.">
+                    Delete Employee
+                </button>
+            @elseif(
+                $employee->employment_type === 'part-time' 
+                && $employee->partTimeAssignments->contains(fn($a) => !empty($a->assigned_days))
+            )
+                <button
+                    class="btn-delete disabled"
+                    disabled
+                    title="Unassign employee from company before deleting.">
                     Delete Employee
                 </button>
             @else
