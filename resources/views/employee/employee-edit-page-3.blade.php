@@ -150,7 +150,7 @@
                     @endif
                     </div>
             
-            <x-button-submit>Continue</x-button-submit>
+            <x-button-submit>Save</x-button-submit>
         </form>
     </div>
 </section>
