@@ -11,7 +11,7 @@
     flex-direction: column;
     background: var(--clr-background);
     padding: 2.5rem 4rem;
-    transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+    transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1),
                 width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -21,14 +21,18 @@
 }
 
 @media (max-width: 768px) {
-    .main-content, 
+    .main-content,
     .main-content.main-content-expanded {
         margin-left: 0 !important;
         width: 100% !important;
         padding: 1.5rem;
     }
 }
+a {
+    outline: none !important;
+    text-decoration: none !important;
 
+}
 .announcement-card {
     background-color: #fff;
     border: 1px solid #e0e0e0;

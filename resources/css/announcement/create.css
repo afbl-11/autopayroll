@@ -45,7 +45,7 @@
     border-radius: 16px;
     padding: 20px;
     gap: 20px;
-    height: 500px;
+    height: 100%;
     box-shadow: 2px 5px 5.9px 0 rgba(136, 125, 125, 0.25);
 }
 
