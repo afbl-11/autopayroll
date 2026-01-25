@@ -14,6 +14,7 @@
         </div>
         </div>
         <div class="form-contain">
+
             <div class="message-container">
                 <x-form-input
                     :value="$announcement->title"
@@ -29,9 +30,12 @@
                 <div class="message-area">
                     {{$announcement->message}}
                 </div>
-                <button type="button" id="openAttachmentModal">
-                    See attached photo
-                </button>
+
+                <div class="attachment-div">
+                    <p type="button" id="openAttachmentModal" class="attachment">
+                        See attached photo
+                    </p>
+                </div>
 
 
                 @if($announcement->attachments)
@@ -51,7 +55,12 @@
                         @endif
                     @endforeach
                 @endif
-
+{{--                <div class="submit-div">--}}
+{{--                    <form action="{{route('employee.delete.announcement', ['id' => $announcement->announcement_id])}}" method="post">--}}
+{{--                        @csrf--}}
+{{--                        <button type="submit" class="submit">Delete Post</button>--}}
+{{--                    </form>--}}
+{{--                </div>--}}
             </div>
         </div>
 

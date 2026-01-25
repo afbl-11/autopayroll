@@ -7,8 +7,17 @@
 /*    width: 100%;*/
 /*    height: 100vh;*/
 /*}*/
-
-.form-contain {
+.attachment {
+    border: none;
+    background: none;
+    justify-content: end;
+}
+.submit-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.form-contain{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -45,16 +54,16 @@ img {
     max-width: 300px;
     max-height: 300px;
 }
-button {
+.submit {
     width: 150px;
-
+    color: white;
     border: none;
-    background-color: var(--clr-yellow);
+    background-color: var(--clr-red);
     border-radius: 10px !important;
     padding: 10px 0;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-button:hover {
+.submit:hover {
     background-color: var(--clr-indigo);
     color: white;
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\EmployeeWeb;
 
 use App\Http\Controllers\Controller;
+use App\Models\Announcement;
 use App\Models\AttendanceLogs;
 use App\Models\EmployeeSchedule;
 use App\Services\AttendanceService;
@@ -15,67 +16,70 @@ class EmployeeDashboard extends Controller
     public function __construct(
         protected AttendanceService $logsService,
     ){}
-    public function workingHours() {
+    public function workingHours()
+    {
         $employee = Auth::guard('employee_web')->user();
 
-        $schedule = employeeSchedule::where('employee_id', $employee->employee_id)
+        $schedule = EmployeeSchedule::where('employee_id', $employee->employee_id)
             ->whereNull('end_date')
             ->first();
 
-        if(!$schedule) {
-            return [
-                'timeIn' => false,
-                'timeOut' => false,
-            ];
+        if (!$schedule) {
+            return null;
         }
 
-        $timeIn = Carbon::parse($schedule->start_time);
-        $timeOut = Carbon::parse($schedule->end_time);
-
-        return  [
-            'timeIn' => $timeIn,
-            'timeOut' => $timeOut,
+        return [
+            'timeIn'  => Carbon::parse($schedule->start_time),
+            'timeOut' => Carbon::parse($schedule->end_time),
         ];
     }
 
-    public function getAttendanceSummary() {
+
+    public function getAttendanceSummary()
+    {
         $employee = Auth::guard('employee_web')->user();
 
         $log = AttendanceLogs::where('employee_id', $employee->employee_id)
             ->latest('log_date')
             ->first();
 
-        if(!$log) {
-            return false;
+        if (!$log) {
+            return null;
         }
 
-        $timeIn = Carbon::parse($log['clock_in_time']);
-        $timeOut = Carbon::parse($log['clock_out_time']);
+        if (!$log->clock_in_time || !$log->clock_out_time) {
+            return null;
+        }
 
-        $temp_hours = abs($timeIn->diffInHours($timeOut));
-        $hoursWorked =  round($temp_hours, 1);
+        $timeIn  = Carbon::parse($log->clock_in_time);
+        $timeOut = Carbon::parse($log->clock_out_time);
 
-        //overtime hours
+        $hoursWorked = round($timeIn->floatDiffInHours($timeOut), 1);
+
         $sched = $this->workingHours();
-
-        $overtime = 0;
-
-        if($timeOut > $sched['timeOut']) {
-            $overtime = abs($timeOut->diffInHours($sched['timeOut']));
+        if (!$sched) {
+            return null;
         }
 
-        //late
+        // OVERTIME
+        $overtime = 0;
+        if ($timeOut->greaterThan($sched['timeOut'])) {
+            $overtime = round($sched['timeOut']->floatDiffInHours($timeOut), 1);
+        }
+
+        // LATE (minutes)
         $late = 0;
-        if($timeIn > $sched['timeIn']) {
-            $late = abs($timeIn->diffInMinutes($sched['timeIn']));
+        if ($timeIn->greaterThan($sched['timeIn'])) {
+            $late = $sched['timeIn']->diffInMinutes($timeIn);
         }
 
         return [
             'hoursWorked' => $hoursWorked,
-            'overtime' => $overtime,
-            'late' => $late,
+            'overtime'    => $overtime,
+            'late'        => $late,
         ];
     }
+
 
     public function getAttendance() {
         $employee = Auth::guard('employee_web')->user();
@@ -89,21 +93,48 @@ class EmployeeDashboard extends Controller
         return $log;
     }
 
+    public function getAnnouncement($adminId) {
+        $post = Announcement::where('admin_id', $adminId)
+            ->latest()
+            ->take(2)
+            ->get();
 
-    public function index() {
+        if(!$post) {
+            return 'no announcement';
+        }
+
+        return $post;
+    }
+
+
+    public function index()
+    {
         $employee = Auth::guard('employee_web')->user();
+        $company  = $employee->company;
 
         $sched = $this->workingHours();
-        $timeIn = Carbon::parse($sched['timeIn'])->format('g:i');
-        $timeOut = Carbon::parse($sched['timeOut'])->format('g:i');
 
-        $company = $employee->company;
+        $timeIn  = $sched ? $sched['timeIn']->format('g:i') : 'N/A';
+        $timeOut = $sched ? $sched['timeOut']->format('g:i') : 'N/A';
 
         $attendanceSummary = $this->getAttendanceSummary();
         $leaveBalance = $employee->getCreditDays();
         $absences = $this->logsService->countTotalAbsences($employee->employee_id);
         $attendance = $this->getAttendance();
 
-        return view('employee_web.dashboard', compact('employee','attendance','absences','leaveBalance', 'attendanceSummary','company', 'timeIn', 'timeOut') );
+        $announcement = $this->getAnnouncement($employee->admin_id);
+
+        return view('employee_web.dashboard', compact(
+            'employee',
+            'attendance',
+            'absences',
+            'leaveBalance',
+            'attendanceSummary',
+            'company',
+            'timeIn',
+            'timeOut',
+            'announcement'
+        ));
     }
+
 }

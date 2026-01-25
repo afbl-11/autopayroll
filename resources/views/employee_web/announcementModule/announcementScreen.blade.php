@@ -39,7 +39,7 @@
                             <div class="col-12 announcement-item" data-type="admin">
                                 <div class="d-flex announcement-card align-items-start">
                                     <div class="announcement-icon-wrapper me-4">
-                                        <i class="bi bi-gear-fill icon-admin"></i>
+                                        <i class="bi bi-bell-fill icon-admin"></i>
                                     </div>
                                     <div class="flex-grow-1">
                                         <div class="d-flex justify-content-between align-items-center mb-1">

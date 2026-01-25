@@ -30,15 +30,34 @@ class AnnouncementController extends Controller
         );
     }
 
-    public function show($id) {
+    public function show($id)
+    {
         $announcement = Announcement::find($id);
 
-        $attachments = $announcement->attachments ? json_decode($announcement->attachments, true): [];
+        if (!$announcement) {
+            return redirect()->back()->with('error', 'Announcement not found.');
+        }
+
+        $attachments = $announcement->attachments
+            ? json_decode($announcement->attachments, true)
+            : [];
 
         return view('employee_web.announcementModule.announcementView', [
             'announcement' => $announcement,
             'attachments' => $attachments,
         ]);
+    }
+
+
+    public function deleteAnnouncement($id) {
+        $announcement = Announcement::find($id);
+
+        if ($announcement) {
+            $announcement->delete();
+            return redirect()->route('employee_web.announcement')->with('message', 'Announcement deleted successfully.');
+        }
+
+        return redirect()->route('employee_web.announcement')->with('error', 'Announcement not found.');
     }
 
 }

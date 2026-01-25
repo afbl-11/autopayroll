@@ -186,26 +186,18 @@
                             <h5 class="fw-bold mb-0">Company Updates</h5>
                         </div>
                         <div class="card-body">
-                            <div class="d-flex gap-3 mb-4">
-                                <div class="bg-light rounded p-2 text-center" style="width: 50px;">
-                                    <span class="d-block fw-bold text-danger small">DEC</span>
-                                    <span class="d-block h5 mb-0 fw-bold">25</span>
+                            @foreach($announcement as $post)
+                                <div class="d-flex gap-3 mb-4">
+                                    <div class="bg-light rounded p-2 text-center" style="width: 50px;">
+                                        <span class="d-block fw-bold text-danger small">{{ \Carbon\Carbon::parse($post->start_date)->format('M') }}</span>
+                                        <span class="d-block h5 mb-0 fw-bold">{{ \Carbon\Carbon::parse($post->start_date)->format('d') }}</span>
+                                    </div>
+                                    <div>
+                                        <h6 class="fw-bold mb-1">{{$post->title}}</h6>
+                                        <p class="text-muted small mb-0">{{$post->subject}}</p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <h6 class="fw-bold mb-1">Christmas Party</h6>
-                                    <p class="text-muted small mb-0">Main Hall • 6:00 PM</p>
-                                </div>
-                            </div>
-
-                            <div class="d-flex gap-3">
-                                <div class="icon-box bg-light text-warning rounded-3" style="width: 50px; height: 50px;">
-                                    <i class="bi bi-megaphone-fill"></i>
-                                </div>
-                                <div>
-                                    <h6 class="fw-bold mb-1">System Maintenance</h6>
-                                    <p class="text-muted small mb-0">Down for 2 hours tonight.</p>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>

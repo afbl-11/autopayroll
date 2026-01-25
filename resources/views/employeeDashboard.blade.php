@@ -8,7 +8,7 @@
             </x-button-link>
         </div>
     </nav>
-   
+
     <div class="nav-group">
 
         <input
@@ -30,10 +30,10 @@
         </select>
 
     </div>
-            
+
     <section class="main-content">
         <div id="employee-cards-container">
-            
+
             <div class="employee-header">
                 <div class="eh-col eh-employee">Employee</div>
                 <div class="eh-col eh-username">Username</div>
@@ -43,8 +43,8 @@
             </div>
 
             @foreach($employees as $employee)
-                @php 
-                    $attendance = $employee->attendanceLogs->first(); 
+                @php
+                    $attendance = $employee->attendanceLogs->first();
                 @endphp
 
                 <div
@@ -59,7 +59,9 @@
                         :name="($employee->first_name ?? '') . ' ' . ($employee->last_name ?? '')"
                         :id="$employee->employee_id ?? ''"
                         :username="$employee->username ?? ''"
-                        :image="'assets/default_profile.png'"
+                        :image="$employee->profile_photo
+                        ? 'storage/' . $employee->profile_photo
+                        : 'assets/no_profile_picture.jpg'"
                         :date="$employee->contract_start ?? ''"
                         :phone="$employee->phone_number ?? ''"
                         :type="$employee->employment_type ?? ''"

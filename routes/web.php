@@ -228,7 +228,6 @@ Route::get('/announcements/view/{id}', [\App\Http\Controllers\EmployeeWeb\Announ
     ->name('new.announcement.view');
 
 Route::post('/announcement/delete/{id}', [AnnouncementsController::class, 'deleteAnnouncement'])
-    ->middleware('auth:admin')
     ->name('delete.announcement');
 
 Route::get('/announcement/create/', [AnnouncementsController::class, 'createAnnouncement'])
@@ -405,6 +404,14 @@ Route::prefix('employee/{employee}')->group(function () {
 
 
 //Employee Web Stuff
+Route::post('/employee/announcement/delete/{id}', [\App\Http\Controllers\EmployeeWeb\AnnouncementController::class, 'deleteAnnouncement'])
+    ->name('employee.delete.announcement');
+
+Route::get('employee/settings', [\App\Http\Controllers\EmployeeWeb\SettingsController::class, 'index'])
+    ->name('employee_web.settings');
+
+Route::put('employee/update/profile', [\App\Http\Controllers\EmployeeWeb\SettingsController::class, 'updateEmployeeProfile'])
+    ->name('employee_web.update.profile');
 
 Route::get('/employee/employee-dashboard', [\App\Http\Controllers\EmployeeWeb\EmployeeDashboard::class, 'index'])
     ->name('web.employee.dashboard');

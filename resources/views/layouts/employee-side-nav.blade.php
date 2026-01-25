@@ -52,7 +52,7 @@
             </li>
 
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{route('employee_web.settings')}}" class="nav-link">
                     <i class="bi bi-gear-fill"></i>
                     <span class="link-text">Settings</span>
                 </a>
