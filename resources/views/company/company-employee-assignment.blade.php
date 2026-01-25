@@ -39,36 +39,38 @@
                 </div>
 
                 @foreach($employees as $employee)
-                <div
-                    class="employee-item"
-                    data-name="{{ strtolower(($employee->first_name ?? '') . ' ' . ($employee->last_name ?? '')) }}"
-                    data-email="{{ strtolower($employee->email ?? '') }}"
-                    data-id="{{ strtolower($employee->employee_id ?? '') }}"
-                    data-position="{{ strtolower($employee->job_position ?? '') }}"
-                    data-status="{{ strtolower($attendance?->status ?? '') }}"
-                >
-                    <label class="employee-card-wrapper">
-                        <input
-                            type="checkbox"
-                            name="employees[]"
-                            value="{{ $employee->employee_id }}"
-                            class="hidden peer employee-checkbox"
+                    @if(strtolower($employee->employment_type) !== 'part-time')
+                        <div
+                            class="employee-item"
+                            data-name="{{ strtolower(($employee->first_name ?? '') . ' ' . ($employee->last_name ?? '')) }}"
+                            data-email="{{ strtolower($employee->email ?? '') }}"
+                            data-id="{{ strtolower($employee->employee_id ?? '') }}"
+                            data-position="{{ strtolower($employee->job_position ?? '') }}"
+                            data-status="{{ strtolower($attendance?->status ?? '') }}"
                         >
-                        <x-employee-cards
-                            :name="$employee->first_name . ' ' . $employee->last_name"
-                            :id="$employee->employee_id"
-                            :username="$employee->username"
-                            :image="'assets/default_profile.png'"
-                            :date="$employee->contract_start"
-                            :phone="$employee->phone_number"
-                            :type="$employee->employment_type"
-                            :position="$employee->job_position"
-                            :email="$employee->email"
-                            :clickable="false"
-                        />
-                        <div class="selection-indicator">✓</div>
-                    </label>
-                </div>
+                            <label class="employee-card-wrapper">
+                                <input
+                                    type="checkbox"
+                                    name="employees[]"
+                                    value="{{ $employee->employee_id }}"
+                                    class="hidden peer employee-checkbox"
+                                >
+                                <x-employee-cards
+                                    :name="$employee->first_name . ' ' . $employee->last_name"
+                                    :id="$employee->employee_id"
+                                    :username="$employee->username"
+                                    :image="'assets/default_profile.png'"
+                                    :date="$employee->contract_start"
+                                    :phone="$employee->phone_number"
+                                    :type="$employee->employment_type"
+                                    :position="$employee->job_position"
+                                    :email="$employee->email"
+                                    :clickable="false"
+                                />
+                                <div class="selection-indicator">✓</div>
+                            </label>
+                        </div>
+                    @endif
                 @endforeach
             </div>
         </form>
