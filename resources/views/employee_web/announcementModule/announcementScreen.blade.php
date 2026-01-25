@@ -5,10 +5,9 @@
 
 <x-root>
     @include('layouts.employee-side-nav')
-    
+
     <main class="main-content">
         <div class="container-fluid p-0">
-            
             <div class="row mb-5">
                 <div class="col">
                     <h2 class="fw-bold mb-2" style="color: var(--clr-primary);">Announcements</h2>
@@ -18,70 +17,44 @@
 
             <ul class="nav filter-tabs mb-4" id="announcementTabs" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" data-filter="all">All</button>
+                    <a class="nav-link "  href="{{route('employee_web.announcement')}}">All</a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" data-filter="payroll">Payroll</button>
+                    <a class="nav-link "  href="{{route('employee_web.announcement', ['type' => 'Payroll'])}}">Payroll</a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" data-filter="admin">Admin</button>
+                    <a class="nav-link "  href="{{route('employee_web.announcement', ['type' => 'Admin'])}}">Admin</a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" data-filter="memo">Memo</button>
+                    <a class="nav-link "  href="{{route('employee_web.announcement', ['type' => 'Memo'])}}">Memo</a>
                 </li>
             </ul>
 
+
             <div class="announcement-list-wrapper">
                 <div class="row g-4" id="announcementList">
-                    
-                    <div class="col-12 announcement-item" data-type="admin">
-                        <div class="d-flex announcement-card align-items-start">
-                            <div class="announcement-icon-wrapper me-4">
-                                <i class="bi bi-gear-fill icon-admin"></i>
-                            </div>
-                            <div class="flex-grow-1">
-                                <div class="d-flex justify-content-between align-items-center mb-1">
-                                    <h5 class="fw-bold mb-0">System Maintenance</h5>
-                                    <span class="small text-muted">Dec 01, 2025</span>
+{{--                                announcement card--}}
+                @foreach($announcements as $post)
+                        <a href="{{route('new.announcement.view', ['id' => $post->announcement_id])}}" >
+                            <div class="col-12 announcement-item" data-type="admin">
+                                <div class="d-flex announcement-card align-items-start">
+                                    <div class="announcement-icon-wrapper me-4">
+                                        <i class="bi bi-gear-fill icon-admin"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <h5 class="fw-bold mb-0">{{$post->title}}</h5>
+                                            <span class="small text-muted">{{ $post->created_at->format('F d, Y') }}</span>
+                                        </div>
+                                        <p class="text-muted small mb-3 text-uppercase fw-bold" style="font-size: 0.75rem;">
+                                            {{$post->subject}}</p>
+                                        <p class="mb-0 text-secondary">{{$post->message}}.</p>
+                                    </div>
                                 </div>
-                                <p class="text-muted small mb-3 text-uppercase fw-bold" style="font-size: 0.75rem;">Admin Update</p>
-                                <p class="mb-0 text-secondary">The payroll system will be down tonight from 10:00 PM to 12:00 AM for scheduled server maintenance and security patches.</p>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="col-12 announcement-item" data-type="memo">
-                        <div class="d-flex announcement-card align-items-start">
-                            <div class="announcement-icon-wrapper me-4">
-                                <i class="bi bi-calendar-heart-fill icon-holiday"></i>
-                            </div>
-                            <div class="flex-grow-1">
-                                <div class="d-flex justify-content-between align-items-center mb-1">
-                                    <h5 class="fw-bold mb-0">Holiday Notice</h5>
-                                    <span class="small text-muted">Nov 14, 2025</span>
-                                </div>
-                                <p class="text-muted small mb-3 text-uppercase fw-bold" style="font-size: 0.75rem;">General Memo</p>
-                                <p class="mb-0 text-secondary">The office will be closed on **November 30** for the public holiday. Regular operations resume on December 1.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-12 announcement-item" data-type="payroll">
-                        <div class="d-flex announcement-card align-items-start">
-                            <div class="announcement-icon-wrapper me-4">
-                                <i class="bi bi-receipt icon-payroll"></i>
-                            </div>
-                            <div class="flex-grow-1">
-                                <div class="d-flex justify-content-between align-items-center mb-1">
-                                    <h5 class="fw-bold mb-0">Payslip Schedule Adjustment</h5>
-                                    <span class="small text-muted">Nov 10, 2025</span>
-                                </div>
-                                <p class="text-muted small mb-3 text-uppercase fw-bold" style="font-size: 0.75rem;">Payroll</p>
-                                <p class="mb-0 text-secondary">Please note the payslip release date for the Nov 16-30 payroll period has been moved up to **Dec 15, 2025**.</p>
-                            </div>
-                        </div>
-                    </div>
-
+                        </a>
+{{--                    end of card--}}
+              @endforeach
                 </div>
             </div>
 
@@ -100,10 +73,10 @@
                 this.classList.add('active');
 
                 const filterType = this.getAttribute('data-filter');
-                
+
                 announcementItems.forEach(item => {
                     const itemType = item.getAttribute('data-type');
-                    
+
                     if (filterType === 'all' || itemType === filterType) {
                         item.style.display = 'block';
                     } else {
