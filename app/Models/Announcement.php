@@ -12,7 +12,10 @@ class Announcement extends Model
 
     protected $fillable = [
         'announcement_id',
+        'announcement_type_id',
         'admin_id',
+        'type',
+        'subject',
         'title',
         'message',
         'start_date',
@@ -24,5 +27,9 @@ class Announcement extends Model
 
     public function admin(){
         return $this->belongsTo(Admin::class, 'admin_id', 'admin_id');
+    }
+
+    public function announcementType(){
+        return $this->belongsTo(AnnouncementType::class, 'announcement_type_id', 'announcement_type_id');
     }
 }

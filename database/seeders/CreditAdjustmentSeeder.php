@@ -13,6 +13,6 @@ class CreditAdjustmentSeeder extends Seeder
      */
     public function run(): void
     {
-        CreditAdjustment::factory()->count(10)->create();
+        CreditAdjustment::factory()->count(3)->create();
     }
 }

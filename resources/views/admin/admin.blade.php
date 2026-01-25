@@ -47,7 +47,9 @@
                                     source="employee.dashboard.attendance"
                                     :employeeId="$log->employee_id"
                                     :name="$log->first_name .' ' . $log->last_name"
-                                    :profile="'assets/default_profile.png'"
+                                    :profile="$log->profile_photo
+                                    ? 'storage/' . $log->profile_photo
+                                    : 'assets/no_profile_picture.jpg'"
                                     :status="$attendance?->status"
                                 />
                             @empty

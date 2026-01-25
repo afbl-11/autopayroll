@@ -11,6 +11,7 @@ use App\Http\Controllers\CreditAdjustmentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeDashboardController;
 use App\Http\Controllers\EmployeePayrollController;
+use App\Http\Controllers\EmployeeWeb\LeaveDashboardController;
 use App\Http\Controllers\LeaveRequestController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\LoginController;
@@ -223,8 +224,10 @@ Route::get('/announcements/detail/{id}', [AnnouncementsController::class, 'getAn
     ->middleware('auth:admin')
     ->name('announce.detail');
 
+Route::get('/announcements/view/{id}', [\App\Http\Controllers\EmployeeWeb\AnnouncementController::class, 'show'])
+    ->name('new.announcement.view');
+
 Route::post('/announcement/delete/{id}', [AnnouncementsController::class, 'deleteAnnouncement'])
-    ->middleware('auth:admin')
     ->name('delete.announcement');
 
 Route::get('/announcement/create/', [AnnouncementsController::class, 'createAnnouncement'])
@@ -401,23 +404,39 @@ Route::prefix('employee/{employee}')->group(function () {
 
 
 //Employee Web Stuff
+Route::post('/employee/announcement/delete/{id}', [\App\Http\Controllers\EmployeeWeb\AnnouncementController::class, 'deleteAnnouncement'])
+    ->name('employee.delete.announcement');
 
-Route::get('/employee/employee-dashboard', function () {
-    return view('employee_web.dashboard');
-});
+Route::get('employee/settings', [\App\Http\Controllers\EmployeeWeb\SettingsController::class, 'index'])
+    ->name('employee_web.settings');
+
+Route::put('employee/update/profile', [\App\Http\Controllers\EmployeeWeb\SettingsController::class, 'updateEmployeeProfile'])
+    ->name('employee_web.update.profile');
+
+Route::get('/employee/employee-dashboard', [\App\Http\Controllers\EmployeeWeb\EmployeeDashboard::class, 'index'])
+    ->name('web.employee.dashboard');
 
 Route::get('/employee/payroll', function () {
     return view('employee_web.PayrollViewingModule.payrollScreen');
 });
 
-Route::get('/employee/announcement', function () {
-    return view('employee_web.announcementModule.announcementScreen');
-});
+Route::get('/employee/announcement/', [\App\Http\Controllers\EmployeeWeb\AnnouncementController::class, 'index'])
+->name('employee_web.announcement');
 
-Route::get('/employee/leave-module', function () {
-    return view('employee_web.leaveModule.leaveModule');
-});
+Route::get('/employee/leave-module',[LeaveDashboardController::class,'index'])
+->name('employee_web.leaveDashboard');
 
-Route::get('/employee/credit-adjustment', function () {
-    return view('employee_web.creditAdjustmentModule.creditAdjustmentModule');
-});
+Route::get('/employee/leave', [LeaveDashboardController::class, 'index'])
+    ->name('employee_web.leave');
+
+Route::get('/employee/leave/filter', [LeaveDashboardController::class, 'index'])
+    ->name('employee_web.filter.leave');
+
+Route::post('/employee/request/leave', [LeaveDashboardController::class, 'sendLeaveRequest'])
+    ->name('employee_web.request.leave');
+
+Route::get('/employee/credit-adjustment',[\App\Http\Controllers\EmployeeWeb\CreditAdjustmentController::class,'index'])
+->name('employee_web.adjustment');
+
+Route::post('/employee/request/adjustment/', [\App\Http\Controllers\EmployeeWeb\CreditAdjustmentController::class, 'sendAdjustmentRequest'])
+    ->name('employee_web.adjustment.request');

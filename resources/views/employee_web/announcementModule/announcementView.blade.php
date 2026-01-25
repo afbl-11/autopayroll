@@ -4,13 +4,14 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
 <x-root>
-    @include('layouts.side-nav')
+    @include('layouts.employee-side-nav')
+
     <main class="main-content">
         <div class="row mb-5">
-            <div class="col">
-                <h2 class="fw-bold mb-2" style="color: var(--clr-primary);">Announcements</h2>
-                <p class="text-muted mb-0">View all company-wide updates, memos, and payroll notices.</p>
-            </div>
+        <div class="col">
+            <h2 class="fw-bold mb-2" style="color: var(--clr-primary);">Announcements</h2>
+            <p class="text-muted mb-0">View all company-wide updates, memos, and payroll notices.</p>
+        </div>
         </div>
         <div class="form-contain">
 
@@ -31,9 +32,9 @@
                 </div>
 
                 <div class="attachment-div">
-                    <button type="button" id="openAttachmentModal" class="attachment">
+                    <p type="button" id="openAttachmentModal" class="attachment">
                         See attached photo
-                    </button>
+                    </p>
                 </div>
 
 
@@ -54,16 +55,18 @@
                         @endif
                     @endforeach
                 @endif
-                <div class="submit-div">
-                    <form action="{{route('delete.announcement', ['id' => $announcement->announcement_id])}}" method="post">
-                        @csrf
-                        <button type="submit" class="submit">Delete Post</button>
-                    </form>
-                </div>
+{{--                <div class="submit-div">--}}
+{{--                    <form action="{{route('employee.delete.announcement', ['id' => $announcement->announcement_id])}}" method="post">--}}
+{{--                        @csrf--}}
+{{--                        <button type="submit" class="submit">Delete Post</button>--}}
+{{--                    </form>--}}
+{{--                </div>--}}
             </div>
         </div>
 
+
     </main>
+
 </x-root>
 <script>
     document.addEventListener('DOMContentLoaded', function () {

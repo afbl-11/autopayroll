@@ -29,7 +29,7 @@ class LeaveRequestController extends Controller
                 'start_date' => 'required|date_format:Y-m-d|before_or_equal:end_date',
                 'end_date'   => 'required|date_format:Y-m-d|after_or_equal:start_date',
                 'reason' => 'required|string|max:255',
-                'leave_type' => 'required|in:sick,vacation,maternity,bereavement,emergency',
+                'leave_type' => 'required|in:Sick,Vacation,Maternity,Bereavement,Paternity',
                 'attachment' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
             ]);
         } catch (ValidationException $e) {
@@ -43,7 +43,6 @@ class LeaveRequestController extends Controller
         if ($request->hasFile('attachment')) {
             $attachmentPath = $request->file('attachment')->store('leave_attachments');
         }
-//        $admin = Auth::guard('admin')->id();
 
         $leave = $employee->leaves()->create([
             'leave_request_id' => Str::uuid(),

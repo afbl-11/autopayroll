@@ -10,17 +10,17 @@
 
     <nav class="nav-menu">
         <ul class="nav-list">
-            
+
             <li class="nav-item">
-                <a href="{{ url('/employee/dashboard') }}" 
-                   class="nav-link {{ request()->is('employee/dashboard*') ? 'active' : '' }}">
+                <a href="{{ url('/employee/employee-dashboard') }}"
+                   class="nav-link {{ request()->is('/employee/employee-dashboard*') ? 'active' : '' }}">
                     <i class="bi bi-grid-fill"></i>
                     <span class="link-text">Dashboard</span>
                 </a>
             </li>
-            
+
             <li class="nav-item">
-                <a href="{{ url('/employee/payroll') }}" 
+                <a href="{{ url('/employee/payroll') }}"
                    class="nav-link {{ request()->is('employee/payroll*') ? 'active' : '' }}">
                     <i class="bi bi-receipt"></i>
                     <span class="link-text">Payslips</span>
@@ -28,7 +28,7 @@
             </li>
 
             <li class="nav-item">
-                <a href="{{ url('/employee/announcement') }}" 
+                <a href="{{ url('/employee/announcement') }}"
                    class="nav-link {{ request()->is('employee/announcement*') ? 'active' : '' }}">
                     <i class="bi bi-megaphone-fill"></i>
                     <span class="link-text">Announcements</span>
@@ -36,15 +36,15 @@
             </li>
 
             <li class="nav-item">
-                <a href="{{ url('/employee/credit-adjustment') }}" 
+                <a href="{{ url('/employee/credit-adjustment') }}"
                    class="nav-link {{ request()->is('employee/credit-adjustment*') ? 'active' : '' }}">
                     <i class="bi bi-sliders"></i>
                     <span class="link-text">Credit Adjustment</span>
                 </a>
             </li>
-            
+
             <li class="nav-item">
-                <a href="{{ url('/employee/leave-module') }}" 
+                <a href="{{ url('/employee/leave-module') }}"
                    class="nav-link {{ request()->is('employee/leave-module*') ? 'active' : '' }}">
                     <i class="bi bi-file-earmark-text-fill"></i>
                     <span class="link-text">Leave Filing</span>
@@ -52,7 +52,7 @@
             </li>
 
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{route('employee_web.settings')}}" class="nav-link">
                     <i class="bi bi-gear-fill"></i>
                     <span class="link-text">Settings</span>
                 </a>
@@ -61,7 +61,7 @@
     </nav>
 
     <div class="sidebar-footer">
-        
+
         <form action="{{ route('logout') }}" method="post" class="logout-form">
             @csrf
             <button type="submit" class="logout-btn">
@@ -82,7 +82,7 @@
         const mainContent = document.querySelector('.main-content');
         const toggleBtn = document.getElementById('sidebarToggle');
         const toggleIcon = document.getElementById('toggleIcon');
-        
+
         function updateIcon(isExpanded) {
             if (isExpanded) {
                 toggleIcon.classList.remove('bi-chevron-double-right');
@@ -94,7 +94,7 @@
         }
 
         const isExpanded = localStorage.getItem('sidebar-expanded') === 'true';
-        
+
         if (isExpanded) {
             sidebar.classList.add('expanded');
             if (mainContent) mainContent.classList.add('main-content-expanded');
@@ -103,15 +103,15 @@
 
         toggleBtn.addEventListener('click', function() {
             sidebar.classList.toggle('expanded');
-            
+
             const expanded = sidebar.classList.contains('expanded');
-            
+
             if (mainContent) {
                 mainContent.classList.toggle('main-content-expanded');
             }
-            
+
             updateIcon(expanded);
-            
+
             localStorage.setItem('sidebar-expanded', expanded);
         });
     });

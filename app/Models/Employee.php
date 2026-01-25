@@ -34,6 +34,7 @@ class Employee extends Authenticatable
         'job_position',
         'employment_type',
         'contract_start',
+        'profile_photo',
         'contract_end',
         'birthdate',
         'gender',
@@ -69,7 +70,7 @@ class Employee extends Authenticatable
         'phil_health_number',
         'pag_ibig_number',
         'tin_number',
-        
+
         // Documents
         'uploaded_documents',
         'days_available',

@@ -4,7 +4,7 @@
         'navigation' => false, 'company' => '',
         'navigationType' => 'company',
         'type' => '', 'employee' => ''])
-        
+
 @php
     use Illuminate\Support\Facades\Storage;
 
@@ -20,19 +20,28 @@
             @include('components.header', ['title' => $title, 'source' => 'admin.profile'])
         @endif
         @if($navigation)
-            @include('components.dashboard-navigation', [
+                @include('components.dashboard-navigation', [
                 'type' => $navigationType,
-                'name' => $navigationType === 'company'? $company->company_name : $employee->first_name . ' ' . $employee->last_name,
-                'id' =>  $navigationType === 'company' ? $company->company_id : $employee->employee_id,
+                'name' => $navigationType === 'company'
+                    ? $company->company_name
+                    : $employee->first_name . ' ' . $employee->last_name,
+
+                'id' => $navigationType === 'company'
+                    ? $company->company_id
+                    : $employee->employee_id,
+
                 'companyLogo' => $companyLogoPath,
-                'employeeProfile' => 'assets/default_profile.png',
-//                 $company->logo ?? $employee->avatar ?? 'assets/default.jpg',
+
+                'employeeProfile' => $navigationType === 'employee' && $employee && $employee->profile_photo
+                    ? 'storage/' . $employee->profile_photo
+                    : 'assets/no_profile_picture.jpg',
+
                 'tin' => $company->tin_number ?? null,
                 'address' => $company->country ?? null,
                 'industry' => $company->industry ?? null,
-                'latitude' => $company->latitude ?? null,
-                'longitude' => $company->longitude ?? null,
-                'employee_count' => $navigationType === 'company' ? $company->employees->count()  : null,
+                'employee_count' => $navigationType === 'company'
+                    ? $company->employees->count()
+                    : null,
             ])
         @endif
         @if($showProgression === true)

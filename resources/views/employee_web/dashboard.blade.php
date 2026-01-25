@@ -5,23 +5,22 @@
 
 <x-root>
     @include('layouts.employee-side-nav')
-    
+
     <main class="main-content p-4">
         <div class="container-fluid">
-            
+
             <div class="row mb-4 align-items-center">
                 <div class="col-md-8">
-                    <h2 class="fw-bold mb-1" style="color: var(--clr-primary);">Good Evening, Marc Jurell!</h2>
-                    <p class="text-muted mb-0">Developer • Jurell Company</p>
+                    <h2 class="fw-bold mb-1" style="color: var(--clr-primary);">Good Evening, {{$employee['first_name']}}!</h2>
+                    <p class="text-muted mb-0">Developer • {{$company->company_name}}</p>
                 </div>
             </div>
-
             <div class="row g-3 mb-4">
                 <div class="col-xl-2 col-md-4 col-sm-6">
                     <div class="card card-theme h-100 shadow-sm">
                         <div class="card-body text-center py-4">
                             <h6 class="text-muted text-uppercase small ls-1 mb-2">Regular</h6>
-                            <h2 class="mb-0 fw-bold display-6">9</h2>
+                            <h2 class="mb-0 fw-bold display-6">{{$attendanceSummary['hoursWorked'] ?? 0}}</h2>
                             <small class="text-muted">hours</small>
                         </div>
                     </div>
@@ -30,7 +29,7 @@
                     <div class="card card-theme h-100 shadow-sm">
                         <div class="card-body text-center py-4">
                             <h6 class="text-muted text-uppercase small ls-1 mb-2">Overtime</h6>
-                            <h2 class="mb-0 fw-bold display-6">0</h2>
+                            <h2 class="mb-0 fw-bold display-6">{{$attendanceSummary['overtime'] ?? 0}}</h2>
                             <small class="text-muted">hours</small>
                         </div>
                     </div>
@@ -39,7 +38,7 @@
                     <div class="card card-theme h-100 shadow-sm">
                         <div class="card-body text-center py-4">
                             <h6 class="text-muted text-uppercase small ls-1 mb-2">Late</h6>
-                            <h2 class="mb-0 fw-bold text-danger display-6">0</h2>
+                            <h2 class="mb-0 fw-bold text-danger display-6">{{$attendanceSummary['late'] ?? 0}}</h2>
                             <small class="text-muted">mins</small>
                         </div>
                     </div>
@@ -49,7 +48,7 @@
                         <div class="card-body d-flex align-items-center justify-content-between">
                             <div>
                                 <h6 class="text-muted text-uppercase small ls-1 mb-1">Leave Balance</h6>
-                                <h2 class="mb-0 fw-bold display-6">15</h2>
+                                <h2 class="mb-0 fw-bold display-6">{{$leaveBalance}}</h2>
                             </div>
                             <div class="icon-box bg-white text-warning shadow-sm">
                                 <i class="bi bi-person-walking"></i>
@@ -62,7 +61,7 @@
                         <div class="card-body d-flex align-items-center justify-content-between">
                             <div>
                                 <h6 class="text-muted text-uppercase small ls-1 mb-1">Absences</h6>
-                                <h2 class="mb-0 fw-bold display-6">3</h2>
+                                <h2 class="mb-0 fw-bold display-6">{{$absences}}</h2>
                             </div>
                             <div class="icon-box bg-white text-danger shadow-sm">
                                 <i class="bi bi-exclamation-triangle-fill"></i>
@@ -113,9 +112,9 @@
                         <div class="card-body text-center d-flex flex-column justify-content-center">
                             <p class="small text-uppercase text-muted mb-3">Shift Schedule</p>
                             <div class="d-flex justify-content-center align-items-center gap-3 mb-3">
-                                <div><h2 class="fw-bold mb-0">07:00</h2><small>AM</small></div>
+                                <div><h2 class="fw-bold mb-0">{{$timeIn}}</h2><small>AM</small></div>
                                 <i class="bi bi-arrow-right text-warning fs-4"></i>
-                                <div><h2 class="fw-bold mb-0">05:00</h2><small>PM</small></div>
+                                <div><h2 class="fw-bold mb-0">{{$timeOut}}</h2><small>PM</small></div>
                             </div>
                         </div>
                     </div>
@@ -142,27 +141,38 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    <tbody>
+                                    @forelse ($attendance as $log)
                                         <tr>
-                                            <td class="ps-3 fw-bold">Dec 05, 2025</td>
-                                            <td>06:55 AM</td>
-                                            <td>05:05 PM</td>
-                                            <td>9h 10m</td>
-                                            <td class="text-end pe-3"><span class="badge bg-theme-yellow rounded-pill">Present</span></td>
+                                            <td class="ps-3 fw-bold">
+                                                {{ \Carbon\Carbon::parse($log->log_date)->format('M d, Y') }}
+                                            </td>
+
+                                            <td>
+                                                {{ $log->time_in ? \Carbon\Carbon::parse($log->time_in)->format('h:i A') : '-' }}
+                                            </td>
+
+                                            <td>
+                                                {{ $log->time_out ? \Carbon\Carbon::parse($log->time_out)->format('h:i A') : '-' }}
+                                            </td>
+
+                                            <td>
+                                                {{ \Carbon\Carbon::parse($log->time_in)->diffInHours(\Carbon\Carbon::parse($log->time_out)) ?? '-' }}
+                                            </td>
+
+                                            <td class="text-end pe-3">
+                                            <span class="badge bg-theme-yellow rounded-pill">
+                                                {{ $log->status ?? 'Present' }}
+                                            </span>
+                                            </td>
                                         </tr>
+                                    @empty
                                         <tr>
-                                            <td class="ps-3 fw-bold">Dec 04, 2025</td>
-                                            <td>07:01 AM</td>
-                                            <td>05:00 PM</td>
-                                            <td>8h 59m</td>
-                                            <td class="text-end pe-3"><span class="badge bg-theme-yellow rounded-pill">Present</span></td>
+                                            <td colspan="5" class="text-center text-muted py-4">
+                                                No attendance records yet.
+                                            </td>
                                         </tr>
-                                        <tr>
-                                            <td class="ps-3 fw-bold">Dec 03, 2025</td>
-                                            <td>06:45 AM</td>
-                                            <td>05:15 PM</td>
-                                            <td>9h 30m</td>
-                                            <td class="text-end pe-3"><span class="badge bg-theme-yellow rounded-pill">Present</span></td>
-                                        </tr>
+                                    @endforelse
                                     </tbody>
                                 </table>
                             </div>
@@ -176,31 +186,23 @@
                             <h5 class="fw-bold mb-0">Company Updates</h5>
                         </div>
                         <div class="card-body">
-                            <div class="d-flex gap-3 mb-4">
-                                <div class="bg-light rounded p-2 text-center" style="width: 50px;">
-                                    <span class="d-block fw-bold text-danger small">DEC</span>
-                                    <span class="d-block h5 mb-0 fw-bold">25</span>
+                            @foreach($announcement as $post)
+                                <div class="d-flex gap-3 mb-4">
+                                    <div class="bg-light rounded p-2 text-center" style="width: 50px;">
+                                        <span class="d-block fw-bold text-danger small">{{ \Carbon\Carbon::parse($post->start_date)->format('M') }}</span>
+                                        <span class="d-block h5 mb-0 fw-bold">{{ \Carbon\Carbon::parse($post->start_date)->format('d') }}</span>
+                                    </div>
+                                    <div>
+                                        <h6 class="fw-bold mb-1">{{$post->title}}</h6>
+                                        <p class="text-muted small mb-0">{{$post->subject}}</p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <h6 class="fw-bold mb-1">Christmas Party</h6>
-                                    <p class="text-muted small mb-0">Main Hall • 6:00 PM</p>
-                                </div>
-                            </div>
-                            
-                            <div class="d-flex gap-3">
-                                <div class="icon-box bg-light text-warning rounded-3" style="width: 50px; height: 50px;">
-                                    <i class="bi bi-megaphone-fill"></i>
-                                </div>
-                                <div>
-                                    <h6 class="fw-bold mb-1">System Maintenance</h6>
-                                    <p class="text-muted small mb-0">Down for 2 hours tonight.</p>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
             </div>
-            
+
         </div>
     </main>
 </x-root>

@@ -1,0 +1,126 @@
+/*main{*/
+/*    background-color: var(--clr-background);*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    display: flex;*/
+/*    !*flex-direction: column;*!*/
+/*    width: 100%;*/
+/*    height: 100vh;*/
+/*}*/
+.attachment {
+    border: none;
+    background: none;
+    justify-content: end;
+}
+.submit-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.form-contain{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.message-container {
+    background: var(--clr-card-surface);
+    border-radius: 16px;
+    padding: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    width: 50%;
+    height: 500px;
+}
+
+input {
+    pointer-events: none;
+    border: none !important;
+    border-bottom: 1px var(--clr-muted) solid !important;
+    border-radius: 0 !important;
+}
+
+.message-area {
+    display: flex;
+    height: 90%;
+    width: 100%;
+    border: 2px solid var(--clr-muted);
+    border-radius: 16px;
+    padding: 10px;
+}
+
+img {
+    max-width: 300px;
+    max-height: 300px;
+}
+.submit {
+    width: 150px;
+    color: white;
+    border: none;
+    background-color: var(--clr-red);
+    border-radius: 10px !important;
+    padding: 10px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.submit:hover {
+    background-color: var(--clr-indigo);
+    color: white;
+}
+
+/* Modal overlay */
+.attachment-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+/* Modal box */
+.attachment-modal-content {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    max-width: 700px;
+    width: 90%;
+    max-height: 85vh;
+    position: relative;
+    animation: popIn 0.25s ease-out;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+}
+
+/* Image */
+.attachment-modal-content img {
+    width: 100%;
+    height: auto;
+    max-height: 70vh;
+    object-fit: contain;
+    border-radius: 12px;
+}
+
+/* Close button */
+.close-modal {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    font-size: 28px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #333;
+}
+
+/* Animation */
+@keyframes popIn {
+    from {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}

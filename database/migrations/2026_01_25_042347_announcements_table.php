@@ -20,7 +20,15 @@ return new class extends Migration
                 ->on('admins')
                 ->onDelete('cascade');
 
+            $table->uuid('announcement_type_id');
+            $table->foreign('announcement_type_id')
+                ->references('announcement_type_id')
+                ->on('announcement_types')
+                ->onDelete('cascade');
+
             $table->string('title')->nullable();
+            $table->string('subject')->nullable();
+            $table->enum('type', ['Admin','Payroll', 'Memo']);
             $table->text('message');
             $table->dateTime('start_date')->nullable();
             $table->dateTime('end_date')->nullable();
@@ -37,6 +45,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('announcements');
+        //
     }
 };

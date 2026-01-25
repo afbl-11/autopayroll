@@ -15,41 +15,52 @@ class LeaveRequestService
 {
     public function leaveApprove($employeeId, $leaveId)
     {
-
         $employee = Employee::find($employeeId);
         $leave = LeaveRequest::find($leaveId);
 
-        $leaveDuration = Carbon::parse($leave->start_date)->diffInDays(Carbon::parse($leave->end_date));
+        if (!$leave || !$employee) {
+            return back()->with(['message' => 'Employee or leave request not found']);
+        }
+
+
+        $leaveDuration = Carbon::parse($leave->start_date)
+                ->diffInDays(Carbon::parse($leave->end_date)) + 1;
         $creditUsed = $leaveDuration;
 
-        $leaveCredit = LeaveCredits::where('employee_id', $employeeId)->first();
+        // Get the correct leave credit row
+        $leaveCredit = LeaveCredits::where('employee_id', $employeeId)
+            ->whereHas('leaveCreditType', function ($query) use ($leave) {
+                $query->where('name', $leave->leave_type);
+            })->first();
 
-        if ($leaveCredit) {
-            if($leaveCredit->is_used) {
-                return back()->with(['message' => 'Leave credits already used']);
-            }
-
-            $newLeaveCredit = $leaveCredit->credit_days - $creditUsed;
-            $newUsedDays = $leaveCredit->used_days + $creditUsed;
-
-            $isUsed = $newLeaveCredit <= 0 ? 1 : 0;
-
-            $leaveCredit->update([
-                'credit_days' => $newLeaveCredit,
-                'used_days' => $newUsedDays,
-                'is_used' => $isUsed,
-                'approved_date' => Carbon::now()->toDateTimeString(),
-            ]);
-//        todo:set a default leave credits when the user is created
+        if (!$leaveCredit) {
+            return back()->with(['message' => 'No leave credit available for this leave type']);
         }
+
+        if ($leaveCredit->is_used) {
+            return back()->with(['message' => 'Leave credits already used for this type']);
+        }
+
+        $newLeaveCredit = $leaveCredit->credit_days - $creditUsed;
+        $newUsedDays = $leaveCredit->used_days + $creditUsed;
+
+        $isUsed = $newLeaveCredit <= 0 ? 1 : 0;
+
+        $leaveCredit->update([
+            'credit_days' => $newLeaveCredit,
+            'used_days' => $newUsedDays,
+            'is_used' => $isUsed,
+            'approved_date' => Carbon::now()->toDateTimeString(),
+        ]);
 
         $leave->update([
             'approver_id' => $employee->admin_id,
-            'status' => "approved",
+            'status' => 'approved',
         ]);
 
         return back()->with(['message' => 'Leave approved successfully']);
     }
+
 
 
     public function rejectRequest($employeeId, $leaveId){
