@@ -9,7 +9,7 @@
                     </div>
                 @endif
                 <div class="card-wrapper">
-                    <a href="#" onclick="openPersonalModal(); return false;" class="btn-edit">Edit</a>
+                    <a href="{{ route('employee.edit.personal', $employee->employee_id) }}" class="btn-edit">Edit</a>
                     <h6>Personal Information</h6>
 {{--                    name and gender--}}
                     <div class="field-row">
@@ -67,7 +67,7 @@
                     </div>
                 </div>
                 <div class="card-wrapper">
-                    <a href="#" onclick="openAddressModal(); return false;" class="btn-edit">Edit</a>
+                    <a href="{{ route('employee.edit.address', $employee->employee_id) }}" class="btn-edit">Edit</a>
                     <h6>Address Information</h6>
 {{--                    nav and button--}}
                     <div class="field-row">
@@ -88,7 +88,7 @@
                     </div>
                 </div>
                 <div class="card-wrapper">
-                    <a href="#" onclick="openGovernmentModal(); return false;" class="btn-edit">Edit</a>
+                    <a href="{{ route('employee.edit.government', $employee->employee_id) }}" class="btn-edit">Edit</a>
                     <h6>Government & Bank Information</h6>
 
                     <div class="field-row">
@@ -134,7 +134,7 @@
 
             <section class="side-content">
                 <div class="card-wrapper">
-                    <a href="#" onclick="openContactModal(); return false;" class="btn-edit">Edit</a>
+                    <a href="{{ route('employee.edit.account', $employee->employee_id) }}" class="btn-edit">Edit</a>
                     <h6>Contact Information</h6>
                     <div class="field-row"> 
                         <x-form-input
@@ -152,7 +152,11 @@
                     </div>
                 </div>
                 <div class="card-wrapper">
-                    <a href="#" onclick="openEmploymentModal(); return false;" class="btn-edit">Edit</a>
+                    @if($employee->employment_type === 'part-time' && $employee->partTimeAssignments->contains(fn($a) => !empty($a->assigned_days)))
+                        <span class="btn-edit disabled" title="Cannot edit a part-time employee's employment information if they are assigned to a company.">Edit</span>
+                    @else
+                        <a href="{{ route('employee.edit.job', $employee->employee_id) }}" class="btn-edit">Edit</a>
+                    @endif
                     <h6>Employment Overview</h6>
                     <div class="field-row">
                         <x-form-input
@@ -178,32 +182,32 @@
                         />
                     </div>
                 </div>
-                <div class="card-wrapper">
-                    <a href="#" onclick="openEditRateModal(); return false;" class="btn-edit">Edit</a>
-                    <h6>Salary Information</h6>
-                    <div class="field-row">
-                        <x-form-input
-                            label="Daily Salary Rate"
-                            id="daily_salary"
-                            name="daily_salary"
-                            :value="$employee->currentRate ? '₱' . number_format($employee->currentRate->rate, 2) : 'Not Set'"
-                        />
-                    </div>
-                    @if($employee->currentRate)
-                    <div class="field-row">
-                        <x-form-input
-                            label="Effective From"
-                            id="effective_from"
-                            name="effective_from"
-                            :value="\Carbon\Carbon::parse($employee->currentRate->effective_from)->format('F j, Y')"
-                        />
-                    </div>
-                    @endif
-                </div>
+                {{-- <div class="card-wrapper"> --}}
+                {{--    <a href="#" onclick="openEditRateModal(); return false;" class="btn-edit">Edit</a> --}}
+                {{--    <h6>Salary Information</h6> --}}
+                {{--    <div class="field-row"> --}}
+                {{--        <x-form-input 
+                                label="Daily Salary Rate"
+                                id="daily_salary"
+                                name="daily_salary"
+                                :value="$employee->currentRate ? '₱' . number_format($employee->currentRate->rate, 2) : 'Not Set'"
+                        /> --}}
+                {{--    </div> --}}
+                {{--    @if($employee->currentRate) --}}
+                {{--    <div class="field-row"> --}}
+                {{--        <x-form-input
+                                label="Effective From"
+                                id="effective_from"
+                                name="effective_from"
+                                :value="\Carbon\Carbon::parse($employee->currentRate->effective_from)->format('F j, Y')"
+                        /> --}}
+                {{--    </div> --}}
+                {{--    @endif --}}
+                {{-- </div> --}}
                 <div class="notes">
 {{--                    optional--}}
                 </div>
-            </section>   
+            </section>
         </div>
         
         {{-- Salary History Section --}}
@@ -277,7 +281,7 @@
                                 ? json_decode($employee->uploaded_documents, true) 
                                 : $employee->uploaded_documents;
                         @endphp
-                        
+                        <p class="note">Note: Change the uploaded documents in the Employment Overview Card.</p>
                         @if(is_array($documents) && count($documents) > 0)
                             <div class="documents-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; margin-top: 20px;">
                                 @foreach($documents as $index => $document)
@@ -348,13 +352,23 @@
                 </div>
             </section>
         </div>
-        
+
         <div class="delete-employee-wrapper">
             @if(!is_null($employee->company_id))
                 <button
                     class="btn-delete disabled"
                     disabled
-                    title="Unassign employee from company before deleting">
+                    title="Unassign employee from company before deleting.">
+                    Delete Employee
+                </button>
+            @elseif(
+                $employee->employment_type === 'part-time' 
+                && $employee->partTimeAssignments->contains(fn($a) => !empty($a->assigned_days))
+            )
+                <button
+                    class="btn-delete disabled"
+                    disabled
+                    title="Unassign employee from company before deleting.">
                     Delete Employee
                 </button>
             @else
@@ -826,6 +840,14 @@
 </div>
 
 <style>
+    .note {
+        font-size: 11.75px; 
+        margin-top: -7px;
+        color: #4B5563;
+        margin-bottom: 20px;
+        letter-spacing: 1.33px;
+        width: 100%;
+    }
     .btn-delete {
         background: var(--clr-red);
         color: var(--clr-background);

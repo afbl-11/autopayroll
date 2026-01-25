@@ -28,7 +28,7 @@
                             :options="['' => 'None', 'Sr.' => 'Sr.', 'Jr.' => 'Jr.', 'Other' => 'Other']"
                             label="Suffix"
                             name="suffix"
-                            id="suffix"
+                            id="suffix" :value="$employee->suffix" useValue
                     >None</x-form-select>
                 </div>
 
@@ -41,19 +41,19 @@
                 <div class="field-row">
                     <x-form-select name="gender" label="Gender"
                         :options="['male'=>'Male','female'=>'Female']"
-                        :value="$employee->gender" />
+                        :value="$employee->gender" useValue/>
                     <x-form-select name="blood_type" label="Blood Type"
                         :options="['A+' => 'A+','A-' => 'A-',
                                 'B+' => 'B+','B-' => 'B-',
                                 'AB+' => 'AB+','AB-' => 'AB-',
                                 'O+' => 'O+','O-' => 'O-']"
-                        :value="$employee->blood_type" />
+                        :value="$employee->blood_type" useValue/>
                 </div>
 
                 <div class="field-row">
                     <x-form-select name="marital_status" label="Civil Status"
                     :options="['single'=>'Single','married'=>'Married','widowed'=>'Widowed']"
-                    :value="$employee->marital_status" />
+                    :value="$employee->marital_status" useValue/>
                 </div>
 
                 <x-button-submit>Save</x-button-submit>
