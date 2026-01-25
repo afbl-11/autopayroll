@@ -11,8 +11,11 @@ class AnnouncementRequest extends FormRequest
     }
     public function rules() {
         return [
-            'title' => 'required',
-            'message' => 'required',
+            'title' => 'required|string|max:255',
+            'subject' => 'nullable|string|max:255',
+            'type' => 'required',
+            'message' => 'required|',
+            'attachment' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ];
     }
 }
