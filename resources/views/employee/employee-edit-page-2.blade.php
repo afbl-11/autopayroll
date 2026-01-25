@@ -15,7 +15,7 @@
 
                         <h5>Residential Address</h5>
                         <div class="field-row">
-                            <x-form-select name="country" id="country" label="Country" required :options="['Philippines' => 'Philippines']" value="philippines"></x-form-select>
+                            <x-form-select name="country" id="country" label="Country" required :options="['Philippines' => 'Philippines']" value="philippines" :value="$employee->country" useValue></x-form-select>
                             <x-form-select name="region" id="region" label="Region" required>Select Region</x-form-select>
                             <input type="hidden" name="region_name" id="region_name">
                         </div>
@@ -46,7 +46,7 @@
                         </div>
         
                         <div class="field-row">
-                            <x-form-select name="id_country" id="id_country" label="Country" :options="['Philippines' => 'Philippines']" value="philippines" required></x-form-select>
+                            <x-form-select name="id_country" id="id_country" label="Country" :options="['Philippines' => 'Philippines']" value="philippines" required :value="$employee->id_country" useValue></x-form-select>
                             <x-form-select name="id_region" id="id_region" label="Region"></x-form-select>
                             <input type="hidden" name="id_region_name" id="id_region_name">
                         </div>

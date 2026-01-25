@@ -177,7 +177,99 @@
                             :value="$employee->employment_type"
                         />
                     </div>
-                    <div class ="field-row">
+                </div>
+                {{-- <div class="card-wrapper"> --}}
+                {{--    <a href="#" onclick="openEditRateModal(); return false;" class="btn-edit">Edit</a> --}}
+                {{--    <h6>Salary Information</h6> --}}
+                {{--    <div class="field-row"> --}}
+                {{--        <x-form-input 
+                                label="Daily Salary Rate"
+                                id="daily_salary"
+                                name="daily_salary"
+                                :value="$employee->currentRate ? '₱' . number_format($employee->currentRate->rate, 2) : 'Not Set'"
+                        /> --}}
+                {{--    </div> --}}
+                {{--    @if($employee->currentRate) --}}
+                {{--    <div class="field-row"> --}}
+                {{--        <x-form-input
+                                label="Effective From"
+                                id="effective_from"
+                                name="effective_from"
+                                :value="\Carbon\Carbon::parse($employee->currentRate->effective_from)->format('F j, Y')"
+                        /> --}}
+                {{--    </div> --}}
+                {{--    @endif --}}
+                {{-- </div> --}}
+                <div class="notes">
+{{--                    optional--}}
+                </div>
+            </section>
+        </div>
+        
+        {{-- Salary History Section --}}
+        <div class="content-wrapper" style="margin-top: 20px;">
+            <section class="main-content">
+                <div class="card-wrapper">
+                    <a href="#" onclick="openEditRateModal(); return false;" class="btn-edit">Add New Rate</a>
+                    <h6>Salary History</h6>
+                    
+                    @if($salaryHistory && $salaryHistory->count() > 0)
+                    <div style="overflow-x: auto; margin-top: 1rem;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                            <thead>
+                                <tr style="background: var(--clr-card-inner); color: var(--clr-primary);">
+                                    <th style="padding: 12px; text-align: left; border: 1px solid #ddd; font-weight: 600;">Daily Rate</th>
+                                    <th style="padding: 12px; text-align: left; border: 1px solid #ddd; font-weight: 600;">Effective From</th>
+                                    <th style="padding: 12px; text-align: left; border: 1px solid #ddd; font-weight: 600;">Effective To</th>
+                                    <th style="padding: 12px; text-align: left; border: 1px solid #ddd; font-weight: 600;">Status</th>
+                                    <th style="padding: 12px; text-align: center; border: 1px solid #ddd; font-weight: 600;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($salaryHistory as $rate)
+                                <tr style="background: white;">
+                                    <td style="padding: 10px 12px; border: 1px solid #ddd; font-family: 'Courier New', monospace;">
+                                        ₱{{ number_format($rate->rate, 2) }}
+                                    </td>
+                                    <td style="padding: 10px 12px; border: 1px solid #ddd;">
+                                        {{ \Carbon\Carbon::parse($rate->effective_from)->format('F j, Y') }}
+                                    </td>
+                                    <td style="padding: 10px 12px; border: 1px solid #ddd;">
+                                        {{ $rate->effective_to ? \Carbon\Carbon::parse($rate->effective_to)->format('F j, Y') : 'Present' }}
+                                    </td>
+                                    <td style="padding: 10px 12px; border: 1px solid #ddd;">
+                                        @php
+                                            $isCurrent = \Carbon\Carbon::parse($rate->effective_from)->lte(now()) && 
+                                                        ($rate->effective_to === null || \Carbon\Carbon::parse($rate->effective_to)->gte(now()));
+                                        @endphp
+                                        <span style="padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600; 
+                                                     background: {{ $isCurrent ? '#dcfce7' : '#f3f4f6' }}; 
+                                                     color: {{ $isCurrent ? '#166534' : '#6b7280' }};">
+                                            {{ $isCurrent ? 'Active' : 'Inactive' }}
+                                        </span>
+                                    </td>
+                                    <td style="padding: 10px 12px; border: 1px solid #ddd; text-align: center;">
+                                        <button onclick="openEditSalaryModal('{{ $rate->employee_rate_id }}', '{{ $rate->rate }}', '{{ $rate->effective_from }}', '{{ $rate->effective_to }}')" 
+                                                style="background: var(--clr-yellow); color: var(--clr-primary); padding: 6px 16px; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600;">
+                                            Edit
+                                        </button>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    @else
+                    <p style="margin-top: 1rem; color: var(--clr-secondary); font-size: 14px;">No salary history available.</p>
+                    @endif
+                </div>
+            </section>
+        </div>
+        
+        {{-- Documents Section --}}
+        <div class="content-wrapper" style="margin-top: 20px;">
+            <section class="main-content">
+                <div class="card-wrapper">
                     <h6>Uploaded Documents</h6>
                     @if(!empty($employee->uploaded_documents))
                         @php
@@ -185,7 +277,7 @@
                                 ? json_decode($employee->uploaded_documents, true) 
                                 : $employee->uploaded_documents;
                         @endphp
-                        
+                        <p class="note">Note: Change the uploaded documents in the Employment Overview Card.</p>
                         @if(is_array($documents) && count($documents) > 0)
                             <div class="documents-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; margin-top: 20px;">
                                 @foreach($documents as $index => $document)
@@ -253,96 +345,10 @@
                             <p style="font-size: 1rem; font-weight: 500;">No documents to show.</p>
                         </div>
                     @endif
-                    </div>
-                </div>
-                {{-- <div class="card-wrapper"> --}}
-                {{--    <a href="#" onclick="openEditRateModal(); return false;" class="btn-edit">Edit</a> --}}
-                {{--    <h6>Salary Information</h6> --}}
-                {{--    <div class="field-row"> --}}
-                {{--        <x-form-input 
-                                label="Daily Salary Rate"
-                                id="daily_salary"
-                                name="daily_salary"
-                                :value="$employee->currentRate ? '₱' . number_format($employee->currentRate->rate, 2) : 'Not Set'"
-                        /> --}}
-                {{--    </div> --}}
-                {{--    @if($employee->currentRate) --}}
-                {{--    <div class="field-row"> --}}
-                {{--        <x-form-input
-                                label="Effective From"
-                                id="effective_from"
-                                name="effective_from"
-                                :value="\Carbon\Carbon::parse($employee->currentRate->effective_from)->format('F j, Y')"
-                        /> --}}
-                {{--    </div> --}}
-                {{--    @endif --}}
-                {{-- </div> --}}
-                <div class="notes">
-{{--                    optional--}}
-                </div>
-            </section>   
-        </div>
-        
-        {{-- Salary History Section --}}
-        <div class="content-wrapper" style="margin-top: 20px;">
-            <section class="main-content">
-                <div class="card-wrapper">
-                    <a href="#" onclick="openEditRateModal(); return false;" class="btn-edit">Add New Rate</a>
-                    <h6>Salary History</h6>
-                    
-                    @if($salaryHistory && $salaryHistory->count() > 0)
-                    <div style="overflow-x: auto; margin-top: 1rem;">
-                        <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
-                            <thead>
-                                <tr style="background: var(--clr-card-inner); color: var(--clr-primary);">
-                                    <th style="padding: 12px; text-align: left; border: 1px solid #ddd; font-weight: 600;">Daily Rate</th>
-                                    <th style="padding: 12px; text-align: left; border: 1px solid #ddd; font-weight: 600;">Effective From</th>
-                                    <th style="padding: 12px; text-align: left; border: 1px solid #ddd; font-weight: 600;">Effective To</th>
-                                    <th style="padding: 12px; text-align: left; border: 1px solid #ddd; font-weight: 600;">Status</th>
-                                    <th style="padding: 12px; text-align: center; border: 1px solid #ddd; font-weight: 600;">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($salaryHistory as $rate)
-                                <tr style="background: white;">
-                                    <td style="padding: 10px 12px; border: 1px solid #ddd; font-family: 'Courier New', monospace;">
-                                        ₱{{ number_format($rate->rate, 2) }}
-                                    </td>
-                                    <td style="padding: 10px 12px; border: 1px solid #ddd;">
-                                        {{ \Carbon\Carbon::parse($rate->effective_from)->format('F j, Y') }}
-                                    </td>
-                                    <td style="padding: 10px 12px; border: 1px solid #ddd;">
-                                        {{ $rate->effective_to ? \Carbon\Carbon::parse($rate->effective_to)->format('F j, Y') : 'Present' }}
-                                    </td>
-                                    <td style="padding: 10px 12px; border: 1px solid #ddd;">
-                                        @php
-                                            $isCurrent = \Carbon\Carbon::parse($rate->effective_from)->lte(now()) && 
-                                                        ($rate->effective_to === null || \Carbon\Carbon::parse($rate->effective_to)->gte(now()));
-                                        @endphp
-                                        <span style="padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600; 
-                                                     background: {{ $isCurrent ? '#dcfce7' : '#f3f4f6' }}; 
-                                                     color: {{ $isCurrent ? '#166534' : '#6b7280' }};">
-                                            {{ $isCurrent ? 'Active' : 'Inactive' }}
-                                        </span>
-                                    </td>
-                                    <td style="padding: 10px 12px; border: 1px solid #ddd; text-align: center;">
-                                        <button onclick="openEditSalaryModal('{{ $rate->employee_rate_id }}', '{{ $rate->rate }}', '{{ $rate->effective_from }}', '{{ $rate->effective_to }}')" 
-                                                style="background: var(--clr-yellow); color: var(--clr-primary); padding: 6px 16px; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600;">
-                                            Edit
-                                        </button>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                    @else
-                    <p style="margin-top: 1rem; color: var(--clr-secondary); font-size: 14px;">No salary history available.</p>
-                    @endif
                 </div>
             </section>
         </div>
-        
+
         <div class="delete-employee-wrapper">
             @if(!is_null($employee->company_id))
                 <button
@@ -820,6 +826,14 @@
 </div>
 
 <style>
+    .note {
+        font-size: 11.75px; 
+        margin-top: -7px;
+        color: #4B5563;
+        margin-bottom: 20px;
+        letter-spacing: 1.33px;
+        width: 100%;
+    }
     .btn-delete {
         background: var(--clr-red);
         color: var(--clr-background);
