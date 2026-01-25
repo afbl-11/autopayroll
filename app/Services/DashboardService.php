@@ -56,45 +56,20 @@ class DashboardService
     }
     public function getDashboardData() {
         return [
-            'admin' => $this->getAdminName(),
-            'attendance' => $this->attendanceRepository->getAll(),
-            'employee_count' => $this->employeeRepository->countEmployees(),
-            'total_payroll' => $this->payrollRepository->getTotalGrossSalary(),
-            'total_deductions' => $this->payrollRepository->getTotalDeductions(),
-            'end_period' => $this->getEndPeriod(),
-            'company'  => $this->showCompanies(),
-            'adminAll' =>$this->getAdminAll(),
-            'adminFirstName' => $this->getAdminByFirstName(),
-            'totalPayroll' => $this->getTotalPayroll(),
-            'totalDeduction' => $this->getDeductions(),
+        'admin' => $this->getAdminName(),
+        'attendance' => $this->attendanceRepository->getAll(),
+        'employee_count' => $this->employeeRepository->countEmployees(),
+        'total_payroll' => $this->getTotalPayrollByType()['total'],
+        'total_payroll_full_time' => $this->getTotalPayrollByType()['full_time'],
+        'total_payroll_part_time' => $this->getTotalPayrollByType()['part_time'],
+        'total_deductions' => $this->getDeductionsByType()['total'],
+        'total_deductions_full_time' => $this->getDeductionsByType()['full_time'],
+        'total_deductions_part_time' => $this->getDeductionsByType()['part_time'],
+        'end_period' => $this->getEndPeriod(),
+        'company'  => $this->showCompanies(),
+        'adminAll' => $this->getAdminAll(),
+        'adminFirstName' => $this->getAdminByFirstName(),
         ];
-    }
-
-    public function getTotalPayroll()
-    {
-       $companies = Company::with(['employees.dailyPayrolls'])->get();
-
-       $totalPayroll = 0;
-       foreach ($companies as $company) {
-           foreach ($company->employees as $employee) {
-               foreach ($employee->dailyPayrolls as $dailyPayroll) {
-                   $totalPayroll += $dailyPayroll->gross_salary;
-               }
-           }
-       }
-       return $totalPayroll;
-    }
-
-    public function getDeductions() {
-        $companies = Company::with(['employees.dailyPayrolls'])->get();
-
-        $totalDeductions = $companies->sum(function ($company) {
-            return $company->employees->sum(function ($employee) {
-                return $employee->dailyPayrolls->sum('deduction');
-            });
-        });
-
-        return $totalDeductions;
     }
 
     public function showAdjustmentRequest() {
@@ -103,5 +78,82 @@ class DashboardService
 
     public function getAttendance() {
         $employee = Employee::where('status', 'active');
+    }
+
+    //New total payroll
+    public function getTotalPayrollByType()
+    {
+        $companies = Company::with(['employees.dailyPayrolls'])->get();
+
+        $totals = [
+            'full_time' => 0,
+            'part_time' => 0,
+        ];
+
+    
+        //Full-time has been seperated from part-time.
+
+        //Full-time
+        $companies = Company::with(['employees.dailyPayrolls'])->get();
+
+        foreach ($companies as $company) {
+            foreach ($company->employees as $employee) {
+                if ($employee->employment_type === 'full-time') {
+                    foreach ($employee->dailyPayrolls as $dailyPayroll) {
+                        $totals['full_time'] += $dailyPayroll->gross_salary;
+                    }
+                }
+            }
+        }
+
+        // Part-time
+        $partTimeEmployees = Employee::where('employment_type', 'part-time')->with('dailyPayrolls')->get();
+
+        foreach ($partTimeEmployees as $employee) {
+            foreach ($employee->dailyPayrolls as $dailyPayroll) {
+                $totals['part_time'] += $dailyPayroll->gross_salary;
+            }
+        }
+
+        $totals['total'] = $totals['full_time'] + $totals['part_time'];
+
+        return $totals;
+    }
+
+    //New total deductions
+    public function getDeductionsByType()
+    {
+        $companies = Company::with(['employees.dailyPayrolls'])->get();
+
+        $totals = [
+            'full_time' => 0,
+            'part_time' => 0,
+        ];
+
+        // Full-timer's deductions
+        $companies = Company::with(['employees.dailyPayrolls'])->get();
+
+        foreach ($companies as $company) {
+            foreach ($company->employees as $employee) {
+                if ($employee->employment_type === 'full-time') {
+                    foreach ($employee->dailyPayrolls as $dailyPayroll) {
+                        $totals['full_time'] += $dailyPayroll->deduction;
+                    }
+                }
+            }
+        }
+
+        // Part-timer's deductions
+        $partTimeEmployees = Employee::where('employment_type', 'part-time')->with('dailyPayrolls')->get();
+
+        foreach ($partTimeEmployees as $employee) {
+            foreach ($employee->dailyPayrolls as $dailyPayroll) {
+                $totals['part_time'] += $dailyPayroll->deduction;
+            }
+        }
+
+        $totals['total'] = $totals['full_time'] + $totals['part_time'];
+
+        return $totals;
     }
 }

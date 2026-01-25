@@ -16,19 +16,19 @@
                             <div class="table-item">
                                 <h6>Total Payroll</h6>
                                 <div class="data">
-                                    <h4>{{$data['totalPayroll']}}</h4>
+                                    <h4>{{$data['total_payroll']}}</h4>
                                 </div>
                             </div>
                             <div class="table-item">
                                 <h6>Total Deductions</h6>
                                 <div class="data">
-                                    <h4>{{$data['totalDeduction']}}</h4>
+                                    <h4>{{$data['total_deductions']}}</h4>
                                 </div>
                             </div>
                             <div class="table-item">
                                 <h6>Upcoming Pay Date</h6>
                                 <div class="data">
-                                    <h4>{{$data['end_period']}}</h4>
+                                    <h4>{{ \Carbon\Carbon::parse($data['end_period'])->addDays(10)->format('Y-m-d') }}</h4> {{-- Lagay ko lang dito --}}
                                 </div>
                             </div>
                         </div>
