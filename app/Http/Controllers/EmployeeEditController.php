@@ -128,9 +128,9 @@ class EmployeeEditController extends Controller
             'middle_name' => $middleName,
             'last_name' => $lastName,
             'birthdate' => $request->birthdate,
-            'gender' => $request->gender ?? $employee->gender,
-            'blood_type' => $request->blood_type ?? $employee->blood_type,
-            'marital_status' => $request->marital_status ?? $employee->marital_status,
+            'gender' => $request->gender,
+            'blood_type' => $request->blood_type,
+            'marital_status' => $request->marital_status,
         ];
 
         $employee->update($updateData);
@@ -144,9 +144,13 @@ class EmployeeEditController extends Controller
             $employee->save();
         }
 
-        return redirect()
-            ->route('employee.info', $employee)
-            ->with('success', 'Personal information updated successfully.');
+        if ($employee->wasChanged()) {
+            return redirect()
+                ->route('employee.info', $employee)
+                ->with('success', 'Personal information updated successfully.');
+        }
+
+        return redirect()->route('employee.info', $employee);
     }
 
     public function editAddress(Employee $employee)

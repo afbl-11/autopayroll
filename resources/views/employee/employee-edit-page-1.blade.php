@@ -28,7 +28,7 @@
                             :options="['' => 'None', 'Sr.' => 'Sr.', 'Jr.' => 'Jr.', 'Other' => 'Other']"
                             label="Suffix"
                             name="suffix"
-                            id="suffix"
+                            id="suffix" :value="$employee->suffix" useValue
                     >None</x-form-select>
                 </div>
 
