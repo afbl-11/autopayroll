@@ -224,6 +224,9 @@ Route::get('/announcements/detail/{id}', [AnnouncementsController::class, 'getAn
     ->middleware('auth:admin')
     ->name('announce.detail');
 
+Route::get('/announcements/view/{id}', [\App\Http\Controllers\EmployeeWeb\AnnouncementController::class, 'show'])
+    ->name('new.announcement.view');
+
 Route::post('/announcement/delete/{id}', [AnnouncementsController::class, 'deleteAnnouncement'])
     ->middleware('auth:admin')
     ->name('delete.announcement');
@@ -410,9 +413,8 @@ Route::get('/employee/payroll', function () {
     return view('employee_web.PayrollViewingModule.payrollScreen');
 });
 
-Route::get('/employee/announcement', function () {
-    return view('employee_web.announcementModule.announcementScreen');
-});
+Route::get('/employee/announcement/', [\App\Http\Controllers\EmployeeWeb\AnnouncementController::class, 'index'])
+->name('employee_web.announcement');
 
 Route::get('/employee/leave-module',[LeaveDashboardController::class,'index'])
 ->name('employee_web.leaveDashboard');
