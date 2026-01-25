@@ -62,9 +62,11 @@ class DashboardService
         'total_payroll' => $this->getTotalPayrollByType()['total'],
         'total_payroll_full_time' => $this->getTotalPayrollByType()['full_time'],
         'total_payroll_part_time' => $this->getTotalPayrollByType()['part_time'],
+        'total_payroll_contractual' => $this->getTotalPayrollByType()['contractual'],
         'total_deductions' => $this->getDeductionsByType()['total'],
         'total_deductions_full_time' => $this->getDeductionsByType()['full_time'],
         'total_deductions_part_time' => $this->getDeductionsByType()['part_time'],
+        'total_deductions_contractual' => $this->getDeductionsByType()['contractual'],
         'end_period' => $this->getEndPeriod(),
         'company'  => $this->showCompanies(),
         'adminAll' => $this->getAdminAll(),
@@ -87,13 +89,14 @@ class DashboardService
 
         $totals = [
             'full_time' => 0,
+            'contractual' => 0,
             'part_time' => 0,
         ];
 
     
-        //Full-time has been seperated from part-time.
+        //Full-time and contractual has been seperated from part-time.
 
-        //Full-time
+        //Full-time and contractual
         $companies = Company::with(['employees.dailyPayrolls'])->get();
 
         foreach ($companies as $company) {
@@ -101,6 +104,11 @@ class DashboardService
                 if ($employee->employment_type === 'full-time') {
                     foreach ($employee->dailyPayrolls as $dailyPayroll) {
                         $totals['full_time'] += $dailyPayroll->gross_salary;
+                    }
+                }
+                elseif ($employee->employment_type === 'contractual') {
+                    foreach ($employee->dailyPayrolls as $dailyPayroll) {
+                        $totals['contractual'] += $dailyPayroll->gross_salary;
                     }
                 }
             }
@@ -115,7 +123,7 @@ class DashboardService
             }
         }
 
-        $totals['total'] = $totals['full_time'] + $totals['part_time'];
+        $totals['total'] = $totals['full_time'] + $totals['contractual'] + $totals['part_time'];
 
         return $totals;
     }
@@ -127,10 +135,11 @@ class DashboardService
 
         $totals = [
             'full_time' => 0,
+            'contractual' => 0,
             'part_time' => 0,
         ];
 
-        // Full-timer's deductions
+        // Full-timers and employees in contractual terms' deductions
         $companies = Company::with(['employees.dailyPayrolls'])->get();
 
         foreach ($companies as $company) {
@@ -140,10 +149,15 @@ class DashboardService
                         $totals['full_time'] += $dailyPayroll->deduction;
                     }
                 }
+                elseif ($employee->employment_type === 'contractual') {
+                    foreach ($employee->dailyPayrolls as $dailyPayroll) {
+                        $totals['contractual'] += $dailyPayroll->deduction;
+                    }
+                }
             }
         }
 
-        // Part-timer's deductions
+        // Part-timers' deductions
         $partTimeEmployees = Employee::where('employment_type', 'part-time')->with('dailyPayrolls')->get();
 
         foreach ($partTimeEmployees as $employee) {
@@ -152,7 +166,7 @@ class DashboardService
             }
         }
 
-        $totals['total'] = $totals['full_time'] + $totals['part_time'];
+        $totals['total'] = $totals['full_time'] + $totals['contractual'] + $totals['part_time'];
 
         return $totals;
     }
