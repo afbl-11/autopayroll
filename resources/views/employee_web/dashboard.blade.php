@@ -12,7 +12,7 @@
             <div class="row mb-4 align-items-center">
                 <div class="col-md-8">
                     <h2 class="fw-bold mb-1" style="color: var(--clr-primary);">Good Evening, {{$employee['first_name']}}!</h2>
-                    <p class="text-muted mb-0">Developer • {{$company->company_name}}</p>
+                    <p class="text-muted mb-0">Developer • {{$company->company_name ?? 'Unassigned'}}</p>
                 </div>
             </div>
             <div class="row g-3 mb-4">
