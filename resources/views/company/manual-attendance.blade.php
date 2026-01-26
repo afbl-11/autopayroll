@@ -515,19 +515,6 @@ function getAvailablePartTimeEmployees(selectedDate) {
     });
 }
 
-// Filter if part-time or contractual are in contract.
-function isWithinContract(emp, selectedDate) {
-    if (!emp.contract_end) return true; // NO END DATE = ACTIVE
-
-    const contractEnd = new Date(emp.contract_end);
-    const date = new Date(selectedDate);
-
-    contractEnd.setHours(0, 0, 0, 0);
-    date.setHours(0, 0, 0, 0);
-
-    return date <= contractEnd;
-}
-
 /* ==========================
    COMPANY CHANGE
 ========================== */
@@ -604,7 +591,7 @@ companySelect.addEventListener("change", async () => {
 
     try {
         // Load permanent employees
-        const empRes = await fetch(`/company/${currentCompanyId}/employees`);
+        const empRes = await fetch(`/company/${currentCompanyId}/employees`); 
         if (!empRes.ok) {
             const errorText = await empRes.text();
             console.error('Employee fetch error:', errorText);
@@ -692,19 +679,12 @@ dateSelect.addEventListener("change", async () => {
         if (selectedPartTimeEmployee) {
             const dayOfWeek = getDayOfWeek(selectedDate);
             partTimeEmployees = allPartTimeEmployees.filter(emp => {
-
-                // ❌ CONTRACT ALREADY ENDED
-                if (!isWithinContract(emp, selectedDate)) return false;
-
-                // ❌ NOT ASSIGNED ON THIS DAY
                 if (emp.days_available) {
-                    const availableDays = typeof emp.days_available === 'string'
-                        ? JSON.parse(emp.days_available)
+                    const availableDays = typeof emp.days_available === 'string' 
+                        ? JSON.parse(emp.days_available) 
                         : emp.days_available;
-
                     return availableDays.includes(dayOfWeek);
                 }
-
                 return false;
             });
             console.log(`Filtered to ${partTimeEmployees.length} employees for ${dayOfWeek} (${selectedDate})`);
@@ -825,18 +805,7 @@ createDateForm.addEventListener('submit', async (e) => {
         attendance = {};
         const currentEmployees = selectedPartTimeEmployee ? partTimeEmployees : employees;
         const availableEmployees = getAvailablePartTimeEmployees(input);
-        let employeesToInit = selectedPartTimeEmployee
-        ? getAvailablePartTimeEmployees(input)
-        : currentEmployees;
-
-
-        // Filter out expired part-time and contractual
-        employeesToInit = employeesToInit.filter(emp => {
-            if (emp.employment_type === 'part-time' || emp.employment_type === 'contractual') {
-                return isWithinContract(emp, input);
-            }
-            return true; // full-time always allowed
-        });
+        const employeesToInit = selectedPartTimeEmployee ? availableEmployees : currentEmployees;
 
         //Restrict employees that are not assigned on that particular day to be given attendance.
         if (selectedPartTimeEmployee) {
@@ -1026,11 +995,7 @@ function renderPartTimeEmployeesGrid() {
         return;
     }
 
-    // Used for assurance.
-    const selectedDate = dateSelect.value;
-
-    // Assure if part-time is in contract.
-    partTimeEmployees.filter(emp => isWithinContract(emp, selectedDate)).forEach(emp => {
+    partTimeEmployees.forEach(emp => {
         const row = document.createElement('tr');
         row.dataset.id = emp.employee_id;
         
