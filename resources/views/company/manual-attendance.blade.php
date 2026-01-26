@@ -515,6 +515,19 @@ function getAvailablePartTimeEmployees(selectedDate) {
     });
 }
 
+// Filter if part-time or contractual are in contract.
+function isWithinContract(emp, selectedDate) {
+    if (!emp.contract_end) return true; // NO END DATE = ACTIVE
+
+    const contractEnd = new Date(emp.contract_end);
+    const date = new Date(selectedDate);
+
+    contractEnd.setHours(0, 0, 0, 0);
+    date.setHours(0, 0, 0, 0);
+
+    return date <= contractEnd;
+}
+
 /* ==========================
    COMPANY CHANGE
 ========================== */
@@ -679,12 +692,19 @@ dateSelect.addEventListener("change", async () => {
         if (selectedPartTimeEmployee) {
             const dayOfWeek = getDayOfWeek(selectedDate);
             partTimeEmployees = allPartTimeEmployees.filter(emp => {
+
+                // ❌ CONTRACT ALREADY ENDED
+                if (!isWithinContract(emp, selectedDate)) return false;
+
+                // ❌ NOT ASSIGNED ON THIS DAY
                 if (emp.days_available) {
-                    const availableDays = typeof emp.days_available === 'string' 
-                        ? JSON.parse(emp.days_available) 
+                    const availableDays = typeof emp.days_available === 'string'
+                        ? JSON.parse(emp.days_available)
                         : emp.days_available;
+
                     return availableDays.includes(dayOfWeek);
                 }
+
                 return false;
             });
             console.log(`Filtered to ${partTimeEmployees.length} employees for ${dayOfWeek} (${selectedDate})`);
@@ -805,8 +825,23 @@ createDateForm.addEventListener('submit', async (e) => {
         attendance = {};
         const currentEmployees = selectedPartTimeEmployee ? partTimeEmployees : employees;
         const availableEmployees = getAvailablePartTimeEmployees(input);
-        const employeesToInit = selectedPartTimeEmployee ? availableEmployees : currentEmployees;
-        
+        let employeesToInit = selectedPartTimeEmployee
+        ? getAvailablePartTimeEmployees(input)
+        : currentEmployees;
+
+
+        // Filter out expired part-time and contractual
+        employeesToInit = employeesToInit.filter(emp => {
+            if (emp.employment_type === 'part-time' || emp.employment_type === 'contractual') {
+                return isWithinContract(emp, input);
+            }
+            return true; // full-time always allowed
+        });
+
+        //Restrict employees that are not assigned on that particular day to be given attendance.
+        if (selectedPartTimeEmployee) {
+            partTimeEmployees = availableEmployees;
+        }
         employeesToInit.forEach(emp => {
             attendance[emp.employee_id] = {
                 status: "P",
@@ -991,7 +1026,11 @@ function renderPartTimeEmployeesGrid() {
         return;
     }
 
-    partTimeEmployees.forEach(emp => {
+    // Used for assurance.
+    const selectedDate = dateSelect.value;
+
+    // Assure if part-time is in contract.
+    partTimeEmployees.filter(emp => isWithinContract(emp, selectedDate)).forEach(emp => {
         const row = document.createElement('tr');
         row.dataset.id = emp.employee_id;
         
@@ -1148,18 +1187,100 @@ tableBody.addEventListener("input", e => {
 ========================== */
 saveBtn.addEventListener("click", async () => {
     if (!dateSelect.value || mode === "view") return;
+            // Avoid saving if employees aren't displayed.
+            const visibleRows = document.querySelectorAll(
+                '#attendanceGrid tbody tr[data-id]'
+            );
 
-    // Validate data (optional - add more validation as needed)
+            if (visibleRows.length === 0) {
+                alert("No employees available for the selected date. Cannot save attendance.");
+                return;
+            }
+    // Validate data
     const invalidRecords = [];
+    const eightHourViolation = [];
+    const overtimeViolation = [];
+    const lateViolation = [];
+
+    function toMinutes(time) {
+    const [h, m] = time.split(':').map(Number);
+    return h * 60 + m;
+    }
+
     Object.entries(attendance).forEach(([id, record]) => {
-        if (["O", "LT"].includes(record.status)) {
-            if (!record.time_in || !record.time_out) {
-                invalidRecords.push(id);
+
+        // Statuses that never require time
+        const noTimeRequiredStatuses = ["A", "DO"];
+
+        // Statuses that must be exactly 8 hours
+        const mustBeEightHoursStatuses = ["P", "CD", "CDO"];
+
+        // No time required (A, DO)
+        if (noTimeRequiredStatuses.includes(record.status)) {
+            return;
+        }
+
+        // Restrict missing time
+        if (!record.time_in || !record.time_out) {
+            invalidRecords.push(id);
+            return;
+        }
+
+        // Calculate worked minutes
+        const workedMinutes =
+            toMinutes(record.time_out) - toMinutes(record.time_in);
+
+        // Don't have time (covers late too)
+        if (workedMinutes <= 0 || Number.isNaN(workedMinutes)) {
+            invalidRecords.push(id);
+            return;
+        }
+
+        // They must be exactly 8 hours.
+        if (mustBeEightHoursStatuses.includes(record.status)) {
+            if (workedMinutes < 480 || workedMinutes >= 510) {
+                eightHourViolation.push(id);
+            }
+        }
+
+        // Overtime
+        if (record.status === "O") {
+            if (workedMinutes < 510) {
+                overtimeViolation.push(id);
+                return;
+            }
+        }
+
+        // Late
+        if (record.status === "LT") {
+            if (workedMinutes >= 480) {
+                lateViolation.push(id);
+                return;
             }
         }
     });
 
-    if (invalidRecords.length > 0 && !confirm(`Some records (${invalidRecords.length}) have Overtime/Late status but missing time entries. Save anyway?`)) {
+    if (invalidRecords.length > 0) {
+        alert(
+            "Cannot save attendance."
+        );
+        return;
+    }
+
+    if (eightHourViolation.length > 0) {
+        alert(
+            "It must be 8 hours."
+        );
+        return;
+    }
+
+    if (overtimeViolation.length > 0) {
+        alert("Overtime must exceed 8 hours and 30 minutes.");
+        return;
+    }
+
+    if (lateViolation.length > 0) {
+        alert("Late/Undertime must be less than 8 hours.");
         return;
     }
 
