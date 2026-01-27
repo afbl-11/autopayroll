@@ -363,6 +363,7 @@ Route::middleware(['auth:admin'])->group(function () {
 
 
 use App\Http\Controllers\EmployeeEditController;
+use Kreait\Firebase\Messaging\CloudMessage;
 
 Route::prefix('employee/{employee}')->group(function () {
 
@@ -440,3 +441,18 @@ Route::get('/employee/credit-adjustment',[\App\Http\Controllers\EmployeeWeb\Cred
 
 Route::post('/employee/request/adjustment/', [\App\Http\Controllers\EmployeeWeb\CreditAdjustmentController::class, 'sendAdjustmentRequest'])
     ->name('employee_web.adjustment.request');
+
+//firebase cloud messaging
+Route::get('/test-fcm', function () {
+    $message = CloudMessage::fromArray([
+        'topic' => 'test',
+        'notification' => [
+            'title' => 'Autopayroll 🔔',
+            'body' => 'Firebase push notifications are working!',
+        ],
+    ]);
+
+    app('firebase.messaging')->send($message);
+
+    return 'Notification sent';
+});
