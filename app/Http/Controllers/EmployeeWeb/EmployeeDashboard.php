@@ -85,10 +85,9 @@ class EmployeeDashboard extends Controller
         $employee = Auth::guard('employee_web')->user();
 
         $log = AttendanceLogs::where('employee_id', $employee->employee_id)
-            ->latest()
+            ->latest('log_date')
             ->take(3)
-            ->get()
-            ->reverse();
+            ->get();
 
         return $log;
     }

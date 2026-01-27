@@ -164,5 +164,11 @@ class Employee extends Authenticatable
     public function otp() {
         $this->hasMany(OtpCodes::class, 'employee_id', 'employee_id');
     }
+
+    public function devices()
+    {
+        return $this->hasMany(EmployeeDevice::class, 'employee_id', 'employee_id');
+    }
+
 }
 

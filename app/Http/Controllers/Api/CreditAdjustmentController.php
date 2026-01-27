@@ -82,7 +82,7 @@ class CreditAdjustmentController extends Controller
 
         $attachmentPath = null;
         if ($request->hasFile('attachment')) {
-            $attachmentPath = $request->file('attachment')->store('attachments', 'public');
+            $attachmentPath = $request->file('attachment')->store('adjustments', 'public');
         }
 
 
@@ -143,4 +143,5 @@ class CreditAdjustmentController extends Controller
             'data' => $adjustmentRequest
         ]);
     }
+
 }

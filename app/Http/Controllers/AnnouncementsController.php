@@ -6,10 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AnnouncementRequest;
 use App\Models\Announcement;
 use App\Models\AnnouncementType;
+use App\Models\EmployeeDevice;
 use App\Services\AnnouncementService;
 use App\Services\EmployeeWeb\EmployeeAnnouncementService;
 use Auth;
 use Illuminate\Http\Request;
+use Kreait\Firebase\Messaging\CloudMessage;
+use Kreait\Firebase\Messaging\Notification;
 
 
 class AnnouncementsController extends Controller
@@ -59,15 +62,25 @@ class AnnouncementsController extends Controller
     {
         $service = new AnnouncementService();
 
-        // Get validated input
         $data = $request->validated();
 
-        // Attach the uploaded file to the data array if it exists
         if ($request->hasFile('attachment')) {
             $data['attachment'] = $request->file('attachment');
         }
+        $announcement = $service->postAnnouncement($data);
 
         $service->postAnnouncement($data);
+        $tokens = EmployeeDevice::pluck('fcm_token')->toArray();
+
+        if (!empty($tokens)) {
+            $message = CloudMessage::new()
+                ->withNotification(Notification::create(
+                    $announcement->title,
+                    $announcement->message
+                ));
+
+            app('firebase.messaging')->sendMulticast($message, $tokens);
+        }
 
         return redirect()->route('announcements')
             ->with('message', 'Announcement created successfully.');
