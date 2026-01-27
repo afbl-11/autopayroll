@@ -22,7 +22,6 @@ class EmployeeLogoutController extends Controller
 
         // Revoke the current token
         $request->user()->currentAccessToken()->delete();
-        $user['android_id'] = null;
         $user->save();
 
         return response()->json([
