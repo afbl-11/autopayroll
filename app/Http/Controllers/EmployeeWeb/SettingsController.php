@@ -7,6 +7,7 @@ use App\Models\Company;
 use App\Models\Employee;
 use Auth;
 use Illuminate\Http\Request;
+use App\Models\Admin;
 
 class SettingsController extends Controller
 {
@@ -38,6 +39,29 @@ class SettingsController extends Controller
                 ->withInput()
                 ->withErrors([
                     'first_name' => 'This name is already registered as an employee.'
+                ]);
+        }
+
+                $adminQuery = Admin::where('first_name', $firstName)
+            ->where('last_name', $lastName);
+
+        if ($middleName) {
+            $adminQuery->where('middle_name', $middleName);
+        } else {
+            $adminQuery->whereNull('middle_name');
+        }
+
+        if ($suffix) {
+            $adminQuery->where('suffix', $suffix);
+        } else {
+            $adminQuery->whereNull('suffix');
+        }
+
+        if ($adminQuery->exists()) {
+            return redirect()->back()
+                ->withInput()
+                ->withErrors([
+                    'first_name' => 'This is the admin\'s name.'
                 ]);
         }
 

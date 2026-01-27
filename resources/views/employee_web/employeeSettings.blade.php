@@ -5,9 +5,14 @@
 
 <x-root>
     @include('layouts.employee-side-nav')
-
     <main class="main-content p-4">
         <div class="container-fluid">
+            <div class="row mb-4">
+                <div class="col-12">
+                    <h2 class="fw-bold mb-1" style="color: var(--clr-primary);">Settings</h2>
+                    <p class="text-muted mb-0">Edit your profile information here.</p>
+                </div>
+            </div>
             <section class="main-content">
                 <div class="settings-wrapper">
                     <div class="profile-settings">
@@ -212,3 +217,287 @@
         </div>
     </main>
 </x-root>
+<style>
+    :root {
+        --sidebar-width-collapsed: 80px;
+        --sidebar-width-expanded: 260px;
+    }
+
+    .mb-4 {
+        margin-left: 15px;
+    }
+
+    .main-content {
+        margin-left: var(--sidebar-width-collapsed);
+        width: calc(100% - var(--sidebar-width-collapsed));
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        background: var(--clr-background);
+        padding-bottom: 50px;
+        transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                    width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .main-content.main-content-expanded {
+        margin-left: var(--sidebar-width-expanded);
+        width: calc(100% - var(--sidebar-width-expanded));
+    }
+
+    @media (max-width: 768px) {
+        .main-content,
+        .main-content.main-content-expanded {
+            margin-left: 0 !important;
+            width: 100% !important;
+        }
+    }
+
+    .settings-wrapper {
+        max-width: 750px;
+        margin: auto;
+        background: #ffffff;
+        border-radius: 8px;
+        padding: 30px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        border: 1px solid #d1d7e2;
+        margin-top: 25px;
+    }
+
+    .settings-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        letter-spacing: 1.33px;
+        color: var(--clr-primary);
+        margin-bottom: 20px;
+    }
+
+    .custom-alert {
+        background: rgba(255, 216, 88, 0.15);
+        border: 1px solid var(--clr-yellow);
+        color: var(--clr-indigo);
+        padding: 12px 15px;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+
+    .profile-photo {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 25px;
+    }
+
+    .avatar-preview {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #d1d7e2;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+
+    .upload-btn {
+        background: var(--clr-yellow);
+        border: 1px solid #dee2e6;
+        padding: 8px 14px;
+        border-radius: 8px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--clr-indigo);
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .upload-btn:hover {
+        background: var(--clr-indigo);
+        color: var(--clr-yellow);
+        border-color: var(--clr-indigo);
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 18px;
+        margin-bottom: 25px;
+    }
+
+    .form-group label {
+        letter-spacing: 0.5px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #64748b;
+        margin-bottom: 6px;
+        display: block;
+    }
+
+    .form-group input,
+    .form-group select {
+        width: 100%;
+        border-radius: 8px;
+        padding: 10px 14px;
+        border: 1px solid #dee2e6;
+        font-size: 0.9rem;
+        transition: border-color 0.2s, box-shadow 0.2s;
+        background: #fff;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+        outline: none;
+        border-color: var(--clr-yellow);
+        box-shadow: 0 0 0 0.2rem rgba(255, 216, 88, 0.15);
+    }
+
+    .error-message {
+        font-size: 0.75rem;
+        color: #dc3545;
+        margin-top: 4px;
+        letter-spacing: 1.33px;
+    }
+
+    .btn-save {
+        background: var(--clr-yellow);
+        color: var(--clr-indigo);
+        border: none;
+        padding: 10px 22px;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        letter-spacing: 0.4px;
+        transition: all 0.2s ease;
+    }
+
+    .btn-save:hover {
+        box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+        transform: translateY(-1px);
+        background: var(--clr-indigo);
+        color: var(--clr-yellow);
+    }
+
+    .links {
+        margin-top: 30px;
+        border-top: 1px solid #f1f5f9;
+        padding-top: 15px;
+        text-decoration: none;
+    }
+
+    .links a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .settings-row {
+        padding: 12px 10px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--clr-primary);
+        transition: background 0.2s ease;
+    }
+
+    .settings-row:hover {
+        background: rgba(88, 188, 255, 0.08);
+    }
+
+    .delete-btn {
+        margin-top: 30px;
+        text-align: right;
+    }
+
+    .delete-label:hover {
+        color: var(--clr-indigo);
+    }
+
+    .delete-label {
+        font-size: 0.8rem;
+        color: white;
+        cursor: pointer;
+    }
+
+    .modal-toggle {
+        display: none;
+    }
+
+    .modal {
+        pointer-events: none;
+        opacity: 0;
+        position: fixed;
+        inset: 0;
+        z-index: 999;
+        transition: opacity 0.2s ease;
+    }
+
+    .modal-toggle:checked ~ .modal {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .modal-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.4);
+    }
+
+    .modal-content {
+        position: relative;
+        background: #fff;
+        max-width: 420px;
+        margin: 12% auto;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+
+    .modal-content h2 {
+        font-size: 1rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .modal-content p {
+        font-size: 0.85rem;
+        color: #6c757d;
+        margin-bottom: 15px;
+    }
+
+    .password-input {
+        width: 100%;
+        padding: 10px 14px;
+        border-radius: 8px;
+        border: 1px solid #dee2e6;
+        font-size: 0.9rem;
+        margin-bottom: 18px;
+    }
+
+    .password-input:focus {
+        outline: none;
+        border-color: var(--clr-yellow);
+        box-shadow: 0 0 0 0.2rem rgba(255, 216, 88, 0.15);
+    }
+
+    .modal-buttons {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+    }
+
+    .btn-cancel {
+        padding: 8px 14px;
+        border-radius: 8px;
+        background: #f8f9fa;
+        border: 1px solid #dee2e6;
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .btn-confirm {
+        padding: 8px 14px;
+        border-radius: 8px;
+        background: #dc3545;
+        color: #fff;
+        border: none;
+        font-size: 0.8rem;
+        font-weight: 700;
+    }
+</style>
