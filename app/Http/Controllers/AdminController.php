@@ -8,7 +8,7 @@ use App\Models\Admin;
 use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage; 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Employee;
@@ -169,51 +169,24 @@ class AdminController extends Controller
         return back()->with('info', 'No changes were made.');
     }
 
-    public function showForgotPassword()
+    public function showForgotPassword(Request $request)
     {
-        return view('auth.auth-forgot-password')
-            ->with(['title' => 'Reset Password']);
+        $email = $request->query('email');
+        return view('auth.auth-forgot-password', compact('email'));
+
     }
 
     public function resetForgotPassword(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email|exists:admins,email',
-            'old_password' => 'required|string',
-
-            'password' => [
-                'required',
-                Password::min(8)
-                    ->mixedCase()
-                    ->numbers()
-                    ->symbols(),
-            ],
-
-            'password_confirmation' => 'required',
+        $request->validate([
+            'password' => 'required|string|min:8|confirmed',
+            'email' => 'required|email',
         ]);
 
-        $validator->after(function ($validator) use ($request) {
-            if ($request->password !== $request->password_confirmation) {
-                $validator->errors()->add(
-                    'password_confirmation',
-                    'Password does not match.'
-                );
-            }
-        });
+        $admin = Admin::where('email', $request->email)->first();
 
-        if ($validator->fails()) {
-            return redirect()
-                ->back()
-                ->withErrors($validator)
-                ->withInput();
-        }
-
-        $admin = Admin::where('email', $request->email)->firstOrFail();
-
-        if (!Hash::check($request->old_password, $admin->password)) {
-            return back()
-                ->withErrors(['old_password' => 'Current password is incorrect.'])
-                ->withInput();
+        if (!$admin) {
+            return back()->withErrors(['email' => 'No account found with this email.']);
         }
 
         if (Hash::check($request->password, $admin->password)) {
