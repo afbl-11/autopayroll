@@ -234,9 +234,7 @@
 
     <div class="header">
         <h1>PAYSLIP</h1>
-        @if($payslipData['employee']->employment_type !== 'part-time' && $payslipData['employee']->company)
-        <h2>{{ $payslipData['employee']->company->company_name }}</h2>
-        @endif
+        <h2>{{ \App\Models\Admin::first()->company_name }}</h2>
         <div class="period">
             {{ $payslipData['period']['period_label'] }}
         </div>
