@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\NotificationType;
 use App\Http\Controllers\Controller;
 use App\Models\CreditAdjustment;
 use App\Models\Employee;
 use App\Services\CreditAdjustmentService;
+use App\Services\NotificationService;
 use Illuminate\Http\Request;
 
 class CreditAdjustmentController extends Controller
 {
     public function __construct(
         protected CreditAdjustmentService $adjustmentService,
+        protected NotificationService $notificationService
     ){}
 
     public function showAdjustments() {
@@ -32,9 +35,19 @@ class CreditAdjustmentController extends Controller
 
         $this->adjustmentService->rejectRequest($validated);
 
+        $employeeId = CreditAdjustment::where('adjustment_id', $validated['adjustment_id'])->first()->employee_id;
+
+        $this->notificationService->notifyEmployees(
+            [$employeeId],
+            'Adjustment Rejected',
+            'Your credit adjustment request has been rejected.',
+            [
+                'type' => NotificationType::CREDIT_REJECTED,
+                'adjustment_id' => $validated['adjustment_id'],
+            ]
+        );
+
        return back();
-
-
     }
 
     public function approveRequest(Request $request)
@@ -45,8 +58,19 @@ class CreditAdjustmentController extends Controller
 
         $this->adjustmentService->approveRequest($validated);
 
-        return back();
+        $employeeId = CreditAdjustment::where('adjustment_id', $validated['adjustment_id'])->first()->employee_id;
 
+        $this->notificationService->notifyEmployees(
+            [$employeeId],
+            'Adjustment Approved',
+            'Your credit adjustment request has been approved.',
+            [
+                'type' => NotificationType::CREDIT_APPROVED ,
+                'adjustment_id' => $validated['adjustment_id'],
+            ]
+        );
+
+        return back();
     }
 
     public function alterClockIn(Request $request) {
