@@ -2,18 +2,19 @@
 
 use App\Http\Controllers\Api\AnnouncementController;
 use App\Http\Controllers\Api\AttendanceController;
+use App\Http\Controllers\Api\CompanyController;
 use App\Http\Controllers\Api\CreditAdjustmentController;
+use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\EmployeeLoginController;
 use App\Http\Controllers\Api\EmployeeLogoutController;
 use App\Http\Controllers\Api\LeaveRequestController;
 use App\Http\Controllers\Api\PayrollController;
 use App\Http\Controllers\Api\PayrollWebController;
 use App\Http\Controllers\Api\ResetPasswordController;
-use App\Http\Controllers\OtpController;
+use App\Http\Controllers\bin\OtpController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\EmployeeController;
-use App\Http\Controllers\Api\CompanyController;
-use App\Http\Controllers\Api\ScheduleController;
+use Kreait\Firebase\Messaging\CloudMessage;
+use Kreait\Firebase\Messaging\Notification;
 
 Route::get('/test', function () {
     return 'API loaded!';
@@ -71,29 +72,3 @@ Route::post('/otp/send', [OtpController::class, 'sendOtp']);
 Route::post('/otp/verify', [OtpController::class, 'verifyOtp']);
 Route::post('/send-otp', [OTPController::class, 'sendOtp']);
 
-use Kreait\Firebase\Messaging\CloudMessage;
-use Kreait\Firebase\Messaging\Notification;
-
-Route::get('/debug/fcm', function () {
-    $token = 'TEST_TOKEN_123';
-
-    $message = CloudMessage::new()
-        ->withNotification(Notification::create(
-            'Backend Test',
-            'Laravel successfully sent this'
-        ));
-
-    try {
-        app('firebase.messaging')
-            ->send($message->withChangedTarget('token', $token));
-
-        return response()->json([
-            'status' => 'sent'
-        ]);
-    } catch (\Throwable $e) {
-        return response()->json([
-            'status' => 'firebase_replied',
-            'error' => $e->getMessage()
-        ], 400);
-    }
-});

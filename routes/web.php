@@ -12,11 +12,13 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeDashboardController;
 use App\Http\Controllers\EmployeePayrollController;
 use App\Http\Controllers\EmployeeWeb\LeaveDashboardController;
+use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\LeaveRequestController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\QrCodeController;
+use App\Mail\SendOtpMail;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -456,3 +458,17 @@ Route::get('/test-fcm', function () {
 
     return 'Notification sent';
 });
+
+// email otp
+Route::post('/forgot-password/send-otp-request', [ForgotPasswordController::class, 'requestOtp'])
+->name('send.otp.request');
+
+//forgot password
+Route::get('/verify-email-address/', [ForgotPasswordController::class, 'verifyEmailAddress'])
+->name('forgot.emailAddress');
+
+Route::post('/email/verify-otp/', [ForgotPasswordController::class, 'verifyOtp'])
+    ->name('verify.otp');
+
+Route::get('/email/otp-input', [ForgotPasswordController::class, 'showOtpView'])
+    ->name('verify.otp.input');
