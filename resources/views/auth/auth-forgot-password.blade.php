@@ -8,26 +8,7 @@
 
                 <form class="form" action="{{ route('forgot.password.update') }}" method="POST">
                     @csrf
-                    <div class="field-row">
-                        <x-form-input
-                            type="email"
-                            name="email"
-                            id="email"
-                            label="Email Address"
-                            required
-                        />
-                    </div>
-
-                    <div class="field-row">
-                        <x-form-input
-                            type="password"
-                            name="old_password"
-                            id="old_password"
-                            label="Current Password"
-                            required
-                            togglePassword="true"
-                        />
-                    </div>
+                    <input type="email" name="email" id="email" hidden value="{{$email}}">
 
                     <div class="field-row">
                         <x-form-input
@@ -114,7 +95,7 @@
 
     .btn-secondary:hover {
         background-color: #fefce8;
-    } 
+    }
 
     #description {
         margin-top: -35px;
