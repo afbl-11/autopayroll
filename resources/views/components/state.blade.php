@@ -3,7 +3,7 @@
 @vite('resources/css/state.css')
 @php
     $statusClass = $status ? 'state-default' : 'state-inactive';
-    $isActive = $status ?  'Active' : 'Inactive';
+    $isActive = $status ?  'Present' : 'Absent';
 @endphp
 
 
