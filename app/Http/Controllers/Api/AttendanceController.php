@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Company;
+use App\Models\Employee;
 use App\Services\Payroll\CreateDailyPayroll;
 use App\Traits\ScheduleTrait;
 use Illuminate\Http\Request;
@@ -36,7 +37,8 @@ class AttendanceController extends Controller
             'token' => 'required|string',
             'signature' => 'required|string',
             'latitude' => 'required|numeric',
-            'longitude' => 'required|numeric'
+            'longitude' => 'required|numeric',
+            'android_id' => 'required|string',
         ]);
 
         /*
@@ -73,6 +75,34 @@ class AttendanceController extends Controller
             ], 400);
         }
 
+//        validate if android_id is already in use
+        $androidUsedByOther = Employee::where('android_id', $request->android_id)
+            ->where('employee_id', '!=', $employee->employee_id)
+            ->exists();
+
+        if ($androidUsedByOther) {
+            return response()->json([
+                'success' => false,
+                'message' => 'You cannot log in with this device. It is already linked to another employee.',
+            ], 401);
+        }
+
+        $deviceRestriction = Employee::where('employee_id', $employee->employee_id)
+            ->whereNotNull('android_id')
+            ->where('android_id', '!=', $request->android_id)
+            ->exists();
+
+        if($deviceRestriction) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Account is currently logged in another device.'
+            ],401);
+        }
+
+//        inserts android_id on employees table
+        $employee['android_id'] = $validated['android_id'];
+        $employee->save();
+
         $today = Carbon::today();
         $existing = AttendanceLogs::where('employee_id', $employee->employee_id)
             ->whereDate('created_at', $today)
@@ -91,6 +121,7 @@ class AttendanceController extends Controller
         if (!$isWorkingDay || !$schedule) {
             return response()->json(['message' => "Employee $employee->employee_id has no schedule today."], 401);
         }
+
         $clockIn = Carbon::today()->setHour(8)->setMinute(0)->setSecond(0);
         $attendance = AttendanceLogs::create([
             'log_id' => Str::uuid(),
@@ -182,6 +213,10 @@ class AttendanceController extends Controller
             'clock_out_latitude' => $validated['latitude'],
             'clock_out_longitude' => $validated['longitude'],
         ]);
+
+//        remove android_id on employees table
+        $employee['android_id'] = null;
+        $employee->save();
 
         $this->dailyPayroll->createDailyPayroll($employee->employee_id);
 
