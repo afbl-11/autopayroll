@@ -135,7 +135,7 @@ form {
 
 }
 
-@media (max-width: 800px) {
+@media (max-width: 875px) {
     .leave-wrapper {
         flex-direction: column;
         height: auto;

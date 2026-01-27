@@ -40,7 +40,7 @@
     <button id="deleteDateBtn" disabled>Delete Date</button>
     <button id="saveAllBtn" disabled>Save All</button>
     
-    <button id="dayOffBtn" class="day-off-btn" disabled>Day Off</button>
+    <button id="dayOffBtn" class="day-off-btn" style="display: none;" disabled>Day Off</button>
     <button id="manualInputBtn" class="manual-input-btn" style="display: none;">Manual Input</button>
 
     <span id="modeLabel" class="mode-label"></span>
@@ -591,7 +591,7 @@ companySelect.addEventListener("change", async () => {
 
     try {
         // Load permanent employees
-        const empRes = await fetch(`/company/${currentCompanyId}/employees`);
+        const empRes = await fetch(`/company/${currentCompanyId}/employees`); 
         if (!empRes.ok) {
             const errorText = await empRes.text();
             console.error('Employee fetch error:', errorText);
@@ -806,7 +806,11 @@ createDateForm.addEventListener('submit', async (e) => {
         const currentEmployees = selectedPartTimeEmployee ? partTimeEmployees : employees;
         const availableEmployees = getAvailablePartTimeEmployees(input);
         const employeesToInit = selectedPartTimeEmployee ? availableEmployees : currentEmployees;
-        
+
+        //Restrict employees that are not assigned on that particular day to be given attendance.
+        if (selectedPartTimeEmployee) {
+            partTimeEmployees = availableEmployees;
+        }
         employeesToInit.forEach(emp => {
             attendance[emp.employee_id] = {
                 status: "P",
@@ -1148,18 +1152,100 @@ tableBody.addEventListener("input", e => {
 ========================== */
 saveBtn.addEventListener("click", async () => {
     if (!dateSelect.value || mode === "view") return;
+            // Avoid saving if employees aren't displayed.
+            const visibleRows = document.querySelectorAll(
+                '#attendanceGrid tbody tr[data-id]'
+            );
 
-    // Validate data (optional - add more validation as needed)
+            if (visibleRows.length === 0) {
+                alert("No employees available for the selected date. Cannot save attendance.");
+                return;
+            }
+    // Validate data
     const invalidRecords = [];
+    const eightHourViolation = [];
+    const overtimeViolation = [];
+    const lateViolation = [];
+
+    function toMinutes(time) {
+    const [h, m] = time.split(':').map(Number);
+    return h * 60 + m;
+    }
+
     Object.entries(attendance).forEach(([id, record]) => {
-        if (["O", "LT"].includes(record.status)) {
-            if (!record.time_in || !record.time_out) {
-                invalidRecords.push(id);
+
+        // Statuses that never require time
+        const noTimeRequiredStatuses = ["A", "DO"];
+
+        // Statuses that must be exactly 8 hours
+        const mustBeEightHoursStatuses = ["P", "CD", "CDO"];
+
+        // No time required (A, DO)
+        if (noTimeRequiredStatuses.includes(record.status)) {
+            return;
+        }
+
+        // Restrict missing time
+        if (!record.time_in || !record.time_out) {
+            invalidRecords.push(id);
+            return;
+        }
+
+        // Calculate worked minutes
+        const workedMinutes =
+            toMinutes(record.time_out) - toMinutes(record.time_in);
+
+        // Don't have time (covers late too)
+        if (workedMinutes <= 0 || Number.isNaN(workedMinutes)) {
+            invalidRecords.push(id);
+            return;
+        }
+
+        // They must be exactly 8 hours.
+        if (mustBeEightHoursStatuses.includes(record.status)) {
+            if (workedMinutes < 480 || workedMinutes >= 510) {
+                eightHourViolation.push(id);
+            }
+        }
+
+        // Overtime
+        if (record.status === "O") {
+            if (workedMinutes < 510) {
+                overtimeViolation.push(id);
+                return;
+            }
+        }
+
+        // Late
+        if (record.status === "LT") {
+            if (workedMinutes >= 480) {
+                lateViolation.push(id);
+                return;
             }
         }
     });
 
-    if (invalidRecords.length > 0 && !confirm(`Some records (${invalidRecords.length}) have Overtime/Late status but missing time entries. Save anyway?`)) {
+    if (invalidRecords.length > 0) {
+        alert(
+            "Cannot save attendance."
+        );
+        return;
+    }
+
+    if (eightHourViolation.length > 0) {
+        alert(
+            "It must be 8 hours."
+        );
+        return;
+    }
+
+    if (overtimeViolation.length > 0) {
+        alert("Overtime must exceed 8 hours and 30 minutes.");
+        return;
+    }
+
+    if (lateViolation.length > 0) {
+        alert("Late/Undertime must be less than 8 hours.");
         return;
     }
 

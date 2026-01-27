@@ -19,6 +19,7 @@
                         data-name="{{$employee->first_name . ' ' . $employee->last_name}}"
                         data-type="{{$requests->adjustment_type}}"
                         data-message="{{$requests->reason}}"
+                        data-attachment="{{ $requests->attachment_path }}"
                     />
                     @if($requests->count() === 0)
 
@@ -245,6 +246,7 @@
                 const date = card.dataset.affectedDate;
                 const startDate = card.dataset.startDate;
                 const endDate = card.dataset.endDate;
+                const attachmentPath = card.dataset.attachment;
 
                 // Prefill hidden inputs in all forms
                 document.querySelectorAll('.adjustment-form input.employee_id').forEach(input => input.value = employeeId);
@@ -252,6 +254,18 @@
                 document.querySelectorAll('.adjustment-form input.affected_date').forEach(input => input.value = date);
                 document.querySelectorAll('.adjustment-form input.start_date').forEach(input => input.value = startDate);
                 document.querySelectorAll('.adjustment-form input.end_date').forEach(input => input.value = endDate);
+
+                const docLink = document.getElementById('modal-doc-link');
+                const noDoc = document.getElementById('modal-no-doc');
+
+                if (attachmentPath) {
+                    docLink.href = "/storage/" + attachmentPath;
+                    docLink.style.display = "inline-block";
+                    noDoc.style.display = "none";
+                } else {
+                    docLink.style.display = "none";
+                    noDoc.style.display = "block";
+                }
             });
         });
 

@@ -12,6 +12,11 @@
     @include('layouts.employee-side-nav')
 
     <main class="main-content">
+        @if (session('success'))
+            <div class="custom-alert">
+                {{ session('success') }}
+            </div>
+        @endif
         <div class="container-fluid p-0">
 
             <div class="row mb-4">
@@ -373,4 +378,38 @@
             btn.style.borderStyle = 'solid';
         }
     }
+
+    const successAlert = document.getElementById('success-alert');
+    if (successAlert) {
+        setTimeout(() => {
+            successAlert.remove();
+        }, 3500);
+    }
 </script>
+
+<style>
+    .custom-alert {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: rgba(255, 216, 88, 0.15); 
+        border: 1px solid var(--clr-yellow); 
+        color: var(--clr-indigo); 
+        padding: 12px 15px; 
+        border-radius: 8px; 
+        font-size: 0.85rem; 
+        font-weight: 600;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        z-index: 9999;
+        animation: slideIn 0.4s ease, fadeOut 0.4s ease 3s forwards;
+    }
+
+    @keyframes slideIn {
+        from { transform: translateX(30px); opacity: 0; }
+        to   { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes fadeOut {
+        to { opacity: 0; transform: translateX(30px); }
+    }
+</style>

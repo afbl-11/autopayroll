@@ -35,6 +35,20 @@
     </div>
     <div class="message" id="modal-message">
     </div>
+    
+    <div class="supporting-doc">
+        <a id="modal-doc-link" 
+        target="_blank"
+        style="display:none;"
+        class="doc-link">
+            View Supporting Document
+        </a>
+
+        <p id="modal-no-doc" class="no-doc">
+            No supporting document uploaded.
+        </p>
+    </div>
+
     <div class="buttons">
         <form action="{{ route('reject.adjustment') }}" method="post">
             @csrf
@@ -48,3 +62,17 @@
         </form>
     </div>
 </div>
+<style>
+    a {
+        color: #4B5563;
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.2s ease-in-out;
+    }
+    a:hover {
+        color: #ceae43;
+    }
+    .no-doc {
+        font-size: 14px;
+    }
+</style>
