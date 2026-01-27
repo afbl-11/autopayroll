@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\bin;
 
 //use GuzzleHttp\Psr7\Request;
+use App\Http\Controllers\Controller;
 use App\Models\Employee;
 use App\Models\OtpCodes;
 use App\Services\SMSService;
