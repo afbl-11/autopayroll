@@ -40,7 +40,7 @@
     <button id="deleteDateBtn" disabled>Delete Date</button>
     <button id="saveAllBtn" disabled>Save All</button>
     
-    <button id="dayOffBtn" class="day-off-btn" disabled>Day Off</button>
+    {{-- <button id="dayOffBtn" class="day-off-btn" disabled>Day Off</button> --}}
     <button id="manualInputBtn" class="manual-input-btn" style="display: none;">Manual Input</button>
 
     <span id="modeLabel" class="mode-label"></span>
