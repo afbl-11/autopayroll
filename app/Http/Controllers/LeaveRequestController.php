@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\NotificationType;
 use App\Http\Controllers\Controller;
 use App\Models\Employee;
 use App\Models\LeaveRequest;
 use App\Services\AttendanceReport;
 use App\Services\LeaveRequestService;
+use App\Services\NotificationService;
 use Carbon\Carbon;
 
 class LeaveRequestController extends Controller
 {
     public function __construct(
-       protected LeaveRequestService $leaveRequestService,
-        protected AttendanceReport $report
+        protected LeaveRequestService $leaveRequestService,
+        protected AttendanceReport $report,
+        protected NotificationService $notificationService,
     ){}
 
     public function showLeaveRequest($id) {
@@ -40,17 +43,48 @@ class LeaveRequestController extends Controller
 
         $this->leaveRequestService->leaveApprove($employeeId, $leaveId);
 
-       return back()->with('success','Leave Request Approved');
+        $this->notificationService->notifyEmployees(
+            [$employeeId],
+            'Leave Approved',
+            'Your leave request has been approved.',
+            [
+                'type' => NotificationType::LEAVE_APPROVED,
+                'leave_id' => $leaveId,
+            ]
+        );
+
+        return back()->with('success','Leave Request Approved');
     }
 
     public function rejectLeaveRequest($employeeId, $leaveId) {
         $this->leaveRequestService->rejectRequest($employeeId, $leaveId);
+
+        $this->notificationService->notifyEmployees(
+            [$employeeId],
+            'Leave Rejected',
+            'Your leave request has been rejected.',
+            [
+                'type' => NotificationType::LEAVE_REJECTED,
+                'leave_id' => $leaveId,
+            ]
+        );
 
         return back()->with('success','Leave Request Rejected');
     }
 
     public function reviseLeaveRequest($employeeId, $leaveId) {
         $this->leaveRequestService->reviseRequest($employeeId, $leaveId);
+
+        $this->notificationService->notifyEmployees(
+            [$employeeId],
+            'Leave Request Needs Revision',
+            'Your leave request has been rejected. Please revise your request.',
+            [
+                'type' => NotificationType::LEAVE_REVISION,
+                'leave_id' => $leaveId,
+            ]
+        );
+
         return back()->with('success','Leave Request Revised');
     }
 }
