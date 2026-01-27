@@ -20,7 +20,7 @@ Route::get('/test', function () {
 });
 
 Route::get('/companies', [CompanyController::class, 'index']);
-Route::get('/schedules', [ScheduleController::class, 'index']);
+//Route::get('/schedules', [ScheduleController::class, 'index']);
 
 Route::post('/employee/login', [EmployeeLoginController::class, 'login']);
 Route::middleware('auth:sanctum')->get('/employee/profile', [EmployeeController::class, 'profile']);
@@ -52,6 +52,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/employee/announcements', [AnnouncementController::class, 'getAnnouncements']);
 
+
 });
     Route::get('/employee/credit-adjustment/types', [CreditAdjustmentController::class, 'adjustmentTypes']);
 
@@ -69,3 +70,30 @@ Route::middleware(['auth:sanctum'])->group(function () {
 Route::post('/otp/send', [OtpController::class, 'sendOtp']);
 Route::post('/otp/verify', [OtpController::class, 'verifyOtp']);
 Route::post('/send-otp', [OTPController::class, 'sendOtp']);
+
+use Kreait\Firebase\Messaging\CloudMessage;
+use Kreait\Firebase\Messaging\Notification;
+
+Route::get('/debug/fcm', function () {
+    $token = 'TEST_TOKEN_123';
+
+    $message = CloudMessage::new()
+        ->withNotification(Notification::create(
+            'Backend Test',
+            'Laravel successfully sent this'
+        ));
+
+    try {
+        app('firebase.messaging')
+            ->send($message->withChangedTarget('token', $token));
+
+        return response()->json([
+            'status' => 'sent'
+        ]);
+    } catch (\Throwable $e) {
+        return response()->json([
+            'status' => 'firebase_replied',
+            'error' => $e->getMessage()
+        ], 400);
+    }
+});
