@@ -15,7 +15,7 @@
                 <div class="field-row">
                     <x-form-input type="password" name="password" id="password" label="Password" class="toggleEye" required togglePassword="true"></x-form-input>
 
-                    <a href="{{ route('forgot.password') }}"><small>Forgot Password</small></a>
+                    <a href="{{ route('forgot.emailAddress') }}"><small>Forgot Password</small></a>
                 </div>
 
                 {{-- reCAPTCHA v2 Checkbox --}}
