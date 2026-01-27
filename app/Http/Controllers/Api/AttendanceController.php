@@ -129,7 +129,7 @@ class AttendanceController extends Controller
             'employee_id' => $employee->employee_id,
             'company_id' => $validated['company_id'],
             'log_date' => now(),
-            'clock_in_time' => Carbon::now()->addHours($clockIn->hour),
+            'clock_in_time' => Carbon::now(),
             'clock_in_latitude' => $validated['latitude'],
             'clock_in_longitude' => $validated['longitude'],
         ]);
@@ -209,7 +209,7 @@ class AttendanceController extends Controller
         }
         $clockOut = Carbon::today()->setHour(17)->setMinute(0)->setSecond(0); // for testing purposes
         $attendance->update([
-            'clock_out_time' => $clockOut,
+            'clock_out_time' => Carbon::now(),
             'clock_out_latitude' => $validated['latitude'],
             'clock_out_longitude' => $validated['longitude'],
         ]);
