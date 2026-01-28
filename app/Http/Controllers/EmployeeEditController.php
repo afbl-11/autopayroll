@@ -238,7 +238,7 @@ class EmployeeEditController extends Controller
     public function updateJob(Request $request, Employee $employee)
     {
         $validated = $request->validate([
-            'job_position'      => 'sometimes|required|string|max:255',
+            'job_position'      => 'nullable|string|max:255',
             'employment_type'   => 'required|string|in:full-time,part-time,contractual',
             'company_id'        => 'nullable|exists:companies,company_id',
             'days_available'    => 'nullable|string',
@@ -259,18 +259,18 @@ class EmployeeEditController extends Controller
             $validated['uploaded_documents'] = json_encode($uploadedFiles);
         }
 
-        //if (isset($validated['job_position'])) {
-            //$newJob = ucwords(strtolower(trim($validated['job_position'])));
-            //$currentJob = ucwords(strtolower(trim($employee->job_position)));
+        if (isset($validated['job_position'])) {
+            $newJob = ucwords(strtolower(trim($validated['job_position'])));
+            $currentJob = ucwords(strtolower(trim($employee->job_position)));
 
-            //if ($newJob === $currentJob) {
-                //return redirect()->back()
-                    //->withInput()
-                    //->withErrors(['job_position' => 'The job position is the same as the current one.']);
-            //}
+            if ($newJob === $currentJob) {
+                return redirect()->back()
+                    ->withInput()
+                    ->withErrors(['job_position' => 'The job position is the same as the current one.']);
+            }
 
-            //$validated['job_position'] = $newJob;
-        //}
+            $validated['job_position'] = $newJob;
+        }
 
         $employee->update(array_filter($validated, fn ($v) => !is_null($v)));
 

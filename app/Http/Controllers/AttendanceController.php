@@ -33,8 +33,9 @@ class AttendanceController extends Controller
 
     public function employees($companyId)
     {
+        $adminId = auth('admin')->id();
         // Fetch only permanent employees (company_id assigned)
-        $employees = Employee::withoutGlobalScopes()
+        $employees = Employee::where('admin_id', $adminId)
             ->where('company_id', $companyId)
             ->get()
             ->map(fn ($e) => [
@@ -51,9 +52,11 @@ class AttendanceController extends Controller
 
     public function partTimeEmployees($companyId)
     {
+        $adminId = auth('admin')->id();
         // Fetch part-time employees assigned to this company through part_time_assignments table
         $partTimeEmployees = DB::table('part_time_assignments')
             ->join('employees', 'part_time_assignments.employee_id', '=', 'employees.employee_id')
+            ->where('employees.admin_id', $adminId)
             ->where('part_time_assignments.company_id', $companyId)
             ->select(
                 'employees.employee_id',
@@ -73,9 +76,11 @@ class AttendanceController extends Controller
 
     public function allPartTimeEmployees()
     {
+        $adminId = auth('admin')->id();
         // Fetch ALL part-time employees from part_time_assignments table
         $partTimeEmployees = DB::table('part_time_assignments')
             ->join('employees', 'part_time_assignments.employee_id', '=', 'employees.employee_id')
+            ->where('employees.admin_id', $adminId)
             ->select(
                 'employees.employee_id',
                 DB::raw("TRIM(CONCAT(employees.first_name, ' ', employees.last_name)) as employee_name"),
@@ -95,7 +100,9 @@ class AttendanceController extends Controller
 
     public function attendanceDates($companyId)
     {
-        $dates = AttendanceLogs::where('company_id', $companyId)
+        $adminId = auth('admin')->id();
+        $dates = AttendanceLogs::where('admin_id', $adminId)
+            ->where('company_id', $companyId)
             ->selectRaw('DISTINCT log_date as date')
             ->orderBy('date')
             ->get();
@@ -105,7 +112,8 @@ class AttendanceController extends Controller
 
     public function attendanceByDate($companyId, $date)
     {
-        $logs = AttendanceLogs::withoutGlobalScope(\App\Models\Scopes\AdminScope::class)
+        $adminId = auth('admin')->id();
+        $logs = AttendanceLogs::where('admin_id', $adminId)
             ->where([
                 'company_id' => $companyId,
                 'log_date'   => $date,
