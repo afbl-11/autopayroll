@@ -55,3 +55,8 @@
         }
     }
 </script>
+<style>
+    .w-100 {
+        margin-bottom: 15px;
+    }
+</style>
