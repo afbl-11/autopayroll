@@ -3,7 +3,7 @@
     background-color: var(--clr-card-surface);
     box-shadow: 2px 5px 5.9px 0 rgba(136, 125, 125, 0.25);
     width: 90%;
-    height: 110px;
+    height: 150px;
     border-radius: 16px;
     padding: 20px;
     justify-content: center;
@@ -91,7 +91,6 @@
 .timeline-labels span {
     white-space: nowrap;
 }
-
 
 @media (max-width: 1250px) {
 

@@ -4,7 +4,7 @@
 
     {{-- DATE & CLOCK-IN/CLOCK-OUT --}}
     <div class="data-wrapper">
-        <p>{{ $dayDate }}</p>
+        <p>{{ \Carbon\Carbon::parse($dayDate)->format('M d, Y (l)') }}</p>
 
         <div class="stats">
             <div class="stats-wrapper">
