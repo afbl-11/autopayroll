@@ -68,7 +68,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::middleware('auth:sanctum')->get('/employee/schedules', [\App\Http\Controllers\Api\ScheduleController::class, 'getSchedule']);
 
-Route::post('/otp/send', [OtpController::class, 'sendOtp']);
-Route::post('/otp/verify', [OtpController::class, 'verifyOtp']);
-Route::post('/send-otp', [OTPController::class, 'sendOtp']);
-
+Route::post('/request-otp', [\App\Http\Controllers\Api\ForgotPasswordController::class, 'requestOtp']);
+Route::post('/verify-otp', [\App\Http\Controllers\Api\ForgotPasswordController::class, 'verifyOtp']);
