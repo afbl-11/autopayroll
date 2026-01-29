@@ -10,7 +10,11 @@
         :leaveBalance="$reports['creditDays']"
         :id="$employee->employee_id"
     />
-
+    @if (session('success'))
+        <div class="custom-alert">
+            {{ session('success') }}
+        </div>
+    @endif
     <section class="main-content">
         <div class="leave-wrapper">
             <div class="message">
@@ -161,6 +165,14 @@
     @media (max-width: 875px) {
         .l {
             height: 400px;
+        }
+    }
+    @media (max-width: 400px) {
+        .document-card {
+            width: 90%;
+        }
+        .l {
+            height: 450px;
         }
     }
 </style>

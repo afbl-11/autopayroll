@@ -115,7 +115,7 @@
                                 </div>
 
                                 {{-- Buttons --}}
-                                <div class="col-lg-4 col-md-6 d-flex gap-3 justify-content-end">
+                                <div class="col-lg-4 col-md-6 d-flex flex-wrap gap-3 justify-content-end">
                                     <button type="submit"
                                             class="btn btn-light border"
                                             style="height: 42px; width: 42px; background: var(--clr-yellow)"
