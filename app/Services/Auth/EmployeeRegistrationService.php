@@ -70,12 +70,12 @@ class EmployeeRegistrationService
             if (isset($data['temp_uploaded_documents']) && is_array($data['temp_uploaded_documents'])) {
                 $uploadedFiles = [];
                 $storage = \Illuminate\Support\Facades\Storage::disk('public');
-                
+
                 foreach ($data['temp_uploaded_documents'] as $tempPath) {
                     if ($storage->exists($tempPath)) {
                         $fileName = basename($tempPath);
                         $finalPath = "employee_documents/{$data['employee_id']}/{$fileName}";
-                        
+
                         // Move file from temp to final location
                         $storage->move($tempPath, $finalPath);
                         $uploadedFiles[] = $finalPath;
@@ -96,7 +96,7 @@ class EmployeeRegistrationService
                     }
                 }
             }
-            
+
             session()->forget('register.basicInformation');
             session()->forget('register.address');
             session()->forget('register.designation');
@@ -132,29 +132,29 @@ class EmployeeRegistrationService
 
     public function concatenateResAddress() {
         $address = session('register.address');
-        
+
         if (!$address) {
             return 'Address not available';
         }
-        
-        return  ($address['province_name'] ?? '') . ', ' . 
-                ($address['city_name'] ?? '') . ', ' . 
-                ($address['barangay_name'] ?? '') . ', ' . 
-                ($address['street'] ?? '') . ', ' . 
+
+        return  ($address['province_name'] ?? '') . ', ' .
+                ($address['city_name'] ?? '') . ', ' .
+                ($address['barangay_name'] ?? '') . ', ' .
+                ($address['street'] ?? '') . ', ' .
                 ($address['house_number'] ?? '');
     }
 
     public function concatenateIdResAddress() {
         $address = session('register.address');
-        
+
         if (!$address) {
             return 'ID Address not available';
         }
-        
-        return  ($address['id_province_name'] ?? '') . ', ' . 
-                ($address['id_city_name'] ?? '') . ', ' . 
-                ($address['id_barangay_name'] ?? '') . ', ' . 
-                ($address['id_street'] ?? '') . ', ' . 
+
+        return  ($address['id_province_name'] ?? '') . ', ' .
+                ($address['id_city_name'] ?? '') . ', ' .
+                ($address['id_barangay_name'] ?? '') . ', ' .
+                ($address['id_street'] ?? '') . ', ' .
                 ($address['id_house_number'] ?? '');
     }
 }
