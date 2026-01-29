@@ -51,26 +51,26 @@ class ForgotPasswordController extends Controller
     public function verifyOtp(Request $request)
     {
 
-            $request->validate([
-                'otp' => 'required|digits:6',
-                'email' => 'required|email|exists:admins,email',
-            ]);
+        $request->validate([
+            'otp' => 'required|digits:6',
+            'email' => 'required|email|exists:admins,email',
+        ]);
 
-            $record = DB::table('password_resets')->where('email', $request->email)->first();
+        $record = DB::table('password_resets')->where('email', $request->email)->first();
 
-            if (!$record) {
-                return back()->withErrors(['otp' => 'Invalid OTP'])->withInput();
-            }
+        if (!$record) {
+            return back()->withErrors(['otp' => 'Invalid OTP'])->withInput();
+        }
 
-            if (Carbon::now()->greaterThan($record->expires_at)) {
-                return back()->withErrors(['otp' => 'OTP expired'])->withInput();
-            }
+        if (Carbon::now()->greaterThan($record->expires_at)) {
+            return back()->withErrors(['otp' => 'OTP expired'])->withInput();
+        }
 
-            if (!Hash::check($request->otp, $record->otp)) {
-                return back()->withErrors(['otp' => 'Incorrect OTP'])->withInput();
-            }
+        if (!Hash::check($request->otp, $record->otp)) {
+            return back()->withErrors(['otp' => 'Incorrect OTP'])->withInput();
+        }
 
-            return redirect()->route('forgot.password', ['email' => $request->email]);
+        return redirect()->route('forgot.password', ['email' => $request->email]);
 
     }
 
