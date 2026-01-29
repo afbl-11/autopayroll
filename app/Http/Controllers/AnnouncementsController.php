@@ -69,7 +69,7 @@ class AnnouncementsController extends Controller
         }
         $announcement = $service->postAnnouncement($data);
 
-        $service->postAnnouncement($data);
+//        $service->postAnnouncement($data);
         $tokens = EmployeeDevice::pluck('fcm_token')->toArray();
 
         if (!empty($tokens)) {
