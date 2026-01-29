@@ -9,6 +9,7 @@ use App\Http\Requests\employeeRegistrationRequest\AssignmentRequest;
 use App\Http\Requests\employeeRegistrationRequest\BasicInformationRequest;
 use App\Repositories\CompanyRepository;
 use App\Services\Auth\EmployeeRegistrationService;
+use Illuminate\Support\Str;
 
 class EmployeeRegistrationController extends Controller
 {
@@ -29,7 +30,8 @@ class EmployeeRegistrationController extends Controller
     }
     public function showStep4() {
         $email = $this->employeeRegistration->getEmail();
-        return view('employee.addEmp4',compact('email'))->with('title', 'Add Employee');
+        $password = Str::password(12);
+        return view('employee.addEmp4',compact('email','password'))->with('title', 'Add Employee');
     }
     public function showStep5() {
 
@@ -58,10 +60,10 @@ class EmployeeRegistrationController extends Controller
 
     public function storeDesignation(AssignmentRequest $request){
         $data = $request->validated();
-        
+
         // Remove uploaded_documents from data to avoid serialization error
         unset($data['uploaded_documents']);
-        
+
         // Handle file uploads - store temporarily
         if ($request->hasFile('uploaded_documents')) {
             $tempFiles = [];
@@ -70,13 +72,13 @@ class EmployeeRegistrationController extends Controller
                 $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
                 $extension = $file->getClientOriginalExtension();
                 $filename = $originalName . '_' . time() . '_' . uniqid() . '.' . $extension;
-                
+
                 $tempPath = $file->storeAs('temp/employee_uploads', $filename, 'public');
                 $tempFiles[] = $tempPath;
             }
             $data['temp_uploaded_documents'] = $tempFiles;
         }
-        
+
         $this->employeeRegistration->storeDesignation($data);
         return redirect()->route('employee.register.4');
     }
