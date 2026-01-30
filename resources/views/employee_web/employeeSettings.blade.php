@@ -515,7 +515,7 @@
             font-size: 32px;
         }
     }
-    @media (max-width: 400px) {
+    @media (max-width: 480px) {
         .main-content,
         .main-content.main-content-expanded {
             width: 85% !important;
@@ -525,7 +525,7 @@
         }
         .settings-wrapper {
             width: 85%;
-            margin-left: 20px;
+            margin-left: 25px;
         }
         .upload-btn{
             font-size: 11px;
@@ -533,10 +533,26 @@
             margin-left: -5px;
         }
         .profile-photo {
-            margin-left: -5px;
+            margin-left: 5px;
         }
         .form-group {
-            width: 73%;
+            width: 88%;
+        }
+    }
+    @media (max-width: 400px) {
+        .main-content,
+        .main-content.main-content-expanded {
+            width: 84% !important;
+            margin-left: 73px !important;
+        }
+        .settings-wrapper {
+            margin-left: 20px;
+        }
+        .profile-photo, .settings-title {
+            margin-left: -9px;
+        }
+        .form-group {
+            width: 71%;
         }
     }
 </style>

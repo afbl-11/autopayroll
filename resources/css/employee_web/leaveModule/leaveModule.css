@@ -56,11 +56,19 @@
     }
 }
 
+@media (max-width: 480px) {
+    .main-content, 
+    .main-content.main-content-expanded {
+        margin-left: 95px !important;
+        width: 77% !important;
+    }
+}
+
 @media (max-width: 400px) {
     .main-content, 
     .main-content.main-content-expanded {
         margin-left: 92px !important;
-        width: 75% !important;
+        width: 73% !important;
     }
     .mb-1 {
         font-size: 30px;

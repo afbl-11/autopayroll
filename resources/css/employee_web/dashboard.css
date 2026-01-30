@@ -43,10 +43,20 @@
     }
 }
 
+@media (max-width: 480px) {
+    .main-content, 
+    .main-content.main-content-expanded {
+        margin-left: 90px !important;
+    }
+    .mb-1 {
+        font-size: 30px;
+    }
+}
+
 @media (max-width: 400px) {
     .main-content, 
     .main-content.main-content-expanded {
-        margin-left: 85px !important;
+        margin-left: 86px !important;
         width: 76% !important;
     }
     .mb-0 {
