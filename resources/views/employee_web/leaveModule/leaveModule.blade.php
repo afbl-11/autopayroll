@@ -111,7 +111,7 @@
                                     </select>
                                 </div>
 
-                                <div class="col-md-6 d-flex gap-2 align-items-end">
+                                <div class="col-md-6 d-flex flex-wrap gap-2 align-items-end">
                                     <div class="flex-grow-1">
                                         <label class="form-label">Status</label>
                                         <select class="form-select" name="status">

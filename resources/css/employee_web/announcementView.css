@@ -1,19 +1,22 @@
-
 .attachment {
     border: none;
     background: none;
     justify-content: end;
+    transition: color 0.3s ease-in-out;
 }
+
 .submit-div {
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 .form-contain{
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
 .message-container {
     background: var(--clr-card-surface);
     border-radius: 16px;
@@ -24,6 +27,7 @@
     flex-direction: column;
     width: 50%;
     height: 500px;
+    margin-top: 125px;
 }
 
 input {
@@ -46,6 +50,7 @@ img {
     max-width: 300px;
     max-height: 300px;
 }
+
 .submit {
     width: 150px;
     color: white;
@@ -55,12 +60,16 @@ img {
     padding: 10px 0;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
+.attachment:hover {
+    color: #ceae43;
+}
+
 .submit:hover {
     background-color: var(--clr-indigo);
     color: white;
 }
 
-/* Modal overlay */
 .attachment-modal {
     position: fixed;
     inset: 0;
@@ -71,7 +80,6 @@ img {
     z-index: 9999;
 }
 
-/* Modal box */
 .attachment-modal-content {
     background: #fff;
     border-radius: 16px;
@@ -84,7 +92,6 @@ img {
     box-shadow: 0 20px 40px rgba(0,0,0,0.25);
 }
 
-/* Image */
 .attachment-modal-content img {
     width: 100%;
     height: auto;
@@ -93,7 +100,6 @@ img {
     border-radius: 12px;
 }
 
-/* Close button */
 .close-modal {
     position: absolute;
     top: 12px;
@@ -105,7 +111,6 @@ img {
     color: #333;
 }
 
-/* Animation */
 @keyframes popIn {
     from {
         transform: scale(0.95);
@@ -114,5 +119,38 @@ img {
     to {
         transform: scale(1);
         opacity: 1;
+    }
+}
+
+@media (max-width: 1150px) {
+    .message-container {
+        margin-left: 110px;
+        width: 55%;
+    }
+}
+
+@media (max-width: 1000px) {
+    .message-container {
+        margin-left: 100px;
+        width: 55%;
+    }
+}
+
+@media (max-width: 800px) {
+    .message-container {
+        margin-left: 80px;
+        height: auto;
+    }
+}
+
+@media (max-width: 600px) {
+    .message-container {
+        margin-left: 95px;
+    }
+}
+
+@media (max-width: 400px) {
+    .message-container {
+        margin-top: 95px;
     }
 }

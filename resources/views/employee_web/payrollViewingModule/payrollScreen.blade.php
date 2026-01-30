@@ -98,13 +98,15 @@
                                         </span>
                                     </td>
                                     <td class="pe-4 text-end">
-                                        <button class="btn btn-light border btn-icon-square me-1" title="View Details">
-                                            <i class="bi bi-eye text-primary"></i>
-                                        </button>
-                                        
-                                        <button class="btn btn-light border btn-icon-square" title="Download PDF">
-                                            <i class="bi bi-download text-secondary"></i>
-                                        </button>
+                                        <div class="d-inline-flex gap-1 justify-content-end">
+                                            <button class="btn btn-light border btn-icon-square" title="View Details">
+                                                <i class="bi bi-eye text-primary"></i>
+                                            </button>
+
+                                            <button class="btn btn-light border btn-icon-square" title="Download PDF">
+                                                <i class="bi bi-download text-secondary"></i>
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
 
@@ -139,7 +141,7 @@
                     </div>
                 </div>
                 
-                <div class="card-footer bg-white border-0 py-3 d-flex justify-content-between align-items-center">
+                <div class="card-footer bg-white border-0 py-3 d-flex flex-wrap gap-3 justify-content-between align-items-center">
                     <small class="text-muted">Showing 1 to 10 of 24 entries</small>
                     <nav>
                         <ul class="pagination pagination-sm mb-0">

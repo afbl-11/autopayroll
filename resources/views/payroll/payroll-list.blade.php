@@ -64,7 +64,8 @@
                         <td>₱{{ number_format($employee->gross_pay_1to15, 2) }}</td>
                         <td>
                             <a href="#" 
-                               onclick="printPayslip('{{ $employee->employee_id }}', '{{ $year }}', '{{ $month }}', '1-15'); return false;" 
+                               onclick="printPayslip('{{ $employee->employee_id }}', '{{ $year }}', '{{ $month }}', '1-15',
+                                                     '{{ $employee->gross_pay_1to15 ?? 0 }}'); return false;" 
                                class="btn-print">
                                 <i class="fas fa-print"></i> Print Payslip
                             </a>
@@ -108,7 +109,8 @@
                         <td>₱{{ number_format($employee->gross_pay_16to31, 2) }}</td>
                         <td>
                             <a href="#" 
-                               onclick="printPayslip('{{ $employee->employee_id }}', '{{ $year }}', '{{ $month }}', '16-30'); return false;" 
+                               onclick="printPayslip('{{ $employee->employee_id }}', '{{ $year }}', '{{ $month }}', '16-30',
+                                                     '{{ $employee->gross_pay_16to31 ?? 0 }}'); return false;" 
                                class="btn-print">
                                 <i class="fas fa-print"></i> Print Payslip
                             </a>
@@ -362,7 +364,12 @@ function togglePeriod() {
     }
 }
 
-function printPayslip(employeeId, year, month, period) {
+function printPayslip(employeeId, year, month, period, grossPay) {
+    if (!grossPay || grossPay <= 0) {
+        alert('This employee has no pay for the selected period.');
+        return;
+    }
+
     const url = `{{ url('dashboard/employee/payslip') }}/${employeeId}/print?year=${year}&month=${month}&period=${period}`;
     window.open(url, '_blank');
 }

@@ -1,4 +1,4 @@
-@vite(['resources/css/employee_web/announcement.css','resources/css/employee_web/announcementView.css', 'resources/css/theme.css'])
+@vite(['resources/css/employee_web/announcementView.css', 'resources/css/theme.css'])
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -7,12 +7,6 @@
     @include('layouts.employee-side-nav')
 
     <main class="main-content">
-        <div class="row mb-5">
-        <div class="col">
-            <h2 class="fw-bold mb-2" style="color: var(--clr-primary);">Announcements</h2>
-            <p class="text-muted mb-0">View all company-wide updates, memos, and payroll notices.</p>
-        </div>
-        </div>
         <div class="form-contain">
 
             <div class="message-container">
@@ -31,29 +25,40 @@
                     {{$announcement->message}}
                 </div>
 
-                <div class="attachment-div">
-                    <p type="button" id="openAttachmentModal" class="attachment">
-                        See attached photo
-                    </p>
-                </div>
+                @php
+                    $files = $announcement->attachments 
+                        ? json_decode($announcement->attachments, true) 
+                        : [];
 
+                    $imageFile = null;
+                    foreach ($files as $file) {
+                        $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+                        if (in_array($ext, ['jpg','jpeg','png','gif'])) {
+                            $imageFile = $file;
+                            break;
+                        }
+                    }
+                @endphp
 
-                @if($announcement->attachments)
-                    @php $files = json_decode($announcement->attachments, true); @endphp
+                @if($imageFile)
+                    <!-- If image exists -->
+                    <div class="attachment-div">
+                        <button type="button" id="openAttachmentModal" class="attachment">
+                            See attached photo
+                        </button>
+                    </div>
 
-                    @foreach($files as $file)
-                        @php $ext = pathinfo($file, PATHINFO_EXTENSION); @endphp
-
-                        @if(in_array(strtolower($ext), ['jpg','jpeg','png','gif']))
-                            <!-- Modal Overlay -->
-                            <div class="attachment-modal" id="attachmentModal">
-                                <div class="attachment-modal-content">
-                                    <button class="close-modal">&times;</button>
-                                    <img src="{{ asset('storage/' . $file) }}" alt="Attachment">
-                                </div>
-                            </div>
-                        @endif
-                    @endforeach
+                    <div class="attachment-modal" id="attachmentModal">
+                        <div class="attachment-modal-content">
+                            <button class="close-modal">&times;</button>
+                            <img src="{{ asset('storage/' . $imageFile) }}" alt="Attachment">
+                        </div>
+                    </div>
+                @else
+                    <!-- If no image -->
+                    <div class="attachment-div">
+                        <span class="text-muted">No attached photo</span>
+                    </div>
                 @endif
 {{--                <div class="submit-div">--}}
 {{--                    <form action="{{route('employee.delete.announcement', ['id' => $announcement->announcement_id])}}" method="post">--}}
