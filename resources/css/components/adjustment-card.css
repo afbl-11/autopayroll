@@ -51,6 +51,7 @@
     .adjustment-card {
         width: 70%;
         margin-left: 50px;
+        height: auto;
     }
 }
 

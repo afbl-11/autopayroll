@@ -232,6 +232,7 @@ img {
 @media (max-width: 800px) {
     .message-container {
         margin-left: 75px;
+        height: auto;
     }
 }
 

@@ -272,7 +272,6 @@ a {
     }
 }
 
-
 .profile-settings {
     width: 100%;
     display: flex;
@@ -285,6 +284,17 @@ a {
     font-weight: 700;
     color: var(--clr-primary);
     text-align: left;
+}
+
+@media screen and (max-width: 400px) {
+    .form-group {
+        width: 95%;
+    }
+
+    .settings-title {
+        font-size: 19px;
+        margin-bottom: 5px;
+    }
 }
 
 .profile-photo {
