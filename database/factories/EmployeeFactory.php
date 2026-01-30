@@ -62,7 +62,7 @@ class EmployeeFactory extends Factory
             'company_id' => $company?->company_id,
             'first_name' => $faker->firstName,
             'middle_name' => $faker->firstName,
-            'profile_photo' => 'default_profile.png',
+            'profile_photo' => 'default_profile.jpg',
             'last_name' => $faker->lastName,
             'email' => $faker->unique()->safeEmail,
             'username' => $faker->unique()->userName,
