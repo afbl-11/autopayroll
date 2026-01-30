@@ -85,17 +85,18 @@
                                             <th class="ps-3">Net Earning</th>
                                             <th>Pay Date</th>
                                             <th>Status</th>
-                                            <th class="text-end pe-3">Action</th>
+{{--                                            <th class="text-end pe-3">Action</th>--}}
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td class="fw-bold ps-3">PHP 15,000.00</td>
-                                            <td>Nov 30, 2025</td>
-                                            <td><span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3">Paid</span></td>
-                                            <td class="text-end pe-3">
-                                                <button class="button-ghost btn-sm">View</button>
+                                            <td class="fw-bold ps-3">PHP {{$payslips->net_pay}}</td>
+                                            <td>{{ \Carbon\Carbon::parse($payslips->pay_date)->format('M d, Y') }}
                                             </td>
+                                            <td><span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3">{{$payslips->status}}</span></td>
+{{--                                            <td class="text-end pe-3">--}}
+{{--                                                <button class="button-ghost btn-sm">View</button>--}}
+{{--                                            </td>--}}
                                         </tr>
                                     </tbody>
                                 </table>

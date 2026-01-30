@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Announcement;
 use App\Models\AttendanceLogs;
 use App\Models\EmployeeSchedule;
+use App\Models\Payslip;
 use App\Services\AttendanceService;
 use Auth;
 use Carbon\Carbon;
@@ -123,6 +124,12 @@ class EmployeeDashboard extends Controller
 
         $announcement = $this->getAnnouncement($employee->admin_id);
 
+        $payslips = Payslip::where('employee_id', $employee->employee_id)
+            ->orderByDesc('year')
+            ->orderByDesc('month')
+            ->orderByDesc('period_start')
+            ->first();
+
         return view('employee_web.dashboard', compact(
             'employee',
             'attendance',
@@ -132,7 +139,8 @@ class EmployeeDashboard extends Controller
             'company',
             'timeIn',
             'timeOut',
-            'announcement'
+            'announcement',
+            'payslips',
         ));
     }
 
