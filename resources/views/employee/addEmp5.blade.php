@@ -100,7 +100,7 @@
                                     <div class="document-card">
                                         <div class="document-preview">
                                             @if(in_array(strtolower($extension), ['jpg', 'jpeg', 'png']))
-                                                <img src="{{ asset('storage/' . $tempPath) }}" 
+                                                <img src="{{ asset('storage/' . $tempPath) }}"
                                                      alt="Document {{ $index + 1 }}">
                                             @elseif(strtolower($extension) === 'pdf')
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="#ef4444" viewBox="0 0 16 16">
@@ -136,7 +136,7 @@
                         </div>
 
                         <div class="field-row">
-                            <x-form-input id="password" label="password" value="DefaultPassword123!"></x-form-input>
+                            <x-form-input id="password" label="password" :value="$data['password']"></x-form-input>
                         </div>
                     </section>
                 </section>
