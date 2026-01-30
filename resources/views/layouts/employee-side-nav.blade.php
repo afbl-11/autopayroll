@@ -76,43 +76,46 @@
     </div>
 </aside>
 
+{{-- SIDEBAR SCRIPT --}}
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const sidebar = document.getElementById('sidebar');
-        const mainContent = document.querySelector('.main-content');
-        const toggleBtn = document.getElementById('sidebarToggle');
-        const toggleIcon = document.getElementById('toggleIcon');
+document.addEventListener('DOMContentLoaded', function () {
+    const sidebar = document.getElementById('sidebar');
+    const mainContent = document.querySelector('.main-content');
+    const toggleBtn = document.getElementById('sidebarToggle');
+    const toggleIcon = document.getElementById('toggleIcon');
 
-        function updateIcon(isExpanded) {
-            if (isExpanded) {
-                toggleIcon.classList.remove('bi-chevron-double-right');
-                toggleIcon.classList.add('bi-chevron-double-left');
-            } else {
-                toggleIcon.classList.remove('bi-chevron-double-left');
-                toggleIcon.classList.add('bi-chevron-double-right');
-            }
-        }
+    function updateIcon(expanded) {
+        toggleIcon.classList.toggle('bi-chevron-double-left', expanded);
+        toggleIcon.classList.toggle('bi-chevron-double-right', !expanded);
+    }
 
-        const isExpanded = localStorage.getItem('sidebar-expanded') === 'true';
+    const isExpanded = localStorage.getItem('sidebar-expanded') === 'true';
+    if (isExpanded) {
+        sidebar.classList.add('expanded');
+        mainContent?.classList.add('main-content-expanded');
+        updateIcon(true);
+    }
 
-        if (isExpanded) {
-            sidebar.classList.add('expanded');
-            if (mainContent) mainContent.classList.add('main-content-expanded');
-            updateIcon(true);
-        }
-
-        toggleBtn.addEventListener('click', function() {
-            sidebar.classList.toggle('expanded');
-
-            const expanded = sidebar.classList.contains('expanded');
-
-            if (mainContent) {
-                mainContent.classList.toggle('main-content-expanded');
-            }
-
-            updateIcon(expanded);
-
-            localStorage.setItem('sidebar-expanded', expanded);
-        });
+    sidebar.addEventListener('click', function (e) {
+        e.stopPropagation();
     });
+
+    toggleBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+
+        sidebar.classList.toggle('expanded');
+        const expanded = sidebar.classList.contains('expanded');
+
+        mainContent?.classList.toggle('main-content-expanded');
+        updateIcon(expanded);
+        localStorage.setItem('sidebar-expanded', expanded);
+    });
+
+    document.addEventListener('click', function () {
+        sidebar.classList.remove('expanded');
+        mainContent?.classList.remove('main-content-expanded');
+        updateIcon(false);
+        localStorage.setItem('sidebar-expanded', false);
+    });
+});
 </script>
