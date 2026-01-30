@@ -6,14 +6,13 @@
 <x-root>
     @include('layouts.employee-side-nav')
     <main class="main-content p-4">
-        <div class="container-fluid">
+        
             <div class="row mb-4">
                 <div class="col-12">
                     <h2 class="fw-bold mb-1" style="color: var(--clr-primary);">Settings</h2>
                     <p class="text-muted mb-0">Edit your profile information here.</p>
                 </div>
             </div>
-            <section class="main-content">
                 <div class="settings-wrapper">
                     <div class="profile-settings">
 
@@ -161,7 +160,6 @@
                         </div>
                     </div>
                 </div>
-            </section>
             <script>
                 document.addEventListener('DOMContentLoaded', () => {
                     const input = document.getElementById('profile-photo-input');
@@ -198,7 +196,7 @@
                     }
                 });
             </script>
-        </div>
+        
     </main>
 </x-root>
 <style>
@@ -226,14 +224,6 @@
     .main-content.main-content-expanded {
         margin-left: var(--sidebar-width-expanded);
         width: calc(100% - var(--sidebar-width-expanded));
-    }
-
-    @media (max-width: 768px) {
-        .main-content,
-        .main-content.main-content-expanded {
-            margin-left: 0 !important;
-            width: 100% !important;
-        }
     }
 
     .settings-wrapper {
@@ -483,5 +473,70 @@
         border: none;
         font-size: 0.8rem;
         font-weight: 700;
+    }
+
+    @media (max-width: 800px) {
+        .main-content,
+        .main-content.main-content-expanded {
+            margin-left: 85px !important;
+            width: 90% !important;
+        }
+        .settings-wrapper {
+            width: 90%;
+        }
+    }
+    @media (max-width: 600px) {
+        .main-content,
+        .main-content.main-content-expanded {
+            margin-left: 75px !important;
+            width: 84% !important;
+        }
+        .settings-wrapper {
+            width: 85%;
+            margin-left: 35px;
+        }
+        .mb-1 {
+            font-size: 32px;
+        }
+    }
+    @media (max-width: 480px) {
+        .main-content,
+        .main-content.main-content-expanded {
+            width: 85% !important;
+        }
+        .mb-1 {
+            font-size: 30px;
+        }
+        .settings-wrapper {
+            width: 85%;
+            margin-left: 25px;
+        }
+        .upload-btn{
+            font-size: 11px;
+            width: 40%;
+            margin-left: -5px;
+        }
+        .profile-photo {
+            margin-left: 5px;
+        }
+        .form-group {
+            width: 88%;
+        }
+    }
+    @media (max-width: 400px) {
+        .main-content,
+        .main-content.main-content-expanded {
+            width: 84% !important;
+            margin-left: 73px !important;
+        }
+        .settings-wrapper {
+            margin-left: 20px;
+        }
+        .profile-photo, .settings-title {
+            margin-left: -9px;
+        }
+        .form-group {
+            width: 71%;
+        }
     }
 </style>

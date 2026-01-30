@@ -19,6 +19,10 @@ nav h4 {
     margin-bottom: 40px;
 }
 
+.attendance-list img {
+    border-radius: 50px;
+}
+
 .summary-wrapper {
     width: 100%;
     height: auto;

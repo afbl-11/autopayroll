@@ -51,13 +51,16 @@
 }
 
 .brand-name {
-    font-family: 'Helvetica medium', sans-serif;
+    font-family: var(--font-logo);
     opacity: 0;
     display: none;
-    font-size: 18px;
+    font-size: 25px;
     font-weight: 600;
     white-space: nowrap;
     transition: opacity 0.2s ease;
+    margin: 0 auto;
+    text-align: center;
+    letter-spacing: 2.304px;
 }
 
 .sidebar-container.expanded .brand-name {
@@ -256,4 +259,8 @@
 .toggle-btn:hover {
     color: var(--clr-yellow);
     background-color: rgba(255,255,255,0.05);
+}
+
+.sidebar-container.expanded .logo-wrapper {
+    display: none;
 }

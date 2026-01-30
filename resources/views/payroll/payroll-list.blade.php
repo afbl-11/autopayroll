@@ -362,7 +362,12 @@ function togglePeriod() {
     }
 }
 
-function printPayslip(employeeId, year, month, period) {
+function printPayslip(employeeId, year, month, period, grossPay) {
+    if (!grossPay || grossPay <= 0) {
+        alert('This employee has no pay for the selected period.');
+        return;
+    }
+
     const url = `{{ url('dashboard/employee/payslip') }}/${employeeId}/print?year=${year}&month=${month}&period=${period}`;
     window.open(url, '_blank');
 }

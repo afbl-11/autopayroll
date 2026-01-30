@@ -21,6 +21,7 @@ class PayrollController extends Controller
         $year = $request->get('year', date('Y'));
         $month = $request->get('month', date('m'));
         $companyFilter = $request->get('company', '');
+        $adminId = auth('admin')->id();
 
         // Get only employees who have payroll data for the selected month
         $employeeIds = DailyPayrollLog::withoutGlobalScope(\App\Models\Scopes\AdminScope::class)
@@ -30,7 +31,7 @@ class PayrollController extends Controller
             ->pluck('employee_id');
 
         $employeesQuery = Employee::with(['currentRate', 'company'])
-            ->withoutGlobalScope(\App\Models\Scopes\AdminScope::class)
+            ->where('admin_id', $adminId)
             ->whereIn('employee_id', $employeeIds);
 
         // Apply company filter
@@ -106,10 +107,11 @@ class PayrollController extends Controller
     {
         $companyFilter = $request->get('company', '');
         $searchTerm = $request->get('search', '');
+        $adminId = auth('admin')->id();
 
         // Get all employees with their current rates
         $employeesQuery = Employee::with(['currentRate', 'company'])
-            ->withoutGlobalScope(\App\Models\Scopes\AdminScope::class);
+            ->where('admin_id', $adminId);
 
         // Apply company filter
         if ($companyFilter === 'part-time') {

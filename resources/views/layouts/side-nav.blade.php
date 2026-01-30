@@ -6,7 +6,8 @@
         <div class="logo-wrapper">
             <x-logo-minimized />
         </div>
-        <span class="brand-name">AutoPayroll</span>
+        <span class="brand-name">Auto<span style="color:#FFD858;">Payroll</span>
+        </span>
     </div>
 
     {{-- NAVIGATION --}}
@@ -118,21 +119,32 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     const isExpanded = localStorage.getItem('sidebar-expanded') === 'true';
-
     if (isExpanded) {
         sidebar.classList.add('expanded');
         mainContent?.classList.add('main-content-expanded');
         updateIcon(true);
     }
 
-    toggleBtn.addEventListener('click', () => {
+    sidebar.addEventListener('click', function (e) {
+        e.stopPropagation();
+    });
+
+    toggleBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+
         sidebar.classList.toggle('expanded');
-
         const expanded = sidebar.classList.contains('expanded');
-        mainContent?.classList.toggle('main-content-expanded');
 
+        mainContent?.classList.toggle('main-content-expanded');
         updateIcon(expanded);
         localStorage.setItem('sidebar-expanded', expanded);
+    });
+
+    document.addEventListener('click', function () {
+        sidebar.classList.remove('expanded');
+        mainContent?.classList.remove('main-content-expanded');
+        updateIcon(false);
+        localStorage.setItem('sidebar-expanded', false);
     });
 });
 </script>

@@ -43,13 +43,15 @@
                                     </div>
                                     <div class="flex-grow-1">
                                         <div class="d-flex justify-content-between align-items-center mb-1">
-                                            <h5 class="fw-bold mb-0">{{$post->title}}</h5>
-                                            <span class="small text-muted">{{ $post->created_at->format('F d, Y') }}</span>
+                                            <h5 class="fw-bold mb-0 announcement-title">{{$post->title}}</h5>
                                         </div>
                                         <p class="text-muted small mb-3 text-uppercase fw-bold" style="font-size: 0.75rem;">
                                             {{$post->subject}}</p>
                                         <p class="mb-0 text-secondary">{{$post->message}}.</p>
                                     </div>
+                                    <span class="small text-muted text-end flex-shrink-0 created_date">
+                                            {{ $post->created_at->format('F d, Y') }}
+                                    </span>
                                 </div>
                             </div>
                         </a>

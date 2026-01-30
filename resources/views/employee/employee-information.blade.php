@@ -881,9 +881,26 @@
         }
     }
 
+    @media (max-width: 550px) {
+         h6 {
+            font-size: 16.5px;
+        }
+    }
+
     @media (max-width: 500px){
         .btn-delete {
             margin-left: 70px;
+        }
+    }
+    @media (max-width: 400px) {
+        h6 {
+            font-size: 16px;
+        }
+        .btn-edit {
+            margin-bottom: 15px;
+        }
+        .document-card {
+            width: 94%;
         }
     }
 </style>

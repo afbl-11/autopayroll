@@ -117,12 +117,9 @@
                         </table>
                     </div>
                 </div>
-
-                <div class="card-footer bg-white border-0 py-3 d-flex justify-content-between align-items-center">
-                    <small class="text-muted">
-                        Showing {{ $payslips->firstItem() }} to {{ $payslips->lastItem() }} of {{ $payslips->total() }} entries
-                    </small>
-
+                
+                <div class="card-footer bg-white border-0 py-3 d-flex flex-wrap gap-3 justify-content-between align-items-center">
+                    <small class="text-muted">Showing 1 to 10 of 24 entries</small>
                     <nav>
                         <ul class="pagination pagination-sm mb-0">
                             {{-- Previous Page --}}
