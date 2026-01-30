@@ -49,7 +49,7 @@
                                     :name="$log->first_name .' ' . $log->last_name"
                                     :profile="$log->profile_photo
                                     ? 'storage/' . $log->profile_photo
-                                    : 'assets/no_profile_picture.jpg'"
+                                    : 'assets/default_profile.jpg'"
                                     :status="$attendance?->status"
                                 />
                             @empty

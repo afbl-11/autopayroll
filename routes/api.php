@@ -70,3 +70,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 Route::post('/request-otp', [\App\Http\Controllers\Api\ForgotPasswordController::class, 'requestOtp']);
 Route::post('/verify-otp', [\App\Http\Controllers\Api\ForgotPasswordController::class, 'verifyOtp']);
+
+Route::middleware('auth:sanctum')->post('/change/profile-photo/success', [\App\Http\Controllers\Api\ChangeProfileController::class, 'changeProfile']);

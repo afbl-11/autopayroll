@@ -53,8 +53,8 @@ class AnnouncementsController extends Controller
     }
 
     public function createAnnouncement() {
-        $types = AnnouncementType::pluck('name', 'name');
-
+        $types = AnnouncementType::pluck('name', 'announcement_type_id');
+//        dd($types);
         return view('announcement.create', compact ('types'))->with('title', 'Create Announcement');
     }
 

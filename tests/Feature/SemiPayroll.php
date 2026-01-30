@@ -2,24 +2,74 @@
 
 namespace Tests\Feature;
 
-use App\Services\Payroll\ComputeSemi;
+use App\Services\Payroll\PayrollHistory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Illuminate\Foundation\Testing\TestCase;
 
 class SemiPayroll extends TestCase
 {
-    /**
-     * A basic feature test example.
-     */
-    public function test_example(): void
+    use RefreshDatabase;
+
+    /** @test */
+    public function it_generates_the_first_reference_for_a_year(): void
     {
-       $service = app(ComputeSemi::class);
-       $result = $service->calculateSemiPayroll();
+        $service = app(PayrollHistory::class);
 
-//        dd($result);
+        $reference = $service->generatePayslipReference(2025);
 
-        $this->assertTrue($result, 'Payroll calculation did not return true');
-        $this->assertDatabaseCount('payrolls', 1);
+        $this->assertEquals('PAY-2025-001', $reference);
+    }
+
+    /** @test */
+    public function it_increments_reference_for_the_same_year(): void
+    {
+        // Seed existing payslip
+        DB::table('payslips')->insert([
+            'payslips_id'  => Str::uuid(),
+            'employee_id'  => 'EMP-001',
+            'year'         => 2025,
+            'month'        => 1,
+            'period'       => '1-15',
+            'reference'    => 'PAY-2025-001',
+            'period_start' => now(),
+            'period_end'   => now(),
+            'net_pay'      => 1000,
+            'status'       => 'pending',
+            'breakdown'    => json_encode([]),
+            'created_at'   => now(),
+            'updated_at'   => now(),
+        ]);
+
+        $service = app(PayrollHistory::class);
+        $reference = $service->generatePayslipReference(2025);
+
+        $this->assertEquals('PAY-2025-002', $reference);
+    }
+
+    /** @test */
+    public function it_resets_reference_for_a_new_year(): void
+    {
+        DB::table('payslips')->insert([
+            'payslips_id'  => Str::uuid(),
+            'employee_id'  => 'EMP-001',
+            'year'         => 2025,
+            'month'        => 12,
+            'period'       => '16-30',
+            'reference'    => 'PAY-2025-015',
+            'period_start' => now(),
+            'period_end'   => now(),
+            'net_pay'      => 1000,
+            'status'       => 'pending',
+            'breakdown'    => json_encode([]),
+            'created_at'   => now(),
+            'updated_at'   => now(),
+        ]);
+
+        $service = app(PayrollHistory::class);
+        $reference = $service->generatePayslipReference(2026);
+
+        $this->assertEquals('PAY-2026-001', $reference);
     }
 }

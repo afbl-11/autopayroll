@@ -2,7 +2,7 @@
     <div class="main-content">
         <nav class="payroll-nav">
             <h1 class="page-title"></h1>
-            
+
             <div class="filter-controls">
                 <select id="companyFilter" class="filter-dropdown" onchange="filterPayroll()">
                     <option value="">All Companies</option>
@@ -63,9 +63,8 @@
                         <td>{{ $employee->days_worked_1to15 }}</td>
                         <td>₱{{ number_format($employee->gross_pay_1to15, 2) }}</td>
                         <td>
-                            <a href="#" 
-                               onclick="printPayslip('{{ $employee->employee_id }}', '{{ $year }}', '{{ $month }}', '1-15',
-                                                     '{{ $employee->gross_pay_1to15 ?? 0 }}'); return false;" 
+                            <a href="#"
+                               onclick="printPayslip('{{ $employee->employee_id }}', '{{ $year }}', '{{ $month }}', '1-15'); return false;"
                                class="btn-print">
                                 <i class="fas fa-print"></i> Print Payslip
                             </a>
@@ -108,9 +107,8 @@
                         <td>{{ $employee->days_worked_16to31 }}</td>
                         <td>₱{{ number_format($employee->gross_pay_16to31, 2) }}</td>
                         <td>
-                            <a href="#" 
-                               onclick="printPayslip('{{ $employee->employee_id }}', '{{ $year }}', '{{ $month }}', '16-30',
-                                                     '{{ $employee->gross_pay_16to31 ?? 0 }}'); return false;" 
+                            <a href="#"
+                               onclick="printPayslip('{{ $employee->employee_id }}', '{{ $year }}', '{{ $month }}', '16-30'); return false;"
                                class="btn-print">
                                 <i class="fas fa-print"></i> Print Payslip
                             </a>
@@ -275,7 +273,7 @@
     .payroll-table, .period-title {
         min-width: 900px;
     }
-    
+
     .payroll-table {
         margin-bottom: 10px;
     }
@@ -354,7 +352,7 @@ function togglePeriod() {
     const period = document.getElementById('periodFilter').value;
     const period1to15 = document.getElementById('period-1-15');
     const period16to30 = document.getElementById('period-16-30');
-    
+
     if (period === '1-15') {
         period1to15.style.display = 'block';
         period16to30.style.display = 'none';

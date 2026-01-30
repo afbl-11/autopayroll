@@ -59,7 +59,7 @@
                                     :name="$employee->first_name . ' ' . $employee->last_name"
                                     :id="$employee->employee_id"
                                     :username="$employee->username"
-                                    :image="'assets/default_profile.png'"
+                                    :image="'assets/default_profile.jpg'"
                                     :date="$employee->contract_start"
                                     :phone="$employee->phone_number"
                                     :type="$employee->employment_type"

@@ -8,13 +8,7 @@ class Kernel extends ConsoleKernel
 {
     public function schedule(Schedule $schedule) {
 
-        $schedule->command('app:payroll-rollover')
-            ->monthlyOn(15, '00:00')
-            ->withoutOverlapping();
-
-        $schedule->command('app:payroll-rollover')
-            ->monthlyOn(Carbon::now()->endOfMonth()->day, '00:00')
-            ->withoutOverlapping();
+        $schedule->command('payslips:generate')->everyMinute();
     }
 
     protected function commands() {

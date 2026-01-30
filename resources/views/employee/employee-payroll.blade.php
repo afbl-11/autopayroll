@@ -1,21 +1,24 @@
 @vite(['resources/css/company/payroll.css'])
 <link rel="stylesheet" href="{{ asset('css/payroll-filters.css') }}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 
 <x-app :navigation="true" navigationType="employee" :employee="$employee" :noHeader="true">
     <section class="main-content">
         <nav>
             <x-button-link :source="['employee.dashboard.payroll', ['id' => $employee->employee_id  ,'type' => 'daily']]" :noDefault="true">Daily Log</x-button-link>
-            <x-button-link :source="['employee.dashboard.payroll', ['id' => $employee->employee_id, 'type' => 'semi']]" :noDefault="true">Semi Monthly</x-button-link>
             <button onclick="openPayslipWithPeriod()" class="btn-link">Generate Payslip</button>
 
-          {{--  <button id="downloadPDF" class="btn-download">Download PDF</button>  --}}
+            <button id="downloadPDF" class="btn-download">Download PDF</button>
         </nav>
 
         <!-- Period Selection Modal for Monthly Payslip -->
         <div id="periodModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;">
             <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.2); max-width: 400px; width: 90%;">
                 <h3 style="color: var(--clr-primary); margin-bottom: 1.5rem; font-size: 18px;">Select Payslip Period</h3>
-                
+
                 <div style="margin-bottom: 1rem;">
                     <label style="display: block; margin-bottom: 0.5rem; color: var(--clr-secondary); font-size: 14px;">Period Type:</label>
                     <select id="modalPeriodFilter" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;">
@@ -72,6 +75,9 @@
                     :type="$type"
                 />
             </table>
+            <div class="mt-3">
+                {{ $payroll->links('pagination::bootstrap-5') }}
+            </div>
         </div>
 
 
@@ -131,45 +137,45 @@
         // Filter functionality for daily payroll
         const yearFilter = document.getElementById('yearFilter');
         const monthFilter = document.getElementById('monthFilter');
-        
+
         if (yearFilter && monthFilter) {
             const tableRows = document.querySelectorAll('#payrollTable tbody tr');
-            
+
             function filterTable() {
                 const selectedYear = yearFilter.value;
                 const selectedMonth = monthFilter.value;
-                
+
                 tableRows.forEach(row => {
                     const dateCell = row.cells[0];
                     if (!dateCell) return;
-                    
+
                     const dateText = dateCell.textContent.trim();
-                    
+
                     // Check if row is empty state
                     if (dateText.includes('No existing payroll log')) {
                         return;
                     }
-                    
+
                     // Parse date from the cell (format: YYYY-MM-DD)
                     const dateMatch = dateText.match(/\d{4}-\d{2}-\d{2}/);
                     if (!dateMatch) return;
-                    
+
                     const [year, month] = dateMatch[0].split('-');
-                    
+
                     let showRow = true;
-                    
+
                     if (selectedYear && year !== selectedYear) {
                         showRow = false;
                     }
-                    
+
                     if (selectedMonth && month !== selectedMonth) {
                         showRow = false;
                     }
-                    
+
                     row.style.display = showRow ? '' : 'none';
                 });
             }
-            
+
             yearFilter.addEventListener('change', filterTable);
             monthFilter.addEventListener('change', filterTable);
         }
@@ -186,8 +192,14 @@
         function navigateToPayslip() {
             const period = document.getElementById('modalPeriodFilter').value;
             const employeeId = '{{ $employee->employee_id }}';
-            window.location.href = `/dashboard/employee/payslip/${employeeId}?period=${period}`;
+
+            const year = document.getElementById('yearFilter')?.value || new Date().getFullYear();
+            const month = document.getElementById('monthFilter')?.value || String(new Date().getMonth() + 1).padStart(2, '0');
+
+            window.location.href =
+                `/dashboard/employee/payslip/${employeeId}?period=${period}&year=${year}&month=${month}`;
         }
+
 
         // Close modal when clicking outside
         document.getElementById('periodModal').addEventListener('click', function(e) {
@@ -200,7 +212,7 @@
         .filter-controls {
             margin-top: 35px;
         }
-        
+
         @media (max-width: 580px) {
             .filter-controls {
                 flex-direction: column;

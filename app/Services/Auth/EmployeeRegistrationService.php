@@ -21,10 +21,25 @@ class EmployeeRegistrationService
 
     public function storeBasicInformation(array $data)
     {
+        if (isset($data['first_name'])) {
+            $data['first_name'] = ucwords(strtolower($data['first_name']));
+        }
+
+        if (isset($data['last_name'])) {
+            $data['last_name'] = ucwords(strtolower($data['last_name']));
+        }
+
+        if (isset($data['middle_name'])) {
+            $data['middle_name'] = ucwords(strtolower($data['middle_name']));
+        }
         session(['register.basicInformation' => $data]);
     }
     public function storeAddress(array $data)
     {
+        if (isset($data['email'])) {
+            $data['email'] = ucwords(strtolower($data['email']));
+        }
+
         session(['register.address' => $data]);
     }
 
@@ -34,6 +49,9 @@ class EmployeeRegistrationService
     }
     public function storeDesignation(array $data)
     {
+        if (isset($data['job_position'])) {
+            $data['job_position'] = ucwords(strtolower($data['job_position']));
+        }
         session(['register.designation' => $data]);
     }
         public function storeCredentials(array $data){
@@ -52,7 +70,7 @@ class EmployeeRegistrationService
 
             $data = array_merge($basicInformation, $address, $designation, $credentials);
 
-            $data['profile_photo'] = 'default_profile.png';
+            $data['profile_photo'] = 'profile-photos/default_profile.jpg';
 
             $data['password'] = Hash::make($data['password'] ?? 'DefaultPassword123!');
 
@@ -70,12 +88,12 @@ class EmployeeRegistrationService
             if (isset($data['temp_uploaded_documents']) && is_array($data['temp_uploaded_documents'])) {
                 $uploadedFiles = [];
                 $storage = \Illuminate\Support\Facades\Storage::disk('public');
-                
+
                 foreach ($data['temp_uploaded_documents'] as $tempPath) {
                     if ($storage->exists($tempPath)) {
                         $fileName = basename($tempPath);
                         $finalPath = "employee_documents/{$data['employee_id']}/{$fileName}";
-                        
+
                         // Move file from temp to final location
                         $storage->move($tempPath, $finalPath);
                         $uploadedFiles[] = $finalPath;
@@ -96,7 +114,7 @@ class EmployeeRegistrationService
                     }
                 }
             }
-            
+
             session()->forget('register.basicInformation');
             session()->forget('register.address');
             session()->forget('register.designation');
@@ -132,29 +150,29 @@ class EmployeeRegistrationService
 
     public function concatenateResAddress() {
         $address = session('register.address');
-        
+
         if (!$address) {
             return 'Address not available';
         }
-        
-        return  ($address['province_name'] ?? '') . ', ' . 
-                ($address['city_name'] ?? '') . ', ' . 
-                ($address['barangay_name'] ?? '') . ', ' . 
-                ($address['street'] ?? '') . ', ' . 
+
+        return  ($address['province_name'] ?? '') . ', ' .
+                ($address['city_name'] ?? '') . ', ' .
+                ($address['barangay_name'] ?? '') . ', ' .
+                ($address['street'] ?? '') . ', ' .
                 ($address['house_number'] ?? '');
     }
 
     public function concatenateIdResAddress() {
         $address = session('register.address');
-        
+
         if (!$address) {
             return 'ID Address not available';
         }
-        
-        return  ($address['id_province_name'] ?? '') . ', ' . 
-                ($address['id_city_name'] ?? '') . ', ' . 
-                ($address['id_barangay_name'] ?? '') . ', ' . 
-                ($address['id_street'] ?? '') . ', ' . 
+
+        return  ($address['id_province_name'] ?? '') . ', ' .
+                ($address['id_city_name'] ?? '') . ', ' .
+                ($address['id_barangay_name'] ?? '') . ', ' .
+                ($address['id_street'] ?? '') . ', ' .
                 ($address['id_house_number'] ?? '');
     }
 }

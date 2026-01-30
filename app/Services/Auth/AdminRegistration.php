@@ -18,6 +18,18 @@ class AdminRegistration
 
     public function processStep1(array $data): void
     {
+        if (isset($data['first_name'])) {
+            $data['first_name'] = ucwords(strtolower($data['first_name']));
+        }
+
+        if (isset($data['last_name'])) {
+            $data['last_name'] = ucwords(strtolower($data['last_name']));
+        }
+
+        if (isset($data['middle_name'])) {
+            $data['middle_name'] = ucwords(strtolower($data['middle_name']));
+        }
+
         session(['register.personal' => $data]);
     }
 
@@ -26,6 +38,7 @@ class AdminRegistration
         $personal = session('register.personal');
         $data = array_merge($personal, $data);
         $data['password'] = Hash::make($data['password']);
+        $data['profile_photo'] = 'profile-photos/default_profile.jpg';
         $data['admin_id'] = $this->generateId->generateId(Admin::class, 'admin_id');
 
 

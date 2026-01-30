@@ -211,11 +211,10 @@ Route::get('dashboard/employee/payslip/{id}', [EmployeePayrollController::class,
     ->name('employee.dashboard.payslip');
 
 Route::get('dashboard/employee/payslip/{id}/print', [EmployeePayrollController::class, 'printPayslipPDF'])
-    ->middleware('auth:admin')
     ->name('employee.dashboard.payslip.print');
 
 Route::get('dashboard/employee/payslip/{id}/semi-monthly', [EmployeePayrollController::class, 'showSemiMonthlyPayslip'])
-    ->middleware('auth:admin')
+//    ->middleware('auth:admin')
     ->name('employee.dashboard.payslip.semi');
 
 Route::get('/announcements', [AnnouncementsController::class, 'getAnnouncements'])
@@ -419,9 +418,8 @@ Route::put('employee/update/profile', [\App\Http\Controllers\EmployeeWeb\Setting
 Route::get('/employee/employee-dashboard', [\App\Http\Controllers\EmployeeWeb\EmployeeDashboard::class, 'index'])
     ->name('web.employee.dashboard');
 
-Route::get('/employee/payroll', function () {
-    return view('employee_web.PayrollViewingModule.payrollScreen');
-});
+Route::get('/employee/payroll',[\App\Http\Controllers\EmployeeWeb\PayrollController::class, 'showPayroll'])
+    ->name('web.employee.payroll');
 
 Route::get('/employee/announcement/', [\App\Http\Controllers\EmployeeWeb\AnnouncementController::class, 'index'])
 ->name('employee_web.announcement');
@@ -472,3 +470,14 @@ Route::post('/email/verify-otp/', [ForgotPasswordController::class, 'verifyOtp']
 
 Route::get('/email/otp-input', [ForgotPasswordController::class, 'showOtpView'])
     ->name('verify.otp.input');
+
+
+
+Route::get('dashboard/view/payslip/{id}', [\App\Http\Controllers\EmployeeWeb\PayrollController::class, 'showPayslip'])
+    ->name('employee_web.dashboard.payslip');
+
+Route::get('/settings/profile/change-password', [\App\Http\Controllers\EmployeeWeb\SettingsController::class, 'showChangePassword'])
+    ->name('employee_web.settings.changePassword');
+
+Route::post('/settings/profile/change-password/success', [\App\Http\Controllers\EmployeeWeb\SettingsController::class, 'changePassword'])
+    ->name('employee_web.settings.changePassword.success');

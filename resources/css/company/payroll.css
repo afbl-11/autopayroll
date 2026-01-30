@@ -5,6 +5,10 @@
     display: flex;
     flex-direction: column;
 }
+
+a{
+
+}
 .main-content nav{
     display: flex;
     width: 95%;
@@ -29,6 +33,14 @@
 .main-content nav a:hover, .btn-download:hover, .btn-link:hover {
     color: var(--clr-background);
     background: var(--clr-indigo);
+}
+
+.mt-3 {
+    padding: 0 2rem;
+}
+.mt-3 a {
+    background-color: whitesmoke !important;
+    border-radius: 0 !important;
 }
 .custom-table {
     width: 95%;

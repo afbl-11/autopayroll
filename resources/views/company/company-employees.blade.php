@@ -54,13 +54,13 @@
                     data-id="{{ strtolower($employee->employee_id ?? '') }}"
                     data-position="{{ strtolower($employee->job_position ?? '') }}"
                     data-status="{{ strtolower($attendance?->status ?? '') }}"
-                >               
+                >
 
                 <x-employee-cards
                     :name="$employeeName"
                     :id="$employee->employee_id"
                     :username="$employee->username"
-                    :image="'assets/default_profile.png'"
+                    :image="'assets/default_profile.jpg'"
                     :date="$employee->contract_start"
                     :phone="$employee->phone_number"
                     :type="$employee->employment_type"
@@ -71,7 +71,7 @@
 
             </div>
             @endforeach
-            
+
             {{-- Part-time hired employees for this week --}}
             @foreach($company->part_time_hired as $employee)
                 @php
@@ -86,13 +86,13 @@
                     data-id="{{ strtolower($employee->employee_id ?? '') }}"
                     data-position="{{ strtolower($employee->job_position ?? '') }}"
                     data-status="{{ strtolower($attendance?->status ?? '') }}"
-                >               
+                >
 
                 <x-employee-cards
                     :name="$employee->first_name . ' ' . $employee->last_name . ' (PT: ' . $daysString . ')'"
                     :id="$employee->employee_id"
                     :username="$employee->username"
-                    :image="'assets/default_profile.png'"
+                    :image="'assets/default_profile.jpg'"
                     :date="$employee->contract_start"
                     :phone="$employee->phone_number"
                     :type="'part-time'"
@@ -112,7 +112,7 @@
         @if($availablePartTimeEmployees->isNotEmpty())
         <div class="available-part-time-section">
             <h3>Available Part-Time Employees</h3>
-            
+
             <div id="part-time-cards-container">
                 <div class="part-time-employee-header" style="display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr 0.7fr; padding: 10px 18px; background: #f3f6ff; border-radius: 10px; border: 1px solid #d9dff7; margin-bottom: 10px; width: 100%; margin-left: 0;">
                     <div class="eh-col eh-employee">Employee</div>
@@ -121,16 +121,16 @@
                     <div class="eh-col eh-types">Available Days</div>
                     <div class="eh-col eh-status-action">Action</div>
                 </div>
-                
+
                 @foreach($availablePartTimeEmployees as $employee)
                     @php
                         $remainingDays = $employee->remaining_days ?? [];
                         $daysString = count($remainingDays) > 0 ? implode(', ', $remainingDays) : 'No days available';
                     @endphp
-                    
+
                     <div class="part-time-row" data-employee-id="{{ $employee->employee_id }}">
                         <div class="pt-col pt-employee">
-                            <img src="{{ asset('assets/default_profile.png') }}" alt="{{ $employee->first_name }}" class="pt-profile-pic">
+                            <img src="{{ asset('assets/default_profile.jpg') }}" alt="{{ $employee->first_name }}" class="pt-profile-pic">
                             <div class="pt-employee-info">
                                 <p class="pt-name">{{ $employee->first_name }} {{ $employee->last_name }}</p>
                                 <p class="pt-id">#{{ $employee->employee_id }}</p>
@@ -142,7 +142,7 @@
                             <span class="days-badge">{{ $daysString }}</span>
                         </div>
                         <div class="pt-col pt-action">
-                            <button class="hire-part-time-btn" 
+                            <button class="hire-part-time-btn"
                                 data-employee-id="{{ $employee->employee_id }}"
                                 data-employee-name="{{ $employee->first_name }} {{ $employee->last_name }}"
                                 data-available-days='@json($remainingDays)'>
@@ -162,11 +162,11 @@
             <h3>Hire Part-Time Employee</h3>
             <p>Employee: <strong id="modalEmployeeName"></strong></p>
             <p>Select the day(s) to hire this employee:</p>
-            
+
             <div id="daySelectionContainer">
                 <!-- Days will be inserted here dynamically -->
             </div>
-            
+
             <div class="modal-actions">
                 <button id="cancelHireBtn">
                     Cancel
@@ -238,10 +238,10 @@
                 selectedEmployeeId = this.dataset.employeeId;
                 const employeeName = this.dataset.employeeName;
                 availableDays = JSON.parse(this.dataset.availableDays || '[]');
-                
+
                 modalEmployeeName.textContent = employeeName;
                 selectedDays = [];
-                
+
                 // Build day selection checkboxes
                 daySelectionContainer.innerHTML = '';
                 availableDays.forEach(day => {
@@ -251,7 +251,7 @@
                         <input type="checkbox" id="day-${day}" value="${day}">
                         <label for="day-${day}">${day}</label>
                     `;
-                    
+
                     const checkbox = dayOption.querySelector('input');
                     checkbox.addEventListener('change', function() {
                         if (this.checked) {
@@ -262,10 +262,10 @@
                             dayOption.classList.remove('selected');
                         }
                     });
-                    
+
                     daySelectionContainer.appendChild(dayOption);
                 });
-                
+
                 modal.style.display = 'flex';
             });
         });
@@ -297,7 +297,7 @@
                 });
 
                 const data = await response.json();
-                
+
                 if (data.success) {
                     alert(data.message);
                     window.location.reload();

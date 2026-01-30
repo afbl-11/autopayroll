@@ -16,7 +16,7 @@
 
 {{--                password--}}
                 <div class="field-row">
-                    <x-form-input  type="text" name="password" id="password" label="Password" value="DefaultPassword123!" readonly></x-form-input>
+                    <x-form-input  type="text" name="password" id="password" label="Password" :value="$password" readonly></x-form-input>
                 </div>
 
                 <x-button-submit>Continue</x-button-submit>

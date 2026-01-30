@@ -21,7 +21,7 @@ class EmployeeTableSeeder extends Seeder
             'first_name' => 'Maria',
             'middle_name' => 'Lourdes',
             'last_name' => 'Santos',
-            'profile_photo' => 'default_profile.png',
+            'profile_photo' => 'default_profile.jpg',
 
             'email' => 'maria.santos@example.com',
             'username' => 'maria_santos',

@@ -37,17 +37,17 @@ class EmployeePayrollController extends Controller
         $period = $request->get('period', '1-15'); // 1-15, 16-30
 
         $employee = Employee::find($id);
-        
+
         try {
             $payslipData = $this->payslipService->generateMonthlyPayslip($id, $year, $month, $period);
-            
+
             if (!$payslipData) {
                 return redirect()->back()->with('error', 'No payroll data found for the selected period');
             }
 
             return view('employee.monthly-payslip', compact('payslipData', 'employee', 'year', 'month', 'period'))
                 ->with('title', 'Monthly Payslip');
-                
+
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
@@ -60,13 +60,13 @@ class EmployeePayrollController extends Controller
 
         try {
             $payslipData = $this->payslipService->generateMonthlyPayslip($id, $year, $month, $period);
-            
+
             if (!$payslipData) {
                 return redirect()->back()->with('error', 'No payroll data found for the selected period');
             }
 
             return view('employee.payslip-pdf', compact('payslipData', 'year', 'month', 'period'));
-            
+
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }

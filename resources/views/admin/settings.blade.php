@@ -30,7 +30,7 @@
                         <img
                             src="{{ auth('admin')->user()->profile_photo
                                     ? asset('storage/' . auth('admin')->user()->profile_photo)
-                                    : asset('assets/no_profile_picture.jpg') }}"
+                                    : asset('assets/default_profile.jpg') }}"
                             alt="Profile Picture"
                             class="avatar-preview"
                             id="avatarPreview"

@@ -34,7 +34,7 @@
 
                 'employeeProfile' => $navigationType === 'employee' && $employee && $employee->profile_photo
                     ? 'storage/' . $employee->profile_photo
-                    : 'assets/no_profile_picture.jpg',
+                    : 'assets/default_profile.jpg',
 
                 'tin' => $company->tin_number ?? null,
                 'address' => $company->country ?? null,

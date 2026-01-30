@@ -5,10 +5,9 @@
 
 <x-root>
     @include('layouts.employee-side-nav')
-    
+
     <main class="main-content p-4">
         <div class="container-fluid">
-            
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <div>
                     <h2 class="fw-bold mb-1" style="color: var(--clr-primary);">My Payslips</h2>
@@ -18,8 +17,8 @@
 
             <div class="card card-theme border-0 shadow-sm mb-4">
                 <div class="card-body p-4">
-                    <form action="" method="GET" class="row g-3 align-items-end">
-                    
+                    <form action="{{ route('web.employee.payroll') }}" method="GET" class="row g-3 align-items-end">
+
                     <div class="col-md-3">
                         <label class="form-label text-muted small text-uppercase fw-bold ls-1">From Date</label>
                         <div class="input-group">
@@ -44,7 +43,7 @@
                         <label class="form-label text-muted small text-uppercase fw-bold ls-1">Status</label>
                         <select class="form-select" name="status">
                             <option value="all">All Statuses</option>
-                            <option value="paid">Paid</option>
+                            <option value="released">Released</option>
                             <option value="pending">Pending</option>
                             <option value="held">On Hold</option>
                         </select>
@@ -54,8 +53,8 @@
                         <button type="submit" class="btn btn-light border btn-icon-square" title="Filter">
                             <i class="bi bi-funnel"></i>
                         </button>
-                        
-                        <a href="#" class="btn btn-light border btn-icon-square" title="Reset">
+
+                        <a href="{{ route('web.employee.payroll') }}" class="btn btn-light border btn-icon-square" title="Reset">
                             <i class="bi bi-arrow-counterclockwise"></i>
                         </a>
                     </div>
@@ -78,64 +77,42 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            @forelse($payslips as $payslip)
                                 <tr>
                                     <td class="ps-4">
-                                        <span class="fw-bold text-muted font-monospace">#PAY-2025-012</span>
+                                        <span class="fw-bold text-muted font-monospace">#{{$payslip->reference}}</span>
                                     </td>
                                     <td>
                                         <div class="d-flex flex-column">
-                                            <span class="fw-semibold text-dark">Nov 01 - Nov 15</span>
-                                            <small class="text-muted" style="font-size: 0.75rem;">2025</small>
+                                            <span class="fw-semibold text-dark" id="period">{{$payslip->period}}</span>
+                                            <small id="year" class="text-muted" style="font-size: 0.75rem;">{{$payslip->year}}</small>
+                                            <input type="hidden" id="month" value="{{$payslip->month}}">
                                         </div>
                                     </td>
-                                    <td class="text-secondary">Nov 30, 2025</td>
+                                    <td class="text-secondary">{{$payslip->pay_date}}</td>
                                     <td>
-                                        <span class="fw-bold text-dark fs-6">₱ 15,000.00</span>
+                                        <span class="fw-bold text-dark fs-6">{{$payslip->net_pay}}</span>
                                     </td>
                                     <td class="text-center">
                                         <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3 py-2 border border-success border-opacity-25 d-inline-flex align-items-center gap-2">
-                                            <i class="bi bi-check-circle-fill"></i> Released
+                                            <i class="bi bi-check-circle-fill"></i> {{$payslip->status}}
                                         </span>
                                     </td>
                                     <td class="pe-4 text-end">
-                                        <div class="d-inline-flex gap-1 justify-content-end">
-                                            <button class="btn btn-light border btn-icon-square" title="View Details">
-                                                <i class="bi bi-eye text-primary"></i>
-                                            </button>
-
-                                            <button class="btn btn-light border btn-icon-square" title="Download PDF">
-                                                <i class="bi bi-download text-secondary"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td class="ps-4">
-                                        <span class="fw-bold text-muted font-monospace">#PAY-2025-013</span>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex flex-column">
-                                            <span class="fw-semibold text-dark">Nov 16 - Nov 30</span>
-                                            <small class="text-muted" style="font-size: 0.75rem;">2025</small>
-                                        </div>
-                                    </td>
-                                    <td class="text-secondary">Dec 15, 2025</td>
-                                    <td>
-                                        <span class="fw-bold text-muted fs-6">₱ 6,824.01</span>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="badge bg-warning bg-opacity-10 text-warning rounded-pill px-3 py-2 border border-warning border-opacity-25 d-inline-flex align-items-center gap-2">
-                                            <i class="bi bi-clock-history"></i> Processing
-                                        </span>
-                                    </td>
-                                    <td class="pe-4 text-end">
-                                        <button class="btn btn-icon btn-light" disabled title="Not available">
-                                            <i class="bi bi-eye-slash text-muted"></i>
+                                        <button class="btn btn-light border btn-icon-square"
+                                                onclick="navigateToPayslip('{{ $payslip->period }}', '{{ $payslip->year }}', '{{ $payslip->month }}')">
+                                            <i class="bi bi-eye text-primary"></i>
                                         </button>
                                     </td>
                                 </tr>
-                                
+                            @empty
+                                <tr>
+                                    <td colspan="6" class="text-center py-4 text-muted">
+                                        <i class="bi bi-file-earmark-text me-2" style="font-size: 1.2rem;"></i>
+                                        No payslip records found
+                                    </td>
+                                </tr>
+                            @endforelse
                             </tbody>
                         </table>
                     </div>
@@ -145,15 +122,94 @@
                     <small class="text-muted">Showing 1 to 10 of 24 entries</small>
                     <nav>
                         <ul class="pagination pagination-sm mb-0">
-                            <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-                            <li class="page-item active"><a class="page-link bg-theme-yellow border-theme-yellow text-dark" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link text-dark" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link text-dark" href="#">Next</a></li>
+                            {{-- Previous Page --}}
+                            <li class="page-item {{ $payslips->onFirstPage() ? 'disabled' : '' }}">
+                                <a class="page-link" href="{{ $payslips->previousPageUrl() }}">Previous</a>
+                            </li>
+
+                            {{-- Page Numbers --}}
+                            @foreach ($payslips->getUrlRange(1, $payslips->lastPage()) as $page => $url)
+                                <li class="page-item {{ $page == $payslips->currentPage() ? 'active' : '' }}">
+                                    <a class="page-link
+                        {{ $page == $payslips->currentPage() ? 'bg-theme-yellow border-theme-yellow text-dark' : 'text-dark' }}"
+                                       href="{{ $url }}">
+                                        {{ $page }}
+                                    </a>
+                                </li>
+                            @endforeach
+
+                            {{-- Next Page --}}
+                            <li class="page-item {{ $payslips->hasMorePages() ? '' : 'disabled' }}">
+                                <a class="page-link" href="{{ $payslips->nextPageUrl() }}">Next</a>
+                            </li>
                         </ul>
                     </nav>
                 </div>
             </div>
-
         </div>
     </main>
 </x-root>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+
+<script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+        const button = document.getElementById("downloadPDF");
+
+        if (!button) return;
+
+        button.addEventListener("click", async () => {
+
+        const payrollTable = document.querySelector(".custom-table");
+        if (!payrollTable) {
+        alert("Payroll table not found.");
+        return;
+    }
+
+        const { jsPDF } = window.jspdf;
+
+        // Capture HTML as image
+        const canvas = await html2canvas(payrollTable, { scale: 2 });
+        const imgData = canvas.toDataURL("image/png");
+
+        // Create PDF
+        const pdf = new jsPDF("p", "mm", "a4");
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+
+        const imgWidth = pageWidth;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+        let heightLeft = imgHeight;
+        let position = 0;
+
+        // Add first page
+        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+
+        // Add additional pages if needed
+        while (heightLeft > 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+    }
+
+        pdf.save("Payroll.pdf");
+    });
+    });
+
+        function navigateToPayslip(period, year, month) {
+            // We use the ID as a parameter in the route helper
+            const baseUrl = "{{ route('employee_web.dashboard.payslip', ['id' => $employee->employee_id]) }}";
+
+            // Now we just append the query parameters
+            const url = `${baseUrl}?period=${encodeURIComponent(period)}&year=${year}&month=${month}`;
+
+            window.location.href = url;
+        }
+
+</script>
