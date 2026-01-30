@@ -21,10 +21,25 @@ class EmployeeRegistrationService
 
     public function storeBasicInformation(array $data)
     {
+        if (isset($data['first_name'])) {
+            $data['first_name'] = ucwords(strtolower($data['first_name']));
+        }
+
+        if (isset($data['last_name'])) {
+            $data['last_name'] = ucwords(strtolower($data['last_name']));
+        }
+
+        if (isset($data['middle_name'])) {
+            $data['middle_name'] = ucwords(strtolower($data['middle_name']));
+        }
         session(['register.basicInformation' => $data]);
     }
     public function storeAddress(array $data)
     {
+        if (isset($data['email'])) {
+            $data['email'] = ucwords(strtolower($data['email']));
+        }
+
         session(['register.address' => $data]);
     }
 
@@ -34,6 +49,9 @@ class EmployeeRegistrationService
     }
     public function storeDesignation(array $data)
     {
+        if (isset($data['job_position'])) {
+            $data['job_position'] = ucwords(strtolower($data['job_position']));
+        }
         session(['register.designation' => $data]);
     }
         public function storeCredentials(array $data){
@@ -52,7 +70,7 @@ class EmployeeRegistrationService
 
             $data = array_merge($basicInformation, $address, $designation, $credentials);
 
-            $data['profile_photo'] = 'default_profile.png';
+            $data['profile_photo'] = 'profile-photos/default_profile.jpg';
 
             $data['password'] = Hash::make($data['password'] ?? 'DefaultPassword123!');
 

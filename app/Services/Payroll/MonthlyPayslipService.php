@@ -22,7 +22,7 @@ class MonthlyPayslipService
     public function generateMonthlyPayslip($employeeId, $year, $month, $period = 'monthly')
     {
         $employee = Employee::with(['currentRate', 'company'])->find($employeeId);
-        
+
         if (!$employee) {
             throw new \Exception("Employee not found");
         }
@@ -30,7 +30,7 @@ class MonthlyPayslipService
         // Determine date range based on period
         $startDate = Carbon::create($year, $month, 1);
         $endDate = Carbon::create($year, $month, 1)->endOfMonth();
-        
+
         if ($period === '1-15') {
             $startDate = Carbon::create($year, $month, 1);
             $endDate = Carbon::create($year, $month, 15);
@@ -66,8 +66,8 @@ class MonthlyPayslipService
         // Calculate government contributions based on monthly rate
         // Only apply deductions on 16-30 period or full monthly
         $applyDeductions = ($period === '16-30' || $period === 'monthly');
-        
-        $contributions = $applyDeductions 
+
+        $contributions = $applyDeductions
             ? $this->contributionService->computeAll($monthlyRate)
             : ['sss' => ['employee' => 0], 'philhealth' => ['employee' => 0], 'pagibig' => ['employee' => 0], 'total_employee' => 0];
 
@@ -96,8 +96,8 @@ class MonthlyPayslipService
                 'year' => $year,
                 'month' => $month,
                 'month_name' => Carbon::create($year, $month, 1)->format('F'),
-                'start_date' => $startDate->format('F d, Y'),
-                'end_date' => $endDate->format('F d, Y'),
+                'start_date' => $startDate->format('Y-m-d'), // change here
+                'end_date'   => $endDate->format('Y-m-d'),   // change here
                 'period_type' => $period,
                 'period_label' => $this->getPeriodLabel($period, $year, $month),
             ],
@@ -139,7 +139,7 @@ class MonthlyPayslipService
     private function getPeriodLabel($period, $year, $month)
     {
         $monthName = Carbon::create($year, $month, 1)->format('F Y');
-        
+
         switch ($period) {
             case '1-15':
                 return "$monthName (1st-15th)";
@@ -150,4 +150,5 @@ class MonthlyPayslipService
                 return $monthName;
         }
     }
+
 }

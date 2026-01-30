@@ -8,9 +8,35 @@ use App\Models\Employee;
 use Auth;
 use Illuminate\Http\Request;
 use App\Models\Admin;
+use Illuminate\Support\Facades\Hash;
 
 class SettingsController extends Controller
 {
+
+    public function showChangePassword() {
+
+        return view('employee_web.changePassword');
+    }
+
+    public function changePassword(Request $request) {
+        $request->validate([
+            'password' => 'required|string|min:8',
+            'new_password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $employee = auth()->guard('employee_web')->user();
+
+        $employee = Employee::find($employee->employee_id);
+
+        if (!\Hash::check($request->password, $employee->password)) {
+            return back()->withErrors(['password' => 'Current password is incorrect.'])->withInput();
+        }
+
+        $employee->password = Hash::make($request->new_password);
+        $employee->save();
+
+        return redirect()->route('employee_web.settings')->with(['success' => 'Password reset successfully.']);
+    }
     public function updateEmployeeProfile(Request $request) {
         $employee = Auth::guard('employee_web')->user();
 

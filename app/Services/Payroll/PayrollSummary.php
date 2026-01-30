@@ -12,7 +12,7 @@ class PayrollSummary
         $employee = DailyPayrollLog::withoutGlobalScope(\App\Models\Scopes\AdminScope::class)
             ->where('employee_id', $id)
             ->orderBy('payroll_date', 'desc')
-            ->get();
+            ->paginate(10);
 
         if(!$employee || $employee->isEmpty()) {
             return collect(); // Return empty collection instead of string
@@ -23,7 +23,7 @@ class PayrollSummary
     public function showSemi($id) {
         $employee = Payroll::where('employee_id', $id)
             ->orderBy('created_at', 'asc')
-            ->get();
+            ->paginate(5);
 
         if(!$employee) {
             return 'Employee doesn\'t have a payroll log';
