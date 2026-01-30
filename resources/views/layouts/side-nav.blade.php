@@ -6,7 +6,8 @@
         <div class="logo-wrapper">
             <x-logo-minimized />
         </div>
-        <span class="brand-name">AutoPayroll</span>
+        <span class="brand-name">Auto<span style="color:#FFD858;">Payroll</span>
+        </span>
     </div>
 
     {{-- NAVIGATION --}}
