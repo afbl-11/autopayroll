@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Announcement;
+use App\Models\AnnouncementType;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
@@ -21,7 +22,7 @@ class AnnouncementService
     {
         $admin = Auth::guard('admin')->user();
         $fullName = $admin->first_name . ' ' . $admin->last_name;
-
+//        dd($data);
         $attachments = null;
 
         if (!empty($data['attachment']) && $data['attachment'] instanceof \Illuminate\Http\UploadedFile) {
@@ -31,13 +32,14 @@ class AnnouncementService
             // Save as JSON array (so multiple attachments can be supported later)
             $attachments = json_encode([$path]);
         }
+        $type = AnnouncementType::where('announcement_type_id', $data['type'])->first();
 
         return Announcement::create([
             'announcement_id' => \Illuminate\Support\Str::uuid(),
-            'announcement_type_id' => $data['announcement_type_id'] ?? \Illuminate\Support\Str::uuid(),
+            'announcement_type_id' => $data['type'],
             'admin_id' => \Illuminate\Support\Facades\Auth::guard('admin')->id(),
             'subject' => $data['subject'],
-            'type' => $data['type'],
+            'type' => $type->name,
             'title' => $data['title'],
             'message' => $data['message'],
             'attachments' => $attachments,
