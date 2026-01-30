@@ -49,7 +49,7 @@
                                             {{$post->subject}}</p>
                                         <p class="mb-0 text-secondary">{{$post->message}}.</p>
                                     </div>
-                                    <span class="small text-muted text-end flex-shrink-0">
+                                    <span class="small text-muted text-end flex-shrink-0 created_date">
                                             {{ $post->created_at->format('F d, Y') }}
                                     </span>
                                 </div>

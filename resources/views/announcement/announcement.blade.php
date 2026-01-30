@@ -45,7 +45,7 @@
                                         {{$post->subject}}</p>
                                     <p class="mb-0 text-secondary">{{$post->message}}.</p>
                                 </div>
-                                    <span class="small text-muted text-end flex-shrink-0">
+                                    <span class="small text-muted text-end flex-shrink-0 created_date">
                                             {{ $post->created_at->format('F d, Y') }}
                                     </span>
                             </div>
@@ -171,12 +171,6 @@ a {
 .icon-memo { color: var(--clr-yellow); }
 .icon-holiday { color: #e74c3c; }
 
-@media (max-width: 992px) {
-    .main-content {
-        padding: 2rem;
-    }
-}
-
 @media (max-width: 800px) {
     .main-content {
         margin-left: 50px;
@@ -197,16 +191,15 @@ a {
         font-size: 1rem;
     }
 
-    span {
-        margin-top: 10px;
-        align-self: flex-end;
+    .created_date {
+       margin-top: 10px;
+       align-self: flex-end;
     }
 }
 @media (max-width: 600px) {
     .main-content {
         margin-left: 75px;
         width: 80%;
-        padding: 1.5rem;
     }
 }
 

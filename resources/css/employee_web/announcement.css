@@ -37,13 +37,14 @@
         margin-bottom: 8px;
     }
 
-    span {
-        margin-top: 10px;
-        align-self: flex-end;
+    .created_date {
+       margin-top: 10px;
+       align-self: flex-end;
     }
 }
 @media (max-width: 600px) {
-    .main-content {
+    .main-content,
+    .main-content.main-content-expanded {
         width: 75% !important;
     }
     .mb-2 {
@@ -51,7 +52,8 @@
     }
 }
 @media (max-width: 480px) {
-    .main-content {
+    .main-content,
+    .main-content.main-content-expanded {
         width: 72% !important;
     }
     .mb-2 {
@@ -62,7 +64,8 @@
     }
 }
 @media (max-width: 400px) {
-    .main-content {
+    .main-content,
+    .main-content.main-content-expanded {
         padding: 1rem;
         width: 67% !important;
     }
