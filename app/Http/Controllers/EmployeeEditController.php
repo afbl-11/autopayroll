@@ -259,17 +259,8 @@ class EmployeeEditController extends Controller
             $validated['uploaded_documents'] = json_encode($uploadedFiles);
         }
 
-        if (isset($validated['job_position'])) {
-            $newJob = ucwords(strtolower(trim($validated['job_position'])));
-            $currentJob = ucwords(strtolower(trim($employee->job_position)));
-
-            if ($newJob === $currentJob) {
-                return redirect()->back()
-                    ->withInput()
-                    ->withErrors(['job_position' => 'The job position is the same as the current one.']);
-            }
-
-            $validated['job_position'] = $newJob;
+        if (!empty($validated['job_position'])) {
+            $validated['job_position'] = ucwords(strtolower(trim($validated['job_position'])));
         }
 
         $employee->update(array_filter($validated, fn ($v) => !is_null($v)));
