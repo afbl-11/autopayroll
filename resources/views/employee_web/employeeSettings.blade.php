@@ -40,7 +40,7 @@
                                 <img
                                     src="{{ auth('employee_web')->user()->profile_photo
                                     ? asset('storage/' . auth('employee_web')->user()->profile_photo)
-                                    : asset('assets/no_profile_picture.jpg') }}"
+                                    : asset('assets/default_profile.jpg') }}"
                                     alt="Profile Picture"
                                     class="avatar-preview"
                                     id="avatarPreview"
@@ -98,16 +98,6 @@
                                         @endforeach
                                     </select>
                                 </div>
-
-{{--                                <div class="form-group">--}}
-{{--                                    <label>Company Name</label>--}}
-{{--                                    <input type="text"--}}
-{{--                                           name="company_name"--}}
-{{--                                           value="{{ old('company_name', auth('employee_web')->user()->company_name ?? '') }}">--}}
-{{--                                    @error('company_name')--}}
-{{--                                    <p class="error-message">{{ $message }}</p>--}}
-{{--                                    @enderror--}}
-{{--                                </div>--}}
                             </div>
 
                             <button type="submit" class="btn-save">
@@ -117,17 +107,11 @@
                     </div>
 
                     <div class="links">
-                        <a href="{{ route('change.password.view') }}">
+                        <a href="{{ route('employee_web.settings.changePassword') }}">
                             <div class="settings-row">
                                 <p>Change Password</p>
                             </div>
                         </a>
-
-{{--                        <a href="{{ route('change.location.view') }}">--}}
-{{--                            <div class="settings-row">--}}
-{{--                                <p>Change Location</p>--}}
-{{--                            </div>--}}
-{{--                        </a>--}}
                     </div>
 
                     <div class="delete-btn">

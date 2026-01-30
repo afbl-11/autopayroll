@@ -61,7 +61,7 @@
                         :username="$employee->username ?? ''"
                         :image="$employee->profile_photo
                         ? 'storage/' . $employee->profile_photo
-                        : 'assets/no_profile_picture.jpg'"
+                        : 'assets/default_profile.jpg'"
                         :date="$employee->contract_start ?? ''"
                         :phone="$employee->phone_number ?? ''"
                         :type="$employee->employment_type ?? ''"
