@@ -19,46 +19,46 @@
                 <div class="card-body p-4">
                     <form action="{{ route('web.employee.payroll') }}" method="GET" class="row g-3 align-items-end">
 
-                    <div class="col-md-3">
-                        <label class="form-label text-muted small text-uppercase fw-bold ls-1">From Date</label>
-                        <div class="input-group">
+                        <div class="col-md-3">
+                            <label class="form-label text-muted small text-uppercase fw-bold ls-1">From Date</label>
+                            <div class="input-group">
                             <span class="input-group-text bg-light border-end-0 text-muted">
                                 <i class="bi bi-calendar3"></i>
                             </span>
-                            <input type="date" class="form-control border-start-0 ps-0" name="date_from" value="{{ request('date_from') }}">
+                                <input type="date" class="form-control border-start-0 ps-0" name="date_from" value="{{ request('date_from') }}">
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-3">
-                        <label class="form-label text-muted small text-uppercase fw-bold ls-1">To Date</label>
-                        <div class="input-group">
+                        <div class="col-md-3">
+                            <label class="form-label text-muted small text-uppercase fw-bold ls-1">To Date</label>
+                            <div class="input-group">
                             <span class="input-group-text bg-light border-end-0 text-muted">
                                 <i class="bi bi-calendar3"></i>
                             </span>
-                            <input type="date" class="form-control border-start-0 ps-0" name="date_to" value="{{ request('date_to') }}">
+                                <input type="date" class="form-control border-start-0 ps-0" name="date_to" value="{{ request('date_to') }}">
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-3">
-                        <label class="form-label text-muted small text-uppercase fw-bold ls-1">Status</label>
-                        <select class="form-select" name="status">
-                            <option value="all">All Statuses</option>
-                            <option value="released">Released</option>
-                            <option value="pending">Pending</option>
-                            <option value="held">On Hold</option>
-                        </select>
-                    </div>
+                        <div class="col-md-3">
+                            <label class="form-label text-muted small text-uppercase fw-bold ls-1">Status</label>
+                            <select class="form-select" name="status">
+                                <option value="all">All Statuses</option>
+                                <option value="released">Released</option>
+                                <option value="pending">Pending</option>
+                                <option value="held">On Hold</option>
+                            </select>
+                        </div>
 
-                    <div class="col-md-3 d-flex gap-2">
-                        <button type="submit" class="btn btn-light border btn-icon-square" title="Filter">
-                            <i class="bi bi-funnel"></i>
-                        </button>
+                        <div class="col-md-3 d-flex gap-2">
+                            <button type="submit" class="btn btn-light border btn-icon-square" title="Filter">
+                                <i class="bi bi-funnel"></i>
+                            </button>
 
-                        <a href="{{ route('web.employee.payroll') }}" class="btn btn-light border btn-icon-square" title="Reset">
-                            <i class="bi bi-arrow-counterclockwise"></i>
-                        </a>
-                    </div>
-                </form>
+                            <a href="{{ route('web.employee.payroll') }}" class="btn btn-light border btn-icon-square" title="Reset">
+                                <i class="bi bi-arrow-counterclockwise"></i>
+                            </a>
+                        </div>
+                    </form>
                 </div>
             </div>
 
@@ -67,14 +67,14 @@
                     <div class="table-responsive">
                         <table class="table table-hover align-middle mb-0">
                             <thead class="bg-light border-bottom">
-                                <tr>
-                                    <th class="ps-4 py-3 text-secondary text-uppercase small ls-1 border-0" width="15%">Reference ID</th>
-                                    <th class="py-3 text-secondary text-uppercase small ls-1 border-0" width="20%">Pay Period</th>
-                                    <th class="py-3 text-secondary text-uppercase small ls-1 border-0" width="15%">Pay Date</th>
-                                    <th class="py-3 text-secondary text-uppercase small ls-1 border-0" width="15%">Net Pay</th>
-                                    <th class="py-3 text-secondary text-uppercase small ls-1 border-0 text-center" width="15%">Status</th>
-                                    <th class="pe-4 py-3 text-secondary text-uppercase small ls-1 border-0 text-end" width="15%">Actions</th>
-                                </tr>
+                            <tr>
+                                <th class="ps-4 py-3 text-secondary text-uppercase small ls-1 border-0" width="15%">Reference ID</th>
+                                <th class="py-3 text-secondary text-uppercase small ls-1 border-0" width="20%">Pay Period</th>
+                                <th class="py-3 text-secondary text-uppercase small ls-1 border-0" width="15%">Pay Date</th>
+                                <th class="py-3 text-secondary text-uppercase small ls-1 border-0" width="15%">Net Pay</th>
+                                <th class="py-3 text-secondary text-uppercase small ls-1 border-0 text-center" width="15%">Status</th>
+                                <th class="pe-4 py-3 text-secondary text-uppercase small ls-1 border-0 text-end" width="15%">Actions</th>
+                            </tr>
                             </thead>
                             <tbody>
                             @forelse($payslips as $payslip)
@@ -117,9 +117,12 @@
                         </table>
                     </div>
                 </div>
-                
-                <div class="card-footer bg-white border-0 py-3 d-flex flex-wrap gap-3 justify-content-between align-items-center">
-                    <small class="text-muted">Showing 1 to 10 of 24 entries</small>
+
+                <div class="card-footer bg-white border-0 py-3 d-flex justify-content-between align-items-center">
+                    <small class="text-muted">
+                        Showing {{ $payslips->firstItem() }} to {{ $payslips->lastItem() }} of {{ $payslips->total() }} entries
+                    </small>
+
                     <nav>
                         <ul class="pagination pagination-sm mb-0">
                             {{-- Previous Page --}}
@@ -155,7 +158,7 @@
 
 
 <script>
-        document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener("DOMContentLoaded", () => {
 
         const button = document.getElementById("downloadPDF");
 
@@ -163,53 +166,51 @@
 
         button.addEventListener("click", async () => {
 
-        const payrollTable = document.querySelector(".custom-table");
-        if (!payrollTable) {
-        alert("Payroll table not found.");
-        return;
-    }
+            const payrollTable = document.querySelector(".custom-table");
+            if (!payrollTable) {
+                alert("Payroll table not found.");
+                return;
+            }
 
-        const { jsPDF } = window.jspdf;
+            const { jsPDF } = window.jspdf;
 
-        // Capture HTML as image
-        const canvas = await html2canvas(payrollTable, { scale: 2 });
-        const imgData = canvas.toDataURL("image/png");
+            // Capture HTML as image
+            const canvas = await html2canvas(payrollTable, { scale: 2 });
+            const imgData = canvas.toDataURL("image/png");
 
-        // Create PDF
-        const pdf = new jsPDF("p", "mm", "a4");
-        const pageWidth = pdf.internal.pageSize.getWidth();
-        const pageHeight = pdf.internal.pageSize.getHeight();
+            // Create PDF
+            const pdf = new jsPDF("p", "mm", "a4");
+            const pageWidth = pdf.internal.pageSize.getWidth();
+            const pageHeight = pdf.internal.pageSize.getHeight();
 
-        const imgWidth = pageWidth;
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+            const imgWidth = pageWidth;
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-        let heightLeft = imgHeight;
-        let position = 0;
+            let heightLeft = imgHeight;
+            let position = 0;
 
-        // Add first page
-        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
+            // Add first page
+            pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
 
-        // Add additional pages if needed
-        while (heightLeft > 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-    }
+            // Add additional pages if needed
+            while (heightLeft > 0) {
+                position = heightLeft - imgHeight;
+                pdf.addPage();
+                pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+            }
 
-        pdf.save("Payroll.pdf");
+            pdf.save("Payroll.pdf");
+        });
     });
-    });
 
-        function navigateToPayslip(period, year, month) {
-            // We use the ID as a parameter in the route helper
-            const baseUrl = "{{ route('employee_web.dashboard.payslip', ['id' => $employee->employee_id]) }}";
+    function navigateToPayslip(period, year, month) {
+        const baseUrl = "{{ route('employee_web.dashboard.payslip', ['id' => $employee->employee_id]) }}";
 
-            // Now we just append the query parameters
-            const url = `${baseUrl}?period=${encodeURIComponent(period)}&year=${year}&month=${month}`;
+        const url = `${baseUrl}?period=${encodeURIComponent(period)}&year=${year}&month=${month}`;
 
-            window.location.href = url;
-        }
+        window.location.href = url;
+    }
 
 </script>
