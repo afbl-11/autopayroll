@@ -10,7 +10,6 @@
 
         <div class="user-profile">
             <x-image-link
-                :image="$adminUser->profile_photo"
                 :source="route('admin.settings')"
             >
                 <h6>

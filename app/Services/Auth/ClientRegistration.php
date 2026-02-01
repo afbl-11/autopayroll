@@ -15,6 +15,20 @@ class ClientRegistration
     {}
 
     public function storeBasicInfo(array $data) {
+
+        if (isset($data['first_name'])) {
+            $data['first_name'] = ucwords(strtolower($data['first_name']));
+        }
+
+        if (isset($data['last_name'])) {
+            $data['last_name'] = ucwords(strtolower($data['last_name']));
+        }
+
+        if (isset($data['company_name'])) {
+            $data['company_name'] = ucwords(strtolower($data['company_name']));
+        }
+
+
         session(['client_basic_info' => $data]);
 
     }

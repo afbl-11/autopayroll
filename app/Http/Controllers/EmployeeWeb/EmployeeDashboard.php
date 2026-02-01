@@ -48,12 +48,12 @@ class EmployeeDashboard extends Controller
             return null;
         }
 
-        if (!$log->clock_in_time || !$log->clock_out_time) {
+        if (!$log->time_in || !$log->time_out) {
             return null;
         }
 
-        $timeIn  = Carbon::parse($log->clock_in_time);
-        $timeOut = Carbon::parse($log->clock_out_time);
+        $timeIn  = Carbon::parse($log->time_in);
+        $timeOut = Carbon::parse($log->time_out);
 
         $hoursWorked = round($timeIn->floatDiffInHours($timeOut), 1);
 

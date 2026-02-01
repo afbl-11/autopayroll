@@ -6,7 +6,9 @@
             :name="$employee->first_name . ' ' . $employee->last_name"
             :id="$employee->employee_id"
             :username="$employee->username"
-            :image="'assets/default_profile.jpg'"
+            :image="$employee->profile_photo
+                    ? 'storage/' . $employee->profile_photo
+                    : 'assets/default_profile.jpg'"
             :date="$employee->contract_start"
             :phone="$employee->phone_number"
             :type="$employee->employment_type"

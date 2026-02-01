@@ -1,5 +1,8 @@
 @vite(['resources/css/employee_web/dashboard.css', 'resources/css/theme.css', 'resources/css/includes/sidebar.css'])
 
+
+
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
@@ -90,13 +93,17 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td class="fw-bold ps-3">PHP {{$payslips->net_pay}}</td>
-                                            <td>{{ \Carbon\Carbon::parse($payslips->pay_date)->format('M d, Y') }}
-                                            </td>
-                                            <td><span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3">{{$payslips->status}}</span></td>
-{{--                                            <td class="text-end pe-3">--}}
-{{--                                                <button class="button-ghost btn-sm">View</button>--}}
-{{--                                            </td>--}}
+                                            @if($payslips)
+                                                <td class="fw-bold ps-3">PHP {{$payslips->net_pay}}</td>
+                                                <td>{{ \Carbon\Carbon::parse($payslips->pay_date)->format('M d, Y') }}
+                                                </td>
+                                                <td><span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3">{{$payslips->status}}</span></td>
+
+                                                @else
+                                                <td colspan="3"> <!-- span all columns -->
+                                                    <p>No Payslip Record</p>
+                                                </td>
+                                            @endif
                                         </tr>
                                     </tbody>
                                 </table>
@@ -150,20 +157,60 @@
                                             </td>
 
                                             <td>
-                                                {{ $log->time_in ? \Carbon\Carbon::parse($log->time_in)->format('h:i A') : '-' }}
+                                                {{ $log->time_in ? \Carbon\Carbon::parse($log->time_in)->format('h:i A') : 'N/A' }}
                                             </td>
 
                                             <td>
-                                                {{ $log->time_out ? \Carbon\Carbon::parse($log->time_out)->format('h:i A') : '-' }}
+                                                {{ $log->time_out ? \Carbon\Carbon::parse($log->time_out)->format('h:i A') : 'N/A' }}
                                             </td>
-
+                                            @if($log->time_in && $log->time_out)
                                             <td>
                                                 {{ \Carbon\Carbon::parse($log->time_in)->diffInHours(\Carbon\Carbon::parse($log->time_out)) ?? '-' }}
                                             </td>
+                                            @else
+                                                <td>
+                                                    N/A
+                                                </td>
+                                            @endif
 
                                             <td class="text-end pe-3">
+
+                                                @php
+                                                    $statusLabel = 'N/A';
+
+                                                    switch($log->status) {
+                                                        case 'A':
+                                                            $statusLabel = 'Absent';
+                                                            break;
+                                                        case 'P':
+                                                            $statusLabel  = 'Present';
+                                                            break;
+                                                        case 'LT':
+                                                            $statusLabel = 'Late/Under time';
+                                                            break;
+                                                        case 'DO':
+                                                            $statusLabel = 'Day Off';
+                                                            break;
+                                                        case 'O':
+                                                            $statusLabel = 'Overtime';
+                                                            break;
+                                                        case 'RH':
+                                                            $statusLabel = 'Regular Holiday';
+                                                            break;
+                                                        case 'SH':
+                                                            $statusLabel = 'Special Holiday';
+                                                            break;
+                                                        case 'CD':
+                                                            $statusLabel = 'Change Day Off';
+                                                            break;
+                                                        case 'CDO':
+                                                            $statusLabel = 'Cancel Day Off';
+                                                            break;
+                                                    }
+
+                                                    @endphp
                                             <span class="badge bg-theme-yellow rounded-pill">
-                                                {{ $log->status ?? 'Present' }}
+                                                {{ $statusLabel ?? 'Present' }}
                                             </span>
                                             </td>
                                         </tr>

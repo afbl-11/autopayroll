@@ -89,3 +89,12 @@
         });
     });
 </script>
+<style>
+
+    .announcement-card {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+    }
+</style>

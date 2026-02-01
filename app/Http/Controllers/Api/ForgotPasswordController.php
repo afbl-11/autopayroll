@@ -76,6 +76,30 @@ class ForgotPasswordController extends Controller
             'success' => true,
             'message' => 'OTP Verified',
         ], 200);
+    }
 
+    public function changePassword(Request $request) {
+
+        $request->validate([
+            'email' => 'required|email|exists:employees,email',
+            'password' => 'required|min:8|confirmed',
+        ]);
+
+        $employee = Employee::where('email', $request->email)->first();
+
+        if (!$employee) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Employee not found',
+            ], 404);
+        }
+
+        $employee->password = Hash::make($request->password);
+        $employee->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Password Changed',
+        ], 200);
     }
 }

@@ -1,13 +1,17 @@
-@props(['source' => '#', 'alt' => 'Profile Picture'])
+@props(['source' => '#', 'alt' => 'Profile Picture', 'image' => null])
 
 @php
     $adminUser = auth('admin')->user();
 
     if ($adminUser && $adminUser->profile_photo) {
         // Add cache-busting
-        $imgSrc = asset('storage/' . $adminUser->profile_photo) . '?t=' . now()->timestamp;
+        $imgSrc = asset( $adminUser->profile_photo
+                    ? 'storage/' . $adminUser->profile_photo
+                    : 'assets/default_profile.jpg') . '?t=' . now()->timestamp;
     } else {
-        $imgSrc = asset('assets/default_profile.jpg');
+        $imgSrc = asset( $adminUser->profile_photo
+                    ? 'storage/' . $adminUser->profile_photo
+                    : 'assets/default_profile.jpg');
     }
 @endphp
 
