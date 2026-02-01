@@ -1,4 +1,20 @@
 @vite('resources/css/components/attendance-logs.css')
+@php
+    switch ($status) {
+        case 'A':
+            $statusLabel = "Absent";
+            break;
+        case 'DO':
+            $statusLabel = "Regular Holiday";
+            break;
+        case 'SH':
+            $statusLabel = "Special Holiday";
+            break;
+
+            default:
+            $statusLabel = "Unknown";
+    }
+@endphp
 
 <div {{$attributes->class('logs-wrapper')}}>
 
@@ -23,7 +39,7 @@
     <div class="data-wrapper" id="work-hours">
 
         @if(empty($timeline) || is_null($timeline['startPercent']))
-            <h6>No data</h6>
+            <h6>{{$statusLabel}}</h6>
         @else
             <div class="timeline-wrapper">
                 <div class="timeline">
@@ -47,7 +63,7 @@
     <div class="data-wrapper">
         <div class="stats-wrapper">
             <p>Duration</p>
-            <p>{{ $duration ?? 'no data' }}</p>
+            <p>{{ $duration . ' Hours' ?? 'no data' }}</p>
         </div>
     </div>
 

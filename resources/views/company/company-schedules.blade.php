@@ -3,9 +3,9 @@
 @php
     $daysOfWeek = [
            'Mon' => 'Mon',
-           'Tues' => 'Tues',
+           'Tue' => 'Tue',
            'Wed' => 'Wed',
-           'Thurs' => 'Thurs',
+           'Thu' => 'Thu',
            'Fri' => 'Fri',
            'Sat' => 'Sat',
            'Sun' => 'Sun']

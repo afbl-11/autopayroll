@@ -12,11 +12,11 @@ class PayrollSummary
         $employee = DailyPayrollLog::withoutGlobalScope(\App\Models\Scopes\AdminScope::class)
             ->where('employee_id', $id)
             ->orderBy('payroll_date', 'desc')
-            ->paginate(10);
+            ->paginate(5);
 
-        if(!$employee || $employee->isEmpty()) {
-            return collect(); // Return empty collection instead of string
-        }
+//        if(!$employee || $employee->isEmpty()) {
+//            return collect(); // Return empty collection instead of string
+//        }
         return $employee;
     }
 
@@ -25,9 +25,9 @@ class PayrollSummary
             ->orderBy('created_at', 'asc')
             ->paginate(5);
 
-        if(!$employee) {
-            return 'Employee doesn\'t have a payroll log';
-        }
+//        if(!$employee) {
+//            return 'Employee doesn\'t have a payroll log';
+//        }
         return $employee;
     }
 }

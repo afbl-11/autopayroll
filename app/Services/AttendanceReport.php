@@ -25,33 +25,42 @@ class AttendanceReport
         $totalNoClockOut = $this->attendanceService->totalNoClockOut($id);
         $noClock = $this->attendanceService->noClockOut($id);
         $countLate = $this->attendanceService->countLate($id);
-        [$logs, $late] = $this->attendanceService->getAttendance($id);
+        [$paginator, $late] = $this->attendanceService->getAttendance($id);
 
         $sched = Employee::with(['employeeSchedule' => function ($query) {
             $query->whereNull('end_date');
         }])->find($id);
 
         $firstSchedule = $sched->employeeSchedule->first();
+        $start_time = $firstSchedule?->start_time;
+        $end_time = $firstSchedule?->end_time;
 
-        if ($firstSchedule) {
-            $start_time = $firstSchedule->start_time;
-            $end_time = $firstSchedule->end_time;
-        } else {
-            $start_time = null;
-            $end_time = null;
-        }
-        $log = AttendanceLogs::where('employee_id',$id)->first();
+        $logs = $paginator->through(function($logItem) use ($start_time, $end_time) {
+            // Generate timeline (you already have this)
+            $timeline = $this->generateTimeline(
+                $start_time,
+                $end_time,
+                $logItem->time_in,
+                $logItem->time_out
+            );
 
-        if($log) {
-            $timeline = $this->generateTimeline($start_time, $end_time,$log->clock_in_time,$log->clock_out_time);
-        } else {
-            $timeline = [
-                'labels' => [],
-                'startPercent' => null,
-                'workedPercent' => null,
-            ];
-        }
-//
+            $logItem->timeline = $timeline;
+
+            // Calculate work hours
+            if ($logItem->time_in && $logItem->time_out) {
+                $timeIn = Carbon::parse($logItem->time_in);
+                $timeOut = Carbon::parse($logItem->time_out);
+
+                $diffInSeconds = $timeIn->diffInSeconds($timeOut);
+                $diffInHours = $diffInSeconds / 3600; // convert seconds to hours
+
+                $logItem->work_hours = abs(round($diffInHours, 2)); // rounded to 2 decimal places
+            } else {
+                $logItem->work_hours = 0;
+            }
+
+            return $logItem;
+        });
 
         return [
             'employee' => $employee,
@@ -64,11 +73,11 @@ class AttendanceReport
             'noClock' => $noClock,
             'countLate' => $countLate,
             'creditDays' => $creditDays,
-            'timeline' => [
-                'startPercent' => $timeline['startPercent'],
-                'workedPercent' => $timeline['workedPercent'],
-                'labels' => $timeline['labels'],
-            ],
+//            'timeline' => [
+//                'startPercent' => $timeline['startPercent'],
+//                'workedPercent' => $timeline['workedPercent'],
+//                'labels' => $timeline['labels'],
+//            ],
             'attendance' =>
                 [
                     'logs' => $logs,

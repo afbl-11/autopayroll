@@ -24,6 +24,8 @@ class AttendanceLogs extends Component
         public $workedPercent = null,
         public $labels = null,
         public $timeline = null,
+        public $status = null,
+        public $statusLabel = null,
 
     )
     {}
