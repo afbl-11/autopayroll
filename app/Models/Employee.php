@@ -161,9 +161,11 @@ class Employee extends Authenticatable
         return $this->hasMany(DailyPayrollLog::class, 'employee_id', 'employee_id');
     }
 
-    public function otp() {
-        $this->hasMany(OtpCodes::class, 'employee_id', 'employee_id');
+    public function otp()
+    {
+        return $this->hasMany(OtpCodes::class, 'employee_id', 'employee_id');
     }
+
 
     public function devices()
     {

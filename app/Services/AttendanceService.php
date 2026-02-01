@@ -3,25 +3,38 @@
 namespace App\Services;
 
 use App\Models\AttendanceLogs;
+use App\Models\Employee;
 use App\Models\EmployeeSchedule;
 use App\Models\PayrollPeriod;
 use App\Traits\PayrollPeriodTrait;
 use App\Traits\ScheduleTrait;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use Illuminate\Support\Str;
 
 class AttendanceService
 {
     use ScheduleTrait;
     use PayrollPeriodTrait;
+
+
+    private $startOfMonth;
+    private $endOfMonth;
+    private $currentDay;
+
+    public function __construct() {
+        $this->startOfMonth = Carbon::now()->startOfMonth()->toDateString();
+        $this->endOfMonth = Carbon::now()->endOfMonth()->toDateString();
+        $this->currentDay = Carbon::now()->toDateString();
+    }
     public function countAttendance($id):int {
         /*
-         * This method counts the total attendances from the start to end of the payroll period.
+         * This method counts the total attendances from the start to end of the month.
          * */
-        [$payroll_start, $payroll_end] = $this->hasPeriod();
-
         return AttendanceLogs::where('employee_id', $id)
-            ->whereBetween('log_date', [$payroll_start, $payroll_end])
+            ->whereDate('log_date', '>=', $this->startOfMonth)
+            ->whereDate('log_date', '<=', $this->currentDay)
+            ->where('status', 'P')
             ->count();
     }
 
@@ -30,38 +43,13 @@ class AttendanceService
          * This method counts total absences from the start to end of the payroll period
          * absences from the previous period will not be counted.
          * */
-        [$payroll_start, $payroll_end] = $this->hasPeriod();
 
-        $schedule = EmployeeSchedule::where('employee_id', $id)
-            ->latest()
-            ->first();
+        $absences = AttendanceLogs::where('employee_id', $id)
+            ->whereBetween('log_date', [$this->startOfMonth, $this->endOfMonth])
+            ->where('status', 'A')
+            ->count();
 
-        if (!$schedule) {
-            return 0;
-        }
-
-
-        $workingDays = is_array($schedule->working_days)
-            ? $schedule->working_days
-            : json_decode($schedule->working_days, 0);
-
-        $expectedWorkingDays = 0;
-//        loops through the days
-        foreach (CarbonPeriod::create($payroll_start, $payroll_end) as $date) {
-            if (in_array($date->format('D'), $workingDays)) {
-                $expectedWorkingDays++;
-            }
-        }
-        $presentDays = AttendanceLogs::where('employee_id', $id)
-            ->whereBetween('log_date', [$payroll_start, $payroll_end])
-            ->selectRaw('COUNT(DISTINCT log_date) as present_days')
-            ->value('present_days') ?? 0;
-
-        if ($presentDays === 0) {
-            return $expectedWorkingDays;
-        }
-
-        return max(0, $expectedWorkingDays - $presentDays);
+        return $absences;
     }
 
     public function computeOvertime($id):int
@@ -213,67 +201,11 @@ class AttendanceService
             ->count();
     }
 
-//    public function getHoursWork(): int {
-//
-//    }
     public function getAttendance($id)  {
-        [$payroll_start, $payroll_end] = $this->hasPeriod();
-        
+
         $logs = AttendanceLogs::where('employee_id', $id)
-            ->whereBetween('log_date', [$payroll_start, $payroll_end])
             ->orderBy('log_date', 'desc')
-            ->get()
-            ->map(function ($log) {
-                // Handle manual attendance
-                if ($log->is_manual) {
-                    $date = Carbon::parse($log->log_date);
-                    $dayOfWeek = $date->format('l');
-                    
-                    // Calculate duration if time_in and time_out exist
-                    $duration = 0;
-                    if ($log->time_in && $log->time_out) {
-                        $timeIn = Carbon::parse($log->time_in);
-                        $timeOut = Carbon::parse($log->time_out);
-                        $minutes = $timeIn->diffInMinutes($timeOut);
-                        $duration = floor($minutes * 100 / 60) / 100;
-                    }
-                    
-                    return [
-                        'date' => $date->toDateString(),
-                        'day' => $dayOfWeek,
-                        'clock_in_time' => $log->time_in ?? 'N/A',
-                        'clock_out_time' => $log->time_out ?? 'N/A',
-                        'duration' => $duration,
-                        'status' => $log->status,
-                    ];
-                }
-                
-                // Handle automated attendance
-                if (!$log->clock_in_time) {
-                    return null; // Skip logs without clock in time
-                }
-
-                // Parse clock in/out as Carbon instances
-                $clockIn = Carbon::parse($log->clock_in_time);
-                $clockOut = $log->clock_out_time ? Carbon::parse($log->clock_out_time) : null;
-
-                // Only date
-                $date = $clockIn->toDateString();
-
-                // Day of the week (Monday, Tuesday, Wednesday…)
-                $dayOfWeek = $clockIn->format('l');
-                $minutes = $clockIn->diffInminutes($clockOut);
-                $hours = floor($minutes * 100 / 60) / 100;
-                return [
-                    'date' => $date,
-                    'day' => $dayOfWeek,
-                    'clock_in_time' => $clockIn->toTimeString(),
-                    'clock_out_time' => $clockOut?->toTimeString(),
-                    'duration' => $hours,
-                    'status' => $log->status,
-                ];
-            })
-            ->filter(); // Remove null values
+            ->paginate(10);
 
         $lateInMinutes = $this->computeLate($id);
 
@@ -287,5 +219,47 @@ class AttendanceService
         $end_time = Carbon::parse($logs->clock_out_time);
 
         return abs($end_time->diffInMinutes($start_time)) / 60;
+    }
+
+    public function markAbsent($id): bool {
+        $schedule = EmployeeSchedule::where('employee_id', $id)
+            ->whereNull('end_date')
+            ->latest('start_date')
+            ->first();
+
+        if (!$schedule) return false;
+
+        $currentDay = Carbon::now()->toDateString();
+
+        $logExists = AttendanceLogs::where('employee_id', $id)
+            ->where('log_date', $currentDay)
+            ->exists();
+
+        if($logExists) return false;
+
+        $employee = Employee::where('employee_id', $id)->first();
+        if (!$employee) return false;
+
+        $end_time = Carbon::parse($currentDay . ' ' . $schedule->end_time);
+
+        if (Carbon::now()->greaterThanOrEqualTo($end_time)) {
+            try {
+                AttendanceLogs::create([
+                    'log_id'      => (string) \Illuminate\Support\Str::uuid(),
+                    'admin_id'    => $employee->admin_id,
+                    'company_id'  => $employee->company_id,
+                    'employee_id' => $id,
+                    'log_date'    => $currentDay,
+                    'status'      => 'A',
+                    'is_adjusted' => 0,
+                    'is_manual'   => 0,
+                ]);
+                return true;
+            } catch (\Exception $e) {
+                \Log::error("Failed to mark employee $id absent: " . $e->getMessage());
+                return false;
+            }
+        }
+        return false;
     }
 }

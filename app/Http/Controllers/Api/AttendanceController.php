@@ -105,7 +105,7 @@ class AttendanceController extends Controller
 
         $today = Carbon::today();
         $existing = AttendanceLogs::where('employee_id', $employee->employee_id)
-            ->whereDate('created_at', $today)
+            ->whereDate('log_date', $today)
             ->first();
 
         if ($existing && $existing->clock_in_time) {
@@ -123,7 +123,7 @@ class AttendanceController extends Controller
         }
 
         $clockIn = Carbon::today()->setHour(8)->setMinute(0)->setSecond(0);
-        $attendance = AttendanceLogs::create([
+        $attendance = AttendanceLogs::updateOrCreate([
             'log_id' => Str::uuid(),
             'admin_id' => $employee->admin_id,
             'employee_id' => $employee->employee_id,
@@ -145,6 +145,8 @@ class AttendanceController extends Controller
      */
     public function clockOut(Request $request)
     {
+
+//        TODO: insert update payslip method in clockout
         /*
          * if attendance scanning comes with options of clockin in and clockin out,
          * then this method should also validate the qr payload. (copy & paste or helper function)
@@ -193,7 +195,7 @@ class AttendanceController extends Controller
         $today = Carbon::today();
 
         $attendance = AttendanceLogs::where('employee_id', $employee->employee_id)
-            ->whereDate('created_at', $today)
+            ->whereDate('log_date', $today)
             ->first();
 
         if (!$attendance) {

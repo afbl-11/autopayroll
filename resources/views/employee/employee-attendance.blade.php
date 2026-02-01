@@ -13,13 +13,14 @@
 
         @forelse ($attendance['logs'] as $log)
             <x-attendance-logs
-                :clockIn="$log['clock_in_time']"
-                :clockOut="$log['clock_out_time']"
-                :dayDate="$log['day']"
+                :clockIn="$log['time_in']"
+                :clockOut="$log['time_out']"
+                :dayDate="$log['log_date']"
                 :dateWeek="$log['date']"
-                :duration="$log['duration']"
+                :duration="$log['work_hours']"
                 :late="$attendance['late']"
-                :timeline="$timeline"
+                :timeline="$log['timeline']"
+                :status="$log['status']"
             />
             @empty
                 <h6>No Log Data</h6>

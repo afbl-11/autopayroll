@@ -126,7 +126,7 @@ class AttendanceController extends Controller
             // For clock-in attendance, use clock_in_time/clock_out_time
             $timeIn = $log->is_manual ? $log->time_in : ($log->clock_in_time ? date('H:i', strtotime($log->clock_in_time)) : null);
             $timeOut = $log->is_manual ? $log->time_out : ($log->clock_out_time ? date('H:i', strtotime($log->clock_out_time)) : null);
-            
+
             $result[$log->employee_id] = [
                 'status'   => $log->status,
                 'time_in'  => $timeIn,
@@ -137,7 +137,10 @@ class AttendanceController extends Controller
 
         return response()->json(['data' => $result]);
     }
-
+/*
+ * method is used for manual attendance,
+ *  saving employee changes in bulk
+ * */
     public function bulkSave(Request $request)
     {
         $request->validate([
@@ -151,15 +154,15 @@ class AttendanceController extends Controller
         try {
             $adminId = auth('admin')->id() ?? auth('admin')->user()?->admin_id ?? 1;
             $payrollService = new AttendancePayrollService();
-            
+
             foreach ($request->records as $employeeId => $data) {
-                
+
                 // Convert time to datetime by combining with the date
                 $clockInTime = null;
                 $clockOutTime = null;
                 $timeIn = null;
                 $timeOut = null;
-                
+
                 if (!empty($data['time_in'])) {
                     // Check if time already has seconds
                     $timeIn = $data['time_in'];
@@ -168,7 +171,7 @@ class AttendanceController extends Controller
                     }
                     $clockInTime = $request->date . ' ' . $timeIn;
                 }
-                
+
                 if (!empty($data['time_out'])) {
                     // Check if time already has seconds
                     $timeOut = $data['time_out'];
@@ -197,7 +200,7 @@ class AttendanceController extends Controller
                             'is_manual'      => 1,
                         ]
                     );
-                
+
                 // Immediately sync this attendance to payroll
                 try {
                     $payrollService->syncAttendanceToPayroll(
@@ -222,7 +225,7 @@ class AttendanceController extends Controller
 
         } catch (\Throwable $e) {
             DB::rollBack();
-            
+
             \Log::error('Bulk save error: ' . $e->getMessage(), [
                 'line' => $e->getLine(),
                 'file' => $e->getFile(),
@@ -311,16 +314,16 @@ class AttendanceController extends Controller
     }
 
     // Manual Input Attendance Methods
-    
+
     public function verifyCompanyCode(Request $request)
     {
         $request->validate([
             'code' => 'required|string'
         ]);
-        
+
         // The code is the company_id itself for simplicity
         $company = Company::where('company_id', $request->code)->first();
-        
+
         if ($company) {
             return response()->json([
                 'success' => true,
@@ -328,26 +331,26 @@ class AttendanceController extends Controller
                 'company_name' => $company->company_name
             ]);
         }
-        
+
         return response()->json([
             'success' => false,
             'message' => 'Invalid company code'
         ], 401);
     }
-    
+
     public function getCompanyEmployees($companyId)
     {
         // Handle part-time employees
         if ($companyId === 'part-time') {
             $date = request('date');
-            
+
             if (!$date) {
                 return response()->json([]);
             }
-            
+
             // Get day of week from date (e.g., "Monday", "Tuesday", etc.)
             $dayOfWeek = \Carbon\Carbon::parse($date)->format('l');
-            
+
             // Get all part-time employees (where employment_type is 'part-time')
             $employees = Employee::where('employment_type', 'part-time')
                 ->with(['employeeSchedule' => function($query) {
@@ -357,12 +360,12 @@ class AttendanceController extends Controller
                 ->filter(function($emp) use ($dayOfWeek) {
                     // Filter by days_available
                     $daysAvailable = $emp->days_available;
-                    
+
                     // Ensure it's an array
                     if (!is_array($daysAvailable)) {
                         $daysAvailable = json_decode($daysAvailable, true) ?? [];
                     }
-                    
+
                     return in_array($dayOfWeek, $daysAvailable);
                 })
                 ->map(function($emp) {
@@ -377,10 +380,10 @@ class AttendanceController extends Controller
                     ];
                 })
                 ->values();
-            
+
             return response()->json($employees);
         }
-        
+
         // Handle regular company employees
         $employees = Employee::where('company_id', $companyId)
             ->with(['employeeSchedule' => function($query) {
@@ -399,14 +402,14 @@ class AttendanceController extends Controller
                     'schedule_end' => $schedule ? substr($schedule->end_time, 0, 5) : null,
                 ];
             });
-        
+
         return response()->json($employees);
     }
-    
+
     public function saveManualAttendance(Request $request)
     {
         DB::beginTransaction();
-        
+
         try {
             $request->validate([
                 'company_id' => 'required|exists:companies,company_id',
@@ -415,7 +418,7 @@ class AttendanceController extends Controller
                 'datetime_out' => 'nullable',
                 'status' => 'nullable|string|in:P,A,LT,O,OT,RH,SH,DO,CD,CDO'
             ]);
-            
+
             // Parse datetime
             $datetimeIn = new \DateTime($request->datetime_in);
             $attendanceDate = $datetimeIn->format('Y-m-d');
@@ -423,20 +426,20 @@ class AttendanceController extends Controller
             $clockInTime = $datetimeIn->format('Y-m-d H:i:s');
             $timeOut = null;
             $clockOutTime = null;
-        
+
             if ($request->datetime_out) {
                 $datetimeOut = new \DateTime($request->datetime_out);
                 $timeOut = $datetimeOut->format('H:i:s');
                 $clockOutTime = $datetimeOut->format('Y-m-d H:i:s');
             }
-        
+
             // Check if attendance already exists
             $exists = AttendanceLogs::withoutGlobalScope(\App\Models\Scopes\AdminScope::class)
                 ->where('company_id', $request->company_id)
                 ->where('employee_id', $request->employee_id)
                 ->where('log_date', $attendanceDate)
                 ->exists();
-            
+
             if ($exists) {
                 DB::rollBack();
                 return response()->json([
@@ -444,7 +447,7 @@ class AttendanceController extends Controller
                     'message' => 'Attendance already recorded for this date'
                 ], 422);
             }
-        
+
             // Use provided status or calculate if not provided
             if ($request->has('status') && $request->status) {
                 $status = $request->status;
@@ -453,34 +456,34 @@ class AttendanceController extends Controller
                 $employee = Employee::with(['employeeSchedule' => function($query) {
                     $query->whereNull('end_date')->orWhere('end_date', '>=', now());
                 }])->find($request->employee_id);
-            
+
                 $schedule = $employee->employeeSchedule->first();
                 $status = 'P'; // Default: Present
-            
+
                 if ($schedule) {
                     $scheduleStart = strtotime($schedule->start_time);
                     $timeInSeconds = strtotime($timeIn);
-                
+
                     // Late if more than 5 minutes after schedule start
                     if ($timeInSeconds > $scheduleStart + 300) {
                         $status = 'LT';
                     }
-                
+
                     // Check undertime if time_out provided
                     if ($timeOut && $schedule->end_time) {
                         $scheduleEnd = strtotime($schedule->end_time);
                         $timeOutSeconds = strtotime($timeOut);
-                    
+
                         if ($timeOutSeconds < $scheduleEnd - 300) {
                             $status = 'LT';
                         }
                     }
                 }
             }
-        
+
             // Create attendance log
             $adminId = auth('admin')->id() ?? auth('admin')->user()?->admin_id ?? 1;
-            
+
             AttendanceLogs::withoutGlobalScope(\App\Models\Scopes\AdminScope::class)
                 ->create([
                     'admin_id' => $adminId,
@@ -495,7 +498,7 @@ class AttendanceController extends Controller
                     'is_manual' => true,
                     'is_adjusted' => 1
                 ]);
-            
+
             // Automatically sync to payroll
             try {
                 $payrollService = new AttendancePayrollService();
@@ -512,14 +515,14 @@ class AttendanceController extends Controller
                 ]);
                 // Continue even if payroll sync fails
             }
-            
+
             DB::commit();
-            
+
             return response()->json([
                 'success' => true,
                 'message' => 'Attendance and payroll recorded successfully'
             ]);
-        
+
         } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json([
                 'success' => false,

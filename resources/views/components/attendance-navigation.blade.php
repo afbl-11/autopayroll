@@ -10,7 +10,7 @@
     </div>
     <div class="summary-content">
         <div class="content-cards">
-            <p>Days active</p>
+            <p>Days Present</p>
             <strong>{{$daysActive}}</strong>
         </div>
         <div class="content-cards">
@@ -18,15 +18,15 @@
             <strong>{{$totalAbsences}}</strong>
         </div>
         <div class="content-cards">
-            <p>Total overtime</p>
+            <p>Total Overtime</p>
             <strong>{{$totalOvertime}}</strong>
         </div>
         <div class="content-cards">
-            <p>No clock-out</p>
+            <p>No Clock-out</p>
             <strong>{{$noClockOut}}</strong>
         </div>
         <div class="content-cards">
-            <p>Leave balance</p>
+            <p>Leave Balance</p>
             <strong>{{$leaveBalance}}</strong>
         </div>
         <div class="content-cards">
