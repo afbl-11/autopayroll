@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Mail\AnnouncementMail;
+use App\Models\Announcement;
 use App\Models\Company;
 use App\Models\Employee;
 use App\Models\Scopes\AdminScope;
@@ -10,6 +12,7 @@ use App\Repositories\EmployeeRepository;
 use App\Services\DashboardService;
 use App\Services\LeaveRequestService;
 use Illuminate\Support\Facades\Auth;
+use Mail;
 
 class DashboardController extends Controller
 {

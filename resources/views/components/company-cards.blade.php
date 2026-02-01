@@ -3,7 +3,7 @@
 @php
     $logoPath = !empty($logo) && file_exists(public_path('storage/' . $logo))
         ? asset('storage/' . $logo)
-        : asset('assets/company-pic.jpg');
+        : asset('assets/default_establishment_picture.png');
 @endphp
 
 <a href="{{ route('company.dashboard.detail', ['id'=> $id]) }}" class="company-row-link">

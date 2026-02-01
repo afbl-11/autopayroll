@@ -19,7 +19,9 @@ class AnnouncementController extends Controller
             ]);
         }
 
-        $announcements = Announcement::where('is_active', true)->get();
+        $announcements = Announcement::where('is_active', true)
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         if($announcements->isEmpty()){
             return response()->json([

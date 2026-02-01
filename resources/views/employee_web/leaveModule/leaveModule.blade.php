@@ -167,7 +167,21 @@
                                             <td>{{$request['leave_type']}}</td>
                                             <td class="text-center"><span class="badge-status status-approved">{{$request['status']}}</span></td>
                                             <td class="pe-4 text-end">
-                                                <button class="btn btn-sm btn-light" title="View Details"><i class="bi bi-eye"></i></button>
+                                                <button
+                                                    class="btn btn-sm btn-light view-leave-btn"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#viewLeaveModal"
+                                                    data-type="{{ $request['leave_type'] }}"
+                                                    data-start="{{ $request['start_date'] }}"
+                                                    data-end="{{ $request['end_date'] }}"
+                                                    data-status="{{ $request['status'] }}"
+                                                    data-reason="{{ $request['reason'] }}"
+                                                    data-submitted="{{ $request['created_at'] }}"
+                                                    data-attachment="{{ $request['supporting_doc'] ? asset('storage/' . $request['supporting_doc']) : '' }}"
+                                                    title="View Details">
+                                                    <i class="bi bi-eye"></i>
+                                                </button>
+
                                             </td>
                                         </tr>
                                         @empty
@@ -293,6 +307,58 @@
             </div>
         </div>
         </main>
+
+    <div class="modal fade" id="viewLeaveModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow-lg" style="border-radius: 20px; overflow: hidden;">
+
+                <!-- Modal Header -->
+                <div class="modal-header bg-warning-subtle text-white p-4" style="border-bottom: none;">
+                    <h5 class="modal-title fw-bold">Leave Details</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body p-4">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <p><strong>Type:</strong> <span id="modalLeaveType" class="text-dark"></span></p>
+                            <p><strong>Period:</strong> <span id="modalLeavePeriod" class="text-dark"></span></p>
+                            <p><strong>Status:</strong>
+                                <span id="modalLeaveStatus" class="badge rounded-pill"></span>
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Submitted:</strong> <span id="modalLeaveSubmitted" class="text-dark"></span></p>
+                            <p><strong>Reason:</strong></p>
+                            <p id="modalLeaveReason" class="text-dark" style="white-space: pre-line;"></p>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <!-- Attachment Preview -->
+                    <div id="modalAttachmentWrapper">
+                        <strong>Attachment:</strong>
+                        <div id="modalLeaveAttachment" class="mt-2 d-flex justify-content-center align-items-center" style="min-height: 200px; border: 1px dashed #ced4da; border-radius: 10px; padding: 10px; overflow: hidden;">
+                            <span class="text-muted">No attachment</span>
+                        </div>
+                        <div id="modalAttachmentActions" class="mt-2 text-center" style="display: none;">
+                            <a id="modalAttachmentDownload" href="#" class="btn btn-outline-primary" download>Download File</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer border-0 p-4">
+                    <button type="button" class="btn btn-secondary fw-bold" data-bs-dismiss="modal" style="border-radius: 25px; padding: 8px 30px;">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 </x-root>
 
 <script>
@@ -386,6 +452,78 @@
             successAlert.remove();
         }, 3500);
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const leaveButtons = document.querySelectorAll('.view-leave-btn');
+
+        leaveButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const type = this.dataset.type;
+                const start = this.dataset.start;
+                const end = this.dataset.end;
+                const status = this.dataset.status;
+                const reason = this.dataset.reason;
+                const submitted = this.dataset.submitted;
+                const attachment = this.dataset.attachment; // URL or null
+
+                document.getElementById('modalLeaveType').innerText = type;
+                document.getElementById('modalLeavePeriod').innerText =
+                    new Date(start).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) +
+                    ' - ' +
+                    new Date(end).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                document.getElementById('modalLeaveSubmitted').innerText =
+                    new Date(submitted).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                document.getElementById('modalLeaveReason').innerText = reason;
+
+                // Status badge
+                const statusBadge = document.getElementById('modalLeaveStatus');
+                statusBadge.innerText = status;
+                statusBadge.className = 'badge rounded-pill ' +
+                    (status === 'approved' ? 'bg-success' : (status === 'pending' ? 'bg-warning text-dark' : 'bg-danger'));
+
+                // Attachment handling
+                const wrapper = document.getElementById('modalLeaveAttachment');
+                const actions = document.getElementById('modalAttachmentActions');
+                const downloadLink = document.getElementById('modalAttachmentDownload');
+
+                wrapper.innerHTML = '';
+                actions.style.display = 'none';
+
+                if (attachment) {
+                    const ext = attachment.split('.').pop().toLowerCase();
+                    if (['png','jpg','jpeg','gif'].includes(ext)) {
+                        const img = document.createElement('img');
+                        img.src = attachment;
+                        img.style.maxWidth = '100%';
+                        img.style.maxHeight = '300px';
+                        img.style.borderRadius = '10px';
+                        wrapper.appendChild(img);
+                        actions.style.display = 'block';
+                        downloadLink.href = attachment;
+                    } else if (ext === 'pdf') {
+                        const embed = document.createElement('embed');
+                        embed.src = attachment;
+                        embed.type = 'application/pdf';
+                        embed.style.width = '100%';
+                        embed.style.height = '300px';
+                        wrapper.appendChild(embed);
+                        actions.style.display = 'block';
+                        downloadLink.href = attachment;
+                    } else {
+                        // Other files: just a download button
+                        wrapper.innerHTML = '<span class="text-muted">File available for download</span>';
+                        actions.style.display = 'block';
+                        downloadLink.href = attachment;
+                    }
+                } else {
+                    wrapper.innerHTML = '<span class="text-muted">No attachment</span>';
+                }
+            });
+        });
+    });
+
+
+
 </script>
 
 <style>

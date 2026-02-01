@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Enums\NotificationType;
 use App\Http\Controllers\Controller;
+use App\Mail\LeaveMail;
 use App\Models\Employee;
 use App\Models\LeaveRequest;
 use App\Services\AttendanceReport;
 use App\Services\LeaveRequestService;
 use App\Services\NotificationService;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class LeaveRequestController extends Controller
 {
@@ -53,11 +56,26 @@ class LeaveRequestController extends Controller
             ]
         );
 
+
+        $leave = LeaveRequest::where('leave_request_id', $leaveId)->first();
+        $employee = Employee::where('employee_id', $leave->employee_id)->first();
+
+        Mail::to($employee->email)->send(
+            new LeaveMail($leave)
+        );
         return back()->with('success','Leave Request Approved');
     }
 
     public function rejectLeaveRequest($employeeId, $leaveId) {
         $this->leaveRequestService->rejectRequest($employeeId, $leaveId);
+
+
+        $leave = LeaveRequest::where('leave_request_id', $leaveId)->first();
+        $employee = Employee::where('employee_id', $leave->employee_id)->first();
+
+        Mail::to($employee->email)->send(
+            new LeaveMail($leave)
+        );
 
         $this->notificationService->notifyEmployees(
             [$employeeId],

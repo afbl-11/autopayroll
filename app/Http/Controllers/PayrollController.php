@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 class PayrollController extends Controller
 {
     public function __construct(protected PayrollComputation $payroll){}
-    
+
     public function index() {
 
     }
@@ -51,7 +51,7 @@ class PayrollController extends Controller
                     ->whereYear('payroll_date', $year)
                     ->whereMonth('payroll_date', $month)
                     ->whereDay('payroll_date', '<=', 15)
-                    ->selectRaw('COUNT(*) as days_worked, 
+                    ->selectRaw('COUNT(*) as days_worked,
                                 SUM(gross_salary + overtime + night_differential) as gross_pay')
                     ->first();
 
@@ -61,7 +61,7 @@ class PayrollController extends Controller
                     ->whereYear('payroll_date', $year)
                     ->whereMonth('payroll_date', $month)
                     ->whereDay('payroll_date', '>', 15)
-                    ->selectRaw('COUNT(*) as days_worked, 
+                    ->selectRaw('COUNT(*) as days_worked,
                                 SUM(gross_salary + overtime + night_differential) as gross_pay')
                     ->first();
 
@@ -69,7 +69,7 @@ class PayrollController extends Controller
                 $employee->gross_pay_1to15 = $payrollData1to15->gross_pay ?? 0;
                 $employee->days_worked_16to31 = $payrollData16to31->days_worked ?? 0;
                 $employee->gross_pay_16to31 = $payrollData16to31->gross_pay ?? 0;
-                
+
                 return $employee;
             });
 

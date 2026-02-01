@@ -17,7 +17,10 @@ class PayrollHistory
     ){}
     public function generateAllPayslipsForEmployee(Employee $employee)
     {
-        // Get earliest payroll date
+
+        /*
+         * takes every payroll log of the employee
+         * */
         $firstLog = DailyPayrollLog::where('employee_id', $employee->employee_id)
             ->orderBy('payroll_date')
             ->first();
@@ -25,9 +28,8 @@ class PayrollHistory
         if (!$firstLog) return;
 
         $startMonth = Carbon::parse($firstLog->payroll_date)->startOfMonth();
-        $endMonth   = Carbon::now()->startOfMonth(); // up to current month
+        $endMonth   = Carbon::now()->startOfMonth();
 
-        // Loop through all months
         $periods = [];
         $cursor = $startMonth->copy();
 
@@ -42,28 +44,32 @@ class PayrollHistory
             $cursor->addMonth();
         }
 
+
+        /*
+         * takes the calculated payroll
+         * */
         foreach ($periods as $p) {
             $payrollData = $this->monthlyPayslipService->generateMonthlyPayslip($employee->employee_id, $p['year'], $p['month'], $p['period']);
 
             if (!$payrollData) continue; // skip if no logs
 
-            // Store in payslips table
-            Payslip::firstOrCreate(
+
+            Payslip::updateOrCreate(
                 [
-                    'payslips_id' => Str::uuid(),
                     'employee_id' => $employee->employee_id,
-                    'reference' => $this->generatePayslipReference(),
                     'year'        => $p['year'],
                     'month'       => $p['month'],
                     'period'      => $p['period'],
                 ],
                 [
-                    'period_start' => $payrollData['period']['start_date'],
-                    'period_end'   => $payrollData['period']['end_date'],
-                    'pay_date'     => now(),
-                    'net_pay'      => $payrollData['net_pay'],
-                    'status'       => 'pending',
-                    'breakdown' => json_encode($payrollData),
+                    'payslips_id' => Str::uuid(),
+                    'reference'   => $this->generatePayslipReference(),
+                    'period_start'=> $payrollData['period']['start_date'],
+                    'period_end'  => $payrollData['period']['end_date'],
+                    'pay_date'    => now(),
+                    'net_pay'     => $payrollData['net_pay'],
+                    'status'      => 'pending',
+                    'breakdown'   => json_encode($payrollData),
                 ]
             );
         }
@@ -87,5 +93,9 @@ class PayrollHistory
         }
 
         return sprintf('PAY-%d-%03d', $year, $nextNumber);
+    }
+
+    public function updatePayslip() {
+
     }
 }

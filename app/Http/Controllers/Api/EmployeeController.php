@@ -18,11 +18,16 @@ class EmployeeController extends Controller
 
         $company = Company::find($employee->company_id);
 
+        // FIX: Prepend 'storage/' so it points to the correct symlinked folder
+        $photoUrl = $employee->profile_photo
+            ? asset('storage/' . $employee->profile_photo)
+            : null;
+
         return response()->json([
             'employee_id' => $employee->employee_id,
             'company_id' => $employee->company_id,
             'company' => $company->company_name ?? 'N/A',
-            'profile_photo' => $employee->profile_photo,
+            'profile_photo' => $photoUrl, // <--- UPDATED LINE
             'first_name' => $employee->first_name,
             'middle_name' => $employee->middle_name,
             'last_name' => $employee->last_name,
