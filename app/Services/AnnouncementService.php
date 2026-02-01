@@ -22,14 +22,11 @@ class AnnouncementService
     {
         $admin = Auth::guard('admin')->user();
         $fullName = $admin->first_name . ' ' . $admin->last_name;
-//        dd($data);
         $attachments = null;
 
         if (!empty($data['attachment']) && $data['attachment'] instanceof \Illuminate\Http\UploadedFile) {
-            // Store the file in storage/app/public/announcement_attachments
             $path = $data['attachment']->store('announcement_attachments', 'public');
 
-            // Save as JSON array (so multiple attachments can be supported later)
             $attachments = json_encode([$path]);
         }
         $type = AnnouncementType::where('announcement_type_id', $data['type'])->first();

@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Enums\NotificationType;
 use App\Http\Controllers\Controller;
+use App\Mail\AdjustmentMail;
 use App\Models\CreditAdjustment;
 use App\Models\Employee;
 use App\Services\CreditAdjustmentService;
 use App\Services\NotificationService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class CreditAdjustmentController extends Controller
 {
@@ -35,10 +37,14 @@ class CreditAdjustmentController extends Controller
 
         $this->adjustmentService->rejectRequest($validated);
 
-        $employeeId = CreditAdjustment::where('adjustment_id', $validated['adjustment_id'])->first()->employee_id;
+        $adjustment = CreditAdjustment::where('adjustment_id', $validated['adjustment_id'])->first();
+
+        $employee = Employee::find($adjustment->employee_id);
+
+        Mail::to($employee->email)->send(new AdjustmentMail($adjustment));
 
         $this->notificationService->notifyEmployees(
-            [$employeeId],
+            [$employee->employee_id],
             'Adjustment Rejected',
             'Your credit adjustment request has been rejected.',
             [
@@ -58,10 +64,13 @@ class CreditAdjustmentController extends Controller
 
         $this->adjustmentService->approveRequest($validated);
 
-        $employeeId = CreditAdjustment::where('adjustment_id', $validated['adjustment_id'])->first()->employee_id;
+        $adjustment = CreditAdjustment::where('adjustment_id', $validated['adjustment_id'])->first();
+
+        $employee = Employee::find($adjustment->employee_id);
+        Mail::to($employee->email)->send(new AdjustmentMail($adjustment));
 
         $this->notificationService->notifyEmployees(
-            [$employeeId],
+            [$adjustment->employee_id],
             'Adjustment Approved',
             'Your credit adjustment request has been approved.',
             [

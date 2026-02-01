@@ -19,6 +19,8 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\QrCodeController;
 use App\Mail\SendOtpMail;
+use App\Mail\TestEmail;
+use App\Models\Announcement;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -481,3 +483,7 @@ Route::get('/settings/profile/change-password', [\App\Http\Controllers\EmployeeW
 
 Route::post('/settings/profile/change-password/success', [\App\Http\Controllers\EmployeeWeb\SettingsController::class, 'changePassword'])
     ->name('employee_web.settings.changePassword.success');
+
+Route::post('/dashboard/employee_web/attendance/view', [\App\Http\Controllers\EmployeeWeb\EmployeeDashboard::class, 'viewWebAttendance'])
+    ->name('employee_web.attendance.view');
+

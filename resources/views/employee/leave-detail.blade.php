@@ -20,7 +20,7 @@
             <div class="message">
                 {{$leave->reason}}
             </div>
-            
+
             <div class="leave-handle-wrapper">
                 <div class="employee-data">
                     <x-form-input
@@ -36,14 +36,14 @@
                     />
 
                     <x-form-input
-                        label="Fillin Date"
-                        :value="$leave->submission_date"
+                        label="Date Filed"
+                        :value="\Carbon\Carbon::parse($leave->submission_date)->format('F d, Y')"
                         :readOnly="true"
                     />
                     {{--                {{dd($duration)}}--}}
                     <x-form-input
                         label="Leave Duration"
-                        :value="$duration . ' days'"
+                        :value="\Carbon\Carbon::parse($leave->start_date)->format('M d, Y') . '   -   ' . \Carbon\Carbon::parse($leave->end_date)->format('M d, Y') "
                     />
                 </div>
 
@@ -62,7 +62,7 @@
                             <x-button-submit id="btn-reject">Reject</x-button-submit>
                         </form>
                     </div>
-                    
+
                     <div class="l">
                         <h6>Supporting Document</h6>
                             @if(!empty($leave->supporting_doc))
@@ -71,22 +71,22 @@
                                 $extension = pathinfo($document, PATHINFO_EXTENSION);
                                 $fileName = basename($document);
                             @endphp
-                            <div class="documents-grid" 
+                            <div class="documents-grid"
                                 style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; margin-top: 0px; max-width: 300px;">
-                                
-                                <div class="document-card" 
+
+                                <div class="document-card"
                                     style="border: 1px solid #e5e7eb; border-radius: 8px; padding: 15px; background: #f9fafb; transition: all 0.3s ease;">
 
                                     <!-- Preview -->
-                                    <div class="document-preview" 
-                                        style="text-align: center; margin-bottom: 12px; cursor: pointer;" 
+                                    <div class="document-preview"
+                                        style="text-align: center; margin-bottom: 12px; cursor: pointer;"
                                         onclick="window.open('{{ asset('storage/'.$document) }}', '_blank')">
 
                                         @if(in_array(strtolower($extension), ['jpg','jpeg','png']))
                                             <img src="{{ asset('storage/'.$document) }}"
                                                 alt="Supporting Document"
                                                 style="max-width: 100%; height: 180px; object-fit: cover; border-radius: 6px; border: 2px solid #e5e7eb;">
-                                        
+
                                         @elseif(strtolower($extension) === 'pdf')
                                             <div style="height: 180px; display: flex; align-items: center; justify-content: center; background: white; border-radius: 6px; border: 2px solid #e5e7eb;">
                                                 <!-- PDF Icon -->

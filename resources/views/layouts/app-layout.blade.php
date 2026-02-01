@@ -3,7 +3,10 @@
         'noHeader' => false,
         'navigation' => false, 'company' => '',
         'navigationType' => 'company',
-        'type' => '', 'employee' => ''])
+        'type' => '',
+         'employee' => '',
+         'adminNav' => true,
+         ])
 
 @php
     use Illuminate\Support\Facades\Storage;
@@ -14,7 +17,9 @@
 @endphp
 
 <x-root>
-    @include('layouts.side-nav')
+    @if($adminNav)
+        @include('layouts.side-nav')
+    @endIf
     <main>
         @if(!$noHeader)
             @include('components.header', ['title' => $title, 'source' => 'admin.profile'])

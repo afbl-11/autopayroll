@@ -7,15 +7,19 @@ use App\Models\Announcement;
 use App\Models\AttendanceLogs;
 use App\Models\EmployeeSchedule;
 use App\Models\Payslip;
+use App\Services\AttendanceReport;
 use App\Services\AttendanceService;
 use Auth;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
+
 
 class EmployeeDashboard extends Controller
 {
 
     public function __construct(
         protected AttendanceService $logsService,
+        protected AttendanceReport $report,
     ){}
     public function workingHours()
     {
@@ -143,5 +147,14 @@ class EmployeeDashboard extends Controller
             'payslips',
         ));
     }
+
+    public function viewWebAttendance(Request $request) {
+        $request->validate([
+            'id' => 'required|exists:employees,employee_id',
+        ]);
+
+        return view('employee_web.attendance',$this->report->data($request->id));
+    }
+
 
 }

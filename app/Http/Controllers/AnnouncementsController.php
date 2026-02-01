@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AnnouncementRequest;
+use App\Mail\AnnouncementMail;
 use App\Models\Announcement;
 use App\Models\AnnouncementType;
+use App\Models\Employee;
 use App\Models\EmployeeDevice;
 use App\Services\AnnouncementService;
 use App\Services\EmployeeWeb\EmployeeAnnouncementService;
@@ -13,6 +15,7 @@ use Auth;
 use Illuminate\Http\Request;
 use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Firebase\Messaging\Notification;
+use Mail;
 
 
 class AnnouncementsController extends Controller
@@ -70,6 +73,14 @@ class AnnouncementsController extends Controller
         $announcement = $service->postAnnouncement($data);
 
         $tokens = EmployeeDevice::pluck('fcm_token')->toArray();
+
+        $employees = Employee::where('admin_id', Auth::guard('admin')->id())->get();
+
+
+        foreach($employees as $employee) {
+            Mail::to($employee->email)
+                ->send(new AnnouncementMail($announcement));
+        }
 
         if (!empty($tokens)) {
             $message = CloudMessage::new()

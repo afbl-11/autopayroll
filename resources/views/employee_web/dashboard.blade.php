@@ -134,7 +134,15 @@
                     <div class="card card-theme shadow-sm h-100">
                         <div class="card-header bg-transparent border-0 pt-4 px-4 d-flex justify-content-between">
                             <h5 class="fw-bold mb-0">Recent Attendance</h5>
-                            <a href="#" class="text-muted small text-decoration-none">View All</a>
+                            <form action="{{ route('employee_web.attendance.view') }}" method="POST" class="d-inline">
+                                @csrf
+                                <input type="hidden" name="id" value="{{ $employee->employee_id }}">
+                                <button type="submit" class="text-muted small text-decoration-none btn btn-link p-0">
+                                    View All
+                                </button>
+                            </form>
+
+
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">

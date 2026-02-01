@@ -191,10 +191,18 @@
 
                                             {{-- Action --}}
                                             <td class="pe-4 text-end">
-                                                <a href="#"
-                                                   class="btn btn-sm btn-outline-primary">
+                                            <td class="pe-4 text-end">
+                                                <button class="btn btn-sm btn-outline-primary view-adjustment-btn"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#viewAdjustmentModal"
+                                                        data-type="{{ ucfirst($adjustment->adjustment_type) }}"
+                                                        data-subtype="{{ $adjustment->subtype ?? '-' }}"
+                                                        data-status="{{ $adjustment->status }}"
+                                                        data-reason="{{ $adjustment->reason }}"
+                                                        data-filed="{{ $adjustment->created_at }}"
+                                                        data-attachment="{{ $adjustment->attachment_path ? asset('storage/' . $adjustment->attachment_path) : '' }}">
                                                     View
-                                                </a>
+                                                </button>
                                             </td>
                                         </tr>
                                     @empty
@@ -294,6 +302,59 @@
             </div>
         </div>
 
+
+
+            <!-- View Adjustment Modal -->
+            <div class="modal fade" id="viewAdjustmentModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content border-0 shadow-lg" style="border-radius: 20px; overflow: hidden;">
+
+                        <!-- Header -->
+                        <div class="modal-header bg-warning-subtle text-white p-4" style="border-bottom: none;">
+                            <h5 class="modal-title fw-bold">Adjustment Details</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <!-- Body -->
+                        <div class="modal-body p-4">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <p><strong>Type:</strong> <span id="modalAdjustmentType"></span></p>
+                                    <p><strong>Sub-type:</strong> <span id="modalAdjustmentSubType"></span></p>
+                                    <p><strong>Status:</strong>
+                                        <span id="modalAdjustmentStatus" class="badge rounded-pill"></span>
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Filed On:</strong> <span id="modalAdjustmentFiled"></span></p>
+                                    <p><strong>Reason:</strong></p>
+                                    <p id="modalAdjustmentReason" style="white-space: pre-line;"></p>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <!-- Attachment -->
+                            <div id="modalAdjustmentAttachmentWrapper">
+                                <strong>Attachment:</strong>
+                                <div id="modalAdjustmentAttachment" class="mt-2 d-flex justify-content-center align-items-center"
+                                     style="min-height: 200px; border: 1px dashed #ced4da; border-radius: 10px; padding: 10px; overflow: hidden;">
+                                    <span class="text-muted">No attachment</span>
+                                </div>
+                                <div id="modalAdjustmentAttachmentActions" class="mt-2 text-center" style="display: none;">
+                                    <a id="modalAdjustmentDownload" href="#" class="btn btn-outline-primary" download>Download File</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Footer -->
+                        <div class="modal-footer border-0 p-4">
+                            <button type="button" class="btn btn-secondary fw-bold" data-bs-dismiss="modal" style="border-radius: 25px; padding: 8px 30px;">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
     </main>
 </x-root>
 
@@ -337,7 +398,73 @@
         setTimeout(() => {
             successAlert.remove();
         }, 3500);
-    }    
+    }
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const buttons = document.querySelectorAll('.view-adjustment-btn');
+
+        buttons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const type = this.dataset.type;
+                const subtype = this.dataset.subtype;
+                const status = this.dataset.status;
+                const reason = this.dataset.reason;
+                const filed = this.dataset.filed;
+                const attachment = this.dataset.attachment;
+
+                // Fill modal text
+                document.getElementById('modalAdjustmentType').innerText = type;
+                document.getElementById('modalAdjustmentSubType').innerText = subtype;
+                document.getElementById('modalAdjustmentFiled').innerText = new Date(filed).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                document.getElementById('modalAdjustmentReason').innerText = reason;
+
+                // Status badge
+                const badge = document.getElementById('modalAdjustmentStatus');
+                badge.innerText = status.charAt(0).toUpperCase() + status.slice(1);
+                badge.className = 'badge rounded-pill ' +
+                    (status === 'approved' ? 'bg-success' : (status === 'pending' ? 'bg-warning text-dark' : 'bg-danger'));
+
+                // Attachment handling
+                const wrapper = document.getElementById('modalAdjustmentAttachment');
+                const actions = document.getElementById('modalAdjustmentAttachmentActions');
+                const downloadLink = document.getElementById('modalAdjustmentDownload');
+
+                wrapper.innerHTML = '';
+                actions.style.display = 'none';
+
+                if (attachment) {
+                    const ext = attachment.split('.').pop().toLowerCase();
+                    if (['png','jpg','jpeg','gif'].includes(ext)) {
+                        const img = document.createElement('img');
+                        img.src = attachment;
+                        img.style.maxWidth = '100%';
+                        img.style.maxHeight = '300px';
+                        img.style.borderRadius = '10px';
+                        wrapper.appendChild(img);
+                        actions.style.display = 'block';
+                        downloadLink.href = attachment;
+                    } else if (ext === 'pdf') {
+                        const embed = document.createElement('embed');
+                        embed.src = attachment;
+                        embed.type = 'application/pdf';
+                        embed.style.width = '100%';
+                        embed.style.height = '300px';
+                        wrapper.appendChild(embed);
+                        actions.style.display = 'block';
+                        downloadLink.href = attachment;
+                    } else {
+                        wrapper.innerHTML = '<span class="text-muted">File available for download</span>';
+                        actions.style.display = 'block';
+                        downloadLink.href = attachment;
+                    }
+                } else {
+                    wrapper.innerHTML = '<span class="text-muted">No attachment</span>';
+                }
+            });
+        });
+    });
+
 </script>
 
 <style>
@@ -345,12 +472,12 @@
         position: fixed;
         top: 20px;
         right: 20px;
-        background: rgba(255, 216, 88, 0.15); 
-        border: 1px solid var(--clr-yellow); 
-        color: var(--clr-indigo); 
-        padding: 12px 15px; 
-        border-radius: 8px; 
-        font-size: 0.85rem; 
+        background: rgba(255, 216, 88, 0.15);
+        border: 1px solid var(--clr-yellow);
+        color: var(--clr-indigo);
+        padding: 12px 15px;
+        border-radius: 8px;
+        font-size: 0.85rem;
         font-weight: 600;
         box-shadow: 0 10px 25px rgba(0,0,0,0.15);
         z-index: 9999;
