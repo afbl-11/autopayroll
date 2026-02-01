@@ -1,9 +1,5 @@
 @vite(['resources/css/company/payroll.css'])
 <link rel="stylesheet" href="{{ asset('css/payroll-filters.css') }}">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 
 <x-app :navigation="true" navigationType="employee" :employee="$employee" :noHeader="true">
     <section class="main-content">
@@ -211,6 +207,14 @@
     <style>
         .filter-controls {
             margin-top: 35px;
+        }
+
+        .btn-link {
+            text-decoration: none;
+        }
+
+        .btn-link:hover {
+            color: white;
         }
 
         @media (max-width: 580px) {
