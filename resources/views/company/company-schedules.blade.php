@@ -8,7 +8,7 @@
            'Thu' => 'Thu',
            'Fri' => 'Fri',
            'Sat' => 'Sat',
-           'Sun' => 'Sun']
+           'Sun' => 'Sun'];
 @endphp
 {{--    script for the checkboxes
    added here and in the root layout so that responses have no delay
@@ -89,9 +89,9 @@
                         // Map full day names to short names
                         const dayMap = {
                             'Monday': 'Mon',
-                            'Tuesday': 'Tues',
+                            'Tuesday': 'Tue',
                             'Wednesday': 'Wed',
-                            'Thursday': 'Thurs',
+                            'Thursday': 'Thu',
                             'Friday': 'Fri',
                             'Saturday': 'Sat',
                             'Sunday': 'Sun'
@@ -244,7 +244,9 @@
                         @endphp
                         <div class="card-content-wrapper">
                             <x-schedule-cards
-                                :image="'assets/default_profile.jpg'"
+                                :image="$employee->profile_photo
+                                ? 'storage/' . $employee->profile_photo
+                                : 'assets/default_profile.jpg'"
                                 :name="$employee->first_name . ' ' . $employee->last_name"
                                 :id="$employee->employee_id"
                                 :start="$startTime"

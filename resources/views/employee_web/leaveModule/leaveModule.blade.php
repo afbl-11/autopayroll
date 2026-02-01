@@ -55,15 +55,16 @@
                         <h6 class="text-muted text-uppercase small fw-bold mb-1">Maternity</h6>
                         @if(isset($log['maternity']) && $log['maternity'] > 0)
                                 <h3 class="fw-bold mb-0">{{$log['maternity']}} <small class="fs-6 text-muted fw-normal">days</small></h3>
-                            @if($log['maternity'] = 0)
-                                <h3 class="fw-bold mb-0">0<small class="fs-6 text-muted fw-normal">days</small></h3>
+                            @if(empty($log['maternity']))
+                            <h3 class="fw-bold mb-0">0<small class="fs-6 text-muted fw-normal">days</small></h3>
                             @endif
                         @endif
 
                         @if(isset($log['paternity']) && $log['paternity'] > 0)
                                 <h3 class="fw-bold mb-0">{{$log['paternity']}} <small class="fs-6 text-muted fw-normal">days</small></h3>
-                            @if($log['paternity'] = 0)
-                                <h3 class="fw-bold mb-0">0<small class="fs-6 text-muted fw-normal">days</small></h3>
+                            @if(empty($log['paternity']))
+
+                            <h3 class="fw-bold mb-0">0<small class="fs-6 text-muted fw-normal">days</small></h3>
                             @endif
                         @endif
 
@@ -392,12 +393,12 @@
         position: fixed;
         top: 20px;
         right: 20px;
-        background: rgba(255, 216, 88, 0.15); 
-        border: 1px solid var(--clr-yellow); 
-        color: var(--clr-indigo); 
-        padding: 12px 15px; 
-        border-radius: 8px; 
-        font-size: 0.85rem; 
+        background: rgba(255, 216, 88, 0.15);
+        border: 1px solid var(--clr-yellow);
+        color: var(--clr-indigo);
+        padding: 12px 15px;
+        border-radius: 8px;
+        font-size: 0.85rem;
         font-weight: 600;
         box-shadow: 0 10px 25px rgba(0,0,0,0.15);
         z-index: 9999;

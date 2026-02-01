@@ -7,7 +7,9 @@
             @foreach($employees as $employee)
                 @foreach($employee->creditAdjustments as $requests)
                     <x-adjustment-card
-                        :image="$employee->profile_photo"
+                        :image="$employee->profile_photo
+                        ? 'storage/' . $employee->profile_photo
+                        : 'assets/default_profile.jpg'"
                         :name="$employee->first_name . ' ' . $employee->last_name"
                         :type="$requests->adjustment_type"
                         :message="$requests->reason"

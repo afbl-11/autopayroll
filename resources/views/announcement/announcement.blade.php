@@ -33,7 +33,7 @@
                         <div class="col-12 announcement-item" data-type="admin">
                             <div class="d-flex announcement-card align-items-start">
                                 <div class="announcement-icon-wrapper me-4">
-                                    <i class="bi bi-bell-fill icon-admin"></i>  
+                                    <i class="bi bi-bell-fill icon-admin"></i>
                                 </div>
                                 <div class="flex-grow-1">
                                     <div class="d-flex align-items-start justify-content-between gap-3 w-100">
@@ -43,7 +43,7 @@
                                     </div>
                                     <p class="text-muted small mb-3 text-uppercase fw-bold" style="font-size: 0.75rem;">
                                         {{$post->subject}}</p>
-                                    <p class="mb-0 text-secondary">{{$post->message}}.</p>
+                                    <p class="mb-0 text-secondary" id="message">{{$post->message}}.</p>
                                 </div>
                                     <span class="small text-muted text-end flex-shrink-0 created_date">
                                             {{ $post->created_at->format('F d, Y') }}
@@ -88,6 +88,10 @@
     transition: all 0.2s ease-in-out;
     display: flex;
     gap: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
 }
 
 .announcement-card:hover {

@@ -23,7 +23,15 @@
 
                 <x-button-submit>Confirm</x-button-submit>
             </form>
-            <p>OTP wasn't sent? Click here to <a href="">Resend</a></p>
+            <form action="{{ route('send.otp.request') }}" method="POST" style="display:inline;">
+                @csrf
+                <input type="hidden" name="email" value="{{ $email }}">
+                Did not receive an email?
+                <button type="submit" style="background:none;border:none;color:#4A90E2;text-decoration:underline;cursor:pointer;">
+                    Click here to resend OTP
+                </button>
+            </form>
+
         </div>
     </section>
 </x-root>

@@ -15,7 +15,7 @@
 >
     <div class="card-wrapper">
         <div class="image">
-            <img src="{{asset('assets/default_profile.jpg')}}" alt="">
+            <img src="{{asset($image)}}" alt="">
         </div>
         <div class="card-info">
             <div class="name">

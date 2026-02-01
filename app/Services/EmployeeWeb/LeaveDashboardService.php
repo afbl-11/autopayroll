@@ -24,12 +24,15 @@ class LeaveDashboardService
 
         foreach ($logs as $log) {
             $typeName = strtolower($log->leaveCreditType->name ?? '');
+
             if ($typeName && array_key_exists($typeName, $balances)) {
-                $balances[$typeName] = $log->credit_days - $log->used_days;
+                $balances[$typeName] += $log->credit_days;
+
             }
         }
 
         return $balances;
+
     }
 
     public function getLeaveRequests($employeeId)
