@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\PayrollController;
 use App\Http\Controllers\Api\PayrollWebController;
 use App\Http\Controllers\Api\ResetPasswordController;
 use App\Http\Controllers\bin\OtpController;
+use App\Http\Controllers\EmployeeDashboardController;
 use Illuminate\Support\Facades\Route;
 use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Firebase\Messaging\Notification;
@@ -72,3 +73,5 @@ Route::post('/request-otp', [\App\Http\Controllers\Api\ForgotPasswordController:
 Route::post('/verify-otp', [\App\Http\Controllers\Api\ForgotPasswordController::class, 'verifyOtp']);
 
 Route::middleware('auth:sanctum')->post('/change/profile-photo/success', [\App\Http\Controllers\Api\ChangeProfileController::class, 'changeProfile']);
+
+Route::middleware('auth:sanctum')->get('/employee/dashboard/mobile', [\App\Http\Controllers\Api\DashboardController::class, 'getAttendanceSummary']);
