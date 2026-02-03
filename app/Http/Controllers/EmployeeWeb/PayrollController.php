@@ -19,11 +19,8 @@ class PayrollController extends Controller
         protected MonthlyPayslipService $monthlyPayslipService,
     ){}
         public function showPayroll(Request $request){
-            $employeeId = Auth::guard('employee_web')->id();
-            $employee = Employee::find($employeeId);
 
-//            $this->payrollHistory->generateAllPayslipsForEmployee($employees);
-
+            $employee = Auth::guard('employee_web')->user();
 
             $query = Payslip::query();
 
@@ -39,7 +36,7 @@ class PayrollController extends Controller
                 $query->where('status', $request->status);
             }
 
-            $payslips = $query->orderBy('pay_date', 'desc')->paginate(2)->withQueryString();
+            $payslips = $query->where('employee_id', $employee->employee_id)->orderBy('pay_date', 'desc')->paginate(2)->withQueryString();
 
             return view('employee_web.payrollViewingModule.payrollScreen', compact('payslips', 'employee'));
         }
