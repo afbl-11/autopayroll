@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Scopes\AdminScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -171,6 +172,14 @@ class Employee extends Authenticatable
     {
         return $this->hasMany(EmployeeDevice::class, 'employee_id', 'employee_id');
     }
+
+    public function latestAttendance(): HasOne
+    {
+        return $this->hasOne(AttendanceLogs::class, 'employee_id', 'employee_id')
+            ->ofMany('log_date', 'max'); // one-of-many, latest log
+    }
+
+
 
 }
 

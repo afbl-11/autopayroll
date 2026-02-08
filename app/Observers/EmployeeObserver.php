@@ -22,14 +22,14 @@ class EmployeeObserver
 
     public function created(Employee $employee): void
     {
-//        // If you need a payroll log, create or fetch it
-//        $log = DailyPayrollLog::create([
-//            'employee_id' => $employee->employee_id,
-//            'payroll_date' => now(),
-//            // add other required fields...
-//        ]);
+        // If you need a payroll log, create or fetch it
+        $log = DailyPayrollLog::create([
+            'employee_id' => $employee->employee_id,
+            'payroll_date' => now(),
+            // add other required fields...
+        ]);
 
-//        ProcessPayrollComputation::dispatch($employee->employee_id);
+        ProcessPayrollComputation::dispatch($employee->employee_id);
     }
 
     /**

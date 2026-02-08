@@ -1,5 +1,8 @@
 @vite(['resources/css/company/payroll.css'])
 <link rel="stylesheet" href="{{ asset('css/payroll-filters.css') }}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
 
 <x-app :navigation="true" navigationType="employee" :employee="$employee" :noHeader="true">
     <section class="main-content">
@@ -71,12 +74,60 @@
                     :type="$type"
                 />
             </table>
-            <div class="mt-3">
-                {{ $payroll->links('pagination::bootstrap-5') }}
-            </div>
+            <div class="card w-100">
+                <div class="card card-theme border-0 shadow-sm">
+                    <div class="card-footer bg-white border-0 py-3">
+                        <div class="d-flex justify-content-between align-items-center w-100">
+
+                            <small class="text-muted">
+                                Showing {{ $payroll->firstItem() }}
+                                to {{ $payroll->lastItem() }}
+                                of {{ $payroll->total() }} entries
+                            </small>
+
+                            <nav class="ms-auto">
+                                <ul class="pagination pagination-sm mb-0">
+
+                                    {{-- Previous Page --}}
+                                    <li class="page-item {{ $payroll->onFirstPage() ? 'disabled' : '' }}">
+                                        <a class="page-link"
+                                           href="{{ $payroll->previousPageUrl() }}">
+                                            Previous
+                                        </a>
+                                    </li>
+
+                                    {{-- Page Numbers --}}
+                                    @foreach ($payroll->getUrlRange(1, $payroll->lastPage()) as $page => $url)
+                                        <li class="page-item {{ $page == $payroll->currentPage() ? 'active' : '' }}">
+                                            <a class="page-link
+                                {{ $page == $payroll->currentPage() ? 'bg-theme-yellow border-theme-yellow text-dark' : 'text-dark' }}"
+                                               href="{{ $url }}">
+                                                {{ $page }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+
+                                    {{-- Next Page --}}
+                                    <li class="page-item {{ $payroll->hasMorePages() ? '' : 'disabled' }}">
+                                        <a class="page-link"
+                                           href="{{ $payroll->nextPageUrl() }}">
+                                            Next
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </nav>
+
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+
+
+
+
         </div>
-
-
     </section>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>

@@ -4,15 +4,16 @@
         case 'A':
             $statusLabel = "Absent";
             break;
+        case 'CDO':
         case 'DO':
-            $statusLabel = "Regular Holiday";
+            $statusLabel = "Day Off";
             break;
+        case 'RH':
         case 'SH':
-            $statusLabel = "Special Holiday";
+            $statusLabel = "Holiday";
             break;
-
-            default:
-            $statusLabel = "Unknown";
+        default:
+            $statusLabel = "";
     }
 @endphp
 

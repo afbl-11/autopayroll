@@ -28,7 +28,7 @@ class EmployeePayrollController extends Controller
             $payroll = $this->payrollSummary->showSemi($id);
         }
 
-        return view('employee.employee-payroll', compact(['employee', 'payroll', 'type']))->with('title', 'Employee Payroll');;
+        return view('employee.employee-payroll', compact(['employee', 'payroll', 'type']))->with('title', 'Employee Payroll');
     }
 
     public function showPayslip($id, Request $request) {

@@ -234,7 +234,7 @@
 
     <div class="header">
         <h1>PAYSLIP</h1>
-        <h2>{{ auth()->user()->company_name }}</h2>
+        <h2>{{ auth()->guard('employee_web')->user()->company_name }}</h2>
         <div class="period">
             {{ $payslipData['period']['period_label'] }}
         </div>

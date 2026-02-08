@@ -7,14 +7,14 @@
 .main-content {
     margin-left: var(--sidebar-width-collapsed);
     width: calc(100% - var(--sidebar-width-collapsed));
-    
+
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     background: var(--clr-background);
     padding-bottom: 50px;
-    
-    transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+
+    transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1),
                 width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -26,7 +26,7 @@
 
 /*Mobile */
 @media (max-width: 800px) {
-    .main-content, 
+    .main-content,
     .main-content.main-content-expanded {
         margin-left: 95px !important;
         width: 85% !important;
@@ -34,7 +34,7 @@
 }
 
 @media (max-width: 600px) {
-    .main-content, 
+    .main-content,
     .main-content.main-content-expanded {
         width: 80% !important;
     }
@@ -44,7 +44,7 @@
 }
 
 @media (max-width: 480px) {
-    .main-content, 
+    .main-content,
     .main-content.main-content-expanded {
         margin-left: 90px !important;
     }
@@ -54,7 +54,7 @@
 }
 
 @media (max-width: 400px) {
-    .main-content, 
+    .main-content,
     .main-content.main-content-expanded {
         margin-left: 86px !important;
         width: 76% !important;
@@ -76,6 +76,7 @@
 .border-start-theme-yellow { border-left: 5px solid var(--clr-yellow) !important; }
 .border-start-theme-red { border-left: 5px solid var(--clr-red) !important; }
 .bg-theme-yellow { background-color: var(--clr-yellow) !important; color: var(--clr-indigo) !important; }
+.bg-theme-green { background-color: var(--clr-green) !important; color: var(--clr-indigo) !important; }
 .icon-box { width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; border-radius: 50%; }
 .button-filled { display: inline-flex; align-items: center; justify-content: center; background: var(--clr-yellow); color: var(--clr-primary); border: none; border-radius: 8px; padding: 10px 20px; font-weight: bold; }
 .button-ghost { background: transparent; border: 1px solid var(--clr-yellow); color: var(--clr-primary); border-radius: 8px; padding: 5px 15px; }

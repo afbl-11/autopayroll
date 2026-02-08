@@ -278,6 +278,56 @@
                     <td class="amount">₱{{ number_format($payslipData['rates']['hourly'], 2) }}</td>
                 </tr>
                 <tr>
+                    @php
+                        $employeeId = $payslipData['employee']->employee_id;
+
+                        $startOfMonth = \Carbon\Carbon::now()->startOfMonth();
+                        $endOfMonth =\Carbon\Carbon::now()->endOfMonth();
+
+                        $logs = \App\Models\AttendanceLogs::where('employee_id', $employeeId)
+                        ->whereBetween('log_date',[$startOfMonth, $endOfMonth])
+                        ->get();
+
+                        $sched = \App\Models\EmployeeSchedule::where('employee_id', $employeeId)
+                        ->whereNull('end_date')
+                        ->first();
+
+                        $start_time = \Carbon\Carbon::parse($sched->start_time);
+                        $end_time = \Carbon\Carbon::parse($sched->end_time);
+
+                        $regularHour = $start_time->floatDiffInMinutes($end_time, true);
+
+                        $totalOvertimeHours = 0;
+                        $workHours = 0;
+
+
+                        foreach ($logs as $log) {
+                            $time_in = Carbon\Carbon::parse($log->clock_in_time);
+                            $time_out =  Carbon\Carbon::parse($log->clock_out_time);
+
+                            $workHours = $time_in->floatDiffInMinutes($time_out, true);
+
+                            if($workHours > $regularHour) {
+                                $totalOvertimeHours += abs($workHours - $regularHour);
+                            }
+                        }
+                        $otHours = floor($totalOvertimeHours / 60); // Full hours
+                        $otMinutes = $totalOvertimeHours % 60;
+                    @endphp
+
+                    @if($payslipData['earnings']['overtime_pay'])
+
+                        @if($totalOvertimeHours < 60)
+                            <td colspan="2">Total Overtime (in minutes)</td>
+                            <td class="amount">{{$totalOvertimeHours}}</td>
+                        @else
+                            <td colspan="2">Total Overtime</td>
+                            <td class="amount">{{ $otHours }}h {{ $otMinutes }}m</td>
+                        @endif
+                    @endif
+
+                </tr>
+                <tr>
                     <td colspan="2">Overtime Pay</td>
                     <td class="amount">₱{{ number_format($payslipData['earnings']['overtime_pay'], 2) }}</td>
                 </tr>
@@ -360,7 +410,7 @@
             </div>
 
             <div class="actions">
-                <a href="{{ route('employee.dashboard.payslip.print', ['id' => $employee->employee_id, 'year' => $year, 'month' => $month, 'period' => $period ?? 'monthly']) }}" 
+                <a href="{{ route('employee.dashboard.payslip.print', ['id' => $employee->employee_id, 'year' => $year, 'month' => $month, 'period' => $period ?? 'monthly']) }}"
                    target="_blank"
                    class="btn-download-pdf">
                     <i class="fas fa-print"></i> Print Payslip
@@ -376,7 +426,7 @@
             const month = document.getElementById('monthFilter').value;
             const period = document.getElementById('periodFilter').value;
             const employeeId = '{{ $employee->employee_id }}';
-            
+
             window.location.href = `/dashboard/employee/payslip/${employeeId}?year=${year}&month=${month}&period=${period}`;
         }
     </script>

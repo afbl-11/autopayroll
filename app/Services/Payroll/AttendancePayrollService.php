@@ -76,7 +76,7 @@ class AttendancePayrollService
     {
         $status = $attendance->status;
         $rate = $employee->currentRate?->rate ?? 0;
-        
+
         // Log warning if employee has no rate
         if ($rate == 0) {
             \Log::warning("Employee has no rate configured", [
@@ -86,7 +86,7 @@ class AttendancePayrollService
                 'status' => $status
             ]);
         }
-        
+
         // Base computation values
         $regularHours = 8;
         $dailyRate = $rate;
@@ -170,20 +170,20 @@ class AttendancePayrollService
 
         $clockIn = Carbon::parse($attendance->clock_in_time);
         $clockOut = Carbon::parse($attendance->clock_out_time);
-        
+
         // Handle night shifts that cross midnight
         if ($clockOut->lessThan($clockIn)) {
             $clockOut->addDay();
         }
-        
+
         $workHours = $clockIn->diffInHours($clockOut, true);
         $workHours = min($workHours, $regularHours); // Cap at regular hours
-        
+
         $grossSalary = $hourlyRate * $workHours;
-        
+
         // Calculate night differential
         $nightDiff = $this->calculateNightDifferential($clockIn, $clockOut, $hourlyRate);
-        
+
         return [
             'gross_salary' => $grossSalary,
             'net_salary' => $grossSalary + $nightDiff,
@@ -209,24 +209,24 @@ class AttendancePayrollService
 
         $clockIn = Carbon::parse($attendance->clock_in_time);
         $clockOut = Carbon::parse($attendance->clock_out_time);
-        
+
         // Handle night shifts that cross midnight
         if ($clockOut->lessThan($clockIn)) {
             $clockOut->addDay();
         }
-        
+
         $totalHours = $clockIn->diffInHours($clockOut, true);
         $workHours = min($totalHours, $regularHours);
         $overtimeHours = max($totalHours - $regularHours, 0);
-        
+
         $grossSalary = $hourlyRate * $workHours;
         $overtimePay = $hourlyRate * $overtimeHours * 1.25; // 125% for overtime
-        
+
         // Calculate night differential
         $nightDiff = $this->calculateNightDifferential($clockIn, $clockOut, $hourlyRate);
-        
+
         $netSalary = $grossSalary + $overtimePay + $nightDiff;
-        
+
         return [
             'gross_salary' => $grossSalary,
             'net_salary' => $netSalary,
@@ -253,27 +253,27 @@ class AttendancePayrollService
 
         $clockIn = Carbon::parse($attendance->clock_in_time);
         $clockOut = Carbon::parse($attendance->clock_out_time);
-        
+
         // Handle night shifts that cross midnight
         if ($clockOut->lessThan($clockIn)) {
             $clockOut->addDay();
         }
-        
+
         $workHours = $clockIn->diffInHours($clockOut, true);
         $workMinutes = $clockIn->diffInMinutes($clockOut, true);
-        
+
         // Calculate deduction based on how short of 8 hours they worked
         $expectedMinutes = $regularHours * 60;
         $shortMinutes = max($expectedMinutes - $workMinutes, 0);
-        
+
         $deduction = $perMinuteRate * $shortMinutes;
         $grossSalary = $dailyRate;
-        
+
         // Calculate night differential
         $nightDiff = $this->calculateNightDifferential($clockIn, $clockOut, $hourlyRate);
-        
+
         $netSalary = $grossSalary - $deduction + $nightDiff;
-        
+
         return [
             'gross_salary' => $grossSalary,
             'net_salary' => $netSalary,
@@ -334,9 +334,9 @@ class AttendancePayrollService
         // Regular/Legal Holiday = 200% (double pay)
         // Special Holiday = 130% (30% bonus)
         $holidayMultiplier = $isRegularHoliday ? 2.0 : 1.3;
-        
+
         $holidayPay = $dailyRate * $holidayMultiplier;
-        
+
         return [
             'gross_salary' => $dailyRate,
             'net_salary' => $holidayPay,
@@ -360,7 +360,7 @@ class AttendancePayrollService
         if ($attendance->clock_in_time && $attendance->clock_out_time) {
             return $this->computePresent($attendance, $employee, $hourlyRate, $dailyRate, $regularHours, $perMinuteRate);
         }
-        
+
         // If no time record → treated as Absent
         return $this->computeAbsent();
     }
@@ -382,21 +382,21 @@ class AttendancePayrollService
     private function calculateNightDifferential($clockIn, $clockOut, $hourlyRate)
     {
         $nightDiffRate = 0.10; // 10% premium
-        
+
         // Set up night differential period (10 PM to 6 AM)
         $nightDiffStart = $clockIn->copy()->setTimeFromTimeString('22:00:00');
         $nightDiffEnd = $clockIn->copy()->addDay()->setTimeFromTimeString('06:00:00');
-        
+
         // Calculate overlap between work hours and night differential period
         $overlapStart = max($clockIn->timestamp, $nightDiffStart->timestamp);
         $overlapEnd = min($clockOut->timestamp, $nightDiffEnd->timestamp);
-        
+
         // If there's an overlap, calculate hours
         $ndHours = 0;
         if ($overlapEnd > $overlapStart) {
             $ndHours = ($overlapEnd - $overlapStart) / 3600; // Convert seconds to hours
         }
-        
+
         // Return night differential premium
         return round($hourlyRate * $ndHours * $nightDiffRate, 2);
     }
@@ -407,19 +407,19 @@ class AttendancePayrollService
     public function bulkSyncAttendanceToPayroll(array $records, $date, $companyId)
     {
         DB::beginTransaction();
-        
+
         try {
             $results = [];
-            
+
             foreach ($records as $employeeId => $data) {
                 $result = $this->syncAttendanceToPayroll($employeeId, $date, $companyId);
                 $results[$employeeId] = $result;
             }
-            
+
             DB::commit();
-            
+
             return $results;
-            
+
         } catch (\Exception $e) {
             DB::rollBack();
             throw $e;

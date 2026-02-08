@@ -87,7 +87,7 @@
                                         <tr>
                                             <th class="ps-3">Net Earning</th>
                                             <th>Pay Date</th>
-                                            <th>Status</th>
+{{--                                            <th>Status</th>--}}
 {{--                                            <th class="text-end pe-3">Action</th>--}}
                                         </tr>
                                     </thead>
@@ -97,7 +97,7 @@
                                                 <td class="fw-bold ps-3">PHP {{$payslips->net_pay}}</td>
                                                 <td>{{ \Carbon\Carbon::parse($payslips->pay_date)->format('M d, Y') }}
                                                 </td>
-                                                <td><span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3">{{$payslips->status}}</span></td>
+{{--                                                <td><span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3">{{$payslips->status}}</span></td>--}}
 
                                                 @else
                                                 <td colspan="3"> <!-- span all columns -->
@@ -184,6 +184,7 @@
                                             <td class="text-end pe-3">
 
                                                 @php
+                                                    $style = 'bg-theme-yellow';
                                                     $statusLabel = 'N/A';
 
                                                     switch($log->status) {
@@ -192,6 +193,7 @@
                                                             break;
                                                         case 'P':
                                                             $statusLabel  = 'Present';
+                                                            $style = 'bg-theme-green';
                                                             break;
                                                         case 'LT':
                                                             $statusLabel = 'Late/Under time';
@@ -217,7 +219,7 @@
                                                     }
 
                                                     @endphp
-                                            <span class="badge bg-theme-yellow rounded-pill">
+                                            <span class="badge {{$style}} rounded-pill">
                                                 {{ $statusLabel ?? 'Present' }}
                                             </span>
                                             </td>
