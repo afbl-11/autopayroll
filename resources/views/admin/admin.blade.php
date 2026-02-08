@@ -37,11 +37,11 @@
 
                 <div class="section">
                     <div class="attendance-overview">
-                        <h6>Attendance Overview</h6>
+                        <h6>Employee Overview</h6>
                         <div class="attendance-list">
                             @forelse($attendance as $log)
                                 @php
-                                    $attendance = $log->attendanceLogs->first();
+                                    $attendance = \App\Models\Employee::with('latestAttendance')->get();
                                 @endphp
                                 <x-attendance-overview
                                     source="employee.dashboard.attendance"
@@ -50,7 +50,6 @@
                                     :profile="$log->profile_photo
                                     ? 'storage/' . $log->profile_photo
                                     : 'assets/default_profile.jpg'"
-                                    :status="$attendance?->status"
                                 />
                             @empty
                                 <p>No Record Found</p>

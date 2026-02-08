@@ -7,5 +7,5 @@
     <div class="name">
         <p>{{$name}}</p>
     </div>
-    <x-state status="{{$status}}"></x-state>
+{{--    <x-state status="{{$status}}"></x-state>--}}
 </div>

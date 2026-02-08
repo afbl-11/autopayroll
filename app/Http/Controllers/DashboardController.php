@@ -26,7 +26,7 @@ class DashboardController extends Controller
 
         $employee = $this->leaveRequestService->showAllLeaveRequests();
         $adjustment = $this->service->showAdjustmentRequest();
-        $attendance = $this->employeeRepository->getEmployees();
+        $attendance = Employee::with('latestAttendance')->get();
 
         return view('admin.admin', compact('employee',  'data','adjustment', 'attendance'));
     }

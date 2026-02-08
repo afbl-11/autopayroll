@@ -16,6 +16,14 @@
     text-align: center;
     max-height: 25px;
 }
+.state-warning {
+    background-color: var(--clr-light-mustart);
+    width: 70px;
+    padding: 5px;
+    border-radius: 16px;
+    text-align: center;
+    max-height: 25px;
+}
 small {
     color: var(--clr-primary);
     font-size: 10px !important;

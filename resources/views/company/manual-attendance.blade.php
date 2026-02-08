@@ -1,5 +1,304 @@
 @vite(['resources/css/company/manual-attendance.css'])
+<style>
 
+    .mode-view .status-btn { opacity:.4; cursor:not-allowed; }
+    .mode-view .time-in, .mode-view .time-out { background-color:#f3f4f6; cursor:not-allowed; }
+    .mode-edit .status-btn { background:#f59e0b;color:#fff; cursor:pointer; }
+    .mode-edit .status-btn:hover { background:#d97706; }
+    .mode-create .status-btn { background:#22c55e;color:#fff; cursor:pointer; }
+    .mode-create .status-btn:hover { background:#16a34a; }
+    .mode-label { font-size:13px;font-weight:600;margin-left:10px; padding: 4px 8px; border-radius: 4px; }
+    .mode-view .mode-label { background: #FFD858; color: black; }
+    .mode-edit .mode-label { background: #f59e0b; color: white; }
+    .mode-create .mode-label { background: #22c55e; color: white; }
+    .status-btn.active { outline:2px solid #000; }
+    .status-btn { padding:2px 6px; margin:0 2px; border-radius:3px; border:1px solid #d1d5db; }
+    .empty-state { text-align: center; padding: 40px; color: #6b7280; }
+    .table-wrapper { overflow-x: auto; margin-top: 20px; }
+    #attendanceGrid { width: 100%; border-collapse: collapse; }
+    #attendanceGrid th, #attendanceGrid td { padding: 10px; border: 1px solid #e5e7eb; text-align: left; }
+    #attendanceGrid th { background-color: #f9fafb; font-weight: 600; }
+    .attendance-controls { display: flex; gap: 10px; align-items: center; margin: 20px 0; flex-wrap: wrap; }
+    .attendance-controls select, .attendance-controls button { padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 4px; }
+    .attendance-controls button { cursor: pointer; }
+    .attendance-controls button:disabled { opacity: 0.5; cursor: not-allowed; }
+    .attendance-legend { background: #f3f4f6; padding: 12px; border-radius: 6px; margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 15px; }
+    .attendance-legend span { margin-right: 15px; }
+    .time-in, .time-out { width: 100px; padding: 6px; border: 1px solid #d1d5db; border-radius: 4px; }
+    .time-in:disabled, .time-out:disabled { background-color: #f3f4f6; }
+
+    /* Checkbox */
+    .checkbox-container {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        user-select: none;
+    }
+    .checkbox-container input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+    }
+    .checkbox-container input[type="checkbox"]:disabled {
+        cursor: not-allowed;
+    }
+    .checkbox-container span {
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    /* Manual Input Button */
+    .manual-input-btn {
+        background: #FFD858 !important;
+        color: black !important;
+        font-weight: 600;
+        border: none !important;
+    }
+    .manual-input-btn:hover {
+        background: #f5c945 !important;
+    }
+    .day-off-btn {
+        background: #10b981 !important;
+        color: white !important;
+        font-weight: 600;
+        border: none !important;
+    }
+    .day-off-btn:hover {
+        background: #059669 !important;
+    }
+    .day-off-btn:disabled {
+        background: #6b7280 !important;
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+
+    /* Modal Styles */
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+    }
+
+    .modal-content {
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        width: 90%;
+        max-width: 500px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .date-input {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #d1d5db;
+        border-radius: 8px;
+        font-size: 16px;
+        margin-top: 8px;
+    }
+
+    .date-input:focus {
+        outline: none;
+        border-color: #3b82f6;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 5px;
+        color: #374151;
+    }
+
+    .modal-large {
+        max-width: 700px;
+    }
+
+    .modal h3 {
+        margin: 0 0 15px 0;
+        color: #1f2937;
+    }
+
+    .code-input {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #d1d5db;
+        border-radius: 8px;
+        font-size: 16px;
+        margin: 15px 0;
+    }
+
+    .modal-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+        justify-content: flex-end;
+    }
+
+    .btn-primary {
+        background: #3b82f6;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+    }
+
+    .btn-primary:hover {
+        background: #2563eb;
+    }
+
+    .btn-secondary {
+        background: #6b7280;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    .btn-secondary:hover {
+        background: #4b5563;
+    }
+
+    .error-message {
+        color: #dc2626;
+        margin-top: 10px;
+        font-size: 14px;
+    }
+
+    .company-info {
+        background: #f3f4f6;
+        padding: 10px;
+        border-radius: 6px;
+        margin-bottom: 20px;
+        font-weight: 600;
+        color: #374151;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #374151;
+    }
+
+    .form-group input, .form-group select {
+        width: 100%;
+        padding: 10px;
+        border: 2px solid #d1d5db;
+        border-radius: 6px;
+        font-size: 14px;
+    }
+
+    .form-group input:disabled {
+        background: #f3f4f6;
+        cursor: not-allowed;
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+    }
+
+    .camera-container {
+        border: 2px solid #d1d5db;
+        border-radius: 8px;
+        overflow: hidden;
+        background: #000;
+        max-width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #camera, #capturedImage {
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+        display: block;
+    }
+
+    .camera-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .status-display {
+        background: #fef3c7;
+        padding: 10px;
+        border-radius: 6px;
+        color: #92400e;
+        font-weight: 600;
+    }
+
+    .status-present {
+        background: #d1fae5 !important;
+        color: #065f46 !important;
+    }
+
+    .status-late {
+        background: #fee2e2 !important;
+        color: #991b1b !important;
+    }
+
+    /* Day Off Modal Styles */
+    .dayoff-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+    }
+    .dayoff-table th,
+    .dayoff-table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #e5e7eb;
+    }
+    .dayoff-table th {
+        background: #f3f4f6;
+        font-weight: 600;
+    }
+    .dayoff-table select {
+        padding: 6px 10px;
+        border: 1px solid #d1d5db;
+        border-radius: 4px;
+        min-width: 150px;
+    }
+    .dayoff-table .btn-cancel {
+        background: #ef4444;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 13px;
+    }
+    .dayoff-table .btn-cancel:hover {
+        background: #dc2626;
+    }
+    .dayoff-table .btn-cancel:disabled {
+        background: #9ca3af;
+        cursor: not-allowed;
+    }
+</style>
 <x-app title="Manual Attendance">
 <div class="main-content">
 
@@ -39,7 +338,7 @@
     <button id="editBtn" disabled>Edit</button>
     <button id="deleteDateBtn" disabled>Delete Date</button>
     <button id="saveAllBtn" disabled>Save All</button>
-    
+
     <button id="dayOffBtn" class="day-off-btn" style="display: none;" disabled>Day Off</button>
     <button id="manualInputBtn" class="manual-input-btn" style="display: none;">Manual Input</button>
 
@@ -53,9 +352,9 @@
 <tr>
     <th>Emp ID</th>
     <th>Name</th>
-    <th>Status</th>
     <th>Time In</th>
     <th>Time Out</th>
+    <th>Status</th>
 </tr>
 </thead>
 <tbody>
@@ -71,35 +370,35 @@
     <div class="modal-content modal-large">
         <h3>Manual Attendance Entry</h3>
         <p id="selectedCompanyName" class="company-info"></p>
-        
+
         <form id="manualAttendanceForm">
             @csrf
             <input type="hidden" id="form_company_id" name="company_id">
-            
+
             <div class="form-group">
                 <label for="employee_select">Select Employee *</label>
                 <select id="employee_select" name="employee_id" required>
                     <option value="">-- Select Employee --</option>
                 </select>
             </div>
-            
+
             <div class="form-row">
                 <div class="form-group">
                     <label for="datetime_in">Date & Time In *</label>
                     <input type="datetime-local" id="datetime_in" name="datetime_in" required>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="datetime_out">Date & Time Out</label>
                     <input type="datetime-local" id="datetime_out" name="datetime_out">
                 </div>
             </div>
-            
+
             <div class="form-group">
                 <label>Status</label>
                 <p id="attendance_status" class="status-display">Status will be calculated based on schedule</p>
             </div>
-            
+
             <div class="modal-actions">
                 <button type="submit" id="submitAttendanceBtn" class="btn-primary">Submit Attendance</button>
                 <button type="button" id="closeFormBtn" class="btn-secondary">Close</button>
@@ -113,12 +412,12 @@
     <div class="modal-content modal-large">
         <h3>Day Off Setup</h3>
         <p class="company-info">Set day off status for employees on selected date</p>
-        
+
         <form id="dayOffForm">
             @csrf
             <input type="hidden" id="dayoff_company_id" name="company_id">
             <input type="hidden" id="dayoff_date" name="date">
-            
+
             <div class="dayoff-list">
                 <table class="dayoff-table">
                     <thead>
@@ -134,7 +433,7 @@
                     </tbody>
                 </table>
             </div>
-            
+
             <div class="modal-actions">
                 <button type="submit" id="saveDayOffBtn" class="btn-primary">Save Day Off</button>
                 <button type="button" id="closeDayOffBtn" class="btn-secondary">Close</button>
@@ -148,13 +447,13 @@
     <div class="modal-content">
         <h3>Create New Date</h3>
         <p class="company-info">Enter date (YYYY-MM-DD)</p>
-        
+
         <form id="createDateForm">
             <div class="form-group">
                 <label for="new_date_input">Date *</label>
                 <input type="date" id="new_date_input" name="date" required class="date-input">
             </div>
-            
+
             <div class="modal-actions">
                 <button type="submit" class="btn-primary">Create Date</button>
                 <button type="button" id="closeCreateDateBtn" class="btn-secondary">Cancel</button>
@@ -165,305 +464,7 @@
 
 </div>
 
-<style>
-.mode-view .status-btn { opacity:.4; cursor:not-allowed; }
-.mode-view .time-in, .mode-view .time-out { background-color:#f3f4f6; cursor:not-allowed; }
-.mode-edit .status-btn { background:#f59e0b;color:#fff; cursor:pointer; }
-.mode-edit .status-btn:hover { background:#d97706; }
-.mode-create .status-btn { background:#22c55e;color:#fff; cursor:pointer; }
-.mode-create .status-btn:hover { background:#16a34a; }
-.mode-label { font-size:13px;font-weight:600;margin-left:10px; padding: 4px 8px; border-radius: 4px; }
-.mode-view .mode-label { background: #FFD858; color: black; } 
-.mode-edit .mode-label { background: #f59e0b; color: white; }
-.mode-create .mode-label { background: #22c55e; color: white; }
-.status-btn.active { outline:2px solid #000; }
-.status-btn { padding:2px 6px; margin:0 2px; border-radius:3px; border:1px solid #d1d5db; }
-.empty-state { text-align: center; padding: 40px; color: #6b7280; }
-.table-wrapper { overflow-x: auto; margin-top: 20px; }
-#attendanceGrid { width: 100%; border-collapse: collapse; }
-#attendanceGrid th, #attendanceGrid td { padding: 10px; border: 1px solid #e5e7eb; text-align: left; }
-#attendanceGrid th { background-color: #f9fafb; font-weight: 600; }
-.attendance-controls { display: flex; gap: 10px; align-items: center; margin: 20px 0; flex-wrap: wrap; }
-.attendance-controls select, .attendance-controls button { padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 4px; }
-.attendance-controls button { cursor: pointer; }
-.attendance-controls button:disabled { opacity: 0.5; cursor: not-allowed; }
-.attendance-legend { background: #f3f4f6; padding: 12px; border-radius: 6px; margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 15px; }
-.attendance-legend span { margin-right: 15px; }
-.time-in, .time-out { width: 100px; padding: 6px; border: 1px solid #d1d5db; border-radius: 4px; }
-.time-in:disabled, .time-out:disabled { background-color: #f3f4f6; }
 
-/* Checkbox */
-.checkbox-container {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    user-select: none;
-}
-.checkbox-container input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
-}
-.checkbox-container input[type="checkbox"]:disabled {
-    cursor: not-allowed;
-}
-.checkbox-container span {
-    font-size: 14px;
-    font-weight: 500;
-}
-
-/* Manual Input Button */
-.manual-input-btn {
-    background: #FFD858 !important;
-    color: black !important;
-    font-weight: 600;
-    border: none !important;
-}
-.manual-input-btn:hover {
-    background: #f5c945 !important;
-}
-.day-off-btn {
-    background: #10b981 !important;
-    color: white !important;
-    font-weight: 600;
-    border: none !important;
-}
-.day-off-btn:hover {
-    background: #059669 !important;
-}
-.day-off-btn:disabled {
-    background: #6b7280 !important;
-    cursor: not-allowed;
-    opacity: 0.5;
-}
-
-/* Modal Styles */
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-}
-
-.modal-content {
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    width: 90%;
-    max-width: 500px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-}
-
-.date-input {
-    width: 100%;
-    padding: 12px;
-    border: 2px solid #d1d5db;
-    border-radius: 8px;
-    font-size: 16px;
-    margin-top: 8px;
-}
-
-.date-input:focus {
-    outline: none;
-    border-color: #3b82f6;
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-.form-group label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 5px;
-    color: #374151;
-}
-
-.modal-large {
-    max-width: 700px;
-}
-
-.modal h3 {
-    margin: 0 0 15px 0;
-    color: #1f2937;
-}
-
-.code-input {
-    width: 100%;
-    padding: 12px;
-    border: 2px solid #d1d5db;
-    border-radius: 8px;
-    font-size: 16px;
-    margin: 15px 0;
-}
-
-.modal-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
-    justify-content: flex-end;
-}
-
-.btn-primary {
-    background: #3b82f6;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-}
-
-.btn-primary:hover {
-    background: #2563eb;
-}
-
-.btn-secondary {
-    background: #6b7280;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
-.btn-secondary:hover {
-    background: #4b5563;
-}
-
-.error-message {
-    color: #dc2626;
-    margin-top: 10px;
-    font-size: 14px;
-}
-
-.company-info {
-    background: #f3f4f6;
-    padding: 10px;
-    border-radius: 6px;
-    margin-bottom: 20px;
-    font-weight: 600;
-    color: #374151;
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
-    color: #374151;
-}
-
-.form-group input, .form-group select {
-    width: 100%;
-    padding: 10px;
-    border: 2px solid #d1d5db;
-    border-radius: 6px;
-    font-size: 14px;
-}
-
-.form-group input:disabled {
-    background: #f3f4f6;
-    cursor: not-allowed;
-}
-
-.form-row {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-}
-
-.camera-container {
-    border: 2px solid #d1d5db;
-    border-radius: 8px;
-    overflow: hidden;
-    background: #000;
-    max-width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#camera, #capturedImage {
-    width: 100%;
-    max-width: 400px;
-    height: auto;
-    display: block;
-}
-
-.camera-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.status-display {
-    background: #fef3c7;
-    padding: 10px;
-    border-radius: 6px;
-    color: #92400e;
-    font-weight: 600;
-}
-
-.status-present {
-    background: #d1fae5 !important;
-    color: #065f46 !important;
-}
-
-.status-late {
-    background: #fee2e2 !important;
-    color: #991b1b !important;
-}
-
-/* Day Off Modal Styles */
-.dayoff-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-}
-.dayoff-table th,
-.dayoff-table td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #e5e7eb;
-}
-.dayoff-table th {
-    background: #f3f4f6;
-    font-weight: 600;
-}
-.dayoff-table select {
-    padding: 6px 10px;
-    border: 1px solid #d1d5db;
-    border-radius: 4px;
-    min-width: 150px;
-}
-.dayoff-table .btn-cancel {
-    background: #ef4444;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 13px;
-}
-.dayoff-table .btn-cancel:hover {
-    background: #dc2626;
-}
-.dayoff-table .btn-cancel:disabled {
-    background: #9ca3af;
-    cursor: not-allowed;
-}
-</style>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
@@ -501,13 +502,13 @@ function getDayOfWeek(dateString) {
 // Filter part-time employees based on date (for dropdown filtering)
 function getAvailablePartTimeEmployees(selectedDate) {
     if (!selectedDate) return partTimeEmployees;
-    
+
     const dayOfWeek = getDayOfWeek(selectedDate);
-    
+
     return partTimeEmployees.filter(emp => {
         if (emp.days_available) {
-            const availableDays = typeof emp.days_available === 'string' 
-                ? JSON.parse(emp.days_available) 
+            const availableDays = typeof emp.days_available === 'string'
+                ? JSON.parse(emp.days_available)
                 : emp.days_available;
             return availableDays.includes(dayOfWeek);
         }
@@ -521,17 +522,17 @@ function getAvailablePartTimeEmployees(selectedDate) {
 companySelect.addEventListener("change", async () => {
     // Ignore if we're programmatically updating the dropdown
     if (isUpdatingDropdown) return;
-    
+
     // Reset everything if no selection
     if (!companySelect.value) {
         resetAll();
         return;
     }
-    
+
     // Check if this is a part-time employee selection
     if (companySelect.value === 'part-time') {
         selectedPartTimeEmployee = true; // Flag to indicate part-time mode
-        
+
         try {
             // Fetch ALL part-time employees
             const partTimeRes = await fetch('/all-part-time-employees');
@@ -541,32 +542,32 @@ companySelect.addEventListener("change", async () => {
             const partTimeData = await partTimeRes.json();
             allPartTimeEmployees = partTimeData.data || []; // Store original list
             partTimeEmployees = allPartTimeEmployees; // Start with all employees
-            
+
             console.log('Loaded all part-time employees:', allPartTimeEmployees);
-            
+
             if (allPartTimeEmployees.length === 0) {
                 alert('No part-time employees found');
                 resetAll();
                 return;
             }
-            
+
             // Use the first part-time employee's company_id as the currentCompanyId
             currentCompanyId = allPartTimeEmployees[0]?.company_id;
-            
+
             // Render all part-time employees in the grid
             renderPartTimeEmployeesGrid();
-            
+
             // Enable date controls for part-time employees
             dateSelect.disabled = false;
             createDateBtn.disabled = false;
-            
+
             // Load attendance dates for the first part-time employee's company
             if (currentCompanyId) {
                 const dateRes = await fetch(`/company/${currentCompanyId}/attendance-dates`);
                 if (dateRes.ok) {
                     const dateData = await dateRes.json();
                     const dates = dateData.data || [];
-                    
+
                     dateSelect.innerHTML = `<option value="">Select Date</option>`;
                     dates.forEach(d => {
                         if (d.date) {
@@ -575,32 +576,32 @@ companySelect.addEventListener("change", async () => {
                     });
                 }
             }
-            
+
         } catch (error) {
             console.error("Error loading part-time employees:", error);
             alert("Failed to load part-time employees");
             resetAll();
         }
-        
+
         return;
     }
-    
+
     // It's a company selection
     selectedPartTimeEmployee = false;
     currentCompanyId = companySelect.value;
 
     try {
         // Load permanent employees
-        const empRes = await fetch(`/company/${currentCompanyId}/employees`); 
+        const empRes = await fetch(`/company/${currentCompanyId}/employees`);
         if (!empRes.ok) {
             const errorText = await empRes.text();
             console.error('Employee fetch error:', errorText);
             throw new Error("Failed to fetch employees");
         }
-        
+
         const empData = await empRes.json();
         employees = empData.data || [];
-        
+
         // Load part-time employees from part_time_assignments
         const partTimeRes = await fetch(`/company/${currentCompanyId}/part-time-employees`);
         if (!partTimeRes.ok) {
@@ -610,13 +611,13 @@ companySelect.addEventListener("change", async () => {
             const partTimeData = await partTimeRes.json();
             partTimeEmployees = partTimeData.data || [];
         }
-        
+
         console.log('Loaded permanent employees:', employees);
         console.log('Loaded part-time employees:', partTimeEmployees);
 
         // Clear date selection first
         dateSelect.value = '';
-        
+
         // Reset attendance data
         attendance = {};
         attendanceByDate = {};
@@ -624,7 +625,7 @@ companySelect.addEventListener("change", async () => {
         // Populate date select first
         const dateRes = await fetch(`/company/${currentCompanyId}/attendance-dates`);
         if (!dateRes.ok) throw new Error("Failed to fetch dates");
-        
+
         const dateData = await dateRes.json();
         const dates = dateData.data || [];
 
@@ -646,7 +647,7 @@ companySelect.addEventListener("change", async () => {
         // Reset mode
         mode = "view";
         setModeUI();
-        
+
         // Render grid with all employees
         renderGrid();
 
@@ -680,8 +681,8 @@ dateSelect.addEventListener("change", async () => {
             const dayOfWeek = getDayOfWeek(selectedDate);
             partTimeEmployees = allPartTimeEmployees.filter(emp => {
                 if (emp.days_available) {
-                    const availableDays = typeof emp.days_available === 'string' 
-                        ? JSON.parse(emp.days_available) 
+                    const availableDays = typeof emp.days_available === 'string'
+                        ? JSON.parse(emp.days_available)
                         : emp.days_available;
                     return availableDays.includes(dayOfWeek);
                 }
@@ -689,15 +690,15 @@ dateSelect.addEventListener("change", async () => {
             });
             console.log(`Filtered to ${partTimeEmployees.length} employees for ${dayOfWeek} (${selectedDate})`);
         }
-        
+
         // Determine which company ID to use for fetching attendance
         const fetchCompanyId = selectedPartTimeEmployee ? currentCompanyId : companySelect.value;
-        
+
         // Load attendance for selected date if not already cached
         if (!attendanceByDate[selectedDate]) {
             const response = await fetch(`/company/${fetchCompanyId}/attendance/${selectedDate}`);
             if (!response.ok) throw new Error("Failed to fetch attendance");
-            
+
             const data = await response.json();
             attendanceByDate[selectedDate] = data.data || {};
         }
@@ -757,7 +758,7 @@ createDateBtn.addEventListener("click", () => {
     const today = new Date();
     today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
     newDateInput.value = today.toISOString().split('T')[0];
-    
+
     // Show modal
     createDateModal.style.display = 'flex';
 });
@@ -768,7 +769,7 @@ closeCreateDateBtn.addEventListener('click', () => {
 
 createDateForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    
+
     const input = newDateInput.value;
     if (!input) return;
 
@@ -781,7 +782,7 @@ createDateForm.addEventListener('submit', async (e) => {
     try {
         // Use appropriate company ID based on mode
         const createCompanyId = selectedPartTimeEmployee ? currentCompanyId : companySelect.value;
-        
+
         const response = await fetch("/attendance/create-date", {
             method: "POST",
             headers: {
@@ -827,15 +828,15 @@ createDateForm.addEventListener('submit', async (e) => {
         // Set mode to create
         mode = "create";
         lockControls(true);
-        
+
         // Enable status buttons in create mode
         document.querySelectorAll(".status-btn").forEach(btn => {
             btn.style.pointerEvents = "auto";
             btn.style.cursor = "pointer";
         });
-        
+
         setModeUI();
-        
+
         // Close modal
         createDateModal.style.display = 'none';
 
@@ -852,13 +853,13 @@ editBtn.addEventListener("click", () => {
     mode = "edit";
     lockControls(true);
     setModeUI();
-    
+
     // Enable all status buttons
     document.querySelectorAll(".status-btn").forEach(btn => {
         btn.style.pointerEvents = "auto";
         btn.style.cursor = "pointer";
     });
-    
+
     updateTimeInputsState(); // Enable time inputs for LT/O statuses
 });
 
@@ -867,7 +868,7 @@ editBtn.addEventListener("click", () => {
 ========================== */
 deleteBtn.addEventListener("click", async () => {
     if (!dateSelect.value) return;
-    
+
     if (!confirm(`Are you sure you want to delete attendance for ${dateSelect.value}?`)) {
         return;
     }
@@ -875,7 +876,7 @@ deleteBtn.addEventListener("click", async () => {
     try {
         // Use appropriate company ID based on mode
         const deleteCompanyId = selectedPartTimeEmployee ? currentCompanyId : companySelect.value;
-        
+
         const response = await fetch("/attendance/delete-date", {
             method: "POST",
             headers: {
@@ -892,11 +893,11 @@ deleteBtn.addEventListener("click", async () => {
 
         // Remove from cache
         delete attendanceByDate[dateSelect.value];
-        
+
         // Remove from select
         const option = dateSelect.querySelector(`option[value="${dateSelect.value}"]`);
         if (option) option.remove();
-        
+
         dateSelect.value = "";
 
         // Reset grid
@@ -921,7 +922,7 @@ deleteBtn.addEventListener("click", async () => {
 ========================== */
 function renderGrid() {
     tableBody.innerHTML = "";
-    
+
     // Show permanent employees from company dropdown
     if (employees.length === 0) {
         tableBody.innerHTML = `
@@ -934,23 +935,23 @@ function renderGrid() {
     employees.forEach(emp => {
         const row = document.createElement('tr');
         row.dataset.id = emp.employee_id;
-        
-        const empName = emp.first_name && emp.last_name 
-            ? `${emp.first_name} ${emp.last_name}` 
+
+        const empName = emp.first_name && emp.last_name
+            ? `${emp.first_name} ${emp.last_name}`
             : (emp.employee_name || 'Unknown');
-        
+
         row.innerHTML = `
             <td>${emp.employee_id}</td>
             <td>${empName}</td>
+            <td><input type="time" class="time-in" disabled></td>
+            <td><input type="time" class="time-out" disabled></td>
             <td>
                 ${["P","O","LT","A","DO","RH","SH","CD","CDO"]
                     .map(s => `<button class="status-btn" data-status="${s}">${s}</button>`).join("")}
             </td>
-            <td><input type="time" class="time-in" disabled></td>
-            <td><input type="time" class="time-out" disabled></td>
         `;
-        
-        tableBody.appendChild(row); 
+
+        tableBody.appendChild(row);
     });
 
     // Initialize status buttons
@@ -959,14 +960,14 @@ function renderGrid() {
 
 function renderSingleEmployeeGrid(employee) {
     tableBody.innerHTML = "";
-    
+
     const row = document.createElement('tr');
     row.dataset.id = employee.employee_id;
-    
-    const empName = employee.first_name && employee.last_name 
-        ? `${employee.first_name} ${employee.last_name}` 
+
+    const empName = employee.first_name && employee.last_name
+        ? `${employee.first_name} ${employee.last_name}`
         : (employee.employee_name || 'Unknown');
-    
+
     row.innerHTML = `
         <td>${employee.employee_id}</td>
         <td>${empName}</td>
@@ -977,7 +978,7 @@ function renderSingleEmployeeGrid(employee) {
         <td><input type="time" class="time-in" disabled></td>
         <td><input type="time" class="time-out" disabled></td>
     `;
-    
+
     tableBody.appendChild(row);
 
     // Initialize status buttons
@@ -986,7 +987,7 @@ function renderSingleEmployeeGrid(employee) {
 
 function renderPartTimeEmployeesGrid() {
     tableBody.innerHTML = "";
-    
+
     if (partTimeEmployees.length === 0) {
         tableBody.innerHTML = `
             <tr>
@@ -998,28 +999,29 @@ function renderPartTimeEmployeesGrid() {
     partTimeEmployees.forEach(emp => {
         const row = document.createElement('tr');
         row.dataset.id = emp.employee_id;
-        
-        const empName = emp.first_name && emp.last_name 
-            ? `${emp.first_name} ${emp.last_name}` 
+
+        const empName = emp.first_name && emp.last_name
+            ? `${emp.first_name} ${emp.last_name}`
             : (emp.employee_name || 'Unknown');
-        
+
         // Show available days in the name
-        const days = emp.days_available ? 
-            (typeof emp.days_available === 'string' ? JSON.parse(emp.days_available) : emp.days_available).join(', ') 
+        const days = emp.days_available ?
+            (typeof emp.days_available === 'string' ? JSON.parse(emp.days_available) : emp.days_available).join(', ')
             : 'All days';
-        
+
         row.innerHTML = `
             <td>${emp.employee_id}</td>
             <td>${empName} <small>(${days})</small></td>
+            <td><input type="time" class="time-in" disabled></td>
+            <td><input type="time" class="time-out" disabled></td>
             <td>
                 ${["P","O","LT","A","DO","RH","SH","CD","CDO"]
                     .map(s => `<button class="status-btn" data-status="${s}">${s}</button>`).join("")}
             </td>
-            <td><input type="time" class="time-in" disabled></td>
-            <td><input type="time" class="time-out" disabled></td>
+
         `;
-        
-        tableBody.appendChild(row); 
+
+        tableBody.appendChild(row);
     });
 
     // Initialize status buttons
@@ -1039,7 +1041,7 @@ function renderAttendanceGrid() {
             renderGrid();
         }
     }
-    
+
     // If no date selected, don't populate attendance data
     if (!dateSelect.value) {
         return;
@@ -1048,7 +1050,7 @@ function renderAttendanceGrid() {
     document.querySelectorAll("tr[data-id]").forEach(row => {
         const id = row.dataset.id;
         const data = attendance[id];
-        
+
         if (!data) {
             // Set default if no data
             row.querySelector('[data-status="P"]').classList.add("active");
@@ -1065,14 +1067,14 @@ function renderAttendanceGrid() {
         // Set time values
         const timeIn = row.querySelector(".time-in");
         const timeOut = row.querySelector(".time-out");
-        
+
         timeIn.value = data.time_in || "";
         timeOut.value = data.time_out || "";
 
         // Update time input states based on mode and status
         updateTimeInputState(row, data.status);
     });
-    
+
     // Disable status buttons in view mode
     if (mode === "view") {
         document.querySelectorAll(".status-btn").forEach(btn => {
@@ -1085,71 +1087,100 @@ function renderAttendanceGrid() {
 /* ==========================
    STATUS CLICK HANDLER
 ========================== */
-tableBody.addEventListener("click", e => {
-    if (!e.target.classList.contains("status-btn")) return;
-    if (mode === "view") return;
+    tableBody.addEventListener("click", e => {
+        const target = e.target;
 
-    const row = e.target.closest("tr");
-    const id = row.dataset.id;
-    const newStatus = e.target.dataset.status;
-    
-    const timeIn = row.querySelector(".time-in");
-    const timeOut = row.querySelector(".time-out");
+        // Only allow manual clicks on NON-TIME statuses (like Absent, Day Off)
+        if (target.classList.contains("status-btn")) {
+            const status = target.dataset.status;
+            if (["A", "DO", "RH", "SH"].includes(status)) {
+                const row = target.closest("tr");
+                const id = row.dataset.id;
 
-    // Update attendance data
-    if (!attendance[id]) {
-        attendance[id] = { status: newStatus, time_in: "", time_out: "" };
-    } else {
-        attendance[id].status = newStatus;
-        
-        // Clear times if status doesn't require them
-        if (!["O", "LT"].includes(newStatus)) {
-            attendance[id].time_in = "";
-            attendance[id].time_out = "";
-            timeIn.value = "";
-            timeOut.value = "";
-        } else {
-            // Preserve current time values when switching to O or LT
-            attendance[id].time_in = timeIn.value || "";
-            attendance[id].time_out = timeOut.value || "";
+                // Update attendance
+                if (!attendance[id]) {
+                    attendance[id] = { status: status, time_in: "", time_out: "" };
+                } else {
+                    attendance[id].status = status;
+
+                    // Clear time if status doesn't need it
+                    if (!["P", "O", "LT", "CD", "CDO"].includes(status)) {
+                        attendance[id].time_in = "";
+                        attendance[id].time_out = "";
+                        row.querySelector(".time-in").value = "";
+                        row.querySelector(".time-out").value = "";
+                    }
+                }
+
+                // Update UI
+                row.querySelectorAll(".status-btn").forEach(btn => {
+                    btn.classList.toggle("active", btn.dataset.status === status);
+                });
+            }
         }
-    }
-
-    // Update UI
-    row.querySelectorAll(".status-btn").forEach(btn => {
-        btn.classList.toggle("active", btn.dataset.status === newStatus);
     });
 
-    // Update time input states
-    updateTimeInputState(row, newStatus);
-});
 
-/* ==========================
-   TIME INPUT HANDLERS
-========================== */
-tableBody.addEventListener("input", e => {
-    if (mode === "view") return;
-    
-    const input = e.target;
-    if (!input.classList.contains("time-in") && !input.classList.contains("time-out")) return;
+    /* ==========================
+       TIME INPUT HANDLERS
+    ========================== */
+    tableBody.addEventListener("input", e => {
+        if (mode === "view") return;
 
-    const row = input.closest("tr");
-    const id = row.dataset.id;
+        const input = e.target;
+        if (!input.classList.contains("time-in") && !input.classList.contains("time-out")) return;
 
-    if (!attendance[id]) {
-        attendance[id] = { status: "P", time_in: "", time_out: "" };
+        const row = input.closest("tr");
+        const id = row.dataset.id;
+
+        if (!attendance[id]) {
+            attendance[id] = { status: "P", time_in: "", time_out: "" };
+        }
+
+        // Update attendance time values
+        if (input.classList.contains("time-in")) {
+            attendance[id].time_in = input.value;
+        } else {
+            attendance[id].time_out = input.value;
+        }
+
+        // Automatically calculate status if both times are entered
+        const timeIn = attendance[id].time_in;
+        const timeOut = attendance[id].time_out;
+
+        const timeBtns = row.querySelectorAll(".status-btn");
+
+        if (timeIn && timeOut) {
+            const workedMinutes = calculateMinutesDifference(timeIn, timeOut);
+            let newStatus = "P"; // default full 8 hours
+
+            if (workedMinutes < 480) newStatus = "LT";       // Late/Undertime
+            else if (workedMinutes > 510) newStatus = "O";   // Overtime
+            else newStatus = "P";                            // Exactly 8 hours
+
+            attendance[id].status = newStatus;
+
+            // Update UI buttons
+            timeBtns.forEach(btn => {
+                if (["P", "LT", "O", "CD", "CDO"].includes(btn.dataset.status)) {
+                    btn.classList.toggle("active", btn.dataset.status === newStatus);
+                }
+            });
+        }
+    });
+
+// Helper: calculate minutes difference between HH:MM strings
+    function calculateMinutesDifference(start, end) {
+        const [sh, sm] = start.split(":").map(Number);
+        const [eh, em] = end.split(":").map(Number);
+        return (eh * 60 + em) - (sh * 60 + sm);
     }
 
-    if (input.classList.contains("time-in")) {
-        attendance[id].time_in = input.value;
-    } else if (input.classList.contains("time-out")) {
-        attendance[id].time_out = input.value;
-    }
-});
 
-/* ==========================
-   SAVE ALL
-========================== */
+
+    /* ==========================
+       SAVE ALL
+    ========================== */
 saveBtn.addEventListener("click", async () => {
     if (!dateSelect.value || mode === "view") return;
             // Avoid saving if employees aren't displayed.
@@ -1252,7 +1283,7 @@ saveBtn.addEventListener("click", async () => {
     try {
         // Use appropriate company ID based on mode
         const saveCompanyId = selectedPartTimeEmployee ? currentCompanyId : companySelect.value;
-        
+
         const response = await fetch("/attendance/manual/bulk-save", {
             method: "POST",
             headers: {
@@ -1274,7 +1305,7 @@ saveBtn.addEventListener("click", async () => {
 
         // Update cache
         attendanceByDate[dateSelect.value] = structuredClone(attendance);
-        
+
         alert("Attendance saved successfully!");
 
         // Switch back to view mode
@@ -1283,16 +1314,16 @@ saveBtn.addEventListener("click", async () => {
         editBtn.disabled = false;
         deleteBtn.disabled = false;
         saveBtn.disabled = true;
-        
+
         // Disable status buttons in view mode
         document.querySelectorAll(".status-btn").forEach(btn => {
             btn.style.pointerEvents = "none";
             btn.style.cursor = "default";
         });
-        
+
         // Update time inputs to readonly state
         updateTimeInputsState();
-        
+
         setModeUI();
 
     } catch (error) {
@@ -1306,7 +1337,7 @@ saveBtn.addEventListener("click", async () => {
 ========================== */
 function resetAll() {
     isUpdatingDropdown = true;
-    
+
     employees = [];
     partTimeEmployees = [];
     allPartTimeEmployees = [];
@@ -1331,13 +1362,13 @@ function resetAll() {
 
     mode = "view";
     setModeUI();
-    
+
     isUpdatingDropdown = false;
 }
 
 function resetAttendanceGrid() {
     attendance = {};
-    
+
     document.querySelectorAll("tr[data-id]").forEach(row => {
         // Reset status to default
         row.querySelectorAll(".status-btn").forEach(btn => {
@@ -1347,7 +1378,7 @@ function resetAttendanceGrid() {
         // Reset and disable time inputs
         const timeIn = row.querySelector(".time-in");
         const timeOut = row.querySelector(".time-out");
-        
+
         timeIn.value = "";
         timeOut.value = "";
         timeIn.disabled = true;
@@ -1364,57 +1395,41 @@ function activateStatusButtons() {
     });
 }
 
-function updateTimeInputState(row, status) {
-    const timeIn = row.querySelector(".time-in");
-    const timeOut = row.querySelector(".time-out");
-    const id = row.dataset.id;
+    function updateTimeInputState(row, status) {
+        const timeIn = row.querySelector(".time-in");
+        const timeOut = row.querySelector(".time-out");
+        const id = row.dataset.id;
 
-    if (mode === "view") {
-        // In view mode, only show times if they exist, but inputs are disabled
-        timeIn.disabled = true;
-        timeOut.disabled = true;
-        
-        // Ensure values are set from attendance data
-        if (attendance[id]) {
-            timeIn.value = attendance[id].time_in || "";
-            timeOut.value = attendance[id].time_out || "";
-        }
-    } else if (mode === "edit" || mode === "create") {
-        // In edit/create mode, enable time inputs for statuses that need time tracking
-        if (["P", "O", "LT", "RH", "SH", "CD", "CDO"].includes(status)) {
-            timeIn.disabled = false;
-            timeOut.disabled = false;
-            // Preserve existing time values
+        if (mode === "view") {
+            timeIn.disabled = true;
+            timeOut.disabled = true;
             if (attendance[id]) {
                 timeIn.value = attendance[id].time_in || "";
                 timeOut.value = attendance[id].time_out || "";
             }
-        } else {
-            timeIn.disabled = true;
-            timeOut.disabled = true;
-            // Don't clear times in edit mode - preserve existing values
-            if (attendance[id] && mode === "edit") {
+        } else if (mode === "edit" || mode === "create") {
+            // ✅ Always enable time inputs in edit/create mode
+            timeIn.disabled = false;
+            timeOut.disabled = false;
+
+            // Preserve existing values if they exist
+            if (attendance[id]) {
                 timeIn.value = attendance[id].time_in || "";
                 timeOut.value = attendance[id].time_out || "";
-            } else if (mode === "create") {
-                // Only clear in create mode for non-time statuses
-                timeIn.value = "";
-                timeOut.value = "";
             }
         }
     }
-}
 
-function updateTimeInputsState() {
-    document.querySelectorAll("tr[data-id]").forEach(row => {
-        const id = row.dataset.id;
-        const data = attendance[id];
-        const status = data ? data.status : "P";
-        
-        updateTimeInputState(row, status);
-    });
-}
 
+    function updateTimeInputsState() {
+        document.querySelectorAll("tr[data-id]").forEach(row => {
+            const id = row.dataset.id;
+            const status = attendance[id]?.status || "P";
+            updateTimeInputState(row, status);
+        });
+    }
+
+// LockControll
 function lockControls(lock) {
     companySelect.disabled = lock;
     dateSelect.disabled = lock;
@@ -1427,7 +1442,7 @@ function lockControls(lock) {
 function setModeUI() {
     document.body.classList.remove("mode-view", "mode-edit", "mode-create");
     document.body.classList.add(`mode-${mode}`);
-    
+
     modeLabel.textContent =
         mode === "view" ? "VIEW MODE (Read-only)" :
         mode === "edit" ? "EDIT MODE" :
@@ -1460,7 +1475,7 @@ datetimeInInput.value = now.toISOString().slice(0, 16);
 // Manual Input Button Click
 manualInputBtn.addEventListener('click', async () => {
     let selectedCompanyId = companySelect.value;
-    
+
     // Auto-select first company if none selected but only one company exists
     if (!selectedCompanyId) {
         const companyOptions = Array.from(companySelect.options).filter(opt => opt.value);
@@ -1473,13 +1488,13 @@ manualInputBtn.addEventListener('click', async () => {
             return;
         }
     }
-    
+
     // For part-time, use the selected date to filter employees
     const selectedDate = dateSelect.value || new Date().toISOString().split('T')[0];
-    
+
     // Load employees for selected company
     await loadEmployees(selectedCompanyId, selectedDate);
-    
+
     // Open attendance form
     const companyName = companySelect.options[companySelect.selectedIndex].text;
     document.getElementById('selectedCompanyName').textContent = `Company: ${companyName}`;
@@ -1497,7 +1512,7 @@ async function loadEmployees(companyId, selectedDate = null) {
         }
         const response = await fetch(url);
         const employees = await response.json();
-        
+
         employeeSelect.innerHTML = '<option value="">-- Select Employee --</option>';
         employees.forEach(emp => {
             const option = document.createElement('option');
@@ -1536,51 +1551,51 @@ datetimeOutInput.addEventListener('change', calculateStatus);
 // Calculate Attendance Status
 function calculateStatus() {
     const selectedOption = employeeSelect.options[employeeSelect.selectedIndex];
-    
+
     if (!selectedOption || !selectedOption.value || !datetimeInInput.value) {
         return;
     }
-    
+
     const scheduleStart = selectedOption.dataset.scheduleStart;
     const scheduleEnd = selectedOption.dataset.scheduleEnd;
     const datetimeIn = new Date(datetimeInInput.value);
     const timeIn = datetimeIn.toTimeString().slice(0, 5);
-    
+
     if (!scheduleStart) {
         attendanceStatus.textContent = 'No schedule assigned';
         attendanceStatus.className = 'status-display';
         return;
     }
-    
+
     // Convert times to minutes for comparison
     const scheduleStartMin = timeToMinutes(scheduleStart);
     const timeInMin = timeToMinutes(timeIn);
-    
+
     let status = 'P'; // Present
     let statusText = 'Present (P)';
     let statusClass = 'status-display status-present';
-    
+
     // Check if late (more than 5 minutes after schedule start)
     if (timeInMin > scheduleStartMin + 5) {
         status = 'LT';
         statusText = 'Late (LT)';
         statusClass = 'status-display status-late';
     }
-    
+
     // Check undertime if datetime out is provided
     if (datetimeOutInput.value && scheduleEnd) {
         const datetimeOut = new Date(datetimeOutInput.value);
         const timeOut = datetimeOut.toTimeString().slice(0, 5);
         const scheduleEndMin = timeToMinutes(scheduleEnd);
         const timeOutMin = timeToMinutes(timeOut);
-        
+
         if (timeOutMin < scheduleEndMin - 5) {
             status = 'LT';
             statusText = 'Undertime (LT)';
             statusClass = 'status-display status-late';
         }
     }
-    
+
     attendanceStatus.textContent = statusText;
     attendanceStatus.className = statusClass;
 }
@@ -1596,19 +1611,19 @@ employeeSelect.addEventListener('change', calculateStatus);
 // Form Submission
 document.getElementById('manualAttendanceForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    
+
     const formData = new FormData(e.target);
-    
+
     // Debug: Log form data
     console.log('Submitting form with data:');
     for (let [key, value] of formData.entries()) {
         console.log(key + ':', value.substring ? value.substring(0, 50) : value);
     }
-    
+
     try {
         const csrfToken = document.querySelector('meta[name="csrf-token"]');
         console.log('CSRF token found:', !!csrfToken, csrfToken?.content);
-        
+
         const response = await fetch('/attendance/manual/save', {
             method: 'POST',
             headers: {
@@ -1616,20 +1631,20 @@ document.getElementById('manualAttendanceForm').addEventListener('submit', async
             },
             body: formData
         });
-        
+
         console.log('Response status:', response.status);
         console.log('Response headers:', response.headers.get('content-type'));
-        
+
         const responseText = await response.text();
         console.log('Response text:', responseText);
-        
+
         const result = JSON.parse(responseText);
-        
+
         if (result.success) {
             alert('Attendance recorded successfully!');
             attendanceFormModal.style.display = 'none';
             resetForm();
-            
+
             // Reload attendance data for current date if viewing
             if (dateSelect.value) {
                 // Invalidate cache and reload
@@ -1661,17 +1676,17 @@ dayOffBtn.addEventListener('click', () => {
         alert('Please select a date first');
         return;
     }
-    
+
     // Use appropriate company ID based on mode
     const dayOffCompanyId = selectedPartTimeEmployee ? currentCompanyId : companySelect.value;
-    
+
     // Set company and date
     document.getElementById('dayoff_company_id').value = dayOffCompanyId;
     document.getElementById('dayoff_date').value = dateSelect.value;
-    
+
     // Populate employee list
     populateDayOffList();
-    
+
     // Show modal
     dayOffModal.style.display = 'flex';
 });
@@ -1684,18 +1699,18 @@ closeDayOffBtn.addEventListener('click', () => {
 // Populate Day Off List
 function populateDayOffList() {
     dayOffEmployeeList.innerHTML = '';
-    
+
     // Determine which employees to show based on mode
     const currentEmployees = selectedPartTimeEmployee ? partTimeEmployees : employees;
-    
+
     // Only permanent employees (full-time and contractual) can take day off
     // Part-time employees can also take day off when in part-time mode
-    const eligibleEmployees = selectedPartTimeEmployee 
+    const eligibleEmployees = selectedPartTimeEmployee
         ? currentEmployees // All part-time employees are eligible
-        : currentEmployees.filter(emp => 
+        : currentEmployees.filter(emp =>
             emp.employment_type === 'full-time' || emp.employment_type === 'contractual'
           );
-    
+
     if (eligibleEmployees.length === 0) {
         dayOffEmployeeList.innerHTML = `
             <tr>
@@ -1706,16 +1721,16 @@ function populateDayOffList() {
         `;
         return;
     }
-    
+
     eligibleEmployees.forEach(emp => {
         const currentStatus = attendance[emp.employee_id]?.status || 'P';
         const isOnDayOff = ['DO'].includes(currentStatus); // Check if already on day off
-        
+
         // Use employee_name if first_name/last_name not available
-        const empName = emp.first_name && emp.last_name 
-            ? `${emp.first_name} ${emp.last_name}` 
+        const empName = emp.first_name && emp.last_name
+            ? `${emp.first_name} ${emp.last_name}`
             : (emp.employee_name || 'Unknown');
-        
+
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${empName}</td>
@@ -1736,7 +1751,7 @@ function populateDayOffList() {
         `;
         dayOffEmployeeList.appendChild(row);
     });
-    
+
     // Add cancel day off button listeners
     document.querySelectorAll('.cancel-dayoff-btn').forEach(btn => {
         btn.addEventListener('click', function() {
@@ -1751,7 +1766,7 @@ function populateDayOffList() {
 // Save Day Off Form
 dayOffForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    
+
     const updates = [];
     document.querySelectorAll('.dayoff-status-select').forEach(select => {
         if (select.value) {
@@ -1761,12 +1776,12 @@ dayOffForm.addEventListener('submit', async (e) => {
             });
         }
     });
-    
+
     if (updates.length === 0) {
         alert('No changes to save');
         return;
     }
-    
+
     // Update local attendance data
     updates.forEach(update => {
         if (!attendance[update.employee_id]) {
@@ -1774,7 +1789,7 @@ dayOffForm.addEventListener('submit', async (e) => {
         }
         attendance[update.employee_id].status = update.status;
     });
-    
+
     // Save to database immediately
     try {
         const response = await fetch("/attendance/manual/bulk-save", {
@@ -1798,13 +1813,13 @@ dayOffForm.addEventListener('submit', async (e) => {
 
         // Update cache
         attendanceByDate[dateSelect.value] = structuredClone(attendance);
-        
+
         // Refresh grid
         renderAttendanceGrid();
-        
+
         // Close modal
         dayOffModal.style.display = 'none';
-        
+
         alert('Day Off status updated successfully!');
 
     } catch (error) {
@@ -1823,4 +1838,4 @@ if (companySelect.value) {
 
 });
 </script>
-</x-app> 
+</x-app>

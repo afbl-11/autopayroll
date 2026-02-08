@@ -27,7 +27,7 @@ class EmployeeDashboardController extends Controller
     }
     public function showDashboard(Request $request) {
         $companies = $this->companyRepository->getCompanies();
-        $employees = $this->employeeRepository->getEmployees();
+        $employees = \App\Models\Employee::with('latestAttendance')->get();
 
         return view('employeeDashboard', compact('employees', 'companies'))->with('title', 'Employee Dashboard');
     }
@@ -37,13 +37,13 @@ class EmployeeDashboardController extends Controller
         // Clear any cached relationships to ensure fresh data
         $employee->unsetRelation('currentRate');
         $employee->load('currentRate');
-        
+
         // Load all rates for salary history
         $salaryHistory = \App\Models\EmployeeRate::where('employee_id', $id)
             ->orderBy('effective_from', 'desc')
             ->orderBy('created_at', 'desc')
             ->get();
-        
+
         $fullName = $employee->first_name . ' ' .$employee->middle_name . ' '. $employee->last_name . ' ' . $employee->suffix;
         $res_address =
             $employee->house_number . ', '

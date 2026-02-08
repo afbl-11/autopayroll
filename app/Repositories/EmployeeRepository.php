@@ -34,7 +34,7 @@ class EmployeeRepository
     }
 
     public function getEmployees() {
-        return Employee::with('attendanceLogs')->get();
+        return Employee::with('latestAttendance')->get();
     }
 
 

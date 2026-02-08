@@ -229,37 +229,46 @@ class AttendanceService
 
         if (!$schedule) return false;
 
-        $currentDay = Carbon::now()->toDateString();
-
-        $logExists = AttendanceLogs::where('employee_id', $id)
-            ->where('log_date', $currentDay)
-            ->exists();
-
-        if($logExists) return false;
-
         $employee = Employee::where('employee_id', $id)->first();
         if (!$employee) return false;
 
-        $end_time = Carbon::parse($currentDay . ' ' . $schedule->end_time);
+        // Get last attendance log
+        $lastLogDate = AttendanceLogs::where('employee_id', $id)
+            ->max('log_date');
 
-        if (Carbon::now()->greaterThanOrEqualTo($end_time)) {
-            try {
+        // Determine where to start checking
+        $startDate = $lastLogDate
+            ? Carbon::parse($lastLogDate)->addDay()
+            : Carbon::parse($schedule->start_date);
+
+        $endDate = Carbon::yesterday(); // NEVER include today
+
+        if ($startDate->gt($endDate)) {
+            return false; // Nothing to process
+        }
+
+        while ($startDate->lte($endDate)) {
+
+            $logExists = AttendanceLogs::where('employee_id', $id)
+                ->where('log_date', $startDate->toDateString())
+                ->exists();
+
+            if (!$logExists) {
                 AttendanceLogs::create([
                     'log_id'      => (string) \Illuminate\Support\Str::uuid(),
                     'admin_id'    => $employee->admin_id,
                     'company_id'  => $employee->company_id,
                     'employee_id' => $id,
-                    'log_date'    => $currentDay,
+                    'log_date'    => $startDate->toDateString(),
                     'status'      => 'A',
                     'is_adjusted' => 0,
                     'is_manual'   => 0,
                 ]);
-                return true;
-            } catch (\Exception $e) {
-                \Log::error("Failed to mark employee $id absent: " . $e->getMessage());
-                return false;
             }
+
+            $startDate->addDay();
         }
-        return false;
+
+        return true;
     }
 }

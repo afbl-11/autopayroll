@@ -58,6 +58,7 @@ class MonthlyPayslipService
         $totalNightDifferential = $dailyLogs->sum('night_differential');
         $totalLateMinutes = $dailyLogs->sum('late_time');
 
+
         // Get employee rate
         $dailyRate = $employee->currentRate?->rate ?? 0;
         $monthlyRate = $dailyRate * 22; // Standard 22 working days per month
@@ -105,6 +106,7 @@ class MonthlyPayslipService
                 'total_days' => $totalWorkDays,
                 'total_hours' => $totalWorkHours,
                 'late_minutes' => $totalLateMinutes,
+                'total_overtime' => $totalOvertimePay
             ],
             'rates' => [
                 'daily' => $dailyRate,

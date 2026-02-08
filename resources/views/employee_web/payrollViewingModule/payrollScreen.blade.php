@@ -72,7 +72,7 @@
                                 <th class="py-3 text-secondary text-uppercase small ls-1 border-0" width="20%">Pay Period</th>
                                 <th class="py-3 text-secondary text-uppercase small ls-1 border-0" width="15%">Pay Date</th>
                                 <th class="py-3 text-secondary text-uppercase small ls-1 border-0" width="15%">Net Pay</th>
-                                <th class="py-3 text-secondary text-uppercase small ls-1 border-0 text-center" width="15%">Status</th>
+{{--                                <th class="py-3 text-secondary text-uppercase small ls-1 border-0 text-center" width="15%">Status</th>--}}
                                 <th class="pe-4 py-3 text-secondary text-uppercase small ls-1 border-0 text-end" width="15%">Actions</th>
                             </tr>
                             </thead>
@@ -93,11 +93,11 @@
                                     <td>
                                         <span class="fw-bold text-dark fs-6">{{$payslip->net_pay}}</span>
                                     </td>
-                                    <td class="text-center">
-                                        <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3 py-2 border border-success border-opacity-25 d-inline-flex align-items-center gap-2">
-                                            <i class="bi bi-check-circle-fill"></i> {{$payslip->status}}
-                                        </span>
-                                    </td>
+{{--                                    <td class="text-center">--}}
+{{--                                        <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3 py-2 border border-success border-opacity-25 d-inline-flex align-items-center gap-2">--}}
+{{--                                            <i class="bi bi-check-circle-fill"></i> {{$payslip->status}}--}}
+{{--                                        </span>--}}
+{{--                                    </td>--}}
                                     <td class="pe-4 text-end">
                                         <button class="btn btn-light border btn-icon-square"
                                                 onclick="navigateToPayslip('{{ $payslip->period }}', '{{ $payslip->year }}', '{{ $payslip->month }}')">

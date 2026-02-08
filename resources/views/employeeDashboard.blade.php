@@ -43,17 +43,13 @@
             </div>
 
             @foreach($employees as $employee)
-                @php
-                    $attendance = $employee->attendanceLogs->first();
-                @endphp
-
                 <div
                     class="employee-item"
                     data-name="{{ strtolower(($employee->first_name ?? '') . ' ' . ($employee->last_name ?? '')) }}"
                     data-email="{{ strtolower($employee->email ?? '') }}"
                     data-id="{{ strtolower($employee->employee_id ?? '') }}"
                     data-position="{{ strtolower($employee->job_position ?? '') }}"
-                    data-status="{{ strtolower($attendance?->status ?? '') }}"
+                    data-status="{{ strtolower($employee->latestAttendance?->status ?? 'no-record') }}"
                 >
                     <x-employee-cards
                         :name="($employee->first_name ?? '') . ' ' . ($employee->last_name ?? '')"
@@ -67,10 +63,11 @@
                         :type="$employee->employment_type ?? ''"
                         :position="ucwords($employee->job_position ?? '')"
                         :email="$employee->email ?? ''"
-                        :status="$attendance?->status"
-                    ></x-employee-cards>
+                        :status="$employee->latestAttendance?->status"
+                    />
                 </div>
             @endforeach
+
         </div>
 
         @if($employees->isEmpty())

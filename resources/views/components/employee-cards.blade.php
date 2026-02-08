@@ -31,6 +31,7 @@
 
     {{-- STATUS --}}
     <div class="er-col er-status">
+{{--        {{dd($status)}}--}}
         <x-state status="{{ $status }}"></x-state>
     </div>
 
