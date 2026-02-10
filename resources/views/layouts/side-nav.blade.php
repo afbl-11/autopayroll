@@ -73,7 +73,7 @@
             <li class="nav-item-4">
                 <a href="{{ route('edit.deductions-sss') }}"
                    class="nav-link {{ request()->routeIs('edit.deductions-sss') ? 'active' : '' }}">
-                    <img src="{{ asset('assets/navigations/SSS.png') }}" alt="Payroll">
+                    <img src="{{ asset('assets/navigations/SSS.png') }}" alt="SSS">
                     <span class="link-text">SSS</span>
                 </a>
             </li>
@@ -81,7 +81,7 @@
             <li class="nav-item-4">
                 <a href="{{ route('edit.deductions-pagibig') }}"
                    class="nav-link {{ request()->routeIs('edit.deductions-pagibig') ? 'active' : '' }}">
-                    <img src="{{ asset('assets/navigations/pag-ibig.png') }}" alt="Payroll">
+                    <img src="{{ asset('assets/navigations/pag-ibig.png') }}" alt="Pag-Ibig">
                     <span class="link-text">Pag-Ibig</span>
                 </a>
             </li>
@@ -89,8 +89,16 @@
             <li class="nav-item-4">
                 <a href="{{ route('edit.deductions-philhealth') }}"
                    class="nav-link {{ request()->routeIs('edit.deductions-philhealth') ? 'active' : '' }}">
-                    <img src="{{ asset('assets/navigations/philhealth.png') }}" alt="Payroll">
+                    <img src="{{ asset('assets/navigations/philhealth.png') }}" alt="PhilHealth">
                     <span class="link-text">PhilHealth</span>
+                </a>
+            </li>
+
+            <li class="nav-item-4">
+                <a href="{{ route('witholding-tax') }}"
+                   class="nav-link {{ request()->routeIs('witholding-tax') ? 'active' : '' }}">
+                    <img src="{{ asset('assets/navigations/tax.png') }}" alt="Tax">
+                    <span class="link-text">Tax</span>
                 </a>
             </li>
 
