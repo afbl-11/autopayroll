@@ -234,7 +234,17 @@
 
     <div class="header">
         <h1>PAYSLIP</h1>
-        <h2>{{ auth()->guard('employee_web')->user()->company_name }}</h2>
+        @php
+
+        $employee = $payslipData['employee'];
+        $companyName = \App\Models\Company::where('company_id', $employee->company_id)
+        ->pluck('company_name')
+        ->first();
+        @endphp
+
+
+        <h2>{{$companyName}}</h2>
+
         <div class="period">
             {{ $payslipData['period']['period_label'] }}
         </div>
@@ -287,7 +297,7 @@
             </tr>
             <tr>
                 <td>Overtime Pay</td>
-                <td class="amount">{{ number_format($payslipData['work_summary']['total_hours'], 2) }} hrs</td>
+                <td class="amount">-</td>
                 <td class="amount">₱{{ number_format($payslipData['earnings']['overtime_pay'], 2) }}</td>
             </tr>
             <tr>
