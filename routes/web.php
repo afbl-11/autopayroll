@@ -406,6 +406,11 @@ Route::prefix('employee/{employee}')->group(function () {
 
 });
 
+Route::view('/tutorial', 'tutorial.tutorial')
+    ->name('tutorial.tutorial');
+Route::view('/tutorial/settings', 'tutorial.tutorial-settings')
+    ->name('tutorial.settings');
+
 //Employee Web Stuff
 Route::post('/employee/announcement/delete/{id}', [\App\Http\Controllers\EmployeeWeb\AnnouncementController::class, 'deleteAnnouncement'])
     ->name('employee.delete.announcement');
