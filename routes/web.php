@@ -406,18 +406,6 @@ Route::prefix('employee/{employee}')->group(function () {
 
 });
 
-Route::view('/edit-deductions-sss', 'payroll.edit-deductions-sss')
-    ->name('edit.deductions-sss');
-
-Route::view('/edit-deductions-pagibig', 'payroll.edit-deductions-pagibig')
-    ->name('edit.deductions-pagibig');
-
-Route::view('/edit-deductions-philhealth', 'payroll.edit-deductions-philhealth')
-    ->name('edit.deductions-philhealth');
-
-Route::view('/witholding-tax', 'payroll.witholding-tax')
-    ->name('witholding-tax');
-
 //Employee Web Stuff
 Route::post('/employee/announcement/delete/{id}', [\App\Http\Controllers\EmployeeWeb\AnnouncementController::class, 'deleteAnnouncement'])
     ->name('employee.delete.announcement');
