@@ -33,7 +33,7 @@
         <p class="sentence">Afterwards, it will display Create Mode.</p>
         <br>
         <img class="pic1" src="{{ asset('assets/tutorial/manual_attendance-7.png') }}" alt="Guide">
-        <p class="sentence">Click the Status buttons to unlock the Time-in and Time-out input fields. After entering the employees’ attendance data on the specified input fields, click <b>Save All</b>. <i>Note: Absent and Day Off are excluded for the input fields to be activated.</i></p>
+        <p class="sentence">Click the Status buttons to unlock the Time-in and Time-out input fields. After entering the employees’ attendance data on the specified input fields, click <b>Save All</b>. <br> <br> <i>Note: Absent and Day Off are excluded for the input fields to be activated.</i></p>
         <br>
         <img class="pic1" src="{{ asset('assets/tutorial/manual_attendance-8.png') }}" alt="Guide">
         <p class="sentence">It will display here the attendance data created on that particular date.</p>
@@ -45,7 +45,7 @@
         <p class="sentence">Click <b>Edit</b>.</p>
         <br>
         <img class="pic1" src="{{ asset('assets/tutorial/manual_attendance-11.png') }}" alt="Guide">
-        <p class="sentence">It will display Edit Mode and the process will be the same as the Create Date. The only difference of this mode is that it will edit the attendance data of the employee inputted on that particular date. <i>Note: typing the time-in and time-out data of a certain employee can automatically maneuver the status buttons, if there attendance data is committing undertime and overtime</i>.</p>
+        <p class="sentence">It will display Edit Mode and the process will be the same as the Create Date. The only difference of this mode is that it will edit the attendance data of the employee inputted on that particular date. <br> <br> <i>Note: typing the time-in and time-out data of a certain employee can automatically maneuver the status buttons, if there attendance data is committing undertime and overtime</i>.</p>
         <br>
         <img class="pic1" src="{{ asset('assets/tutorial/manual_attendance-12.png') }}" alt="Guide">
         <p class="sentence">Select a date in the Select Date dropdown field and click <b>Delete Date</b>.</p>
@@ -132,6 +132,8 @@
    margin-left: auto;
    margin-right: auto;
    display: block;
+   border: 1px lightgray solid;
+   padding: 8px;
 }
 .pic2 {
     width: 600px

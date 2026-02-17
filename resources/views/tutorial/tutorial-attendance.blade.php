@@ -126,6 +126,8 @@
    margin-left: auto;
    margin-right: auto;
    display: block;
+   border: 1px lightgray solid;
+   padding: 8px;
 }
 .pic2 {
     width: 600px
