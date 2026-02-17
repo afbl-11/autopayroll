@@ -3,8 +3,8 @@
 
     <div class="links">
         <ul>
-            <li><a class="a" href="">Admin Dashboard & Settings</a></li>
-            <li><a class="v"href="">Attendance</a></li>
+            <li><a class="a" href="{{ route('tutorial.tutorial') }}">Admin Dashboard & Settings</a></li>
+            <li><a class="v"href="{{ route('tutorial.attendance') }}">Attendance</a></li>
             <li><a class="v"href="">Leave & Credit Management</a></li>
             <li><a class="v"href="">Employee and Client Management</a></li>
             <li><a class="v" href="">Salary & Tax Management</a></li>
@@ -12,17 +12,17 @@
     </div>
 
     <div class="content">
+        <a href="{{ route('tutorial.settings') }}" class="s">Next Page to Settings Guide</a>
         <p class="titles">Dashboard</p>
         <img class="pic1" src="{{ asset('assets/tutorial/admin-dashboard_upper-2.png') }}" alt="Guide">
         <p class="sentence"><span class="k">T</span>he dashboard page presents the summary of the overall operations of the registered company, including the total number of employees, overall payroll costs, and manpower distribution.</p>
         <br>
         <img class="pic1" src="{{ asset('assets/tutorial/requests.png') }}" alt="Guide">
-        <p class="sentences">In addition, it also displays the pending requests submitted by employees.</p>
+        <p class="sentence">In addition, it also displays the pending requests submitted by employees.</p>
         <br>
         <img class="pic1" src="{{ asset('assets/tutorial/highlighted-requests.png') }}" alt="Guide">
-        <p class="sentences">These requests are clickable, which can redirect the user to the details of those specificied requests for approval.</p>
+        <p class="sentence">These requests are clickable, which can redirect you to the details of those specificied requests for approval.</p>
         <br>
-        <a href="{{ route('tutorial.settings') }}" class="s">Next Page</a>
     </div>
 
 </x-app>
@@ -109,25 +109,29 @@
 .sentence {
     text-align: justify;
     margin-bottom: 15px;
+    width: 85%;
+    margin-left: 7%;
 }
 .sentences {
     text-align: center;
     margin-bottom: 15px;
 }
 .s {
-    padding: 12px;
-    background-color: #FFD858;
+    padding: 2px;
+    padding-left: 10px;
+    border-left: 1px solid lightgray;
     letter-spacing: 1.33px;
     color: black;
-    border-radius: 16px;
     text-decoration: none;
     display: block;
-    margin: 40px auto 0 auto;
-     width: fit-content;
+    text-align: right;
+    width: fit-content;
+    margin-bottom: 25px;
+    margin-left: auto;
+    font-size: 13px;
 }
 .s:hover {
     transition: 0.3s ease-out;
-    background-color: black;
-    color: #FFD858;
+    color: gray;
 }
 </style>

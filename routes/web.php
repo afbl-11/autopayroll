@@ -410,6 +410,10 @@ Route::view('/tutorial', 'tutorial.tutorial')
     ->name('tutorial.tutorial');
 Route::view('/tutorial/settings', 'tutorial.tutorial-settings')
     ->name('tutorial.settings');
+Route::view('/tutorial/attendance', 'tutorial.tutorial-attendance')
+->name('tutorial.attendance');
+Route::view('/tutorial/manual-attendance', 'tutorial.tutorial-manual-attendance')
+->name('tutorial.manual-attendance');
 
 //Employee Web Stuff
 Route::post('/employee/announcement/delete/{id}', [\App\Http\Controllers\EmployeeWeb\AnnouncementController::class, 'deleteAnnouncement'])
