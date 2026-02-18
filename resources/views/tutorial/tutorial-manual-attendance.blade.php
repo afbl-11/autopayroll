@@ -12,13 +12,25 @@
     </div>
 
     <div class="content">
-        <a href="{{ route('tutorial.attendance') }}" class="s">Back to Pre-Requisite Guide</a>
+        <div class="bar">
+        <a href="{{ route('tutorial.attendance') }}" class="p">Employee Assignment Guide</a>
+        <a href="{{ route('tutorial.manual-attendance') }}" class="s">Manual Attendance Guide</a>
+        </div>
         <p class="titles">Manual Attendance</p>
         <img class="pic1" src="{{ asset('assets/tutorial/manual_attendance-1.png') }}" alt="Guide">
         <p class="sentence"><span class="k">T</span>he manual attendance feature functions as an alternative version of the Attendance QR Attendance Process of the system.</p>
         <br>
+        <img class="pic1" src="{{ asset('assets/tutorial/manual-attendance-introductory-1.png') }}" alt="Guide">
+        <p class="sentence">You can find the Manual Attendance page by pressing first that icon in the sidebar.</p>
+        <br>
+        <img class="pic1" src="{{ asset('assets/tutorial/manual-attendance-introductory-2.png') }}" alt="Guide">
+        <p class="sentence">The icon will expand the sidebar. Scroll down and select <b>Attendance</b>.</p>
+        <br>
+        <img class="pic1" src="{{ asset('assets/tutorial/manual-attendance-introductory-3.png') }}" alt="Guide">
+        <p class="sentence">It will redirect you to this page, which is the Manual Attendance page.</p>
+        <br>        
         <img class="pic1" src="{{ asset('assets/tutorial/manual_attendance-2.png') }}" alt="Guide">
-        <p class="sentence">First, in order to operate, select a company. </p>
+        <p class="sentence">In using this feature, you must first select a company. </p>
         <br>
         <img class="pic1" src="{{ asset('assets/tutorial/manual_attendance-3.png') }}" alt="Guide">
         <p class="sentence">It will display the employees assigned to that company. Select <b>Create Date</b> to record the attendance of the employees in a particular date.</p>
@@ -72,6 +84,10 @@
     margin-bottom: 50px;
     height: 70px;
 }
+.bar {
+    display: flex;
+    justify-content: flex-end;
+}
 .links ul{
     display: flex;
     gap: 50px;
@@ -106,7 +122,7 @@
 }
 .titles {
     margin-top: 0px;
-    font-size: 25px;
+    font-size: 20px;
     letter-spacing: 1.33px;
     border-bottom: 1px solid lightgray;
 }
@@ -151,10 +167,10 @@
     text-align: center;
     margin-bottom: 15px;
 }
-.s {
+.s, .p {
     padding: 2px;
-    padding-right: 10px;
-    border-right: 1px solid lightgray;
+    padding-left: 10px;
+    border-left: 1px solid lightgray;
     letter-spacing: 1.33px;
     color: black;
     text-decoration: none;
@@ -162,11 +178,15 @@
     text-align: right;
     width: fit-content;
     margin-bottom: 25px;
-    margin-right: auto;
     font-size: 13px;
 }
-.s:hover {
+.s:hover, .p:hover {
     transition: 0.3s ease-out;
     color: gray;
+}
+.p {
+    border-left: 0px solid lightgray;
+    padding-right: 10px;
+    padding-left: 0px;
 }
 </style>

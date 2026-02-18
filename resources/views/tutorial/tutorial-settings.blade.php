@@ -12,11 +12,17 @@
     </div>
 
     <div class="content">
-        <a href="{{ route('tutorial.tutorial') }}" class="s">Back to Dashboard Guide</a>
+        <div class="bar">
+        <a href="{{ route('tutorial.tutorial') }}" class="p">Dashboard Guide</a>
+        <a href="{{ route('tutorial.settings') }}" class="s">Settings Guide</a>
+        </div>
         <p class="titles">Settings</p>
         <img class="pic1" src="{{ asset('assets/tutorial/settings-1.png') }}" alt="Guide">
         <p class="sentence"><span class="k">T</span>he settings page allows you to edit your profile information, including your profile picture, name, and company name.</p>
         <br>
+        <img class="pic1" src="{{ asset('assets/tutorial/settings-location.png') }}" alt="Guide">
+        <p class="sentence">You can find the settings page by pressing that icon in the sidebar.</p>
+        <br>        
         <img class="pic1" src="{{ asset('assets/tutorial/settings-2.png') }}" alt="Guide">
         <p class="sentence">For changing the profile picture, click <b>Change Photo</b>, which will allows you to choose and upload a picture, and click <b>Save Changes</b>.</p>
         <br>
@@ -57,6 +63,10 @@
     margin-bottom: 50px;
     height: 70px;
 }
+.bar {
+    display: flex;
+    justify-content: flex-end;
+}
 .links ul{
     display: flex;
     gap: 50px;
@@ -91,7 +101,7 @@
 }
 .titles {
     margin-top: 0px;
-    font-size: 25px;
+    font-size: 20px;
     letter-spacing: 1.33px;
     border-bottom: 1px solid lightgray;
 }
@@ -136,10 +146,10 @@
     text-align: center;
     margin-bottom: 15px;
 }
-.s {
+.s, .p {
     padding: 2px;
-    padding-right: 10px;
-    border-right: 1px solid lightgray;
+    padding-left: 10px;
+    border-left: 1px solid lightgray;
     letter-spacing: 1.33px;
     color: black;
     text-decoration: none;
@@ -147,12 +157,15 @@
     text-align: right;
     width: fit-content;
     margin-bottom: 25px;
-    margin-right: auto;
     font-size: 13px;
 }
-.s:hover {
+.s:hover, .p:hover {
     transition: 0.3s ease-out;
     color: gray;
 }
+.p {
+    border-left: 0px solid lightgray;
+    padding-right: 10px;
+    padding-left: 0px;
+}
 </style>
-

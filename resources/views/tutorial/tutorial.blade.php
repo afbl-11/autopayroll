@@ -12,10 +12,13 @@
     </div>
 
     <div class="content">
-        <a href="{{ route('tutorial.settings') }}" class="s">Next Page to Settings Guide</a>
+        <div class="bar">
+        <a href="{{ route('tutorial.tutorial') }}" class="p">Dashboard Guide</a>
+        <a href="{{ route('tutorial.settings') }}" class="s">Settings Guide</a>
+        </div>
         <p class="titles">Dashboard</p>
         <img class="pic1" src="{{ asset('assets/tutorial/admin-dashboard_upper-2.png') }}" alt="Guide">
-        <p class="sentence"><span class="k">T</span>he dashboard page presents the summary of the overall operations of the registered company, including the total number of employees, overall payroll costs, and manpower distribution.</p>
+        <p class="sentence"><span class="k">T</span>he dashboard page presents the summary of the overall operations of the registered company, including the total number of employees, overall payroll costs, and manpower distribution. <br> <br> <i>Note: It is also the first page you will see upon logging in into this website.</i></p>
         <br>
         <img class="pic1" src="{{ asset('assets/tutorial/requests.png') }}" alt="Guide">
         <p class="sentence">In addition, it also displays the pending requests submitted by employees.</p>
@@ -38,6 +41,10 @@
     align-self: center;
     margin-bottom: 50px;
     height: 70px;
+}
+.bar {
+    display: flex;
+    justify-content: flex-end;
 }
 .links ul{
     display: flex;
@@ -73,7 +80,7 @@
 }
 .titles {
     margin-top: 0px;
-    font-size: 25px;
+    font-size: 20px;
     letter-spacing: 1.33px;
     border-bottom: 1px solid lightgray;
 }
@@ -118,7 +125,7 @@
     text-align: center;
     margin-bottom: 15px;
 }
-.s {
+.s, .p {
     padding: 2px;
     padding-left: 10px;
     border-left: 1px solid lightgray;
@@ -129,11 +136,15 @@
     text-align: right;
     width: fit-content;
     margin-bottom: 25px;
-    margin-left: auto;
     font-size: 13px;
 }
-.s:hover {
+.s:hover, .p:hover {
     transition: 0.3s ease-out;
     color: gray;
+}
+.p {
+    border-left: 0px solid lightgray;
+    padding-right: 10px;
+    padding-left: 0px;
 }
 </style>

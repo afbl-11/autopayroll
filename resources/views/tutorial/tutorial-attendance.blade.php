@@ -12,10 +12,25 @@
     </div>
 
     <div class="content">
-        <a href="{{ route('tutorial.manual-attendance') }}" class="s">Next Page to Manual Attendance Guide</a>
-        <p class="titles">Attendance: <i>Pre-Requisite</i></p>
+        <div class="bar">
+        <a href="{{ route('tutorial.attendance') }}" class="p">Employee Assignment Guide</a>
+        <a href="{{ route('tutorial.manual-attendance') }}" class="s">Manual Attendance Guide</a>
+        </div>
+        <p class="titles">Employee Assignment</p>
+        <img class="pic1" src="{{ asset('assets/tutorial/pre_req-introductory-1.png') }}" alt="Guide">
+        <p class="sentence"><span class="k">F</span>irst, this is a prerequisite before incorporating any attendance. Employees must be assigned to a company and given a schedule. To proceed, press that icon in the sidebar.</p>
+        <br>
+        <img class="pic1" src="{{ asset('assets/tutorial/company-dashboard_pre-req.png') }}" alt="Guide">
+        <p class="sentence">It will redirect you to this page, which is the Company Dashboard page.</p>
+        <br>
+        <img class="pic1" src="{{ asset('assets/tutorial/pre_req-introductory-2.png') }}" alt="Guide">
+        <p class="sentence">Next, select a certain company.</p>
+        <br>
+        <img class="pic1" src="{{ asset('assets/tutorial/pre_req-introductory-3.png') }}" alt="Guide">
+        <p class="sentence">It will redirect to its profile. Then, select <b>Employees</b>.</p>
+        <br>
         <img class="pic1" src="{{ asset('assets/tutorial/pre-req_attendance-1.png') }}" alt="Guide">
-        <p class="sentence"><span class="k">F</span>irst, in order for your employees to have attendance in the system, you must assign them to a company.</p>
+        <p class="sentence">It will redirect you to this page, which is responsible for assigning employees to a company. This is required for the attendance processes in the system, such as time-in and time-out using the QR system in the mobile application.</p>
         <br>
         <img class="pic1" src="{{ asset('assets/tutorial/pre-req_attendance-2.png') }}" alt="Guide">
         <p class="sentence">For full-time and contractual employees, they already have been assigned to a company during registration.</p>
@@ -32,11 +47,14 @@
         <img class="pic1" src="{{ asset('assets/tutorial/pre-req_attendance-6.png') }}" alt="Guide">
         <p class="sentence">It is important to note that after hiring them, it will display their available days. This indicates that when you are going to assign them to another company, you will be notified about what days are not yet assigned to them.</p>
         <br>
+        <img class="pic1" src="{{ asset('assets/tutorial/pre_req-introductory-4.png') }}" alt="Guide">
+        <p class="sentence">Second, assign employees a schedule in the company by pressing <b>Schedules</b>.</p>
+        <br>
         <img class="pic1" src="{{ asset('assets/tutorial/pre-req_attendance-7.png') }}" alt="Guide">
-        <p class="sentence">Second, assign them a schedule in the company.</p>
+        <p class="sentence">You will be redirect to the Schedules page, which has this functionality for assigning employees their schedule.</p>
         <br>
         <img class="pic1" src="{{ asset('assets/tutorial/pre-req_attendance-8.png') }}" alt="Guide">
-        <p class="sentence">Click the employee you want to assign their schedule with. Select their working days in the company by selecting the day cards.</p>
+        <p class="sentence">In assigning their schedules, you must first click the employee you want to assign their schedule with. Then, select their working days in the company by selecting the day cards.</p>
         <br>
         <img class="pic1" src="{{ asset('assets/tutorial/pre-req_attendance-9.png') }}" alt="Guide">
         <p class="sentence">Next, input their start and end time for their working hours in the site.</p>
@@ -45,7 +63,7 @@
         <p class="sentence">Lastly, click <b>Save Schedule</b>.</p>
         <br>
         <img class="pic1" src="{{ asset('assets/tutorial/pre-req_attendance-11.png') }}" alt="Guide">
-        <p class="sentence">The inputted schedule of the employees will be displayed here. This schedule is integral in timing-in and timing-out using the QR system in the mobile application and as well in recording attendance logs in this website.</p>
+        <p class="sentence">The inputted schedule of the employees will be displayed here. This schedule is integral in timing-in and timing-out using the QR system in the mobile application and as well in recording manual attendance logs in this website.</p>
         <br>
         <img class="pic1" src="{{ asset('assets/tutorial/pre-req_attendance-12.png') }}" alt="Guide">
         <p class="sentence">For part-time employees, same process will be applied if they were selected. However, since in their hiring process the working days have already been selected. It will be fixed here.</p>
@@ -65,6 +83,10 @@
     align-self: center;
     margin-bottom: 50px;
     height: 70px;
+}
+.bar {
+    display: flex;
+    justify-content: flex-end;
 }
 .links ul{
     display: flex;
@@ -100,7 +122,7 @@
 }
 .titles {
     margin-top: 0px;
-    font-size: 25px;
+    font-size: 20px;
     letter-spacing: 1.33px;
     border-bottom: 1px solid lightgray;
 }
@@ -145,7 +167,7 @@
     text-align: center;
     margin-bottom: 15px;
 }
-.s {
+.s, .p {
     padding: 2px;
     padding-left: 10px;
     border-left: 1px solid lightgray;
@@ -156,11 +178,15 @@
     text-align: right;
     width: fit-content;
     margin-bottom: 25px;
-    margin-left: auto;
     font-size: 13px;
 }
-.s:hover {
+.s:hover, .p:hover {
     transition: 0.3s ease-out;
     color: gray;
+}
+.p {
+    border-left: 0px solid lightgray;
+    padding-right: 10px;
+    padding-left: 0px;
 }
 </style>
