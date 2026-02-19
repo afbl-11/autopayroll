@@ -321,7 +321,39 @@
             </tr>
         </tbody>
     </table>
+    @if($payslipData['period']['start_date'] != \Carbon\Carbon::now()->startOfMonth()->toDateString())
+        <table class="payslip-table">
+            <tr class="section-header">
+                <th colspan="2">PREVIOUS PAYROLL</th>
+                <th class="amount">AMOUNT</th>
+            </tr>
+            <tr>
+                <td colspan="2">Late Deductions</td>
+                <td class="amount">₱{{ number_format($payslipData['previous_payroll']['previousLateDeductions'], 2) }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">Overtime Pay</td>
+                <td class="amount">₱{{ number_format($payslipData['previous_payroll']['previousOvertimePay'], 2) }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">Holiday Pay</td>
+                <td class="amount">₱{{ number_format($payslipData['previous_payroll']['previousHolidayPay'], 2) }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">Night Differentials</td>
+                <td class="amount">₱{{ number_format($payslipData['previous_payroll']['previousNightDifferential'], 2) }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">Previous Gross Salary</td>
+                <td class="amount">₱{{ number_format($payslipData['previous_payroll']['previousGrossSalary'], 2) }}</td>
+            </tr>
 
+            <tr class="total-row">
+                <td colspan="2"><strong>PREVIOUS NET SALARY</strong></td>
+                <td class="amount"><strong>₱{{ number_format($payslipData['previous_payroll']['previousNet'], 2) }}</strong></td>
+            </tr>
+        </table>
+    @endif
     <!-- Statutory Deductions -->
     <h3 class="section-title">Statutory Deductions</h3>
     <table>
@@ -336,22 +368,22 @@
             <tr>
                 <td>SSS Contribution</td>
                 <td class="amount">₱{{ number_format($payslipData['deductions']['sss'], 2) }}</td>
-                <td class="amount">-</td>
+                <td class="amount">₱{{ number_format($payslipData['deductions']['employer_sss'], 2) }}</td>
             </tr>
             <tr>
                 <td>PhilHealth Contribution</td>
                 <td class="amount">₱{{ number_format($payslipData['deductions']['philhealth'], 2) }}</td>
-                <td class="amount">-</td>
+                <td class="amount">₱{{ number_format($payslipData['deductions']['employer_philhealth'], 2) }}</td>
             </tr>
             <tr>
                 <td>Pag-IBIG Contribution</td>
                 <td class="amount">₱{{ number_format($payslipData['deductions']['pagibig'], 2) }}</td>
-                <td class="amount">-</td>
+                <td class="amount">₱{{ number_format($payslipData['deductions']['employer_pagibig'], 2) }}</td>
             </tr>
             <tr class="font-bold">
                 <td style="text-align: right;">Total Statutory Deductions:</td>
                 <td class="amount">₱{{ number_format($payslipData['deductions']['total_statutory'], 2) }}</td>
-                <td class="amount">-</td>
+                <td class="amount">₱{{ number_format($payslipData['deductions']['total_employer'], 2) }}</td>
             </tr>
         </tbody>
     </table>
@@ -411,7 +443,7 @@
 
     <div class="footer">
         <p>This is a computer-generated payslip. No signature is required.</p>
-        <p>Generated on: {{ date('F d, Y h:i A') }}</p>
+        <p>Generated on: {{ date('F d, Y') }}</p>
     </div>
 </body>
 </html>

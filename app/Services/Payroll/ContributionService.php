@@ -62,9 +62,9 @@ class ContributionService
         $policy = PhilhealthRate::where('status', 'active')->first();
 
         // 2026 Standard Fallbacks
-        $rate = $policy->total_rate ?? 0.05;
-        $minSalary = $policy->min_salary ?? 10000.00;
-        $maxSalary = $policy->max_salary ?? 100000.00;
+        $rate = $policy->premium_rate ?? 0.05;
+        $minSalary = $policy->salary_floor ?? 10000.00;
+        $maxSalary = $policy->salary_ceiling ?? 100000.00;
 
         // Apply PhilHealth Floor and Ceiling
         $basis = $salary;
@@ -112,8 +112,8 @@ class ContributionService
         $msc = (float) $matchedBracket->msc_amount;
 
         // Standard 2026 Rates: EE (4.5%) and ER (9.5%)
-        $eeShare = $msc * 0.045;
-        $erShare = ($msc * 0.095) + (float)$matchedBracket->ec_er_share; // Add the EC contribution to ER
+        $eeShare = $msc * $activeVersion->ee_rate;
+        $erShare = ($msc * $activeVersion->er_rate) + (float)$matchedBracket->ec_er_share; // Add the EC contribution to ER
 
         return [
             'employee' => round($eeShare, 2),

@@ -52,6 +52,7 @@ class MonthlyPayslipService
         }
 
 
+        $previousNet = 0;
 
         if($startDate->format('Y-m-d') > 15 ){
             $tempStart = $startDate->format('Y-m-d');
@@ -101,10 +102,14 @@ class MonthlyPayslipService
 
         // Calculate government contributions based on monthly rate
         // Only apply deductions on 16-30 period or full monthly
+        $grossSalary = $totalGrossSalary + $totalOvertimePay + $totalNightDifferential;
         $applyDeductions = ($period === '16-30' || $period === 'monthly');
+        if($applyDeductions){
 
+            $wholeMonthGross = $grossSalary + $previousNet;
+        }
         $contributions = $applyDeductions
-            ? $this->contributionService->computeAll($monthlyRate)
+            ? $this->contributionService->computeAll($wholeMonthGross)
             : [
                 'sss'        => ['employee' => 0, 'employer' => 0, 'total' => 0],
                 'philhealth' => ['employee' => 0, 'employer' => 0, 'total' => 0],
@@ -114,11 +119,14 @@ class MonthlyPayslipService
                 'total_contribution' => 0,
             ];
         // Calculate taxable income
-        $grossSalary = $totalGrossSalary + $totalOvertimePay + $totalNightDifferential;
         $totalStatutoryDeductions = $contributions['total_employee'];
         $netTaxableIncome = $grossSalary - $totalStatutoryDeductions;
 
-        $totalTaxableIncome = $netTaxableIncome + $previousNet;
+        if($applyDeductions){
+            $totalTaxableIncome = $netTaxableIncome + $previousNet;
+        }else {
+            $totalTaxableIncome = $netTaxableIncome;
+        }
 
         $withholdingTax = 0;
         if ($applyDeductions) {
@@ -133,7 +141,13 @@ class MonthlyPayslipService
         // Calculate net pay
         // Net Pay = Gross Taxable Salary + Holiday Pay - Total Deductions
         // Note: Holiday pay is non-taxable, so it's added after tax calculations
-        $netPay = $grossSalary - $totalDeductions + $totalHolidayPay;
+
+        if($applyDeductions){
+            $netPay = ($grossSalary + $totalHolidayPay + $previousNet) - $totalDeductions;
+        }else {
+            $netPay = ($grossSalary + $totalHolidayPay) - $totalDeductions;
+
+        }
 
         return [
             'employee' => $employee,
@@ -161,6 +175,7 @@ class MonthlyPayslipService
                 'previousHolidayPay' => $previousHolidayPay,
                 'previousNightDifferential' => $previousNightDifferential,
                 'previousLateMinutes' => $previousLateMinutes,
+                'previousNet' => $previousNet,
             ],
             'rates' => [
                 'daily' => $dailyRate,
@@ -172,20 +187,25 @@ class MonthlyPayslipService
                 'overtime_pay' => $totalOvertimePay,
                 'holiday_pay' => $totalHolidayPay,
                 'night_differential' => $totalNightDifferential,
-                'gross_salary' => $grossSalary,
+                'gross_taxable_salary' => $grossSalary,
                 'taxable_income' => $totalTaxableIncome,
             ],
             'deductions' => [
                 'sss' => $contributions['sss']['employee'],
                 'philhealth' => $contributions['philhealth']['employee'],
                 'pagibig' => $contributions['pagibig']['employee'],
+                'employer_sss' => $contributions['sss']['employer'],
+                'employer_pagibig' => $contributions['pagibig']['employer'],
+                'employer_philhealth' => $contributions['philhealth']['employer'],
                 'withholding_tax' => $withholdingTax,
                 'late_deductions' => $totalLateDeductions,
-                'total_statutory' => $totalStatutoryDeductions,
-                'total_deductions' => $totalDeductions,
+                'total_statutory' => $contributions['total_employee'],
+                'total_employer' => $contributions['total_employer'],
+                'total_deductions' => $contributions['total_employee'] + $withholdingTax,
+
             ],
             'net_pay' => round($netPay, 2),
-            'net_taxable_income' => round($netTaxableIncome, 2),
+            'net_taxable_income' => round($totalTaxableIncome, 2),
             'daily_logs' => $dailyLogs,
         ];
     }
