@@ -234,7 +234,7 @@
             <div class="payslip-header">
                 <h1>NET PAY (Semi-Monthly Payslip)</h1>
                 <p style="color: var(--clr-secondary); font-size: 14px;">
-                    {{ $payslipData['period']['period_label'] }}
+                    {{ $payslipData['period']['period_label']}}
                 </p>
                 <p style="color: var(--clr-secondary); font-size: 13px;">
                     Pay Period: {{ $payslipData['period']['start_date'] }} - {{ $payslipData['period']['end_date'] }}
@@ -346,11 +346,38 @@
                 </tr>
                 @endif
                 <tr class="total-row">
-                    <td colspan="2"><strong>GROSS TAXABLE SALARY</strong></td>
-                    <td class="amount"><strong>₱{{ number_format($payslipData['earnings']['gross_taxable_salary'], 2) }}</strong></td>
+                    <td colspan="2"><strong>GROSS SALARY</strong></td>
+                    <td class="amount"><strong>₱{{ number_format($payslipData['earnings']['gross_salary'], 2) }}</strong></td>
                 </tr>
             </table>
-
+            @if($payslipData['period']['start_date'] != \Carbon\Carbon::now()->startOfMonth()->toDateString())
+                <table class="payslip-table">
+                    <tr class="section-header">
+                        <th colspan="2">PREVIOUS PAYROLL</th>
+                        <th class="amount">AMOUNT</th>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Late Deductions</td>
+                        <td class="amount">₱{{ number_format($payslipData['previous_payroll']['previousLateDeductions'], 2) }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Overtime Pay</td>
+                        <td class="amount">₱{{ number_format($payslipData['previous_payroll']['previousOvertimePay'], 2) }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Holiday Pay</td>
+                        <td class="amount">₱{{ number_format($payslipData['previous_payroll']['previousHolidayPay'], 2) }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Night Differentials</td>
+                        <td class="amount">₱{{ number_format($payslipData['previous_payroll']['previousNightDifferential'], 2) }}</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td colspan="2"><strong>PREVIOUS GROSS SALARY</strong></td>
+                        <td class="amount"><strong>₱{{ number_format($payslipData['previous_payroll']['previousGrossSalary'], 2) }}</strong></td>
+                    </tr>
+                </table>
+            @endif
             <table class="payslip-table">
                 <tr class="section-header">
                     <th colspan="2">STATUTORY DEDUCTIONS</th>
@@ -380,8 +407,8 @@
                     <td class="amount"><strong>₱{{ number_format($payslipData['net_taxable_income'], 2) }}</strong></td>
                 </tr>
                 <tr>
-                    <td colspan="2">Tax Bracket/Range (0.00 + 15% over PHP 20,833.00)</td>
-                    <td class="amount">-</td>
+                    <td colspan="2">Tax Bracket Applied (Based on Active Law Version)</td>
+                    <td class="amount">₱{{ number_format($payslipData['deductions']['withholding_tax'], 2) }}</td>
                 </tr>
                 <tr class="total-row">
                     <td colspan="2"><strong>WITHHOLDING TAX</strong></td>
@@ -396,7 +423,7 @@
                 </tr>
                 <tr>
                     <td colspan="2">GROSS PAY</td>
-                    <td class="amount">₱{{ number_format($payslipData['earnings']['gross_taxable_salary'], 2) }}</td>
+                    <td class="amount">₱{{ number_format($payslipData['earnings']['gross_salary'], 2) }}</td>
                 </tr>
                 <tr>
                     <td colspan="2">GROSS DEDUCTIONS</td>

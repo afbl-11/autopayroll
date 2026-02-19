@@ -16,8 +16,12 @@ use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\LeaveRequestController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PagIbigController;
 use App\Http\Controllers\PayrollController;
+use App\Http\Controllers\PhilHealthController;
 use App\Http\Controllers\QrCodeController;
+use App\Http\Controllers\SSSContributionController;
+use App\Http\Controllers\TaxController;
 use App\Mail\SendOtpMail;
 use App\Mail\TestEmail;
 use App\Models\Announcement;
@@ -487,3 +491,36 @@ Route::post('/settings/profile/change-password/success', [\App\Http\Controllers\
 Route::post('/dashboard/employee_web/attendance/view', [\App\Http\Controllers\EmployeeWeb\EmployeeDashboard::class, 'viewWebAttendance'])
     ->name('employee_web.attendance.view');
 
+Route::middleware('auth:admin')->get('/sss-settings', [SSSContributionController::class, 'index'])->name('sss.index');
+Route::get('/sss-template', [SSSContributionController::class, 'downloadTemplate'])->name('sss.template');
+Route::middleware('auth:admin')->post('/sss-upload', [SSSContributionController::class, 'store'])->name('sss.upload');
+
+Route::middleware('auth:admin')->get('/philHealth-settings', [\App\Http\Controllers\PhilHealthController::class, 'index'])
+    ->name('philHealth.settings');
+Route::middleware('auth:admin')->post('/philHealth-store', [\App\Http\Controllers\PhilHealthController::class, 'store'])
+    ->name('philHealth.store');
+
+Route::middleware(['auth:admin'])->group(function () {
+
+    Route::get('/tax-management', [TaxController::class, 'index'])->name('tax.index');
+
+    Route::put('/tax-management/{version}', [TaxController::class, 'update'])->name('tax.update');
+
+    Route::post('/tax-management/{version}/clone', [TaxController::class, 'clone'])->name('tax.clone');
+});
+
+// Pag-IBIG
+Route::get('/pagibig-settings', [PagIbigController::class, 'index'])->name('pagibig.index');
+Route::put('/pagibig-update/{version}', [PagIbigController::class, 'update'])->name('pagibig.update');
+Route::post('/pagibig-clone/{version}', [PagIbigController::class, 'clone'])->name('pagibig.clone');
+
+
+Route::prefix('settings/deductions')->name('deductions.')->group(function () {
+    // Default redirect to Tax
+    Route::get('/', function() { return redirect()->route('deductions.tax'); });
+
+    Route::get('/tax', [TaxController::class, 'index'])->name('tax');
+    Route::get('/sss', [SSSContributionController::class, 'index'])->name('sss');
+    Route::get('/pagibig', [PagIbigController::class, 'index'])->name('pagibig');
+    Route::get('/philhealth', [PhilHealthController::class, 'index'])->name('philhealth');
+});
