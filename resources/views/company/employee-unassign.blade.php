@@ -35,7 +35,7 @@
                     <div class="eh-col eh-username">Username</div>
                     <div class="eh-col eh-position">Role</div>
                     <div class="eh-col eh-type">Type</div>
-                    <div class="eh-col eh-status">Status</div>
+{{--                    <div class="eh-col eh-status">Status</div>--}}
                 </div>
 
                 @foreach($employees as $employee)
@@ -62,6 +62,7 @@
                             value="{{ $employee->employee_id }}"
                             class="hidden peer employee-checkbox"
                         >
+
                         <x-employee-cards
                             :name="$employeeName"
                             :id="$employee->employee_id"
@@ -75,6 +76,7 @@
                             :position="$employee->job_position"
                             :email="$employee->email"
                             :clickable="false"
+{{--                            :status="$employee->status"--}}
                         />
                         <div class="selection-indicator">✓</div>
                     </label>
