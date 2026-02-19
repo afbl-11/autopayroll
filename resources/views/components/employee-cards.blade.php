@@ -31,7 +31,6 @@
 
     {{-- STATUS --}}
     <div class="er-col er-status">
-{{--        {{dd($status)}}--}}
         <x-state status="{{ $status }}"></x-state>
     </div>
 
@@ -66,9 +65,13 @@
     </div>
 
     {{-- STATUS --}}
+
+
+        @if($status)
     <div class="er-col er-status">
         <x-state status="{{ $status }}"></x-state>
     </div>
+        @endif
 
 </div>
 @endif
