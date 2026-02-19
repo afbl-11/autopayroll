@@ -10,9 +10,12 @@ class MonthlyPayslipService
 {
     protected $contributionService;
 
-    public function __construct()
+    public function __construct(
+        protected TaxService $taxService,
+    )
     {
         $this->contributionService = new ContributionService();
+
     }
 
     /**
@@ -48,6 +51,38 @@ class MonthlyPayslipService
             return null;
         }
 
+
+
+        if($startDate->format('Y-m-d') > 15 ){
+            $tempStart = $startDate->format('Y-m-d');
+            $tempEnd = $endDate->format('Y-m-d');
+
+            $previousStartDate = Carbon::parse($tempStart)->startOfMonth()->format('Y-m-d');
+            $previousEndDate = Carbon::parse($tempEnd)->startOfMonth()->addDay(14)->format('Y-m-d');
+
+            $previousPayroll = DailyPayrollLog::withoutGlobalScope(\App\Models\Scopes\AdminScope::class)
+                ->where('employee_id', $employeeId)
+                ->whereBetween('payroll_date', [$previousStartDate, $previousEndDate])
+                ->get();
+
+            if ($previousPayroll->isEmpty()) {
+                return null;
+            }
+
+            $previousWorkDays = $previousPayroll->count();
+            $previousWorkHours = $previousPayroll->sum('work_hours');
+            $previousGrossSalary = $previousPayroll->sum('gross_salary');
+            $previousOvertimePay = $previousPayroll->sum('overtime');
+            $previousLateDeductions = $previousPayroll->sum('deduction');
+            $previousHolidayPay = $previousPayroll->sum('holiday_pay');
+            $previousNightDifferential = $previousPayroll->sum('night_differential');
+            $previousLateMinutes = $previousPayroll->sum('late_time');
+
+            $previousNet = ($previousGrossSalary + $previousHolidayPay + $previousNightDifferential + $previousOvertimePay) - $previousLateDeductions;
+
+        }
+
+
         // Calculate totals
         $totalWorkDays = $dailyLogs->count();
         $totalWorkHours = $dailyLogs->sum('work_hours');
@@ -70,17 +105,26 @@ class MonthlyPayslipService
 
         $contributions = $applyDeductions
             ? $this->contributionService->computeAll($monthlyRate)
-            : ['sss' => ['employee' => 0], 'philhealth' => ['employee' => 0], 'pagibig' => ['employee' => 0], 'total_employee' => 0];
-
+            : [
+                'sss'        => ['employee' => 0, 'employer' => 0, 'total' => 0],
+                'philhealth' => ['employee' => 0, 'employer' => 0, 'total' => 0],
+                'pagibig'    => ['employee' => 0, 'employer' => 0, 'total' => 0],
+                'total_employee'     => 0,
+                'total_employer'     => 0,
+                'total_contribution' => 0,
+            ];
         // Calculate taxable income
-        $grossTaxableSalary = $totalGrossSalary + $totalOvertimePay + $totalNightDifferential;
+        $grossSalary = $totalGrossSalary + $totalOvertimePay + $totalNightDifferential;
         $totalStatutoryDeductions = $contributions['total_employee'];
-        $netTaxableIncome = $grossTaxableSalary - $totalStatutoryDeductions;
+        $netTaxableIncome = $grossSalary - $totalStatutoryDeductions;
 
-        // Simple tax computation (15% for amounts over 20,833) - only apply on 16-30 or monthly
+        $totalTaxableIncome = $netTaxableIncome + $previousNet;
+
         $withholdingTax = 0;
-        if ($applyDeductions && $netTaxableIncome > 20833) {
-            $withholdingTax = round(($netTaxableIncome - 20833) * 0.15, 2);
+        if ($applyDeductions) {
+            // We use the cumulative taxable income (1st half + 2nd half)
+            // to find the correct Monthly Bracket in your TaxService.
+            $withholdingTax = $this->taxService->compute($totalTaxableIncome);
         }
 
         // Calculate total deductions
@@ -89,7 +133,7 @@ class MonthlyPayslipService
         // Calculate net pay
         // Net Pay = Gross Taxable Salary + Holiday Pay - Total Deductions
         // Note: Holiday pay is non-taxable, so it's added after tax calculations
-        $netPay = $grossTaxableSalary - $totalDeductions + $totalHolidayPay;
+        $netPay = $grossSalary - $totalDeductions + $totalHolidayPay;
 
         return [
             'employee' => $employee,
@@ -108,6 +152,16 @@ class MonthlyPayslipService
                 'late_minutes' => $totalLateMinutes,
                 'total_overtime' => $totalOvertimePay
             ],
+            'previous_payroll' => [
+                'previous_WorkDays' => $previousWorkDays,
+                'previous_WorkHours' => $previousWorkHours,
+                'previousGrossSalary' => $previousGrossSalary,
+                'previousOvertimePay' => $previousOvertimePay,
+                'previousLateDeductions' => $previousLateDeductions,
+                'previousHolidayPay' => $previousHolidayPay,
+                'previousNightDifferential' => $previousNightDifferential,
+                'previousLateMinutes' => $previousLateMinutes,
+            ],
             'rates' => [
                 'daily' => $dailyRate,
                 'monthly' => $monthlyRate,
@@ -118,7 +172,8 @@ class MonthlyPayslipService
                 'overtime_pay' => $totalOvertimePay,
                 'holiday_pay' => $totalHolidayPay,
                 'night_differential' => $totalNightDifferential,
-                'gross_taxable_salary' => $grossTaxableSalary,
+                'gross_salary' => $grossSalary,
+                'taxable_income' => $totalTaxableIncome,
             ],
             'deductions' => [
                 'sss' => $contributions['sss']['employee'],
