@@ -347,7 +347,7 @@
                 @endif
                 <tr class="total-row">
                     <td colspan="2"><strong>GROSS SALARY</strong></td>
-                    <td class="amount"><strong>₱{{ number_format($payslipData['earnings']['gross_salary'], 2) }}</strong></td>
+                    <td class="amount"><strong>₱{{ number_format($payslipData['earnings']['gross_taxable_salary'], 2) }}</strong></td>
                 </tr>
             </table>
             @if($payslipData['period']['start_date'] != \Carbon\Carbon::now()->startOfMonth()->toDateString())
@@ -372,9 +372,14 @@
                         <td colspan="2">Night Differentials</td>
                         <td class="amount">₱{{ number_format($payslipData['previous_payroll']['previousNightDifferential'], 2) }}</td>
                     </tr>
+                    <tr>
+                        <td colspan="2">Previous Gross Salary</td>
+                        <td class="amount">₱{{ number_format($payslipData['previous_payroll']['previousGrossSalary'], 2) }}</td>
+                    </tr>
+
                     <tr class="total-row">
-                        <td colspan="2"><strong>PREVIOUS GROSS SALARY</strong></td>
-                        <td class="amount"><strong>₱{{ number_format($payslipData['previous_payroll']['previousGrossSalary'], 2) }}</strong></td>
+                        <td colspan="2"><strong>PREVIOUS NET SALARY</strong></td>
+                        <td class="amount"><strong>₱{{ number_format($payslipData['previous_payroll']['previousNet'], 2) }}</strong></td>
                     </tr>
                 </table>
             @endif
@@ -423,7 +428,7 @@
                 </tr>
                 <tr>
                     <td colspan="2">GROSS PAY</td>
-                    <td class="amount">₱{{ number_format($payslipData['earnings']['gross_salary'], 2) }}</td>
+                    <td class="amount">₱{{ number_format($payslipData['earnings']['gross_taxable_salary'], 2) }}</td>
                 </tr>
                 <tr>
                     <td colspan="2">GROSS DEDUCTIONS</td>
