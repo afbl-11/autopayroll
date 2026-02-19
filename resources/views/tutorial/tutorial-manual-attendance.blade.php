@@ -6,8 +6,8 @@
             <li><a class="v" href="{{ route('tutorial.tutorial') }}">Admin Dashboard & Settings</a></li>
             <li><a class="a"href="{{ route('tutorial.manual-attendance') }}">Attendance</a></li>
             <li><a class="v"href="">Leave & Credit Management</a></li>
-            <li><a class="v"href="">Employee and Client Management</a></li>
-            <li><a class="v" href="">Salary & Tax Management</a></li>
+       {{-- <li><a class="v"href="">Employee and Client Management</a></li> --}}
+            <li><a class="v" href="{{ route('tutorial.salary') }}">Salary & Tax Management</a></li>
         </ul>
     </div>
 

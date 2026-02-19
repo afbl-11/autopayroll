@@ -3,28 +3,40 @@
 
     <div class="links">
         <ul>
-            <li><a class="a" href="{{ route('tutorial.tutorial') }}">Admin Dashboard & Settings</a></li>
+            <li><a class="v" href="{{ route('tutorial.settings') }}">Admin Dashboard & Settings</a></li>
             <li><a class="v"href="{{ route('tutorial.attendance') }}">Attendance</a></li>
             <li><a class="v"href="">Leave & Credit Management</a></li>
        {{-- <li><a class="v"href="">Employee and Client Management</a></li> --}}
-            <li><a class="v" href="{{ route('tutorial.salary') }}">Salary & Tax Management</a></li>
+            <li><a class="a" href="{{ route('tutorial.salary') }}">Salary & Tax Management</a></li>
         </ul>
     </div>
 
     <div class="content">
         <div class="bar">
-        <a href="{{ route('tutorial.tutorial') }}" class="p">Dashboard Guide</a>
-        <a href="{{ route('tutorial.settings') }}" class="s">Settings Guide</a>
+        <a href="{{ route('tutorial.salary') }}" class="p">Salary Management Guide</a>
+        <a href="{{ route('tutorial.tax') }}" class="s">Tax Management Guide</a>
         </div>
-        <p class="titles">Dashboard</p>
-        <img class="pic1" src="{{ asset('assets/tutorial/admin-dashboard_upper-2.png') }}" alt="Guide">
-        <p class="sentence"><span class="k">T</span>he dashboard page presents the summary of the overall operations of the registered company, including the total number of employees, overall payroll costs, and manpower distribution. <br> <br> <i>Note: It is also the first page you will see upon logging in into this website.</i></p>
+        <p class="titles">Salary Management</p>
+        <img class="pic1" src="{{ asset('assets/tutorial/salary-1.png') }}" alt="Guide">
+        <p class="sentence"><span class="k">T</span>he Salary Management page is used to set or update an employee’s daily rate.</p>
         <br>
-        <img class="pic1" src="{{ asset('assets/tutorial/requests.png') }}" alt="Guide">
-        <p class="sentence">In addition, it also displays the pending requests submitted by employees.</p>
+        <img class="pic1" src="{{ asset('assets/tutorial/salary-2.png') }}" alt="Guide">
+        <p class="sentence">You can find the Salary Management page by pressing first that icon in the sidebar.</p>
+        <br>        
+        <img class="pic1" src="{{ asset('assets/tutorial/salary-3.png') }}" alt="Guide">
+        <p class="sentence">In using its feature, you must first click <b>Update</b>.</p>
         <br>
-        <img class="pic1" src="{{ asset('assets/tutorial/highlighted-requests.png') }}" alt="Guide">
-        <p class="sentence">These requests are clickable, which can redirect you to the details of those specificied requests for approval.</p>
+        <img class="pic1" src="{{ asset('assets/tutorial/salary-4.png') }}" alt="Guide">
+        <p class="sentence">A modal will appear that will allow you to edit the employee’s daily rate and set the effectivity of the edit.</p>
+        <br>
+        <img class="pic1" src="{{ asset('assets/tutorial/salary-5.png') }}" alt="Guide">
+        <p class="sentence">Afterwards, if edited, Click <b>Save</b>.</p>
+        <br>
+        <img class="pic1" src="{{ asset('assets/tutorial/salary-6.png') }}" alt="Guide">
+        <p class="sentence">Afterwards, you will be located to the employee’s profile, which you will scroll down to view their Salary History, which encapsulates your edit. <br> <br> <i>Note: The edit button and the add new rate buttons functions the same way as the Update button in the Salary Management page.</i></p>
+        <br>
+        <img class="pic1" src="{{ asset('assets/tutorial/salary-7.png') }}" alt="Guide">
+        <p class="sentence">Go back to the Salary Management page and you will see that the edited daily rate will be displayed alongside its effectivity date.</p>
         <br>
     </div>
 
