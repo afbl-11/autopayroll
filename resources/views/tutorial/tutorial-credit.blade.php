@@ -3,9 +3,9 @@
 
     <div class="links">
         <ul>
-            <li><a class="a" href="{{ route('tutorial.settings') }}">Admin Dashboard & Settings</a></li>
+            <li><a class="v" href="{{ route('tutorial.tutorial') }}">Admin Dashboard & Settings</a></li>
             <li><a class="v"href="{{ route('tutorial.attendance') }}">Attendance</a></li>
-            <li><a class="v"href="{{ route('tutorial.leave') }}">Leave & Credit Management</a></li>
+            <li><a class="a"href="{{ route('tutorial.credit') }}">Leave & Credit Management</a></li>
        {{-- <li><a class="v"href="">Employee and Client Management</a></li> --}}
             <li><a class="v" href="{{ route('tutorial.salary') }}">Salary & Tax Management</a></li>
         </ul>
@@ -13,39 +13,51 @@
 
     <div class="content">
         <div class="bar">
-        <a href="{{ route('tutorial.tutorial') }}" class="p">Dashboard Guide</a>
-        <a href="{{ route('tutorial.settings') }}" class="s">Settings Guide</a>
+        <a href="{{ route('tutorial.leave') }}" class="p">Leave Management Guide</a>
+        <a href="{{ route('tutorial.credit') }}" class="s">Credit Adjustment Guide</a>
         </div>
-        <p class="titles">Settings</p>
-        <img class="pic1" src="{{ asset('assets/tutorial/settings-1.png') }}" alt="Guide">
-        <p class="sentence"><span class="k">T</span>he settings page allows you to edit your profile information, including your profile picture, name, and company name.</p>
+        <p class="titles">Leave Management</p>
+        <img class="pic1" src="{{ asset('assets/tutorial/credit-3.png') }}" alt="Guide">
+        <p class="sentence"><span class="k">T</span>he credit adjustment functionality on the website allows you to apply employee-requested adjustments and either approve or reject them.</p>
         <br>
-        <img class="pic1" src="{{ asset('assets/tutorial/settings-location.png') }}" alt="Guide">
-        <p class="sentence">You can find the settings page by pressing that icon in the sidebar.</p>
+        <img class="pic1" src="{{ asset('assets/tutorial/credit-1.png') }}" alt="Guide">
+        <p class="sentence">To start, scroll down to the Adjustment Requests in the Admin Dashboard.</p>
+        <br>
+        <img class="pic1" src="{{ asset('assets/tutorial/credit-2.png') }}" alt="Guide">
+        <p class="sentence">Select a certain adjustment request.</p>
         <br>        
-        <img class="pic1" src="{{ asset('assets/tutorial/settings-2.png') }}" alt="Guide">
-        <p class="sentence">For changing your profile picture, click <b>Change Photo</b>, which will allows you to choose and upload a picture, and click <b>Save Changes</b>.</p>
+        <img class="pic1" src="{{ asset('assets/tutorial/credit-3.png') }}" alt="Guide">
+        <p class="sentence">You will be redirected to the Credit Adjustments Page.</p>
         <br>
-        <img class="pic1" src="{{ asset('assets/tutorial/settings-3.png') }}" alt="Guide">
-        <p class="sentence">For changing your profile details, change the displayed information on the input and select dropdown fields, which you inputted when you are registering your account, and click <b>Save Changes</b>.</p>
+        <img class="pic1" src="{{ asset('assets/tutorial/credit-4.png') }}" alt="Guide">
+        <p class="sentence">Select a certain adjustment request here.</p>
         <br>
-        <img class="pic1" src="{{ asset('assets/tutorial/settings-4.png') }}" alt="Guide">
-        <p class="sentence">For deleting your account, click <b>Delete Account</b>.</p>
+        <img class="pic1" src="{{ asset('assets/tutorial/credit-5.png') }}" alt="Guide">
+        <p class="sentence">You can see the adjustment request details.</p>
         <br>
-        <img class="pic1" src="{{ asset('assets/tutorial/settings-5.png') }}" alt="Guide">
-        <p class="sentence">A modal will appear that will let you to enter your password first, before pressing <b>Confirm</b> to delete your account.</p>
+        <img class="pic1" src="{{ asset('assets/tutorial/credit-6.png') }}" alt="Guide">
+        <p class="sentence">In this part, you can either Approve or Reject. If you want to reject it just click <b>Reject</b>.</p>
         <br>
-        <img class="pic1" src="{{ asset('assets/tutorial/settings-6.png') }}" alt="Guide">
-        <p class="sentence">For changing your password, click <b>Change Password</b>.</p>
+        <img class="pic1" src="{{ asset('assets/tutorial/credit-7.png') }}" alt="Guide">
+        <p class="sentence">If you want to approve the request, you need to apply first the adjustment. Thus, to get out of the modal, click the shadow part behind the modal. </p>
         <br>
-        <img class="pic1" src="{{ asset('assets/tutorial/settings-7.png') }}" alt="Guide">
-        <p class="sentence">You will be redirected to the Change Password page, where you must enter your current password before your new password. Re-enter the new password in the Confirm Password input field before pressing <b>Confirm</b>.</p>
+        <img class="pic1" src="{{ asset('assets/tutorial/credit-8.png') }}" alt="Guide">
+        <p class="sentence">Select the request and select the adjustment type that will be applied.</p>
+        <br>        
+        <img class="pic1" src="{{ asset('assets/tutorial/credit-9.png') }}" alt="Guide">
+        <p class="sentence">Enter the Log Date Affected and the Time-Out log requested to be adjusted.</p>
         <br>
-        <img class="pic1" src="{{ asset('assets/tutorial/settings-8.png') }}" alt="Guide">
-        <p class="sentence">For changing your company location, click <b>Change Location</b>.</p>
+        <img class="pic1" src="{{ asset('assets/tutorial/credit-10.png') }}" alt="Guide">
+        <p class="sentence">Click <b>Apply</b>.</p>
         <br>
-        <img class="pic1" src="{{ asset('assets/tutorial/settings-9.png') }}" alt="Guide">
-        <p class="sentence">You will be redirected to the Change Location page, where you will input your company's new location through the provided input and select dropdown fields before clicking <b>Change Location</b>.</p>
+        <img class="pic1" src="{{ asset('assets/tutorial/credit-11.png') }}" alt="Guide">
+        <p class="sentence">Go back to the modal and click <b>Approve</b>.</p>
+        <br>
+        <img class="pic1" src="{{ asset('assets/tutorial/credit-12.png') }}" alt="Guide">
+        <p class="sentence">The adjustment has been approved and is not displayed anymore in the Credit Adjustment page.</p>
+        <br>
+        <img class="pic1" src="{{ asset('assets/tutorial/credit-13.png') }}" alt="Guide">
+        <p class="sentence">However, the status of the adjustment will be displayed in the credit adjustment pages of both the mobile application and the employee website of the system.</p>
         <br>
     </div>
 

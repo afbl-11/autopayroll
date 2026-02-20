@@ -1,11 +1,11 @@
 
-<x-app title="Guide">
+<x-app title="Technical Guide">
 
     <div class="links">
         <ul>
             <li><a class="a" href="{{ route('tutorial.tutorial') }}">Admin Dashboard & Settings</a></li>
             <li><a class="v"href="{{ route('tutorial.attendance') }}">Attendance</a></li>
-            <li><a class="v"href="">Leave & Credit Management</a></li>
+            <li><a class="v"href="{{ route('tutorial.leave') }}">Leave & Credit Management</a></li>
        {{-- <li><a class="v"href="">Employee and Client Management</a></li> --}}
             <li><a class="v" href="{{ route('tutorial.salary') }}">Salary & Tax Management</a></li>
         </ul>
@@ -146,5 +146,99 @@
     border-left: 0px solid lightgray;
     padding-right: 10px;
     padding-left: 0px;
+}
+@media (max-width: 1300px) {
+    .pic1 {
+        width: 600px;
+    }
+    .links a {
+        font-size: 12px;
+    }
+    .links, .content {
+        margin-left: 25px;
+    }
+}
+
+@media (max-width: 1100px) {
+    .pic1 {
+        width: 500px;
+    }
+    .links ul{
+        gap: 30px;
+    }
+    .links a {
+        font-size: 11px;
+    }
+    .links, .content {
+        margin-left: 45px;
+    }
+}
+
+@media (max-width: 950px) {
+    .pic1 {
+        width: 100%;
+    }    
+}
+
+@media (max-width: 900px) {
+    .links {
+        width: 85%;
+        text-align: center;
+    }
+    .links a {
+        padding: 5px;
+    }
+}
+
+@media (max-width: 700px) {
+    .links {
+        width: 82%;
+        text-align: center;
+    }
+    .links ul{
+        gap: 20px;
+    }
+    .links a {
+        font-size: 10px;
+    }
+    .links, .content {
+        margin-left: 75px;
+    }
+    .s, .p {
+        font-size: 11px;
+    }
+}
+@media (max-width: 675px) {
+    .links {
+        width: 75%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        height: auto;
+    }
+    .links ul{
+        flex-direction: column;
+        gap: 8px;
+        align-items: center;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    .links a {
+        font-size: 12px;
+    }
+}
+@media (max-width: 480px) {
+    .links a {
+        font-size: 10px;
+    }    
+    .links {
+        width: 70%;
+    }
+    .content {
+        width: 65%;
+    }
+    .bar {
+        margin-right: -25px;
+    }
 }
 </style>
