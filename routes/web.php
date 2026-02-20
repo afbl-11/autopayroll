@@ -418,6 +418,11 @@ Route::view('/tutorial/salary', 'tutorial.tutorial-salary')
 ->name('tutorial.salary');
 Route::view('/tutorial/tax', 'tutorial.tutorial-tax')
 ->name('tutorial.tax');
+Route::view('/tutorial/leave', 'tutorial.tutorial-leave')
+->name('tutorial.leave');
+Route::view('/tutorial/credit', 'tutorial.tutorial-credit')
+->name('tutorial.credit');
+
 //Employee Web Stuff
 Route::post('/employee/announcement/delete/{id}', [\App\Http\Controllers\EmployeeWeb\AnnouncementController::class, 'deleteAnnouncement'])
     ->name('employee.delete.announcement');
@@ -454,6 +459,22 @@ Route::get('/employee/credit-adjustment',[\App\Http\Controllers\EmployeeWeb\Cred
 
 Route::post('/employee/request/adjustment/', [\App\Http\Controllers\EmployeeWeb\CreditAdjustmentController::class, 'sendAdjustmentRequest'])
     ->name('employee_web.adjustment.request');
+
+Route::prefix('employee/tutorial')->name('employee.tutorial.')->group(function () {
+
+    Route::view('/credit', 'employee_web.tutorial.tutorial-credit')
+        ->name('credit');
+
+    Route::view('/leave', 'employee_web.tutorial.tutorial-leave')
+        ->name('leave');
+
+    Route::view('/payslip', 'employee_web.tutorial.tutorial-payslip')
+        ->name('payslip');
+
+    Route::view('/settings', 'employee_web.tutorial.tutorial-settings')
+        ->name('settings');
+
+});
 
 //firebase cloud messaging
 Route::get('/test-fcm', function () {

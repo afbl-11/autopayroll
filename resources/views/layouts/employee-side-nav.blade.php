@@ -58,6 +58,15 @@
                     <span class="link-text">Settings</span>
                 </a>
             </li>
+
+            <li class="nav-item">
+                <a href="{{route('employee.tutorial.settings')}}" class="nav-link">
+                    <img src="{{ asset('assets/navigations/guide-3.png') }}" alt="Guide">
+                    <span class="link-text">Guide</span>
+                </a>
+            </li>
+
+
         </ul>
     </nav>
 

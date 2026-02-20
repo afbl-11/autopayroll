@@ -3,9 +3,9 @@
 
     <div class="links">
         <ul>
-            <li><a class="a" href="{{ route('tutorial.settings') }}">Admin Dashboard & Settings</a></li>
+            <li><a class="v" href="{{ route('tutorial.tutorial') }}">Admin Dashboard & Settings</a></li>
             <li><a class="v"href="{{ route('tutorial.attendance') }}">Attendance</a></li>
-            <li><a class="v"href="{{ route('tutorial.leave') }}">Leave & Credit Management</a></li>
+            <li><a class="a"href="{{ route('tutorial.leave') }}">Leave & Credit Management</a></li>
        {{-- <li><a class="v"href="">Employee and Client Management</a></li> --}}
             <li><a class="v" href="{{ route('tutorial.salary') }}">Salary & Tax Management</a></li>
         </ul>
@@ -13,39 +13,30 @@
 
     <div class="content">
         <div class="bar">
-        <a href="{{ route('tutorial.tutorial') }}" class="p">Dashboard Guide</a>
-        <a href="{{ route('tutorial.settings') }}" class="s">Settings Guide</a>
+        <a href="{{ route('tutorial.leave') }}" class="p">Leave Management Guide</a>
+        <a href="{{ route('tutorial.credit') }}" class="s">Credit Adjustment Guide</a>
         </div>
-        <p class="titles">Settings</p>
-        <img class="pic1" src="{{ asset('assets/tutorial/settings-1.png') }}" alt="Guide">
-        <p class="sentence"><span class="k">T</span>he settings page allows you to edit your profile information, including your profile picture, name, and company name.</p>
+        <p class="titles">Leave Management</p>
+        <img class="pic1" src="{{ asset('assets/tutorial/leave-management.png') }}" alt="Guide">
+        <p class="sentence"><span class="k">T</span>he leave management functionality in the website allows you to assign the status of the leaves filed by the employee.</p>
         <br>
-        <img class="pic1" src="{{ asset('assets/tutorial/settings-location.png') }}" alt="Guide">
-        <p class="sentence">You can find the settings page by pressing that icon in the sidebar.</p>
+        <img class="pic1" src="{{ asset('assets/tutorial/leave-1.png') }}" alt="Guide">
+        <p class="sentence">To start, scroll down to the Leave Requests in the Admin Dashboard.</p>
+        <br>
+        <img class="pic1" src="{{ asset('assets/tutorial/leave-2.png') }}" alt="Guide">
+        <p class="sentence">Select a certain leave request.</p>
         <br>        
-        <img class="pic1" src="{{ asset('assets/tutorial/settings-2.png') }}" alt="Guide">
-        <p class="sentence">For changing your profile picture, click <b>Change Photo</b>, which will allows you to choose and upload a picture, and click <b>Save Changes</b>.</p>
+        <img class="pic1" src="{{ asset('assets/tutorial/leave-3.png') }}" alt="Guide">
+        <p class="sentence">It will redirect you to the leave details such as the employee who filed it.</p>
         <br>
-        <img class="pic1" src="{{ asset('assets/tutorial/settings-3.png') }}" alt="Guide">
-        <p class="sentence">For changing your profile details, change the displayed information on the input and select dropdown fields, which you inputted when you are registering your account, and click <b>Save Changes</b>.</p>
+        <img class="pic1" src="{{ asset('assets/tutorial/leave-4.png') }}" alt="Guide">
+        <p class="sentence">Scroll down and you can see the supporting document for the leave request, along with the options to approve, request revision, or reject the filed leave.</p>
         <br>
-        <img class="pic1" src="{{ asset('assets/tutorial/settings-4.png') }}" alt="Guide">
-        <p class="sentence">For deleting your account, click <b>Delete Account</b>.</p>
+        <img class="pic1" src="{{ asset('assets/tutorial/leave-5.png') }}" alt="Guide">
+        <p class="sentence">Once you decided the status of the filed leave, Click <b>Leave Request</b>. </p>
         <br>
-        <img class="pic1" src="{{ asset('assets/tutorial/settings-5.png') }}" alt="Guide">
-        <p class="sentence">A modal will appear that will let you to enter your password first, before pressing <b>Confirm</b> to delete your account.</p>
-        <br>
-        <img class="pic1" src="{{ asset('assets/tutorial/settings-6.png') }}" alt="Guide">
-        <p class="sentence">For changing your password, click <b>Change Password</b>.</p>
-        <br>
-        <img class="pic1" src="{{ asset('assets/tutorial/settings-7.png') }}" alt="Guide">
-        <p class="sentence">You will be redirected to the Change Password page, where you must enter your current password before your new password. Re-enter the new password in the Confirm Password input field before pressing <b>Confirm</b>.</p>
-        <br>
-        <img class="pic1" src="{{ asset('assets/tutorial/settings-8.png') }}" alt="Guide">
-        <p class="sentence">For changing your company location, click <b>Change Location</b>.</p>
-        <br>
-        <img class="pic1" src="{{ asset('assets/tutorial/settings-9.png') }}" alt="Guide">
-        <p class="sentence">You will be redirected to the Change Location page, where you will input your company's new location through the provided input and select dropdown fields before clicking <b>Change Location</b>.</p>
+        <img class="pic1" src="{{ asset('assets/tutorial/leave-6.png') }}" alt="Guide">
+        <p class="sentence">It will display the employee’s leave request list along with the status you assigned, which is shown on the far-right side of each request.</p>
         <br>
     </div>
 
