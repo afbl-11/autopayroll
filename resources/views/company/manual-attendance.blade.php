@@ -827,15 +827,17 @@ createDateForm.addEventListener('submit', async (e) => {
 
         // Set mode to create
         mode = "create";
-        lockControls(true);
 
+        setModeUI();
+        lockControls(true);
+        updateTimeInputsState();
         // Enable status buttons in create mode
         document.querySelectorAll(".status-btn").forEach(btn => {
             btn.style.pointerEvents = "auto";
             btn.style.cursor = "pointer";
         });
 
-        setModeUI();
+        // lockControls(true);
 
         // Close modal
         createDateModal.style.display = 'none';
