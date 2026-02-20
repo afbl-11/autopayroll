@@ -86,6 +86,14 @@
                 </a>
             </li>
 
+            <li class="nav-item-4">
+                <a href="{{ route('tutorial.tutorial') }}"
+                   class="nav-link {{ request()->routeIs('tutorial.tutorial') ? 'active' : '' }}">
+                    <img src="{{ asset('assets/navigations/guide-2.png') }}" alt="Guide">
+                    <span class="link-text">Guide</span>
+                </a>
+            </li>
+
         </ul>
     </div>
 
