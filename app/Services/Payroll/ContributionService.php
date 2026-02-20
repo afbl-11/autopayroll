@@ -1,51 +1,58 @@
 <?php
+
 namespace App\Services\Payroll;
 
 use App\Models\PagIbigVersion;
 use App\Models\PhilhealthRate;
 use App\Models\SssVersionsTable;
 
-// Add your SSS and PhilHealth models here
-// use App\Models\SssVersion;
-// use App\Models\PhilHealthVersion;
-
 class ContributionService
 {
     public function computeAll(float $regularSalary): array
     {
-        // We pass the regular salary to all, but each method
-        // will apply its own specific versioning logic.
-        $sss = $this->computeSSS($regularSalary);
-        $philhealth = $this->computePhilHealth($regularSalary);
-        $pagibig = $this->computePagIbig($regularSalary);
+        try {
+            $sss = $this->computeSSS($regularSalary);
+            $philhealth = $this->computePhilHealth($regularSalary);
+            $pagibig = $this->computePagIbig($regularSalary);
 
-        return [
-            'sss' => $sss,
-            'philhealth' => $philhealth,
-            'pagibig' => $pagibig,
-            'total_employee' => round($sss['employee'] + $philhealth['employee'] + $pagibig['employee'], 2),
-            'total_employer' => round($sss['employer'] + $philhealth['employer'] + $pagibig['employer'], 2),
-            'total_contribution' => round($sss['total'] + $philhealth['total'] + $pagibig['total'], 2),
-        ];
+            return [
+                'sss' => $sss,
+                'philhealth' => $philhealth,
+                'pagibig' => $pagibig,
+                'total_employee' => round($sss['employee'] + $philhealth['employee'] + $pagibig['employee'], 2),
+                'total_employer' => round($sss['employer'] + $philhealth['employer'] + $pagibig['employer'], 2),
+                'total_contribution' => round($sss['total'] + $philhealth['total'] + $pagibig['total'], 2),
+            ];
+        } catch (\Throwable $e) {
+            // This will intercept the 500 error and show you the culprit
+            dd([
+                'error' => $e->getMessage(),
+                'file'  => $e->getFile(),
+                'line'  => $e->getLine(),
+                'trace' => $e->getTraceAsString()
+            ]);
+        }
     }
-
     /**
-     * Compute Pag-IBIG based on the Active Version in DB
+     * Compute Pag-IBIG
      */
     public function computePagIbig(float $salary): array
     {
         $policy = PagIbigVersion::where('status', 'active')->first();
 
-        // Fallback to 2026 standard if DB is empty
-        $cap = $policy->salary_cap ?? 10000.00;
-        $eeRateAbove = $policy->employee_rate_above_threshold ?? 0.02;
-        $erRate = $policy->employer_rate ?? 0.02;
+        // Use Null-safe operator ?-> to prevent 500 error if $policy is null
+        $cap = (float) ($policy?->salary_cap ?? 10000.00);
+        $eeRate = (float) ($policy?->employee_rate_above_threshold ?? 0.02);
+        $erRate = (float) ($policy?->employer_rate ?? 0.02);
 
-        // Logic: Basis is salary capped at the MFS Cap
         $basis = min($salary, $cap);
 
-        $ee = $basis * $eeRateAbove;
-        $er = $basis * $erRate;
+        // Ensure rate is treated as decimal (e.g., 2% = 0.02)
+        $actualEeRate = $eeRate > 1 ? $eeRate / 100 : $eeRate;
+        $actualErRate = $erRate > 1 ? $erRate / 100 : $erRate;
+
+        $ee = $basis * $actualEeRate;
+        $er = $basis * $actualErRate;
 
         return [
             'employee' => round($ee, 2),
@@ -55,18 +62,20 @@ class ContributionService
     }
 
     /**
-     * Compute PhilHealth (2026 standard: 5% shared equally)
+     * Compute PhilHealth
      */
     public function computePhilHealth(float $salary): array
     {
         $policy = PhilhealthRate::where('status', 'active')->first();
 
-        // 2026 Standard Fallbacks
-        $rate = $policy->premium_rate ?? 0.05;
-        $minSalary = $policy->salary_floor ?? 10000.00;
-        $maxSalary = $policy->salary_ceiling ?? 100000.00;
+        // Null-safe defaults
+        $rawRate = (float) ($policy?->premium_rate ?? 0.05);
+        $minSalary = (float) ($policy?->salary_floor ?? 10000.00);
+        $maxSalary = (float) ($policy?->salary_ceiling ?? 100000.00);
 
-        // Apply PhilHealth Floor and Ceiling
+        // Handle if DB has "5.00" instead of "0.05"
+        $rate = $rawRate > 1 ? $rawRate / 100 : $rawRate;
+
         $basis = $salary;
         if ($basis < $minSalary) $basis = $minSalary;
         if ($basis > $maxSalary) $basis = $maxSalary;
@@ -82,38 +91,37 @@ class ContributionService
     }
 
     /**
-     * Compute SSS based on Salary Brackets
+     * Compute SSS
      */
     public function computeSSS(float $salary): array
     {
-        // 1. Get the active version
-        $activeVersion = \App\Models\SssVersionsTable::where('status', 'active')
-            ->with(['brackets' => function($query) {
-                $query->orderBy('min_salary', 'asc');
-            }])
+        $activeVersion = SssVersionsTable::where('status', 'active')
+            ->with(['brackets' => fn($q) => $q->orderBy('min_salary', 'asc')])
             ->first();
 
-        if (!$activeVersion) return ['employee' => 0, 'employer' => 0, 'total' => 0];
-
-        // 2. Find the correct bracket
-        $matchedBracket = null;
-        foreach ($activeVersion->brackets as $bracket) {
-            $max = $bracket->max_salary ?? INF;
-            if ($salary >= $bracket->min_salary && $salary <= $max) {
-                $matchedBracket = $bracket;
-                break;
-            }
+        if (!$activeVersion) {
+            return ['employee' => 0, 'employer' => 0, 'total' => 0];
         }
 
-        if (!$matchedBracket) return ['employee' => 0, 'employer' => 0, 'total' => 0];
+        $matchedBracket = $activeVersion->brackets->first(function ($bracket) use ($salary) {
+            $max = $bracket->max_salary ?? INF;
+            return $salary >= $bracket->min_salary && $salary <= $max;
+        });
 
-        // 3. Calculate based on MSC (Monthly Salary Credit)
-        // MSC is the basis for the percentage
+        if (!$matchedBracket) {
+            return ['employee' => 0, 'employer' => 0, 'total' => 0];
+        }
+
         $msc = (float) $matchedBracket->msc_amount;
 
-        // Standard 2026 Rates: EE (4.5%) and ER (9.5%)
-        $eeShare = $msc * $activeVersion->ee_rate;
-        $erShare = ($msc * $activeVersion->er_rate) + (float)$matchedBracket->ec_er_share; // Add the EC contribution to ER
+        // Ensure rates are decimals
+        $eeRate = (float) $activeVersion->ee_rate;
+        $erRate = (float) $activeVersion->er_rate;
+        $eeRate = $eeRate > 1 ? $eeRate / 100 : $eeRate;
+        $erRate = $erRate > 1 ? $erRate / 100 : $erRate;
+
+        $eeShare = $msc * $eeRate;
+        $erShare = ($msc * $erRate) + (float)($matchedBracket->ec_er_share ?? 0);
 
         return [
             'employee' => round($eeShare, 2),
