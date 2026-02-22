@@ -39,6 +39,20 @@ class LeaveRequestController extends Controller
             ], 422);
         }
 
+        $exists = LeaveRequest::where('employee_id', $employee->employee_id)
+            ->where(function ($query) use ($request) {
+                $query->where('start_date', '<=', $request->end_date)
+                    ->where('end_date', '>=', $request->start_date);
+            })
+            ->exists();
+
+        if ($exists) {
+            return response()->json([
+                'success' => false,
+                'message' => 'You already have a leave request during this period.'
+            ],422);
+        }
+
         $attachmentPath = null;
         if ($request->hasFile('attachment')) {
             $attachmentPath = $request->file('attachment')->store('leave_attachments', 'public');

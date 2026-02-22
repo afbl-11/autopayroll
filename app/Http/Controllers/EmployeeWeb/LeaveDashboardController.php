@@ -69,6 +69,17 @@ class LeaveDashboardController extends Controller
            'attachment' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
 
+        $exists = LeaveRequest::where('employee_id', $employee->employee_id)
+            ->where(function ($query) use ($request) {
+                $query->where('start_date', '<=', $request->end_date)
+                    ->where('end_date', '>=', $request->start_date);
+            })
+            ->exists();
+
+        if ($exists) {
+            return back()->with(['success' => 'You already have a leave request during this period.']);
+        }
+
         if ($request->hasFile('attachment')) {
             $validated['attachment'] = $request->file('attachment')->store('leave_attachments', 'public');
         }
