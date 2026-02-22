@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\PagibigVersion;
+use App\Models\PagIbigVersion;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
