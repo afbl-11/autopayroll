@@ -73,7 +73,7 @@
             <li class="nav-item-4">
                 <a href="{{ route('deductions.tax') }}"
                    class="nav-link {{ request()->routeIs('deductions.*') ? 'active' : '' }}">
-                    <img src="{{ asset('assets/navigations/salary.png') }}" alt="Deductions">
+                    <img src="{{ asset('assets/navigations/tax.png') }}" alt="Deductions">
                     <span class="link-text">Tax & Deductions</span>
                 </a>
             </li>

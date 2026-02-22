@@ -16,7 +16,7 @@
         <a href="{{ route('tutorial.leave') }}" class="p">Leave Management Guide</a>
         <a href="{{ route('tutorial.credit') }}" class="s">Credit Adjustment Guide</a>
         </div>
-        <p class="titles">Leave Management</p>
+        <p class="titles">Credit Adjustment</p>
         <img class="pic1" src="{{ asset('assets/tutorial/credit-3.png') }}" alt="Guide">
         <p class="sentence"><span class="k">T</span>he credit adjustment functionality on the website allows you to apply employee-requested adjustments and either approve or reject them.</p>
         <br>
