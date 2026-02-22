@@ -10,7 +10,7 @@ class PagIbigController extends Controller
 {
     public function index(Request $request)
     {
-        $versions = PagibigVersion::orderBy('effective_date', 'desc')->get();
+        $versions = PagIbigVersion::orderBy('effective_date', 'desc')->get();
 
         // If a specific version is requested via ?version=ID, show that.
         // Otherwise, show the currently active one.

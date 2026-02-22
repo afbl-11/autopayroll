@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PagibigVersion extends Model
+class PagIbigVersion extends Model
 {
 
     protected $table = 'pagibig_versions';
