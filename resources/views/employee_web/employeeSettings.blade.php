@@ -8,7 +8,7 @@
     <main class="main-content p-4">
         
             <div class="row mb-4">
-                <div class="col-12">
+                <div class="col-12" id="head_1">
                     <h2 class="fw-bold mb-1" style="color: var(--clr-primary);">Settings</h2>
                     <p class="text-muted mb-0">Edit your profile information here.</p>
                 </div>
@@ -219,11 +219,6 @@
         padding-bottom: 50px;
         transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1),
                     width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .main-content.main-content-expanded {
-        margin-left: var(--sidebar-width-expanded);
-        width: calc(100% - var(--sidebar-width-expanded));
     }
 
     .settings-wrapper {
@@ -502,14 +497,15 @@
     @media (max-width: 480px) {
         .main-content,
         .main-content.main-content-expanded {
-            width: 85% !important;
+            margin-left: 0px !important;
+            width: 100% !important;
         }
         .mb-1 {
             font-size: 30px;
         }
         .settings-wrapper {
-            width: 85%;
-            margin-left: 25px;
+            width: 100%;
+            margin-left: 0px;
         }
         .upload-btn{
             font-size: 11px;
@@ -520,23 +516,11 @@
             margin-left: 5px;
         }
         .form-group {
-            width: 88%;
+            width: 100%;
+        }
+        #head_1 {
+            margin-left: 30px;
         }
     }
-    @media (max-width: 400px) {
-        .main-content,
-        .main-content.main-content-expanded {
-            width: 84% !important;
-            margin-left: 73px !important;
-        }
-        .settings-wrapper {
-            margin-left: 20px;
-        }
-        .profile-photo, .settings-title {
-            margin-left: -9px;
-        }
-        .form-group {
-            width: 71%;
-        }
-    }
+    
 </style>

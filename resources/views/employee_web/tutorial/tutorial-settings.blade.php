@@ -8,7 +8,7 @@
     <main class="main-content p-4">
         
             <div class="row mb-4">
-                <div class="col-12">
+                <div class="col-12" id="head_1">
                     <h2 class="fw-bold mb-1" style="color: var(--clr-primary);">Technical Guide</h2>
                     <p class="text-muted mb-0">Learn how to manage your account.</p>
                 </div>
@@ -61,11 +61,6 @@
         padding-bottom: 50px;
         transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1),
                     width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .main-content.main-content-expanded {
-        margin-left: var(--sidebar-width-expanded);
-        width: calc(100% - var(--sidebar-width-expanded));
     }
     
     .mb-4 {
@@ -200,15 +195,23 @@
 @media (max-width: 480px) {
     .links a {
         font-size: 10px;
-    }    
+    } 
+    #head_1 {
+        margin-left: 35px;
+        width: 85%;
+    }       
     .links {
         width: 70%;
     }
     .content {
-        width:95%;
+        width:100%;
+        margin-left: 0;
     }
     .mb-1 {
         font-size: 30px;
+    }
+    .main-content {
+        width: 100%;
     }
 }
 </style>

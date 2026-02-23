@@ -15,11 +15,6 @@
                 width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.main-content.main-content-expanded {
-    margin-left: var(--sidebar-width-expanded);
-    width: calc(100% - var(--sidebar-width-expanded));
-}
-
 @media (max-width: 800px) {
     .main-content,
     .main-content.main-content-expanded {
@@ -54,7 +49,7 @@
 @media (max-width: 480px) {
     .main-content,
     .main-content.main-content-expanded {
-        width: 72% !important;
+        width: 100% !important;
     }
     .mb-2 {
         font-size: 30px;
@@ -62,12 +57,14 @@
     .announcement-title {
         font-size: 1.2rem;
     }
+    #head_1 {
+        margin-left: 60px;
+    }
 }
 @media (max-width: 400px) {
     .main-content,
     .main-content.main-content-expanded {
         padding: 1rem;
-        width: 67% !important;
     }
 
     .filter-tabs {

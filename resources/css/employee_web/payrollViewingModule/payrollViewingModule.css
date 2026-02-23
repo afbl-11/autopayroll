@@ -17,11 +17,6 @@
                 width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.main-content.main-content-expanded {
-    margin-left: var(--sidebar-width-expanded);
-    width: calc(100% - var(--sidebar-width-expanded));
-}
-
 @media (max-width: 1150px) {
     .main-content, 
     .main-content.main-content-expanded {
@@ -66,7 +61,10 @@
     .main-content, 
     .main-content.main-content-expanded {
         margin-left: 90px !important;
-        width: 80% !important;
+        width: 100% !important;
+    }
+    #head_1 {
+        margin-left: 50px;
     }
 }
 
@@ -74,7 +72,6 @@
     .main-content, 
     .main-content.main-content-expanded {
         margin-left: 82px !important;
-        width: 77% !important;
     }
     .mb-1 {
         font-size: 30px;

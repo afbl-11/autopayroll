@@ -9,7 +9,7 @@
     <main class="main-content p-4">
         <div class="container-fluid">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <div>
+                <div id="head_1">
                     <h2 class="fw-bold mb-1" style="color: var(--clr-primary);">My Payslips</h2>
                     <p class="text-muted mb-0">View and download your payment history.</p>
                 </div>

@@ -149,8 +149,10 @@ img {
     }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 480px) {
     .message-container {
+        margin-left: 0px;
         margin-top: 95px;
+        width: 75%;
     }
 }

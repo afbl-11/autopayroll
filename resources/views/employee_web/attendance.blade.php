@@ -1,16 +1,10 @@
 @vite('resources/css/employee_dashboard/attendance.css')
-<style>
-    .attendanceHeader {
-        width: 100%;
-        margin-left: 10%;
-    }
-</style>
 <x-app  :noHeader="true" :adminNav="false">
 
     @include('layouts.employee-side-nav')
     <section class="main-content">
         <div class="attendanceHeader">
-            <h3>Attendance</h3>
+            <h3 class="h">Attendance</h3>
         </div>
         @forelse ($attendance['logs'] as $log)
             <x-attendance-logs
@@ -31,3 +25,32 @@
 </x-app>
 
 {{--TODO: fool proof everything--}}
+<style>
+    .attendanceHeader {
+        width: 100%;
+    }
+    .h {
+        margin-left: 60px;
+    }
+    @media (max-width: 1150px) {
+        .h {
+            margin-top: 15px;
+            margin-left: 80px;
+        }
+    }
+    @media (max-width: 800px) {
+        .h {
+            margin-left: 90px;
+        }
+    }
+    @media (max-width: 480px) {
+        .h {
+            margin-left: 70px;
+            margin-top: 25px;
+        }
+        .logs-wrapper {
+            width: 90%;
+            margin-left: -15px;
+        }
+    }
+</style>

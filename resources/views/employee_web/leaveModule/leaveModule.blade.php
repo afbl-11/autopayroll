@@ -20,7 +20,7 @@
         <div class="container-fluid p-0">
 
             <div class="row mb-4">
-                <div class="col-12">
+                <div class="col-12" id="head_1">
                     <h2 class="fw-bold mb-1" style="color: var(--clr-primary);">Leave Filing</h2>
                     <p class="text-muted mb-0">Manage and track your leave requests and credits.</p>
                 </div>
