@@ -485,6 +485,7 @@
         .main-content.main-content-expanded {
             margin-left: 75px !important;
             width: 84% !important;
+            margin-bottom: 25px;
         }
         .settings-wrapper {
             width: 85%;
@@ -520,6 +521,7 @@
         }
         #head_1 {
             margin-left: 30px;
+            width: 85%;
         }
     }
     

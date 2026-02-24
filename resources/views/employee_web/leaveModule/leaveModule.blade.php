@@ -310,7 +310,7 @@
 
     <div class="modal fade" id="viewLeaveModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content border-0 shadow-lg" style="border-radius: 20px; overflow: hidden;">
+            <div class="modal-content border-0 shadow-lg" id="modal1" style="border-radius: 20px; overflow: hidden;">
 
                 <!-- Modal Header -->
                 <div class="modal-header bg-warning-subtle text-white p-4" style="border-bottom: none;">
@@ -550,5 +550,42 @@
 
     @keyframes fadeOut {
         to { opacity: 0; transform: translateX(30px); }
+    }
+
+    .mt-3{
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+
+    @media (max-width: 600px) {
+        #modal1 {
+            margin-top: 25px;
+            margin-bottom: 25px;
+            width: 90%;
+            margin-left: 25px;
+        }
+        .main-content {
+            margin-bottom: 25px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        #modal1 {
+            margin-left: 20px;
+            width: 90%;
+            height: 90%;
+        }
+    }
+
+    @media (max-width: 400px) {
+        #modal1 {
+            margin-left: 18px;
+        }
+    }
+
+    @media (max-width: 350px) {
+        #modal1 {
+            margin-left: 17px;
+        }
     }
 </style>
