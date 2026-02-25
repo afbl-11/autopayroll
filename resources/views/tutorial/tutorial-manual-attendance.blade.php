@@ -20,10 +20,10 @@
         <img class="pic1" src="{{ asset('assets/tutorial/manual_attendance-1.png') }}" alt="Guide">
         <p class="sentence"><span class="k">T</span>he manual attendance feature functions as an alternative version of the Attendance QR Attendance Process of the system.</p>
         <br>
-        <img class="pic1" src="{{ asset('assets/tutorial/manual-attendance-introductory-1.png') }}" alt="Guide">
+        <img class="pic1" src="{{ asset('assets/tutorial/expand.png') }}" alt="Guide">
         <p class="sentence">You can find the Manual Attendance page by pressing first that icon in the sidebar.</p>
         <br>
-        <img class="pic1" src="{{ asset('assets/tutorial/manual-attendance-introductory-2.png') }}" alt="Guide">
+        <img class="pic1" src="{{ asset('assets/tutorial/attendancelocate.png') }}" alt="Guide">
         <p class="sentence">The icon will expand the sidebar. Scroll down and select <b>Attendance</b>.</p>
         <br>
         <img class="pic1" src="{{ asset('assets/tutorial/manual-attendance-introductory-3.png') }}" alt="Guide">

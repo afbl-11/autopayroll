@@ -20,10 +20,10 @@
         <img class="pic1" src="{{ asset('assets/tutorial/leave-management.png') }}" alt="Guide">
         <p class="sentence"><span class="k">T</span>he leave management functionality in the website allows you to assign the status of the leaves filed by the employee.</p>
         <br>
-        <img class="pic1" src="{{ asset('assets/tutorial/leave-1.png') }}" alt="Guide">
+        <img class="pic1" src="{{ asset('assets/tutorial/leave_1.png') }}" alt="Guide">
         <p class="sentence">To start, scroll down to the Leave Requests in the Admin Dashboard.</p>
         <br>
-        <img class="pic1" src="{{ asset('assets/tutorial/leave-2.png') }}" alt="Guide">
+        <img class="pic1" src="{{ asset('assets/tutorial/leave_2.png') }}" alt="Guide">
         <p class="sentence">Select a certain leave request.</p>
         <br>        
         <img class="pic1" src="{{ asset('assets/tutorial/leave-3.png') }}" alt="Guide">

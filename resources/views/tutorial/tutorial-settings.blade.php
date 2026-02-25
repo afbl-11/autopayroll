@@ -20,7 +20,7 @@
         <img class="pic1" src="{{ asset('assets/tutorial/settings-1.png') }}" alt="Guide">
         <p class="sentence"><span class="k">T</span>he settings page allows you to edit your profile information, including your profile picture, name, and company name.</p>
         <br>
-        <img class="pic1" src="{{ asset('assets/tutorial/settings-location.png') }}" alt="Guide">
+        <img class="pic1" src="{{ asset('assets/tutorial/settings.png') }}" alt="Guide">
         <p class="sentence">You can find the settings page by pressing that icon in the sidebar.</p>
         <br>        
         <img class="pic1" src="{{ asset('assets/tutorial/settings-2.png') }}" alt="Guide">

@@ -20,10 +20,10 @@
         <img class="pic1" src="{{ asset('assets/tutorial/tax-1.png') }}" alt="Guide">
         <p class="sentence"><span class="k">T</span>he Tax Management feature is used to update tax and deduction rates, especially when the government implements changes during a specific period.</p>
         <br>
-        <img class="pic1" src="{{ asset('assets/tutorial/tax-2.png') }}" alt="Guide">
+        <img class="pic1" src="{{ asset('assets/tutorial/expand.png') }}" alt="Guide">
         <p class="sentence">You can find the Deduction Settings page, which is the page utilized for this feature, by pressing first that icon in the sidebar.</p>
         <br>        
-        <img class="pic1" src="{{ asset('assets/tutorial/tax-3.png') }}" alt="Guide">
+        <img class="pic1" src="{{ asset('assets/tutorial/taxlocate.png') }}" alt="Guide">
         <p class="sentence">The icon will expand the sidebar. Scroll down and select <b>Tax & Deductions</b>.</p>
         <br>
         <img class="pic1" src="{{ asset('assets/tutorial/tax-4.png') }}" alt="Guide">

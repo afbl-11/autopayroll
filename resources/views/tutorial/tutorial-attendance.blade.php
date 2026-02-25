@@ -17,7 +17,7 @@
         <a href="{{ route('tutorial.manual-attendance') }}" class="s">Manual Attendance Guide</a>
         </div>
         <p class="titles">Employee Assignment</p>
-        <img class="pic1" src="{{ asset('assets/tutorial/pre_req-introductory-1.png') }}" alt="Guide">
+        <img class="pic1" src="{{ asset('assets/tutorial/company.png') }}" alt="Guide">
         <p class="sentence"><span class="k">F</span>irst, this is a prerequisite before incorporating any attendance. Employees must be assigned to a company and given a schedule. To proceed, press that icon in the sidebar.</p>
         <br>
         <img class="pic1" src="{{ asset('assets/tutorial/company-dashboard_pre-req.png') }}" alt="Guide">

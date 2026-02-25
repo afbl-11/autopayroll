@@ -149,6 +149,11 @@
     font-weight: 600;
 }
 
+.img-1 {
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+}
+
 /*section.content-wrapper:nth-of-type(2){*/
 /*    background: var(--clr-indigo);*/
 /*}*/

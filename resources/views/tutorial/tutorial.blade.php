@@ -17,7 +17,7 @@
         <a href="{{ route('tutorial.settings') }}" class="s">Settings Guide</a>
         </div>
         <p class="titles">Dashboard</p>
-        <img class="pic1" src="{{ asset('assets/tutorial/admin-dashboard_upper-2.png') }}" alt="Guide">
+        <img class="pic1" src="{{ asset('assets/tutorial/admin_dashboard.png') }}" alt="Guide">
         <p class="sentence"><span class="k">T</span>he dashboard page presents the summary of the overall operations of the registered company, including the total number of employees, overall payroll costs, and manpower distribution. <br> <br> <i>Note: It is also the first page you will see upon logging in into this website.</i></p>
         <br>
         <img class="pic1" src="{{ asset('assets/tutorial/requests.png') }}" alt="Guide">

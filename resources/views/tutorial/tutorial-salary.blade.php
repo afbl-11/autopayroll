@@ -20,7 +20,7 @@
         <img class="pic1" src="{{ asset('assets/tutorial/salary-1.png') }}" alt="Guide">
         <p class="sentence"><span class="k">T</span>he Salary Management page is used to set or update an employee’s daily rate.</p>
         <br>
-        <img class="pic1" src="{{ asset('assets/tutorial/salary-2.png') }}" alt="Guide">
+        <img class="pic1" src="{{ asset('assets/tutorial/salary.png') }}" alt="Guide">
         <p class="sentence">You can find the Salary Management page by pressing first that icon in the sidebar.</p>
         <br>        
         <img class="pic1" src="{{ asset('assets/tutorial/salary-3.png') }}" alt="Guide">
