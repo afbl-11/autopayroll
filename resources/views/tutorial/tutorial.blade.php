@@ -6,7 +6,7 @@
             <li><a class="a" href="{{ route('tutorial.tutorial') }}">Admin Dashboard & Settings</a></li>
             <li><a class="v"href="{{ route('tutorial.attendance') }}">Attendance</a></li>
             <li><a class="v"href="{{ route('tutorial.leave') }}">Leave & Credit Management</a></li>
-       {{-- <li><a class="v"href="">Employee and Client Management</a></li> --}}
+            <li><a class="v"href="{{ route('tutorial.client') }}">Employee and Client Management</a></li>
             <li><a class="v" href="{{ route('tutorial.salary') }}">Salary & Tax Management</a></li>
         </ul>
     </div>
@@ -24,7 +24,7 @@
         <p class="sentence">In addition, it also displays the pending requests submitted by employees.</p>
         <br>
         <img class="pic1" src="{{ asset('assets/tutorial/highlighted-requests.png') }}" alt="Guide">
-        <p class="sentence">These requests are clickable, which can redirect you to the details of those specificied requests for approval.</p>
+        <p class="sentence">These requests are clickable, which can redirect you to the details of those specified requests for approval.</p>
         <br>
     </div>
 
