@@ -18,9 +18,6 @@ class EmployeeRegistrationController extends Controller
         protected CompanyRepository $companyRepository
     ){}
 
-    public function showStep1() {
-        return view('employee.addEmp1');
-    }
     public function showStep2() {
         return view('employee.addEmp2')->with('title', 'Add Employee');
     }
