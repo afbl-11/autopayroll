@@ -61,12 +61,12 @@ class LeaveDashboardController extends Controller
             abort(403);
         }
 
-       $validated =  $request->validate([
-           'start_date' => 'required|date_format:Y-m-d|before_or_equal:end_date',
-           'end_date'   => 'required|date_format:Y-m-d|after_or_equal:start_date',
-           'reason' => 'required|string|max:255',
-           'leave_type' => 'required|in:Sick,Vacation,Maternity,Bereavement,Paternity',
-           'attachment' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+        $validated = $request->validate([
+            'start_date' => 'required|date|date_format:Y-m-d|before_or_equal:end_date',
+            'end_date'   => 'required|date|date_format:Y-m-d|after_or_equal:start_date',
+            'reason'     => 'required|string|max:255',
+            'leave_type' => 'required|in:Sick,Vacation,Maternity,Bereavement,Paternity',
+            'attachment' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
 
         $exists = LeaveRequest::where('employee_id', $employee->employee_id)
@@ -76,8 +76,12 @@ class LeaveDashboardController extends Controller
             })
             ->exists();
 
+        if($validated['start_date'] < Carbon::now()->toDateString()) {
+            return back()->with(['error' => 'You cannot file a leave in the past!.']);
+        }
+
         if ($exists) {
-            return back()->with(['success' => 'You already have a leave request during this period.']);
+            return back()->with(['error' => 'You already have a leave request during this period.']);
         }
 
         if ($request->hasFile('attachment')) {

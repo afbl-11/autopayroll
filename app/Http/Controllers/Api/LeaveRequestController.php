@@ -25,9 +25,9 @@ class LeaveRequestController extends Controller
         }
 
         try {
-            $request->validate([
-                'start_date' => 'required|date_format:Y-m-d|before_or_equal:end_date',
-                'end_date'   => 'required|date_format:Y-m-d|after_or_equal:start_date',
+            $validated = $request->validate([
+                'start_date' => 'required|date|date_format:Y-m-d|before_or_equal:end_date',
+                'end_date'   => 'required|date|date_format:Y-m-d|after_or_equal:start_date',
                 'reason' => 'required|string|max:255',
                 'leave_type' => 'required|in:Sick,Vacation,Maternity,Bereavement,Paternity',
                 'attachment' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
@@ -37,6 +37,13 @@ class LeaveRequestController extends Controller
                 'success' => false,
                 'errors' => $e->errors()
             ], 422);
+        }
+
+        if($validated['start_date'] < Carbon::now()->toDateString()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'You cannot file a leave in the past!.'
+            ],422);
         }
 
         $exists = LeaveRequest::where('employee_id', $employee->employee_id)
