@@ -2,8 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Models\AttendanceLogs;
 use App\Models\Employee;
+use App\Models\EmployeeSchedule;
 use App\Services\AttendanceService;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class MarkEmployeesAbsent extends Command
@@ -27,21 +30,28 @@ class MarkEmployeesAbsent extends Command
      */
     public function handle(AttendanceService $attendanceService)
     {
-        $this->info('Starting absence check...');
+        $now = now();
+        $today = $now->toDateString();
+        $currentTime = $now->toTimeString();
 
-        $employees = Employee::all();
+        $schedules = EmployeeSchedule::where('end_time', '<=', $currentTime)
+            ->whereNull('end_date')
+            ->get();
         $absentCount = 0;
+        foreach ($schedules as $schedule) {
+            $alreadyProcessed = AttendanceLogs::where('employee_id', $schedule->employee_id)
+                ->where('log_date', $today)
+                ->exists();
 
-        foreach ($employees as $employee) {
-            // We capture the "result" of the function in $isAbsent
-            $isAbsent = $attendanceService->markAbsent($employee->employee_id);
+            if (!$alreadyProcessed) {
+                $attendanceService->markAbsent($schedule->employee_id, includeToday: true);
 
-            if ($isAbsent) {
                 $absentCount++;
-                $this->info("Employee {$employee->employee_id} was marked absent.");
+                $this->info("Employee {$schedule->employee_id} was marked absent." . $absentCount);
+
+                $this->info("Employee ID: {$schedule->employee_id} processed.");
             }
         }
-
-        $this->comment("Process finished. Total new absences: $absentCount");
+        $this->info("No Employee Processed...");
     }
 }
