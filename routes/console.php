@@ -7,5 +7,5 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
-    Schedule::command('payslips:generate')->everyMinute()->withoutOverlapping();
-    Schedule::command('attendance:mark-absent')->everyMinute()->withoutOverlapping();
+    Schedule::command('payslips:generate')->everyThirtyMinutes();
+    Schedule::command('attendance:mark-absent')->everyThirtyMinutes();
