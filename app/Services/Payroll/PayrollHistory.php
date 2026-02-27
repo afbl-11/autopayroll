@@ -27,7 +27,7 @@ class PayrollHistory
 
         if (!$firstLog) return;
 
-        $startMonth = Carbon::parse($firstLog->payroll_date)->startOfMonth();
+        $startMonth = Carbon::now()->subMonths(2)->startOfMonth();
         $endMonth   = Carbon::now()->startOfMonth();
 
         $periods = [];
@@ -37,7 +37,6 @@ class PayrollHistory
             $year  = $cursor->year;
             $month = $cursor->month;
 
-            // Two periods per month: 1-15 and 16-end
             $periods[] = ['year' => $year, 'month' => $month, 'period' => '1-15'];
             $periods[] = ['year' => $year, 'month' => $month, 'period' => '16-30'];
 

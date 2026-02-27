@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\AttendanceLogs;
 use App\Models\Employee;
 use App\Models\EmployeeSchedule;
+use App\Models\PartTimeAssignment;
 use App\Models\PayrollPeriod;
 use App\Traits\PayrollPeriodTrait;
 use App\Traits\ScheduleTrait;
@@ -221,7 +222,7 @@ class AttendanceService
         return abs($end_time->diffInMinutes($start_time)) / 60;
     }
 
-    public function markAbsent($id): bool {
+    public function markAbsent($id, bool $includeToday = false): bool {
         $schedule = EmployeeSchedule::where('employee_id', $id)
             ->whereNull('end_date')
             ->latest('start_date')
@@ -232,6 +233,14 @@ class AttendanceService
         $employee = Employee::where('employee_id', $id)->first();
         if (!$employee) return false;
 
+        if(!$employee->company_id) {
+            $partTime = PartTimeAssignment::where('employee_id', $id)->first();
+
+            if (!$partTime) {
+                return false;
+            }
+        }
+
         // Get last attendance log
         $lastLogDate = AttendanceLogs::where('employee_id', $id)
             ->max('log_date');
@@ -241,7 +250,7 @@ class AttendanceService
             ? Carbon::parse($lastLogDate)->addDay()
             : Carbon::parse($schedule->start_date);
 
-        $endDate = Carbon::yesterday(); // NEVER include today
+        $endDate = $includeToday ? Carbon::today() : Carbon::yesterday();
 
         if ($startDate->gt($endDate)) {
             return false; // Nothing to process
@@ -252,12 +261,11 @@ class AttendanceService
             $logExists = AttendanceLogs::where('employee_id', $id)
                 ->where('log_date', $startDate->toDateString())
                 ->exists();
-
             if (!$logExists) {
                 AttendanceLogs::create([
                     'log_id'      => (string) \Illuminate\Support\Str::uuid(),
                     'admin_id'    => $employee->admin_id,
-                    'company_id'  => $employee->company_id,
+                    'company_id'  => $employee->company_id ?? $partTime->company_id,
                     'employee_id' => $id,
                     'log_date'    => $startDate->toDateString(),
                     'status'      => 'A',
