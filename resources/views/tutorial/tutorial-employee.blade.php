@@ -65,6 +65,9 @@
         <img class="pic1" src="{{ asset('assets/tutorial/employee-14.png') }}" alt="Guide">
         <p class="sentence">If you selected <b>Part-Time</b>, you must select the Days Available upon working for your company that you would use in assigning them to multiple companies.</p>
         <br>
+       <img class="pic1" src="{{ asset('assets/tutorial/add_client_button.png') }}" alt="Guide">
+        <p class="sentence">To note, if you click <b>Add Client</b>, it will redirect you to the Client Registration Page and you will be doing again the onboarding process of client companies in the system displayed in the other tab.</p>
+        <br>
         <img class="pic1" src="{{ asset('assets/tutorial/employee-15.png') }}" alt="Guide">
         <p class="sentence">After selecting their employment type and input their daily rate, input their position and upload their documents (optional).</p>
         <br>
@@ -105,19 +108,19 @@
         <p class="sentence">Click <b>Leave Request</b>.</p>
         <br>
         <img class="pic1" src="{{ asset('assets/tutorial/employee-28.png') }}" alt="Guide">
-        <p class="sentence">This will store their leave request history. Next, click <b>Payroll</b>.</p>
+        <p class="sentence">This will store their leave request history. Refer to the Leave Management Guide Tab for more information regarding this feature. Next, click <b>Payroll</b>.</p>
         <br>
         <img class="pic1" src="{{ asset('assets/tutorial/employee-29.png') }}" alt="Guide">
         <p class="sentence">This tab will generate the payroll of the employee per daily log, you can also download it by clicking <b>Download PDF</b>.</p>
         <br>
         <img class="pic1" src="{{ asset('assets/tutorial/employee-30.png') }}" alt="Guide">
-        <p class="sentence">To generate payslip, select first the year and month.</p>
+        <p class="sentence">To generate payslip, select first the year and month of a certain payroll period.</p>
         <br>
         <img class="pic1" src="{{ asset('assets/tutorial/employee-31.png') }}" alt="Guide">
         <p class="sentence">Afterwards, click <b>Generate Payslip</b>.</p>
         <br>
         <img class="pic1" src="{{ asset('assets/tutorial/employee-32.png') }}" alt="Guide">
-        <p class="sentence">A modal will appear that will allow you to select a certain payroll period before clicking <b>Continue</b>, which will allow you to view the payslip for that specified period.</p>
+        <p class="sentence">A modal will appear that will allow you to select a certain payroll period before clicking <b>Continue</b>, which will allow you to view the payslip of that employee for that specific period.</p>
         <br>
         <div id="imageModal" class="image-modal">
             <span class="close-modal">&times;</span>

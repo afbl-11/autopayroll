@@ -3,7 +3,7 @@
 {{--    @vite(['resources/css/theme.css'])--}}
 <main>
 
-    <div class="container-fluid px-4 py-5">
+    <div class="container-fluid px-4 py-5" id="body">
         {{-- SHARED HEADER --}}
         <div class="d-flex justify-content-between align-items-end mb-4">
             <div>
@@ -96,5 +96,65 @@
     .deduction-body .card-header {
         background-color: #f8f9fc;
         border-bottom: 1px solid #e3e6f0;
+    }
+
+    @media (max-width: 1150px) {
+        #body {
+            margin-left: 35px;
+        }
+    }
+
+    @media (max-width: 800px) {
+        #body {
+            margin-left: 50px;
+        }
+    }
+
+    @media (max-width: 700px) {
+        #body {
+            margin-left: 125px;
+        }
+    }
+
+    @media (max-width: 620px) {
+        #body {
+            margin-left: 235px;
+        }
+    }
+
+    @media (max-width: 600px) {
+        #body {
+            margin-left: 245px;
+        }
+    }
+
+    @media (max-width: 550px) {
+        #body {
+            margin-left: 295px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        #body {
+            margin-left: 345px;
+        }
+    }
+
+    @media (max-width: 450px) {
+        #body {
+            margin-left: 395px;
+        }
+    }
+
+    @media (max-width: 400px) {
+        #body {
+            margin-left: 445px;
+        }
+    }
+
+    @media (max-width: 350px) {
+        #body {
+            margin-left: 495px;
+        }
     }
 </style>

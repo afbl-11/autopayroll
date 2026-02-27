@@ -67,6 +67,34 @@
         <br>
         <img class="pic1" src="{{ asset('assets/tutorial/pre-req_attendance-12.png') }}" alt="Guide">
         <p class="sentence">For part-time employees, same process will be applied if they were selected. However, since in their hiring process the working days have already been selected. It will be fixed here.</p>
+        <br> <br>
+        <p class="sentence" id="f"><i>Additional Information: Unassigning Employees and Assigning Manually Full-Time and Contractual Employees</i></p>
+        <img class="pic1" src="{{ asset('assets/tutorial/unassign-1.png') }}" alt="Guide">
+        <p class="sentence">In addition, if you want to Unassign Employees for Full-Time, Contractual, and Part-Time, click <b>Unassign Employee</b>.</p>
+        <br>
+        <img class="pic1" src="{{ asset('assets/tutorial/unassign-2.png') }}" alt="Guide">
+        <p class="sentence">Select a certain employee.</p>
+        <br>
+        <img class="pic1" src="{{ asset('assets/tutorial/unassign-3.png') }}" alt="Guide">
+        <p class="sentence">It will appear a checkmark of the selected employee and the amount of employee being selected.</p>
+        <br>
+        <img class="pic1" src="{{ asset('assets/tutorial/unassign-4.png') }}" alt="Guide">
+        <p class="sentence">Click <b>Save Selection</b>.</p>
+        <br>
+        <img class="pic1" src="{{ asset('assets/tutorial/unassign-5.png') }}" alt="Guide">
+        <p class="sentence">You will see there that the employee will not appear here.</p>
+        <br>
+        <img class="pic1" src="{{ asset('assets/tutorial/assign-1.png') }}" alt="Guide">
+        <p class="sentence">To assign the full-time employee manually click <b>Assign Employee</b>.
+        <br> <br>
+        <i>Note: This is only be applied for Full-Time and Contractual Employees.</i>
+        </p>
+        <br>
+        <img class="pic1" src="{{ asset('assets/tutorial/assign-2.png') }}" alt="Guide">
+        <p class="sentence">Same process as unassigning employees. Now, click <b>Save Selection</b>.</p>
+        <br>
+        <img class="pic1" src="{{ asset('assets/tutorial/assign-3.png') }}" alt="Guide">
+        <p class="sentence">Now, the employee will be back here.</p>
         <br>
         <div id="imageModal" class="image-modal">
             <span class="close-modal">&times;</span>
@@ -321,6 +349,16 @@
     font-size: 40px;
     color: white;
     cursor: pointer;
+}
+
+#f {
+  font-size: 18px;
+  border-top: 1px solid lightgrey;
+  padding-top: 20px;  
+  padding-bottom: 10px;
+  color: #696969;
+  width: 90%;
+  margin-left: 5%;
 }
 </style>
 
