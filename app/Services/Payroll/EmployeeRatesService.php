@@ -13,14 +13,13 @@ class EmployeeRatesService
     public function createRate(array $data) : EmployeeRate {
 
         $admin = Auth::guard('admin')->id();
-        $employee = Employee::find($data['employee_id']);
 
         return EmployeeRate::create([
-           'employee_rate_id' => Str::uuid(),
             'employee_id' => $data['employee_id'],
             'admin_id' => $admin,
             'rate' => $data['rate'],
             'effective_from' => Carbon::now()->format('Y-m-d'),
+            'effective_to' => null,
         ]);
     }
 
