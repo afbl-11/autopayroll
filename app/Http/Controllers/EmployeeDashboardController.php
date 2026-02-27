@@ -33,7 +33,7 @@ class EmployeeDashboardController extends Controller
     }
 
     public function showInfo($id) {
-        $employee = Employee::findOrFail($id);
+        $employee = Employee::find($id);
         // Clear any cached relationships to ensure fresh data
         $employee->unsetRelation('currentRate');
         $employee->load('currentRate');
@@ -81,7 +81,7 @@ class EmployeeDashboardController extends Controller
     }
     public function destroy($id)
     {
-        $employee = Employee::findOrFail($id);
+        $employee = Employee::find($id);
 
         if (!is_null($employee->company_id)) {
             return back()->with(
