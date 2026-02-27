@@ -17,6 +17,11 @@
                 {{ session('success') }}
             </div>
         @endif
+            @if (session('error'))
+                <div class="custom-alert">
+                    {{ session('error') }}
+                </div>
+            @endif
         <div class="container-fluid p-0">
 
             <div class="row mb-4">
