@@ -16,7 +16,7 @@
         <div class="container-fluid p-0">
 
             <div class="row mb-4">
-                <div class="col-12">
+                <div class="col-12" id="head_1">
                     <h2 class="fw-bold mb-1" style="color: var(--clr-primary);">Payroll Credit Adjustment</h2>
                     <p class="text-muted mb-0">Easily request and track payroll credit adjustments.</p>
                 </div>
@@ -190,7 +190,7 @@
                                             </td>
 
                                             {{-- Action --}}
-                                            <td class="pe-4 text-end">
+                                            
                                             <td class="pe-4 text-end">
                                                 <button class="btn btn-sm btn-outline-primary view-adjustment-btn"
                                                         data-bs-toggle="modal"
@@ -219,9 +219,9 @@
                                 </table>
                                 @if ($adjustments->hasPages())
                                     <div class="d-flex justify-content-between align-items-center px-4 py-3 border-top">
-                                        <div class="text-muted small">
+                                        <div class="text-muted small" id="sp">
                                             Showing {{ $adjustments->firstItem() }} to {{ $adjustments->lastItem() }} of {{ $adjustments->total() }} results
-                                        </div>
+                                        </div> 
 
                                         {{-- Use simple view to avoid duplicate text --}}
                                         <div>
@@ -307,7 +307,7 @@
             <!-- View Adjustment Modal -->
             <div class="modal fade" id="viewAdjustmentModal" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg">
-                    <div class="modal-content border-0 shadow-lg" style="border-radius: 20px; overflow: hidden;">
+                    <div class="modal-content border-0 shadow-lg" id="modal1" style="border-radius: 20px; overflow: hidden;">
 
                         <!-- Header -->
                         <div class="modal-header bg-warning-subtle text-white p-4" style="border-bottom: none;">
@@ -491,5 +491,40 @@
 
     @keyframes fadeOut {
         to { opacity: 0; transform: translateX(30px); }
+    }
+    
+    @media (max-width: 600px) {
+        #modal1 {
+            margin-top: 25px;
+            margin-bottom: 25px;
+            width: 90%;
+            margin-left: 25px;
+        }
+        .main-content {
+            margin-bottom: 25px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        #sp {
+            margin-right: 15px;
+        }
+        #modal1 {
+            margin-left: 20px;
+            width: 90%;
+            height: 90%;
+        }
+    }
+
+    @media (max-width: 400px) {
+        #modal1 {
+            margin-left: 18px;
+        }
+    }
+
+    @media (max-width: 350px) {
+        #modal1 {
+            margin-left: 17px;
+        }
     }
 </style>

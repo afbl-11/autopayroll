@@ -89,43 +89,118 @@
 {{-- SIDEBAR SCRIPT --}}
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+
     const sidebar = document.getElementById('sidebar');
     const mainContent = document.querySelector('.main-content');
     const toggleBtn = document.getElementById('sidebarToggle');
     const toggleIcon = document.getElementById('toggleIcon');
 
-    function updateIcon(expanded) {
+    function updateIcon() {
+        const expanded = sidebar.classList.contains('expanded');
         toggleIcon.classList.toggle('bi-chevron-double-left', expanded);
         toggleIcon.classList.toggle('bi-chevron-double-right', !expanded);
     }
+    if (window.innerWidth > 480) {
+        const isExpanded = localStorage.getItem('sidebar-expanded') === 'true';
 
-    const isExpanded = localStorage.getItem('sidebar-expanded') === 'true';
-    if (isExpanded) {
-        sidebar.classList.add('expanded');
-        mainContent?.classList.add('main-content-expanded');
-        updateIcon(true);
-    }
-
-    sidebar.addEventListener('click', function (e) {
-        e.stopPropagation();
-    });
-
-    toggleBtn.addEventListener('click', function (e) {
-        e.stopPropagation();
-
-        sidebar.classList.toggle('expanded');
-        const expanded = sidebar.classList.contains('expanded');
-
-        mainContent?.classList.toggle('main-content-expanded');
-        updateIcon(expanded);
-        localStorage.setItem('sidebar-expanded', expanded);
-    });
-
-    document.addEventListener('click', function () {
+        if (isExpanded) {
+            sidebar.classList.add('expanded');
+            mainContent?.classList.add('main-content-expanded');
+        }
+    } else {
         sidebar.classList.remove('expanded');
         mainContent?.classList.remove('main-content-expanded');
-        updateIcon(false);
-        localStorage.setItem('sidebar-expanded', false);
+    }
+    updateIcon();
+    
+    toggleBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        sidebar.classList.toggle('expanded');
+        updateIcon();
+
+        if (window.innerWidth > 480) {
+            localStorage.setItem(
+                'sidebar-expanded',
+                sidebar.classList.contains('expanded')
+            );
+        }
+    });
+
+    document.addEventListener('click', function (e) {
+        const isClickInsideSidebar = sidebar.contains(e.target);
+        const isClickOnToggle = toggleBtn.contains(e.target);
+
+        if (!isClickInsideSidebar && !isClickOnToggle) {
+            sidebar.classList.remove('expanded');
+            mainContent?.classList.remove('main-content-expanded');
+            updateIcon();
+
+            if (window.innerWidth > 480) {
+                localStorage.setItem('sidebar-expanded', false);
+            }
+        }
     });
 });
 </script>
+
+<style>
+    @media (max-width: 480px) {
+
+    .sidebar-container {
+        position: fixed;
+        left: -260px;
+        top: 0;
+        height: 100vh;
+        width: 260px;
+        transition: 0.3s ease;
+        z-index: 1050;
+    }
+
+    .sidebar-container.expanded {
+        left: 0;
+    }
+
+    .main-content {
+        margin-left: 0px !important;
+    }
+    .nav-menu {
+        margin-top: 0px;
+    }
+    .sidebar-header {
+        margin-top: 60px;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        padding-top: 40px;
+    }
+
+     .toggle-btn {
+        position: fixed;
+        top: 20px;
+        left: 15px;
+        z-index: 1100;
+
+        width: 45px;
+        height: 45px;
+        border-radius: 12px;
+        border: none;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        transition: all 0.3s ease;
+    }
+
+    /* 🔹 When sidebar is CLOSED */
+    .sidebar-container:not(.expanded) ~ .sidebar-footer .toggle-btn,
+    .sidebar-container:not(.expanded) .toggle-btn {
+        background: #ffffff;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+    }
+
+    /* 🔹 When sidebar is OPEN */
+    .sidebar-container.expanded .toggle-btn {
+        background: transparent;
+        box-shadow: none;
+    }
+}
+</style>

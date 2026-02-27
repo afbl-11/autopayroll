@@ -8,7 +8,7 @@
     <main class="main-content p-4">
         
             <div class="row mb-4">
-                <div class="col-12">
+                <div class="col-12" id="head_1">
                     <h2 class="fw-bold mb-1" style="color: var(--clr-primary);">Technical Guide</h2>
                     <p class="text-muted mb-0">Learn how to manage your account.</p>
                 </div>
@@ -41,7 +41,12 @@
         <p class="sentence">To view the payslip, you can click here.</p>
         <br>
     </div> 
-        
+    <div id="imageModal" class="image-modal">
+        <span class="close-modal">&times;</span>
+        <div class="zoom-container">
+            <img id="modalImage">
+        </div>
+    </div>   
     </main>
 </x-root>
 <style>
@@ -55,11 +60,6 @@
         padding-bottom: 50px;
         transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1),
                     width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .main-content.main-content-expanded {
-        margin-left: var(--sidebar-width-expanded);
-        width: calc(100% - var(--sidebar-width-expanded));
     }
     
     .mb-4 {
@@ -170,11 +170,10 @@
         align-items: center;
         margin-top: 10px;
         margin-bottom: 10px;
-
         border-bottom: 1px solid #e5e7eb;
         border-top: 1px solid #e5e7eb;
     }
-    .bar a {
+    .bar a{
         text-align: center;
     }
     .s {
@@ -195,19 +194,128 @@
 @media (max-width: 480px) {
     .links a {
         font-size: 10px;
-    }    
+    } 
+    #head_1 {
+        margin-left: 35px;
+        width: 85%;
+    }       
     .links {
         width: 70%;
     }
     .content {
-        width:95%;
-    }
-    .bar {
-        margin-right: -25px;
+        width:100%;
+        margin-left: 0;
     }
     .mb-1 {
-            font-size: 30px;
+        font-size: 30px;
+    }
+    .main-content {
+        width: 100%;
     }
 }
-</style>
 
+.image-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    inset: 0;
+    background: rgba(0,0,0,0.9);
+}
+
+.zoom-container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    cursor: grab;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#modalImage {
+    max-width: 90%;
+    max-height: 90%;
+    transition: transform 0.1s ease-out;
+    transform-origin: center center;
+}
+
+.close-modal {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    font-size: 40px;
+    color: white;
+    cursor: pointer;
+}
+</style>
+<script>
+const modal = document.getElementById("imageModal");
+const modalImg = document.getElementById("modalImage");
+const zoomContainer = document.querySelector(".zoom-container");
+const closeBtn = document.querySelector(".close-modal");
+
+let scale = 1;
+let posX = 0;
+let posY = 0;
+let isDragging = false;
+let startX, startY;
+
+document.querySelectorAll(".pic1, .pic2").forEach(img => {
+    img.addEventListener("click", function() {
+        modal.style.display = "block";
+        modalImg.src = this.src;
+        scale = 1;
+        posX = 0;
+        posY = 0;
+        modalImg.style.transform = `translate(0px, 0px) scale(1)`;
+    });
+});
+
+closeBtn.onclick = () => modal.style.display = "none";
+
+modal.onclick = e => {
+    if (e.target === modal) modal.style.display = "none";
+};
+
+zoomContainer.addEventListener("wheel", function(e) {
+    e.preventDefault();
+
+    const rect = modalImg.getBoundingClientRect();
+    const offsetX = e.clientX - rect.left;
+    const offsetY = e.clientY - rect.top;
+
+    const zoom = e.deltaY < 0 ? 1.1 : 0.9;
+    scale *= zoom;
+
+    posX -= (offsetX - rect.width / 2) * (zoom - 1);
+    posY -= (offsetY - rect.height / 2) * (zoom - 1);
+
+    modalImg.style.transform =
+        `translate(${posX}px, ${posY}px) scale(${scale})`;
+});
+
+zoomContainer.addEventListener("mousedown", function(e) {
+    isDragging = true;
+    startX = e.clientX - posX;
+    startY = e.clientY - posY;
+    zoomContainer.style.cursor = "grabbing";
+});
+
+zoomContainer.addEventListener("mousemove", function(e) {
+    if (!isDragging) return;
+    posX = e.clientX - startX;
+    posY = e.clientY - startY;
+    modalImg.style.transform =
+        `translate(${posX}px, ${posY}px) scale(${scale})`;
+});
+
+zoomContainer.addEventListener("mouseup", function() {
+    isDragging = false;
+    zoomContainer.style.cursor = "grab";
+});
+
+zoomContainer.addEventListener("mouseleave", function() {
+    isDragging = false;
+    zoomContainer.style.cursor = "grab";
+});
+</script>

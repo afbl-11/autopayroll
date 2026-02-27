@@ -6,7 +6,7 @@
             <li><a class="v" href="{{ route('tutorial.tutorial') }}">Admin Dashboard & Settings</a></li>
             <li><a class="a"href="{{ route('tutorial.manual-attendance') }}">Attendance</a></li>
             <li><a class="v"href="{{ route('tutorial.leave') }}">Leave & Credit Management</a></li>
-       {{-- <li><a class="v"href="">Employee and Client Management</a></li> --}}
+            <li><a class="v"href="{{ route('tutorial.client') }}">Employee and Client Management</a></li>
             <li><a class="v" href="{{ route('tutorial.salary') }}">Salary & Tax Management</a></li>
         </ul>
     </div>
@@ -20,10 +20,10 @@
         <img class="pic1" src="{{ asset('assets/tutorial/manual_attendance-1.png') }}" alt="Guide">
         <p class="sentence"><span class="k">T</span>he manual attendance feature functions as an alternative version of the Attendance QR Attendance Process of the system.</p>
         <br>
-        <img class="pic1" src="{{ asset('assets/tutorial/manual-attendance-introductory-1.png') }}" alt="Guide">
+        <img class="pic1" src="{{ asset('assets/tutorial/expand.png') }}" alt="Guide">
         <p class="sentence">You can find the Manual Attendance page by pressing first that icon in the sidebar.</p>
         <br>
-        <img class="pic1" src="{{ asset('assets/tutorial/manual-attendance-introductory-2.png') }}" alt="Guide">
+        <img class="pic1" src="{{ asset('assets/tutorial/attendancelocate.png') }}" alt="Guide">
         <p class="sentence">The icon will expand the sidebar. Scroll down and select <b>Attendance</b>.</p>
         <br>
         <img class="pic1" src="{{ asset('assets/tutorial/manual-attendance-introductory-3.png') }}" alt="Guide">
@@ -68,6 +68,12 @@
         <img class="pic1" src="{{ asset('assets/tutorial/manual_attendance-14.png') }}" alt="Guide">
         <p class="sentence">If you press <b>Ok</b>, the attendance data of those employees on that particular date will be removed.</p>
         <br>
+        <div id="imageModal" class="image-modal">
+            <span class="close-modal">&times;</span>
+            <div class="zoom-container">
+                <img id="modalImage">
+            </div>
+        </div> 
     </div>
 
 </x-app>
@@ -283,4 +289,109 @@
         margin-right: -25px;
     }
 }
+.image-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    inset: 0;
+    background: rgba(0,0,0,0.9);
+}
+
+.zoom-container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    cursor: grab;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#modalImage {
+    max-width: 90%;
+    max-height: 90%;
+    transition: transform 0.1s ease-out;
+    transform-origin: center center;
+}
+
+.close-modal {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    font-size: 40px;
+    color: white;
+    cursor: pointer;
+}
 </style>
+
+<script>
+const modal = document.getElementById("imageModal");
+const modalImg = document.getElementById("modalImage");
+const zoomContainer = document.querySelector(".zoom-container");
+const closeBtn = document.querySelector(".close-modal");
+
+let scale = 1;
+let posX = 0;
+let posY = 0;
+let isDragging = false;
+let startX, startY;
+
+document.querySelectorAll(".pic1, .pic2").forEach(img => {
+    img.addEventListener("click", function() {
+        modal.style.display = "block";
+        modalImg.src = this.src;
+        scale = 1;
+        posX = 0;
+        posY = 0;
+        modalImg.style.transform = `translate(0px, 0px) scale(1)`;
+    });
+});
+
+closeBtn.onclick = () => modal.style.display = "none";
+
+modal.onclick = e => {
+    if (e.target === modal) modal.style.display = "none";
+};
+
+zoomContainer.addEventListener("wheel", function(e) {
+    e.preventDefault();
+
+    const rect = modalImg.getBoundingClientRect();
+    const offsetX = e.clientX - rect.left;
+    const offsetY = e.clientY - rect.top;
+
+    const zoom = e.deltaY < 0 ? 1.1 : 0.9;
+    scale *= zoom;
+
+    posX -= (offsetX - rect.width / 2) * (zoom - 1);
+    posY -= (offsetY - rect.height / 2) * (zoom - 1);
+
+    modalImg.style.transform =
+        `translate(${posX}px, ${posY}px) scale(${scale})`;
+});
+
+zoomContainer.addEventListener("mousedown", function(e) {
+    isDragging = true;
+    startX = e.clientX - posX;
+    startY = e.clientY - posY;
+    zoomContainer.style.cursor = "grabbing";
+});
+
+zoomContainer.addEventListener("mousemove", function(e) {
+    if (!isDragging) return;
+    posX = e.clientX - startX;
+    posY = e.clientY - startY;
+    modalImg.style.transform =
+        `translate(${posX}px, ${posY}px) scale(${scale})`;
+});
+
+zoomContainer.addEventListener("mouseup", function() {
+    isDragging = false;
+    zoomContainer.style.cursor = "grab";
+});
+
+zoomContainer.addEventListener("mouseleave", function() {
+    isDragging = false;
+    zoomContainer.style.cursor = "grab";
+});
+</script>

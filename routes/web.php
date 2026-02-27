@@ -426,6 +426,10 @@ Route::view('/tutorial/leave', 'tutorial.tutorial-leave')
 ->name('tutorial.leave');
 Route::view('/tutorial/credit', 'tutorial.tutorial-credit')
 ->name('tutorial.credit');
+Route::view('/tutorial/client', 'tutorial.tutorial-client')
+->name('tutorial.client');
+Route::view('/tutorial/employee', 'tutorial.tutorial-employee')
+->name('tutorial.employee');
 
 //Employee Web Stuff
 Route::post('/employee/announcement/delete/{id}', [\App\Http\Controllers\EmployeeWeb\AnnouncementController::class, 'deleteAnnouncement'])

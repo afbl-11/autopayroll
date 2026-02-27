@@ -86,7 +86,7 @@
 {{--        2nd content--}}
 
         <section class="content-wrapper">
-            <img src="{{asset('assets/landing/employee-list.png')}}" alt="">
+            <img src="{{asset('assets/landing/list.png')}}" class="list" alt="">
             <div class="info-message">
                 <h3 >Your Workforce at a Glance</h3>
                 <p class="sub-text" >Browse, filter, and manage all employees across multiple client companies. View assignment details, track work status, and keep everything organized in one place.</p>
@@ -98,11 +98,11 @@
                 <h3 id="h3-content">Employee Attendance Overview</h3>
                 <p id="p-content">Track employee attendance every cutoff period using submitted logs from client companies. Review absences, leaves, late-ins, and overtime in one place.</p>
             </div>
-                <img src="{{asset('assets/landing/attendance.png')}}" alt="">
+                <img src="{{asset('assets/landing/attendance_laptop.png')}}" class="list" alt="">
         </section>
 {{--        4th content--}}
         <section class="content-wrapper">
-            <img src="{{asset('assets/landing/leaveRequest.png')}}" alt="">
+            <img src="{{asset('assets/landing/leave_laptop.png')}}" class="list" alt="">
             <div class="info-message">
                 <h3>Manage Leave Requests Efficiently</h3>
                 <p>Review, approve, or revise employee leave requests with full visibility. Integrated with the mobile app for direct submissions from the field</p>

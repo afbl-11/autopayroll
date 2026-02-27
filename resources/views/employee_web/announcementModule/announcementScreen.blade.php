@@ -9,7 +9,7 @@
     <main class="main-content">
         <div class="container-fluid p-0">
             <div class="row mb-5">
-                <div class="col">
+                <div class="col" id="head_1">
                     <h2 class="fw-bold mb-2" style="color: var(--clr-primary);">Announcements</h2>
                     <p class="text-muted mb-0">View all company-wide updates, memos, and payroll notices.</p>
                 </div>
