@@ -24,6 +24,7 @@
             <form action="{{route('auth.store.step1')}}" method="post">
                 @csrf
 {{--                first name--}}
+                <input type="text" name="website" style="display:none;">
                 <div class="field-row">
                   <x-form-input
                     label="First Name"

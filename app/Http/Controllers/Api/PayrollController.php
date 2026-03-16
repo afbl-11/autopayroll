@@ -22,7 +22,7 @@ class PayrollController extends Controller
             return response()->json([
                 'message' => 'no record',
                 'data' => $payroll
-            ], 200);
+            ], 404);
         }
 
         return response()->json([

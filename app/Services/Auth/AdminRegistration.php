@@ -5,6 +5,7 @@ use App\Models\Admin;
 use App\Services\GenerateId;
 use App\Services\Payroll\PayrollPeriodService;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class AdminRegistration
@@ -36,21 +37,31 @@ class AdminRegistration
     public function createAdmin(array $data): Admin
     {
         $personal = session('register.personal');
-        $data = array_merge($personal, $data);
-        $data['password'] = Hash::make($data['password']);
-        $data['profile_photo'] = 'profile-photos/default_profile.jpg';
-        $data['admin_id'] = $this->generateId->generateId(Admin::class, 'admin_id');
 
+        // Safety check: if session expired, redirect back
+        if (!$personal) {
+            throw new \Exception("Registration session expired.");
+        }
 
-        $admin = Admin::create($data);
+        $combinedData = array_merge($personal, $data);
+        $combinedData['password'] = Hash::make($combinedData['password']);
+        $combinedData['profile_photo'] = 'profile-photos/default_profile.jpg';
+        $combinedData['admin_id'] = $this->generateId->generateId(Admin::class, 'admin_id');
 
-        $this->periodService->createPeriod($data['admin_id']);
+        // Wrap in a transaction
+        return DB::transaction(function () use ($combinedData) {
+            $admin = Admin::create($combinedData);
 
-        event(new Registered($admin));
+            // If this fails, the whole block throws an exception and rolls back
+            $this->periodService->createPeriod($combinedData['admin_id']);
 
-        session()->forget('register.personal');
+            // Fire event ONLY if DB operations succeeded
+            event(new Registered($admin));
 
-        return $admin;
+            session()->forget('register.personal');
+
+            return $admin;
+        });
     }
 
 }
