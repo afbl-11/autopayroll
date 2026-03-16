@@ -20,6 +20,7 @@ class AdminRegisterPersonal extends FormRequest
             'last_name' => ['required','string','max:255'],
             'suffix' => [ 'nullable', 'in:Sr.,Jr.,Other'],
             'email' => ['required','email','unique:admins,email'],
+            'website' => 'prohibited',
             'password' => [
                 'required',
                 'string',
