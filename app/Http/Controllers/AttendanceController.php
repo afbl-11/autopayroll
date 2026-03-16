@@ -9,6 +9,7 @@ use App\Models\DailyPayrollLog;
 use App\Models\Employee;
 use App\Models\Company;
 use App\Models\EmployeeSchedule;
+use App\Services\Payroll\PayrollHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -18,6 +19,7 @@ class AttendanceController extends Controller
 {
     public function __construct(
         protected AttendanceReport $report,
+        protected PayrollHistory $payslip,
     ){}
 
     public function showAttendance($id)
@@ -507,6 +509,8 @@ class AttendanceController extends Controller
                     $attendanceDate,
                     $request->company_id
                 );
+
+                $this->payslip->generatePayslipReference();
             } catch (\Exception $e) {
                 \Log::error('Payroll sync failed in manual attendance modal', [
                     'employee_id' => $request->employee_id,
