@@ -32,7 +32,7 @@ class AnnouncementMail extends Mailable
 
     public function build()
     {
-        return $this->from('autopayroll@autopayroll.org', 'Autopayroll System')
+        return $this->from('info@autopayroll.org', 'Autopayroll System')
             ->subject($this->announcement->title)
             ->view('emails.announcement');
     }
