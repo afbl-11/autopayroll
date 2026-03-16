@@ -37,15 +37,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 /**admin registration*/
-Route::get('/register/admin/credentials', [AdminRegistrationController::class, 'showStep1'])
-    ->name('auth.register.step1');
-Route::get('/register/admin/address', [AdminRegistrationController::class, 'showStep2'])
-    ->name('auth.register.step2');
+Route::middleware(['throttle:register-attempts'])->group(function () {
 Route::post('/register/admin/success', [AdminRegistrationController::class, 'register'])
     ->name('admin.register');
 Route::post('/register/admin/personal-info', [AdminRegistrationController::class, 'storeStep1'])
     ->name('auth.store.step1');
-
+});
+Route::get('/register/admin/credentials', [AdminRegistrationController::class, 'showStep1'])
+    ->name('auth.register.step1');
+Route::get('/register/admin/address', [AdminRegistrationController::class, 'showStep2'])
+    ->name('auth.register.step2');
 
 //login
 Route::get('/login', function () {
